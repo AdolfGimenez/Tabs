@@ -1,0 +1,41 @@
+-- #25868
+-- esta 0700668  y debe estar 0700688 
+-- DRCONBEP SE CAMBIO CODIGO Y NOMBRE DE COMERCIO
+select * from libdebito.drconbep where lerrnb='133407511891'
+update libdebito.drconbep set LIDCOM='0700688', codeno='STOCK ITAUGUA'
+where lerrnb='133407511891'
+
+-- OPMOVI SE CAMBIA CODIGO DE COMERCIO
+select * from  gxopera.opmovi where OPNOREF='133407511891'
+update  gxopera.opmovi set  OPCOMER='0700688'
+where OPNOREF='133407511891'
+
+-- OPRECLE SE LE SACA TRX A UN COMERCIO, SE PASA AL OTRO
+
+select * from gxopera.oprecle where RECOMER='0700668' and refech in('20211130') and reenti='002'
+update gxopera.oprecle set recant=recant-1, remonto=remonto-28000
+where RECOMER='0700668' and refech in('20211130') and reenti='002'
+
+select * from gxopera.oprecle where RECOMER='0700688' and refech in('20211130') and reenti='002'
+update gxopera.oprecle set recant=recant+1, remonto=remonto+28000
+where RECOMER='0700688' and refech in('20211130') and reenti='002'
+
+-- FLICOM N/A PORQUE AMBOS COMERCIOS TIENEN CABECERA
+select * from gxopera.flicom where lifechd in ('20211130') and licomer='0700668' AND LINROFIN='0'
+select * from gxopera.flicom where lifechd in ('20211130') and licomer='0700688' AND LINROFIN='0'
+
+-- FLICOM1 SE LE SACA TRX A UN COMERCIO, SE PASA AL OTRO
+select * from gxopera.flicom1 where lifechd in ('20211130') and licomer='0700668'  and lifecha='20211130' and LITIPTAR='DEB' AND LINROFAC='0'
+update gxopera.flicom1 set LICANT=LICANT-1, LIMONTO=LIMONTO-28000, LICOBPS=LICOBPS-420, LIIVABPS=LIIVABPS-42, LIcoent=licoent-420, LIivaent=LIivaENT-42, lineto=lineto-27076
+where lifechd in ('20211130') and licomer='0700668'  and lifecha='20211130' and LITIPTAR='DEB' AND LINROFAC='0'
+-- 28000.00 Y 27076.00
+
+select * from gxopera.flicom1 where lifechd in ('20211130') and licomer='0700688'  and lifecha='20211130' and LITIPTAR='DEB' AND LINROFAC='0'
+update gxopera.flicom1 set LICANT=LICANT+1, LIMONTO=LIMONTO+28000, LICOBPS=LICOBPS+420, LIIVABPS=LIIVABPS+42, LIcoent=licoent+420, LIivaent=LIivaENT+42, lineto=lineto+27076
+where lifechd in ('20211130') and licomer='0700688'  and lifecha='20211130' and LITIPTAR='DEB' AND LINROFAC='0'
+
+-- OPLIQUI SE CAMBIA CODIGO DE COMERCIO
+
+SELECT * FROM GXOPERA.OPLIQUI WHERE  OPNROREF='133407511891'
+UPDATE GXOPERA.OPLIQUI  SET OPNCOMER='0700688'
+WHERE  OPNROREF='133407511891'

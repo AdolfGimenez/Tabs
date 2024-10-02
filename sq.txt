@@ -1,0 +1,82 @@
+------------------control glonal
+select lfectr Fecha, lhortr Hora, lcodbc Marca, lenemi Emisor, lbinpr Bin, lnrtar Tarjeta
+,pdescricion narca_tarjeta,lcretr Retorno,lesttr Estado,limpgs Monto,coddes Descripcion_COD,lnfact Pais, loritr Dispositivo,LCOMTR, lcodtr
+from libdebito.drconbep
+inner join LIBDEBITO.TBCTRA0P A on A.TXCTRX = lcodtr 
+right join libdebito.tbcret0p on lcretr = codnro 
+inner join libdebito.tbinproc on pbin=lbinpr
+where lfectr in '20200821'
+--AND LHORTR between '140000' and '160000'
+--and lenemi IN ('530','560','590','570')		  --ADQ MST
+--and lenemi in ('015','020')									--VSA EMISOR
+--and lnfisc='422745' and lenemi in ('500')		--VSA ADQ
+--and lbinpr like '443078%'										--VSA BNF
+--and lbinpr like '488234%'										--VSA BEPSA
+--and LBINPR in '456976'											--VSA CONTI
+--and lenemi='510'														--PROCARD
+--AND LNFACT <> 'PY'
+--and lcretr in '19'
+--and lcodbc in 'VSA' 
+order by lhortr desc
+-------------------------------------------------------------------------------
+--Adq MasterCard
+select lfectr AS FECHA , lcodbc AS MARCA,lenemi EMISOR, COUNT(*) CANTIDAD,lesttr AS ESTADO
+,lcretr AS COD_RETORNO, coddes Descripcion_COD
+from libdebito.drconbep
+inner join LIBDEBITO.TBCTRA0P A on A.TXCTRX = lcodtr
+right join libdebito.tbcret0p on lcretr = codnro
+where lfectr='20200821' 
+and  lcodbc = 'MST' 
+and codmar='MSTC'
+and lenemi in ('530','560','570','590') 
+GROUP BY Lfectr, lcretr, lcodbc,LENEMI,coddes, lesttr
+order by lcretr asc, cantidad desc
+----------------------------------
+--Visa ADQ Continental--
+select lenemi emisor, ennombr ENTIDAD,lcretr cod_retorno,count(*) cantidad,sum(limpgs)
+from libdebito.drconbep INNER JOIN gxbdbps.gentiaf ON (ENEMISO=LENemi)
+WHERE lfectr in '20200821'
+and lenemi='540'
+group by lenemi,lcretr,ennombr
+ORDER BY CANTIDAD DESC
+--------------------------------
+--Visa Emisor  
+select lfectr AS FECHA , lcodbc AS MARCA,lenemi EMISOR, COUNT(*) CANTIDAD
+,lesttr AS ESTADO, lcretr AS COD_RETORNO, coddes Descripcion_COD 
+from libdebito.drconbep 
+inner join LIBDEBITO.TBCTRA0P A on A.TXCTRX = lcodtr 
+right join libdebito.tbcret0p on lcretr = codnro 
+where lfectr='20200821'
+and lcodbc='VSA'
+and  codmar = 'VISA'
+and lenemi in ('015','020') 
+GROUP BY Lfectr, lcretr, lcodbc,LENEMI,coddes, lesttr 
+order by lcretr asc, cantidad desc
+--------------------------------------------------------------
+--Visa Adq
+select lfectr AS FECHA , lcodbc AS MARCA,lenemi EMISOR, COUNT(*) CANTIDAD
+,lesttr AS ESTADO, lcretr AS COD_RETORNO, coddes Descripcion_COD
+from libdebito.drconbep
+inner join LIBDEBITO.TBCTRA0P A on A.TXCTRX = lcodtr
+right join libdebito.tbcret0p on lcretr = codnro
+where lfectr='20200821'
+and lcodbc='VSA' 
+and  codmar = 'VISA'
+and lnfisc='422745' and lenemi in ('500')
+GROUP BY Lfectr, lcretr, lcodbc,LENEMI,coddes, lesttr
+order by lcretr asc, cantidad desc
+------------------------------------------------------------
+-------Resumen billeteras
+select count(*) Cantidad ,lcretr Cod_Retorno,coddes Descripcion_COD 
+,LFECTR FECHA_REAL,lesttr Estado,lcodtr COD_TRX 
+,SUM(limpgs) importe,substr(lidtra,1,1) Origen,A.TXDTRX DETALLES
+from libdebito.drconbep
+inner join LIBDEBITO.TBCTRA0P A on A.TXCTRX = lcodtr
+right join libdebito.tbcret0p on lcretr = codnro
+WHERE  lfectr= '20200821'
+and lcodtr in ('000052','567102')
+and limpgs>1
+and  codmar = 'BEPS'
+group by lcretr,coddes,lesttr,lcodtr
+,TXDTRX,LFECTR,substr(lidtra,1,1),lfectr
+order by lcodtr,cantidad desc 

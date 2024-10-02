@@ -1,0 +1,56 @@
+--verificar trx Billeteras
+select lfectr Fecha,lhortr Hora,lenemi Emisor
+,lnrtar N_tarj,lidcom Cod_Comercio
+,lcomtr Comercio,(limpgs) importe,lcretr Retorno
+,lesttr Estado,substr(lidtra,1,1) Origen,lctade referencia_linea,lerrnb Cod_Ref
+,A.TXDTRX DETALLES,lcotel numero,lcodtr Cod_Trx,lactfj Activo_Pos,lenemi,lctaor, lcodtr, codmar
+from libdebito.drconbep
+inner join LIBDEBITO.TBCTRA0P A on A.TXCTRX = lcodtr
+right join libdebito.tbcret0p on lcretr = codnro
+where lfectr='20210419'
+--and lhortr > '180000'-- between '152700' and '153400'
+--and lcodtr='000052'---Tigo Money 
+--and lcodtr='567102'--Bill Personal
+--And lenemi='591'
+--and lcodtr='000072'--Bill Clar
+--and lnrtar like '6274311520%'--Tigo Card
+and lcodtr in ('370000','380000','390000')--Cico
+--and lcomtr like 'FARMAOLIVA %'
+and limpgs>1
+and  codmar = 'BEPS'
+--and lctade like '%401063623'
+--AND LIDCOM IN '0301628'
+--and lcotel in '0983478300'
+--and lcretr in '96'--('96','91')
+--and lctade in '0374010076'
+order by lhortr desc 
+--------------------------------------------------------------
+------------------control glonal
+select lfectr Fecha, lhortr Hora, lcodbc Marca, lenemi Emisor, lbinpr Bin,lerrnb Num_Fef, SUBSTR(lnrtar,1,6)||'XXXXXX'||SUBSTR(lnrtar,13,4) AS TARJETA
+,pdescricion Marca_tarjeta,lcretr Retorno,lesttr Estado,limpgs Monto,coddes Descripcion_COD,lnfact Pais, loritr Dispositivo,LCOMTR comercio, lcodtr Cod_trx, leca62, lidcom
+from libdebito.drconbep
+inner join LIBDEBITO.TBCTRA0P A on A.TXCTRX = lcodtr 
+right join libdebito.tbcret0p on lcretr = codnro 
+inner join libdebito.tbinproc on pbin=lbinpr
+where lfectr in '20210419'
+--And lenemi IN ('530','560','590','570') --and lcodbc='MST'
+--and lenemi in ('015','020')						--VSA EMISOR
+--and lnfisc='422745' and lenemi in ('500')		--VSA ADQ
+--and lbinpr like '443078'										--VSA BNF--
+--and lbinpr like '488234%'										--VSA BEPS
+--AND LNRTAR LIKE '535874%'
+--And LBINPR in '456976'
+--and lbinpr='510211'
+--and lnrtar like '%4775'
+--And LBINPR in '606257'
+--and lbinpr='517789'											--VSA CONTI										
+--and lenemi='510'	
+--and lnrtar like '%6063'														
+--AND LNFACT <> 'PY'
+--and coDmar='VSA'
+--and lcodbc='MST'
+--AND CODMAR IN  ('VISA','UNI','CRE','MST')
+--and lcretr in '91'-- ('92','03','19','12') --('','01')
+--and loritr <>'P'
+--and lcodbc in 'VSA' 
+order by lhortr desc

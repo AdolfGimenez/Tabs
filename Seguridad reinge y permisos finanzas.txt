@@ -1,0 +1,307 @@
+--Finanzas permisos especiales
+select * from  CONTABILID.GE04NIV 
+where nicous in ('U99CARLOS', 'U99SELENE', 'U99HILKA')
+
+select * from contabilid.ge03acc
+where accous in ('U99CARLOS', 'U99SELENE', 'U99HILKA')
+
+
+select * from contabilid.tatacus
+where tacous in ('U99CARLOS', 'U99SELENE', 'U99HILKA')
+
+
+*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**-**-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+
+--Seguridad REINGE
+
+INSERT INTO GXSEGDTA.TSGARU (SGROLCOD,SGSISCOD,SGUSRCOD,SGARUEXP,SGARUUSMO,SGARUFCHMO,SGARUENTRJ) VALUES (
+278,33,2925,'N','          ', CURRENT_TIMESTAMP,' '); --LAURA SANCHEZ
+
+INSERT INTO GXSEGDTA.TSGARU (SGROLCOD,SGSISCOD,SGUSRCOD,SGARUEXP,SGARUUSMO,SGARUFCHMO,SGARUENTRJ) VALUES (
+278,33,2929,'N','          ', CURRENT_TIMESTAMP,' '); --JOSE CHAMORRO
+
+select * from GXSWTDTA.TSWTPSW 
+
+SELECT * FROM GXSEGDTA.TSGSIS t WHERE SGSISCOD IN (21, 1, 2, 33)
+
+/*INSERTA ROL*/
+INSERT INTO GXSEGDTA.TSGROL (SGROLCOD,SGSISCOD,SGROLDESC,SGROLUSMO,SGROLFCHMO) VALUES (
+136,1,'PRDCTARJETA                                       ', current_user,current_timestamp);
+
+-- Tabla sistemas
+SELECT * FROM GXSEGDTA.TSGSIS
+
+
+-- Tabla de areas
+SELECT * FROM GXSEGDTA.TSgare
+
+
+SELECT * FROM GXSEGDTA.TSgdto
+ 
+
+--Tabla Rol
+SELECT * FROM GXSEGDTA.TSGROL WHERE SGROLCOD='225'
+
+ 
+
+-- Tabla Usuario
+SELECT * FROM GXSEGDTA.TSGUSR
+
+JOSE 2011
+HERNAN 1942
+
+-- RelaciÃ³n Usuario/Rol
+SELECT * FROM gxsegdta.TSGARU
+where SGUSRCOD in ('2011', '2942', '3029')
+
+SELECT * FROM gxsegdta.TSGARU
+where SGUSRCOD in ('2917')
+
+ 
+203 21
+--RelaciÃ³n ROl/FUnciones u Objetos gx
+SELECT * FROM GXSEGDTA.TSGROL where SGROLCOD='203'
+
+ 
+
+-- Tabla FUnciones u objetos gx
+SELECT * FROM GXSEGDTA.TSGFUN where SGFUNCOD in ('2558') , '2427', '2431')
+
+SELECT * FROM GXSEGDTA.TSGFUN where SGFUNOBJ LIKE '%TCLMOV%'
+
+-- Tabla FUnciones u objetos gx
+SELECT * FROM GXSEGDTA.TSGFUN where SGFUNOBJ like 'TDGTSA%'
+
+-- Tabla FUnciones u objetos gx
+delete GXSEGDTA.TSGFUN where SGFUNOBJ='WCL001'
+
+select * from gxfindta.tcltra
+
+select * from gxfindta.tclmrt
+
+
+INSERT INTO GXSEGDTA.TSGUSR
+(
+  SGUSRCOD,
+  SGUSRNOM,
+  SGUSRID,
+  SGUSREST,
+  SGDTOCOD,
+  SGARECOD,
+  SGSECCOD,
+  SGUSRMAIL,
+  SGTUSCOD,
+  SGUSRADM,
+  SGGENCOD,
+  SGGCOCOD,
+  SGUSRFCHUA,
+  SGUSRUSMO,
+  SGUSRFCHMO,
+  SGUSRDOC,
+  SGUSRENTRJ
+)
+VALUES
+(
+  3029,
+  'ARNALDO DAVALOS PERALTA',
+  'U99ARNALDO',
+  'A',
+  1,
+  9,
+  0,
+  'adavalos@bepsa.com.py',
+  1,
+  '          ',
+  2,
+  182,
+  '00000000',
+  'U99HERNAN ',
+  '2021-01-05 11:49:38.000',
+  '4918100',
+  'S'
+);
+
+
+
+
+INSERT INTO GXSEGDTA.TSGARU
+(
+  SGROLCOD,
+  SGSISCOD,
+  SGUSRCOD,
+  SGARUEXP,
+  SGARUUSMO,
+  SGARUFCHMO,
+  SGARUENTRJ
+)
+VALUES
+(
+  91,
+  2,
+  3029,
+  'N',
+  '          ',
+  '0001-01-01 00:00:00.000',
+  ' '
+);
+
+INSERT INTO GXSEGDTA.TSGARU
+(
+  SGROLCOD,
+  SGSISCOD,
+  SGUSRCOD,
+  SGARUEXP,
+  SGARUUSMO,
+  SGARUFCHMO,
+  SGARUENTRJ
+)
+VALUES
+(
+  203,
+  21,
+  3029,
+  'N',
+  '          ',
+  '0001-01-01 00:00:00.000',
+  ' '
+);
+
+INSERT INTO GXSEGDTA.TSGARU
+(
+  SGROLCOD,
+  SGSISCOD,
+  SGUSRCOD,
+  SGARUEXP,
+  SGARUUSMO,
+  SGARUFCHMO,
+  SGARUENTRJ
+)
+VALUES
+(
+  356,
+  33,
+  3029,
+  'N',
+  '          ',
+  '0001-01-01 00:00:00.000',
+  ' '
+);
+
+INSERT INTO GXSEGDTA.TSGARU
+(
+  SGROLCOD,
+  SGSISCOD,
+  SGUSRCOD,
+  SGARUEXP,
+  SGARUUSMO,
+  SGARUFCHMO,
+  SGARUENTRJ
+)
+VALUES
+(
+  87,
+  1,
+  3029,
+  'N',
+  '          ',
+  '0001-01-01 00:00:00.000',
+  ' '
+);
+
+
+SELECT * FROM gxsegdta.TSGFUN t WHERE SGFUNCOD IN (3943,3947,3951,3955,3959,3963,3975,3979,3983);
+
+
+
+SELECT * FROM GXFINDTA.TCLTRA
+SELECT * FROM GXFINDTA.TCLmrt
+
+INSERT INTO GXFINDTA.TCLTRA
+(
+  TPCIDTRA,
+  MRTIDMOTRE,
+  TPCAREA,
+  TPCUSULTUP,
+  TPCFHULTUP,
+  TPCMOV
+)
+VALUES
+(
+  8,
+  '8 ',
+  21,
+  '          ',
+  '00000000',
+  'S'
+);
+
+
+
+SELECT * FROM GXSEGDTA.TSGFUN WHERE SGFUNCOD='2554'
+
+
+INSERT INTO GXSEGDTA.TSGROLDT
+(SGROLCOD, SGSISCOD, SGFUNCOD, SGRDTPDIS, SGRDTPUPD, SGRDTPINS, SGRDTPDEL)
+VALUES(225, 21, 2194, 'S', 'S', 'S', 'S');
+
+SELECT * FROM GXSEGDTA.TSGROLDT
+WHERE SGROLCOD=225
+
+
+INSERT INTO GXSEGDTA.TSGFUN
+(
+  SGFUNCOD,
+  SGSISCOD,
+  SGFUNDES,
+  SGFUNOBJ,
+  SGFUNPAD,
+  SGFUNORD,
+  SGFUNVIS,
+  SGFUNFILT,
+  SGFUNTOBJ,
+  SGFUNUSMO,
+  SGFUNFCHMO,
+  SGFUNCPAD,
+  SGFUNURLOB,
+  SGFUNTIPO
+)
+VALUES
+(
+  4457,
+  21,
+  'MOVIMIENTO',
+  'TCLMOV',
+  'N',
+  0,
+  'N',
+  'S',
+  'W',
+  'U99HERNAN ',
+  '2021-02-25 21:59:49.000',
+  0,
+  'http://localhost:8080/accesobepsa/servlet/seguridad.',
+  'I'
+);
+
+
+
+INSERT INTO GXSEGDTA.TSGROLDT
+(SGROLCOD, SGSISCOD, SGFUNCOD, SGRDTPDIS, SGRDTPUPD, SGRDTPINS, SGRDTPDEL)
+VALUES(208, 21, 3975, 'S', 'N', 'N', 'N');
+
+
+
+INSERT INTO GXSEGDTA.TSGROLDT
+(SGROLCOD, SGSISCOD, SGFUNCOD, SGRDTPDIS, SGRDTPUPD, SGRDTPINS, SGRDTPDEL)
+VALUES(208, 21, 2169, 'S', 'N', 'N', 'N');
+
+
+select * from libdebito.bst015
+
+select COFACTU from gxbdbps.comaeaf where CODENO like '%BIGGIE%'
+
+
+
+
+
+

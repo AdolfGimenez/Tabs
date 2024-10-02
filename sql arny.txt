@@ -1,0 +1,38 @@
+select ---count (*)
+*from libdebito.drconbep
+where lfectr between '20180720' and '20180720'
+and lcretr='XD'
+--and SUBSTR(LNRTAR,1,6) IN ('627431')
+order by lhortr desc 	
+
+--verificar trx tigo money--
+select * from libdebito.drconbep
+where lfectr between '20180719' and '20180719' and lnrtar like '627431117%' order by lhortr desc 	
+
+--verificar trx por comercio--
+select * from libdebito.drconbep
+where lfectr between '20180604' and '20180604' and lidcom='0701608' order by lhortr desc; 
+
+and limpgs = '140000'  and substr(lidtra,1,1) = 'T' and lhortr between '073000' and '080000'
+
+select * from roshkalib.m_usuarios
+where numero_celular = '0981131090'
+
+select * from libdebito.drconbep
+where lfectr between '20180602' and '20180602' and lidcom='0700138' order by lhortr desc 
+
+-------------------------------------------------------------------------------------------------------------------
+select lfectr, lhortr, lnrtar, lidcom, lcomtr, limpgs, lcretr, lesttr
+from libdebito.drconbep 
+where lfectr between '20180728' and '20180728' and lnrtar like '627431581%' order by lhortr desc
+------------------------------------------------------------------------------------------------------------------- 
+select lfectr, lhortr, lnrtar, lexpir, lcodbc, lidcom, lcomtr, limpgs, lcretr, lesttr
+from libdebito.drconbep 
+where lfectr='20180728'
+and lcretr='XD' order by lhortr desc 
+------------------------------------------------------------------------------------------------------------------- 
+select lfectr, lhortr, lnrtar, lidcom, lcomtr, limpgs, lcretr, lesttr, substr(leca62,1,2)
+from libdebito.drconbep 
+where lfectr='20180728'
+and substr(leca62,1,2)='SP'
+order by lhortr desc

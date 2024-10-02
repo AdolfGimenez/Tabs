@@ -1,0 +1,18 @@
+select * from contabilid.TATSEDE
+select * from contabilid.FICLIEN 
+select * from contabilid.SJMOVIM
+select * from contabilid.TATRAEM
+select * from CONTABILID.SJDPERS 
+select * from contabilid.SJSBMES
+
+select * from yapi.TATSEDE
+select * from yapi.FICLIEN where CLCODO='PE' AND CLCOCL>200 and CLAPEL like '%BERNAL%' ORDER BY CLCOCL 
+select * from yapi.SJMOVIM
+select * from yapi.TATRAEM
+select * from yapi.SJDPERS WHERE DPCOEM='235'
+select * from yapi.SJSBMES
+
+
+
+
+

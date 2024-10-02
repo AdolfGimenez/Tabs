@@ -1,0 +1,11 @@
+--verificar tigo companion-- CON TARJETA
+select lfectr fecha,lhortr hora,lerrnb ref,lidcom cod_comercio,lcomtr comercio,lnrtar tarjeta
+,limpgs monto,lesttr estado,lcretr retorno from libdebito.drconbep
+where lfectr BETWEEN '20200624' AND '20200624'
+--and lcretr in '91'
+--and lidcom in '0700360'
+--where lhortr between '144216' and '155600'
+--and lfectr in '20200528'
+--and lcretr in ('96','93')
+and lnrtar like '627431152%' 
+order by lhortr desc 

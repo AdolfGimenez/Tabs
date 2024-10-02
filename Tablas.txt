@@ -1,0 +1,73 @@
+- LIBDEBITO.TBCTRA0P		- Codigos de Transacciones habilitadas
+- LIBDEBITO.SWITCHENT		- Tabla de conexion entidades COMSRV01
+- LIBDEBITO.BDCARD0P		- Contiene Nro de Tarjeta de Prueba
+- GXBDBPS.ATMCCRET			- Codigos de Respuesta
+- GXFINDTA.TCLRMI 			- Tabla de Categoria de Comercios MCC.
+- GXFINDTA.TCLIMP			- Tabla de impuestos
+- GXBDBPS.TMOVIAF           - Tabla de movimientos.
+- GXBDBPS.TCMOVAF 	    -Tabla Codigos de movimientos 
+- GXBDBPS.TMCTAAF	    - Tabla de Saldos.
+- GXBDBPS.IPMDTA			- Tabla de IPM's Mastercard
+- GXBDBPS.IPMDTAE			- Tabla de IPM's-Detalles Mastercard
+- COMERPRB 					- Tabla de Comercios de Prueba
+- BDCARDOP 					- Tabla de Numeros de tarjetas de prueba
+- ATMCENTRE.LOGATMCENT 		- Archivo de log ATMCENTRE
+- LIBDEBITO.LOGPOS0P		- Archivo de Log Pos
+- GXBDBPS.ATMCLOGE 			- Archivo de Log Errores ATMCENTRE
+- DEBUGATMC 				- Log Debug ATMCENTRE  
+- GXBDBPS.ATMCTXDEST 		- Archivo de configuracion/operacion para atm's
+- ATMCENTRE.TBBINE0P 		– Tabla de bines.
+- ATMCENTRE.ATMCSTSDTA 		- Archivo de Log de ATMCENTRE
+- GXBDBPS.ATMCCFG 			– Configuración de atm
+- GXBDBPS.ATMCCRET 			– Códigos de retorno
+- GXBDBPS.ATMCMSGLOG 		- Log Mensaje ATMC
+- GXBDBPS.SWTDEST 			- Tabla de Destinos
+- GXBDBPS.CORUBAF			- Tabla de Rubros.
+- GXBDBPS.TPRMUTTX 			- Tabla de Reglas/Limites de Transacciones
+- GXOPERA.CLPARF 			- Tabla de Entidades - Clearing
+- GXBDBPS.TDENTCOM 			- Tabla de parametros de conexion con Entidad Debito
+- GXBDBPS.LGCOMENT 			- Log de Mensajeria con Entidad
+- GXBDPBS.ATMCDTA 			- Tabla de ATM's
+- GXBDBPS.TDENTIDAD 		- Tabla de entidades.
+- GXBDBPS.COMAEAF       	- Maestro de Comercios
+- GXTRJDTA.TDGBIN			- Tabla de Bines (General)
+- GXBDBPS.TMTARAF			- Maestro Tarjeta Credito Dinelco
+- TGEMBHAF					- Historico de Embozados
+- TDBIN 					- Bines de Tarjetas de Debito
+- TDBINDET					- Tabla Extendida de Bines
+- GXBDBPS.TMCTAAF			- Tabla de Disponibles.
+- TDCLIENTE					- Tabla de Clientes Tarjetas de Debito.
+- TDCTA						- Tabla de numeros de cuenta Debito
+- TDCTAAD					- Tabla de adherentes Tarj. Debito
+- GXBDBPS.TDEMNOTAR			- Tabla de Tarjetas de Debito.
+- TDEMIS					- Tabla de Emisiones
+- TDTARREL					- Tabla de Ctas Relacionadas
+- TDCTAREL  				- Tabla de Ctas Relacionadas reingenieria
+- ATMCENTRE.ATMCSTSDTA 		- Log de ATM Centre)
+- TSWOTP					- Almacena datos de nro de tarjeta/pin
+- TTCTRJ  					- Tarjeta Credito (maestro de reingenieria)
+- TTDEMI  					- Emision (maestro de tarjeta debito reingenieria)
+- TTDCAD  					- Adherente (reingenieria)
+- GCLIEAF 					- Datos Cliente Tarjeta de Credito (sistema actual)
+- TDENTCOM 					- Tabla de Autorizadores de Entidades
+- VISA.VIMCC				- Tabla de Categoria de Comercios - MCC Visa
+- VISA.VIPOSEM				- Pos Entry Mode Visa
+- VISA.VIPOSCOND			- Pos Condition Code Visa
+- GXBDBPS.VICNTCDE			- Tabla de Paises
+- GXBDBPS.AITCOT			- Tabla de Cotizaciones
+- VISA.VISISSLOG			- Log de Mensajes
+- VISA.VISCTLDTA			- Datos de Transaccion Visa - Emisor
+- VISA.VISTRNDTA			- Datos de Transaccion Visa - Detalles de Programas
+- VISA.VISMTADTA			- Codigos de Proceso para Visa
+- LIBDEBITO.TBEPAD0P		- Tabla de Entidades y cuentas clearing
+- VISA.VSPCEAS				- Archivo de configuraciones del EAS
+
+- MASTERCARD.MASCTLDTA  	- Datos de Transaccion Mastercard -Detalles de Campos
+- MASTERCARD.MASTRNDTA  	- Datos de Transaccion Mastercard -Detalles de Programas
+
+
+
+
+
+
+

@@ -1,0 +1,4 @@
+select LFECTR FECHA_REAL,count(*) CANT,LCRETR COD_RET, lbinpr BIN,pdescricion ENTIDAD
+from libdebito.drconbep inner join libdebito.tbinproc  on lbinpr=pbin where lfectr between '20181229' and '20181229'
+and lenemi='510' and lcodbc in ('VSA','MST') and lcretr='60' 
+group by LFECTR,LCRETR, lbinpr,pdescricion

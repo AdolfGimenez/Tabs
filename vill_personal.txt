@@ -1,0 +1,22 @@
+-----------------------TRX PERSONAL.
+select lfectr Fecha, lhortr Hora, lcodbc Marca, lenemi Emisor, lbinpr Bin, lnrtar Tarjeta
+,LIDCOM COMERCIO,LCOMTR NOMBRE_COMERCIO,limpgs MONTO,lcretr Retorno, lesttr Estado
+, loritr DISPOSITIVO, lctaor numero_tell, lctade ref_personal, lerrnb ref_bepsa from libdebito.drconbep
+where lfectr in '20200624' 
+--and lhortr between '160000' and '162000'
+and lenemi='571'
+--and lidcom in '0701038'
+and lnrtar like '627431571%'  
+--and limpgs like '16%'
+--and lerrnb in '016278994760'
+--and lhortr > '160000'
+--AND LESTTR IN 'R'
+--and lcretr IN ' '
+--and lctade in '0020200610182944' 
+--and lctaor like '%0991422949'
+--and lcotel like '0973829935'
+--and lidcom in '0701918'
+--and lcretr in  '92'
+--AND LIMPGS LIKE '553589%'
+--and loritr in 'P' -- 'A'
+order by lhortr desc

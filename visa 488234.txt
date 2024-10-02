@@ -1,0 +1,25 @@
+--------SQL BINES A MONITOREAR----
+select lfectr FECHA,lhortr HORA,lerrnb NUM_BOL,lidcom COD_COMERCIO,lcomtr COMERCIO,lnrtar NUM_TARJETA,limpgs MONTO,lesttr ESTADO,lcretr RETORNO
+,LCODBC MARCA,LENEMI COD_ENTIDAD,LHISDE EMISOR,LORITR DISPOSITIVO, LNFACT PAIS,lactfj from libdebito.drconbep
+where lfectr in '20200624'																
+--and lhortr between '122011' and '133400'
+--AND LENEMI='571'
+--and lhortr >'150000'
+--and lcodbc in 'MST'
+--and lnrtar like '%'---VISA DEBITO  - CONTI 
+and lnrtar like '488234%'--VISA BEPSA
+--and lnrtar like '703002%'--DINELCO BNF
+--and lnrtar like '703002%'--DINELCO CONTINENTAL
+--and lnrtar like '703040%'--DINELCO RIO
+--and lnrtar like '443078%'--VISA BNF
+--and lnrtar like '627431113%'--COOP. MBURICAO
+--and lnrtar like '627431110%'--COOP. ÑEMBY
+--and lnrtar like '627431571%'--PERSONAL
+--and lnrtar like '627431103%'--COOP. YPACARAI
+--and lidcom in '1000581'
+--and loritr in 'P'
+--AND LCRETR IN ('88','96')
+--and lesttr IN ('R','D')
+order by lhortr desc 
+
+

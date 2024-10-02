@@ -1,0 +1,11 @@
+--------SQL BINES A MONITOREAR----
+select lfectr FECHA,lhortr HORA,lerrnb NUM_BOL,lidcom COD_COMERCIO,lcomtr COMERCIO,lnrtar NUM_TARJETA,limpgs MONTO,lesttr ESTADO,lcretr RETORNO
+,LCODBC MARCA,LENEMI COD_ENTIDAD,LHISDE EMISOR,LORITR DISPOSITIVO, LNFACT PAIS from libdebito.drconbep
+where lfectr between '20200624' and '20200624'
+--and lhortr between '194644' and '194949'
+--and lenemi in '158'
+--AND LENEMI='571'
+--and lcodbc in 'MST'
+and lnrtar like '456976%'---VISA DEBITO  - CONTI 
+--and lnrtar like '456976%'--VISA BEPSA
+order by lhortr desc 

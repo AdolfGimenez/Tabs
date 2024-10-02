@@ -1,0 +1,427 @@
+--VER TRANSACCIONES POR INICIO DE HORA RECHAZADAS RROCARD
+select lfectr,lhortr,lerrnb,lidcom,lcomtr,lnrtar,limpgs,lesttr,lcretr from libdebito.drconbep
+where lfectr between '20200418' and '20200418' 
+and lenemi='510' and lhortr > '90000'
+-- and lcretr in ('96','91','XD','92','94', '60') 
+order by lhortr desc
+
+--verificar trx tigo handlerWS-- SIN TARJETA
+select lfectr,lhortr,lerrnb,lidcom,lcomtr,lnrtar
+,limpgs,lesttr,lcretr from libdebito.drconbep
+where lfectr between '20200418' and '20200418' 
+and lnrtar like '627431581%' 
+--and lcretr in '51'
+--and lcretr in ('96','91','XD','92','94', '60')
+order by lhortr desc 
+
+--verificar tigo companion-- CON TARJETA
+select lfectr,lhortr,lerrnb,lidcom,lcomtr,lnrtar,limpgs,lesttr,lcretr from libdebito.drconbep
+where lfectr between '20200418' and '20200418' 
+and lnrtar like '627431152%' 
+AND LCRETR IN '51'
+order by lhortr desc 
+
+-- DINELCO BNF
+select lfectr,lhortr,lerrnb,lidcom,lcomtr,lnrtar,limpgs,lesttr,lcretr,leca62,lcodbc from libdebito.drconbep
+where lfectr between '20200418' and '20200418' 
+and lnrtar like '65535%'
+--and lcretr in '99'
+--and lhortr between '194607' and '201400'
+--and lcodbc in 'CAB'
+-- and lcretr='16'
+order by lhortr desc 
+
+--VISA
+select lfectr,lhortr,lerrnb,lidcom,lcomtr,lnrtar,limpgs,lesttr,lcretr
+,LCODBC,LENEMI,LHISDE,LECA62,LORITR from libdebito.drconbep
+where lfectr between '20200418' and '20200418'
+--and lhortr between '194644' and '194949'
+and lnrtar like '%'
+--and loritr in 'P'
+--AND LCRETR in '96'
+--AND LCRETR IN '12'
+--and lesttr IN ('R','D')
+--AND  LCODBC IN 'VSA'
+order by lhortr desc 
+---------------------------------------------------------------------
+--VISA
+select lfectr,lhortr,lerrnb,lidcom,lcomtr,lnrtar,limpgs,lesttr,lcretr
+,LCODBC,LENEMI,LHISDE,LECA62,LORITR from libdebito.drconbep
+where lfectr between '20200418' and '20200418'
+and lnrtar like '488234%'
+--AND LCRETR IN '91'
+---and lhortr between '200857' and '220000'
+--AND LNRTAR LIKE '488234%'
+--AND  LCODBC IN ('VSA','MST')
+order by lhortr desc 
+-------------------------------------------------------------------
+
+--MASTERCARD
+select lfectr,lhortr,lerrnb,lidcom,lcomtr,lnrtar,limpgs,lesttr,lcretr from libdebito.drconbep
+where lfectr between '20200418' and '20200418' 
+order by lhortr desc 
+
+select lfectr,lhortr,lerrnb,lidcom,lcomtr,lnrtar,limpgs,lesttr,lcretr from libdebito.drconbep
+where lfectr between '20200418' and '20200418' and lnrtar like '601638%' order by lhortr desc --
+
+
+select ---count (*)
+*from libdebito.drconbep
+where lfectr between '20200418' and '20200418'
+and lcretr='55'
+and SUBSTR(LNRTAR,1,6) IN ('443078')
+order by lhortr desc
+
+----------------------------------------------------------------------------------------------------------------     
+    
+--verificar trx por comercio--
+select lfectr, lhortr, lnrtar, lidcom, lcomtr, limpgs, lcretr, lesttr from libdebito.drconbep
+where lfectr between '20200418' and '20200418' and lidcom='1001598' order by lhortr desc; 
+
+and limpgs = '140000'  and substr(lidtra,1,1) = 'T' and lhortr between '073000' and '080000'
+
+----------------------------------------------------------------------------------------------------------------
+--USUARIOS TIGO MONEY
+select * from roshkalib.m_usuarios
+where numero_celular = '0983214316'
+
+------------------------------------------------------------------------------------------------------------------
+---TRX DE UN COMERCIO EN ESPECÍFICO 
+select lfectr,lhortr,lerrnb,lidcom,lcomtr,lnrtar,limpgs,lesttr,lcretr from libdebito.drconbep
+where lhortr between '175553' and '190516' 
+and lfectr in '20200418'
+and lnrtar like '443078%' 
+order by lhortr desc 
+
+-------------------------------------------------------------------------------------------------------------------
+select lfectr, lhortr, lnrtar, lidcom, lcomtr, limpgs, lcretr, lesttr
+from libdebito.drconbep 
+where lfectr between '20200418' and '20200418' 
+--and lnrtar like '443078%'
+and lidcom in '4600017' 
+order by lhortr desc
+------------------------------------------------------------------------------------------------------------------- 
+--PARA VER UN CÓDIGO DE RETORNO EN ESPECÍFICO
+select lfectr, lhortr, lnrtar, lexpir, lcodbc, lidcom, lcomtr, limpgs, lcretr, lesttr
+from libdebito.drconbep 
+where lfectr='20200418'
+--and SUBSTR(LNRTAR,1,6) IN ('703002')
+and lcretr='96' 
+order by lhortr desc 
+------------------------------------------------------------------------------------------------------------------- 
+select lfectr, lhortr, lnrtar, lidcom, lcomtr, limpgs, lcretr, lesttr, substr(leca62,1,2)
+from libdebito.drconbep 
+where lfectr='20200418'
+and substr(leca62,1,2)='XV'
+order by lhortr desc
+-------------------------------------------------------------------------------------------------------------------
+--DINELCO BNF 7030
+select lfectr, lhortr, lnrtar, lidcom, lcomtr, limpgs, lesttr, lcretr
+from libdebito.drconbep 
+where lfectr between '20200418' and '20200418' 
+and lnrtar like '627431%' 
+order by lhortr desc
+-------------------------------------------------------------------------------------------------------------------
+select lfectr, lhortr, lnrtar, lexpir, lcodbc, lidcom, lcomtr, limpgs, lcretr, lesttr 
+from libdebito.drconbep 
+where lfectr between '20200418' and '20200418'  
+where lhortr between '170000' and '220000'
+and lnrtar like '703002%' 
+order by lfectr, lhortr desc
+----------------------------------------------------------------------------------------------------------------------
+-- COOPERATIVA CAPIATA
+select lfectr,lhortr,lerrnb,lidcom,lcomtr,lnrtar,limpgs,lesttr,lcretr from libdebito.drconbep
+where lfectr between '20200418' and '20200418' 
+and lnrtar like '703002%' 
+--and lcretr in '99'
+--and lhortr between '180000' and '220000'
+order by lhortr desc 
+------------------------------------------------------------------------------------------------------------------
+-- COOPERATIVA MBURICAO
+select lfectr,lhortr,lerrnb,lidcom,lcomtr,lnrtar,limpgs,lesttr,lcretr from libdebito.drconbep
+where lfectr between '20200418' and '20200418' 
+and lnrtar like '443078%' 
+order by lhortr desc 
+-------------------------------------------------------------------------------------------------------------------
+--verificar personal--
+select lfectr Fecha,lhortr Hora,lerrnb Cod_Ref,lctaor Numero, lidcom Cod_Comercio,lcomtr Comercio,lnrtar N_Cu,limpgs Monto,lesttr Estado,lcretr Retorno from libdebito.drconbep
+where lfectr between '20200418' and '20200418' 
+and lnrtar like '627431571%'
+--and  lidcom in '0100001'
+--and lctaor like  '%0985548382'
+order by lhortr desc 
+---------------------------------------------------------------------------------------------------------------------
+--COOPERATIVA YPAKARAI
+select lfectr,lhortr,lerrnb,lidcom,lcomtr,lnrtar,limpgs,lesttr,lcretr from libdebito.drconbep
+where lfectr between '20200101' and '20200418' 
+and lnrtar like '627431103%' 
+order by lhortr desc 
+----------------------------------------------------------------------------------------------------------------------
+--VER TRANSACCIONES POR INICIO DE HORA RECHAZADAS DE PROCARD
+select lfectr,lhortr,lerrnb,lidcom,lcomtr,lnrtar, lbinpr, lcodbc, limpgs,lesttr,lcretr,leca62  from libdebito.drconbep
+where lfectr between '20200418' and '20200418' 
+--and lhortr between '122800' and '125823' 
+and lenemi='510'
+--and lidcom ' 
+--and lhortr between '184418' and '185247'
+--and leca62 like '%_v1000000'
+--and leca62 like '%_v330819'
+--and lcodbc in 'MST'
+--and lcretr in '92'
+--and lnrtar like '604302%'
+--and lcretr in ('09')
+--and lhortr > '63000'--'91','XD','92')
+-- and lcretr in ('96','91','XD','92') 
+order by lhortr desc
+------------------------------------------------------------------------------------------------------------------------
+--TABLA DE BINES
+select * from libdebito.tbinproc
+where pbin = '109910'
+-------------------------------------------------------------------------------------------------------------------------
+--VER TRANSACCIONES POR INICIO DE HORA APROBADAS
+select lfectr,lhortr,lerrnb,lidcom,lcomtr,lnrtar,limpgs,lesttr,lbinpr,lcodbc, lcretr from libdebito.drconbep
+where lHORTR between '172709' and '202020' 
+AND LFECTR IN '20200418'
+and lenemi='510'
+--and lcretr in '92'
+-- and lcretr in ('12') 
+--and lhortr > '60000'
+order by lhortr desc
+---------------370 carga , 380 retiro, 390 giro--------------------------------------------------------------------------
+select lfectr,lhortr,lerrnb,lidcom,lcomtr,lnrtar,limpgs,lesttr,lcretr,lcotel, lcodtr codtrx from libdebito.drconbep
+where lfectr between '20200418' and '20200418'
+--and lcotel in '0985926762' 
+and lcodtr in  ('370000','380000','390000') 
+order by lhortr desc
+--------------------------------------------------------------------------------------------------------------------------
+------------------------TRANSACCIONES ATM-CENTRE -------------------------------------------------------------------------
+select lfectr as FECHA,lhortr as HORA,SUBSTR(lnrtar,1,6)||'XXXXXX'||SUBSTR(lnrtar,13,4) AS TARJETA
+,leca62 As ATM,lcomtr as NOMBRE_ATM,limpgs as MONTO,lcretr as RETORNO, lesttr as ESTADO, lcotel,Lctaor C_I
+from libdebito.drconbep
+where substr(lidtra,1,4) like 'T226'
+--AND lctaor C_I
+--and lnrtar like '516400%'
+and lfectr= '20200418'
+order by lhortr desc
+---------------------------------------------------------------------------------------------------------------------------
+
+select*from libdebito.drconbep
+where lfectr between '20200418' and '20200418'
+--and lcotel in '0982666661' 
+and lcodtr in  ('370000','380000','390000') 
+order by lhortr desc
+---------------------------------------------------------------------------------------------------------------------------
+--Coop Ñemby
+select lfectr, lhortr, lnrtar, lidcom, lcomtr, limpgs, lesttr, lcretr,lenemi,lcodbc,lhisde
+from libdebito.drconbep 
+where lfectr between '20200418' and '20200418' 
+and lnrtar like '488234%' 
+--AND LENEMI IN '9644'
+--AND LCRETR IN '06'
+--and lenemi='110'
+--and lenemi in '110'
+order by lhortr desc
+--------------------------------
+--------SQL BINES A MONITOREAR----
+select lfectr,lhortr,lerrnb,lidcom,lcomtr,lnrtar,limpgs,lesttr,lcretr, lcotel
+,LCODBC,LENEMI,LHISDE,LECA62,LORITR from libdebito.drconbep
+where lfectr between '20200418' and '20200418'
+AND LENEMI='510'
+--and lcodbc in 'MST'
+--and lhortr between '194644' and '194949'
+and lnrtar like '488234%'--VISA BEPSA
+--and lnrtar like '703002%'--DINELCO BNF
+--and lnrtar like '703020%'--DINELCO CONTINENTAL
+--and lnrtar like '703040%'--DINELCO RIO
+--and lnrtar like '443078%'--VISA BNF
+--and lnrtar like '627431113%'--COOP. MBURICAO
+--and lnrtar like '627431110%'--COOP. ÑEMBY
+--and lnrtar like '627431571%'--PERSONAL
+--and lnrtar like '627431103%'--COOP. YPACARAI
+--and lnrtar like '%'
+--and lidcom in '1000581'
+--and loritr in 'P'
+--AND LCRETR IN ('91','14','04')
+--and lesttr IN ('R','D')
+order by lhortr desc 
+-----------------------------------------------------------------
+select*from libdebito.drconbep 
+-----------------------------------------------------------------
+--Consulta de transacciones (37000-Carga),(38000-Giro),(39000-Retiro)
+select lfectr Feha, lfcotr Fecha_Comer, lhortr Hora, lctaor C_I, lctade Num_Ref
+, lcotel Nume_Tell, lidcom Cod_Comer, lcomtr Comercio, limpgs Monto
+, lcodtr Transaccion, LCRETR Retorno from libdebito.drconbep
+where lfectr between '20200418' and '20200418'
+and lctade like '%338488823'
+--and lidcom in '1000581'
+and lcotel in '0981846218'
+--AND LCRETR IN '51' 
+and lcodtr in  ('370000','380000','390000') 
+order by lhortr desc
+----------------------------------------------------------------
+SELECT lfectr FECHA,lhortr HORA,SUBSTR(lnrtar,1,6) || 'XXXXXX' ||SUBSTR(lnrtar,13,4) TARJE,lnrtar,lbinpr,LENEMI ENTIDAD, LCODBC MARCA,/*,pdescricion MARCA*/
+lesttr ESTADO,lcretr COD_RETORNO,--coddes DESCRIP_RET,--lbinpr BIN,--,pdescricion MARCA_ENTIDAD,
+lerrnb REFERENCIA_BEPSA, lidcom COD_COMERCIO,lcomtr LOCAL_COMERCIO,lcautr COD_AUT,limpgs IMPORTE,lcodtr COD_TRX,LACTFJ,/*txdtrx DESC_TRX,*/leca62 VERSION--,lntoke--, enemiso BANCO,tgdesc DESCRIPCION
+from libdebito.drconbep 
+WHERE lfectr BETWEEN '20191201' AND '20200418' 
+and lcretr='05' 
+and SUBSTR(lnrtar,1,6)like '443078'
+and substr(leca62,1,1) in ('T') 
+--and lhortr > '211000' and lhortr < '235959'
+--and lhortr > '115000' 
+--and lcretr = '00' and substr (lcodtr,1,1) <> '3'
+--orderb by leca62 desc
+order by lfectr asc ,lhortr asc
+--------------------------------------------------------------
+select*from libdebito.drconbep
+where lfectr between '20200418' and '20200418'
+and lactfj in '46050312'
+--------------------------------------------------------------
+/*resumen de transacciones tigo money y billetera personal ver si sube.
+000052 Tigo Money, 567102 Billetera personal*/
+select  count(*) Cantidad,lcretr Cod_Retorno,lesttr Estado,lcodtr COD_TRX ,SUM(limpgs) importe,substr(lidtra,1,1) Origen
+from libdebito.drconbep where lfectr between '20200418' and '20200418'
+--and lenemi in ('571','581')
+and lenemi = '571'
+--and lcodtr in ('000052','567102')
+and lesttr='A'
+and limpgs>1
+--and substr(lidtra,1,1)='P' --descomentar  solo si quieren saber de pos
+group by lcretr,lesttr,lcodtr,substr(lidtra,1,1)
+order by cantidad desc
+--------------------------------------------------------------
+select pidstat, count(pidstat) as cantidad from gxbdbps.atmcpid
+group by pidstat
+-----------------------------------------------------------------------////
+ 
+select lfectr fecha,count(*) Cantidad,lcretr Cod_Retorno,lesttr Estado,lcodtr COD_TRX ,SUM(limpgs) importe,substr(lidtra,1,1) Origen
+from libdebito.drconbep where lfectr between '20200411' and '20200411'
+and lenemi in ('571','581')
+--and lcodtr in ('000052','567102')
+--and lesttr='A'
+and limpgs>1
+group by lfectr,lcretr,lesttr,lcodtr,substr(lidtra,1,1)
+order by cantidad desc
+------------------------------------------------------------------------------------select lfectr fecha,count(*) Cantidad,lcretr Cod_Retorno,lesttr Estado,lcodtr COD_TRX ,SUM(limpgs) importe,substr(lidtra,1,1) Origen
+select lfectr fecha ,count(*) Cantidad,lcretr Cod_Retorno,lesttr Estado,lcodtr COD_TRX ,SUM(limpgs) importe,substr(lidtra,1,1) Origen
+from libdebito.drconbep where lfectr between '20200411' and '20200411'
+and lenemi in ('571','581')
+--and lcodtr in ('000052','567102')
+--and lesttr='A'
+and limpgs>1
+group by lfectr,lcretr,lesttr,lcodtr,substr(lidtra,1,1)
+order by cantidad desc
+------------------------------------------------------------------------------------------
+SELECT*FROM LIBDEBITO.DRCONBEP
+where substr(lidtra,1,4) like 'T468'
+AND LCTADE LIKE '%2396281438'
+/////////////////////////////////////////////////////////////////////////////////////
+--verificar personal--
+select lfectr Fecha,lhortr Hora,lerrnb Cod_Ref,lctaor Numero, lidcom Cod_Comercio,lcomtr Comercio,lnrtar N_Cu,limpgs Monto,lesttr Estado,lcretr Retorno, lhisde from libdebito.drconbep
+where lfectr between '20200418' and '20200418' 
+and lenemi = '571'
+--and lcretr in '84'
+--and lctaor like '%0972756053'--completar con el numero de la billetera
+--and lnrtar like '627431571%'
+--and  lidcom in '0701739'
+--and lctaor like  '%0985548382'
+order by lhortr desc 
+----------------------
+--verificar trx tigo handlerWS-- SIN TARJETA
+select lfectr,lhortr,lerrnb,lidcom,lcomtr,lnrtar,limpgs,lesttr,lcretr, lctade Num_Ref from libdebito.drconbep
+where lfectr between '20200418' and '20200418' 
+and lnrtar like '627431581%'
+--and lctade in '338821505'
+--and lcotel in '0984392114'
+--and lctaor like '%0981846218'
+order by lhortr desc 
+----------------------
+--verificar personal--
+select lfectr Fecha,lhortr Hora,lerrnb Cod_Ref,lctaor Numero, lidcom Cod_Comercio,lcomtr Comercio,lnrtar N_Cu,limpgs Monto,lesttr Estado,lcretr Retorno, lhisde, lctade, lcotel from libdebito.drconbep
+where lfectr between '20200418' and '20200418' 
+and lenemi = '581'
+--and lcretr in '84'
+and lcotel in '0982151785'
+--and lctaor like '%0971364687'--completar con el numero de la billetera
+--and lnrtar like '627431571%'
+and  lidcom in '0700815'
+order by lhortr desc 
+----------------------
+--verificar tigo companion-- CON TARJETA
+select lfectr,lhortr,lerrnb,lidcom,lcomtr,lnrtar,limpgs,lesttr,lcretr from libdebito.drconbep
+where lfectr between '20200418' and '20200418' 
+and lnrtar like '627431152%' 
+order by lhortr desc 
+---------------------
+--Consulta de transacciones (37000-Carga),(38000-Giro),(39000-Retiro)
+select lfectr Feha, lfcotr Fecha_Comer, lhortr Hora, lctaor C_I, lctade Num_Ref
+, lcotel Nume_Tell, lidcom Cod_Comer, lcomtr Comercio, limpgs Monto
+, lcodtr Transaccion, LCRETR Retorno from libdebito.drconbep
+where lfectr between '20200416' and '20200418' 
+--and lcotel in ''a
+--and lcotel in '0985501115'
+and lcodtr in  ('370000','380000','390000') 
+order by lhortr desc
+
+select * from libdebito.switchent
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+select*from libdebito.drconbep
+where lfectr between '20200412' and '20200412' 
+and lenemi = '571'
+and lctaor like '%097'
+order by lhortr desc
+
+
+-------------------------------------------
+select lfectr Fecha, lhortr Hora, lctaor Numero_Tell,lnrtar N_Cu, Lidcom Cod_Comer, lcomtr Comercio, limpgs Monto
+,lcretr Retorno, lesttr Estado, loritr Origen, Lcodbc Tipo_Operacion  
+from libdebito.drconbep
+where lfectr between '20200412' and '20200412' 
+and lenemi = '571'
+and lctaor like '%0981834891'
+order by lhortr desc
+----------------------------------------
+ --usar este *count para traer totales-
+select  COUNT(*) CANTIDAD, LCODBC Marca 
+from libdebito.drconbep  
+where lfectr between '20200415' and '20200415' 
+and lcodbc in 'VSA'
+--AND LENEMI IN ('581', '582', '583') 
+--AND LCRETR IN ('91','96', '01', '93' )
+--order by lhortr desc 
+--------------------------------------
+select  lcodbc AS MARCA ,COUNT(*) CANTIDAD
+from libdebito.drconbep 
+where lfectr='20200415' 
+and lcodbc in ('VSA','DEB','BIL','TGI','TCO','CRE','PAN') 
+GROUP BY lcodbc
+--------------------------------------------
+select lfectr AS FECHA , lcodbc AS MARCA , lcretr AS RETORNO, lesttr AS ESTADO, COUNT(*) CANTIDAD
+from libdebito.drconbep 
+and lenemi='510' 
+and lhortr between '083000' and '094600'
+and lcretr in ('91','05','00') -- and lcodbc in ('VSA')
+GROUP BY Lfectr, lcodbc, lesttr , lcretr
+------------------------------------------
+select*from libdebito.drconbep
+where lfectr between '20200415' and '20200415' 
+and lenemi = '581'
+--and lcretr in '84'
+--and lctaor like '%0971364687'--completar con el numero de la billetera
+--and lnrtar like '627431571%'
+and  lidcom in '0700807'
+--and lctaor like  '%0985548382'
+order by lhortr desc 
+-*--------------------------------------------
+select count(*) Cantidad ,lcretr Cod_Retorno,coddes Descripcion_COD ,LFECTR FECHA_REAL,lesttr Estado,lcodtr COD_TRX ,SUM(limpgs) importe,substr(lidtra,1,1) Origen
+,A.TXDTRX DETALLES
+from libdebito.drconbep
+inner join LIBDEBITO.TBCTRA0P A on A.TXCTRX = lcodtr
+right join libdebito.tbcret0p on lcretr = codnro
+WHERE  lfectr= '20200418'
+and lcodtr in ('000052','567102')
+and limpgs>1
+and  codmar = 'BEPS'
+group by lcretr,coddes,lesttr,lcodtr,TXDTRX,LFECTR,substr(lidtra,1,1),lfectr
+order by lcodtr,cantidad desc
+

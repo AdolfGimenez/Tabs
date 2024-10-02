@@ -1,0 +1,45 @@
+SELECT lfectr FECHA,lfcotr fecha_com,lhortr HORA,/*SUBSTR(lnrtar,1,6) || 'XXXXXX' ||SUBSTR(lnrtar,13,4) */
+lnrtar TARJE,LENEMI ENTIDAD, LCODBC MARCA,lhisde Destino,/*,pdescricion MARCA*/
+lesttr ESTADO,lcretr COD_RETORNO,--coddes DESCRIP_RET,
+--lbinpr BIN,--,pdescricion MARCA_ENTIDAD,
+lerrnb REFE_BEPSA, lidcom COD_COMER,lcomtr LOCAL_COMER,limpgs IMPORTE,
+lcodtr COD_TRX,leca62 Version_Pos,LNFISC cod_adq_bepsa
+from libdebito.drconbep
+WHERE lfectr BETWEEN '20200621' AND '20200621'
+and lcodbc='VSA'
+and lnfisc='422745'
+order by lhortr desc
+
+
+select*from LIBDEBITO.TBCRET0P
+
+
+
+
+select lfectr AS FECHA , lcodbc AS MARCA,lenemi EMISOR,lbinpr as Bin, lcretr AS RETORNO, lesttr AS ESTADO, COUNT(*) CANTIDAD
+from libdebito.drconbep
+where lfectr='20200624'
+--and lhortr between '000000' and  '011000'
+and lcodbc='VSA'
+and lnfisc='422745'
+GROUP BY Lfectr, lcodbc,LENEMI,lbinpr, lesttr , lcretr
+order by lcretr desc
+-------------------------------------------------------------
+[19:27] Marco Alvarez
+    --VER TRANSACCIONES VISA EMISOR BEPSA BNF  
+select lfectr FECHA,lhortr HORA,lerrnb NUM_BOL,lidcom COD_COMERCIO,lcomtr COMERCIO,lnrtar NUM_TARJETA,limpgs MONTO,lesttr ESTADO,lcretr RETORNO
+,LCODBC MARCA,LENEMI COD_ENTIDAD,LHISDE EMISOR,LORITR DISPOSITIVO, LNFACT PAIS, LPOSEM AS ENTRADA,
+CASE
+  WHEN LPOSEM ='0710' THEN 'CONTACTLESS'
+  WHEN LPOSEM ='0510' THEN 'CHIP'
+  WHEN LPOSEM ='0910' THEN 'BANDA'
+  WHEN LPOSEM ='0100' THEN 'INTERNET'
+  WHEN LPOSEM ='051' THEN 'VER_BANDA'
+  WHEN LPOSEM ='510' THEN 'VER_BANDA2'
+ END AS MODO_ENTRADA
+from libdebito.drconbep 
+where lfectr between '20200621' and '20200621' 
+--and lnrtar like '488234%' 
+AND LPOSEM  IN '0100'--traer por Internet y Chip
+and lbinpr= '488234'
+order by lhortr desc

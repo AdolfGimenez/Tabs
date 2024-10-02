@@ -1,0 +1,90 @@
+1-IDENTIFICAR LA LIBRERIA
+wrkobj *all/trxcobro
+2- STRSQL
+select * from gxopera/trxcobro 
+//select count(*) from gxopera/trxcobro "contabilizar registros" 
+
+select * from gxopera/trxcobro + shift f1 - cambiar atributo de sesion
+salida de select opcion 3 + intro
+Salida de SELECT . . . . . . .   3              1=Pantalla, 2=Impresora   "siempre opcion 3"   
+                                                3=Archivo                    
+Archivo de salida:                                                           
+  Archivo  . . . . . . . . . .   TRXCOBRO       Nombre "nombre del archivo que queres crear, a eleccion"                      
+    Biblioteca . . . . . . . .     YAPI         Nombre "biblioteca donde se va a crear"                      
+  Miembro  . . . . . . . . . .   *FILE          Nombre, *FILE, *FIRST, *ALL  
+  Opción . . . . . . . . . . .   1              1=Crear archivo      "opcion 1 por default"        
+                                                2=Sustituir archivo          
+                                                3=Crear miembro              
+                                                4=Sustituir miembro          
+                                                5=A¦adir a miembro           
+  Autorización . . . . . . . .   *LIBCRTAUT     Nombre de lista de           
+                                                  autorizaciones             
+                                                *LIBCRTAUT, *CHANGE, *ALL    
+                                                *EXCLUDE, *USE               
+  Texto  . . . . . . . . . . .                                               
+
+recuperar select + 2 enter
+
+SALVAR Y RESTAURAR OBJETOS
+ savrstobj  + F4
+Objetos  . . . . . . . . . . . . > TRXCOBRO      Nombre, genérico*, *ALL      "nombre de la tabla" 
+              + para más valores                                               
+Biblioteca salvada . . . . . . . > YAPI          Nombre, genérico*, *ALLUSR    "en donde se salvo primeramente"
+              + para más valores                                               
+Nombre ubicación remota  . . . . > BEPSAPY         "nombre del sistema" -- BEPSAPY: DESARROLLO / TESTING: MAQTEST / PRODUCCION: BEPSA                           
+Tipos de objeto  . . . . . . . .   *ALL          *ALL, *ALRTBL, *BNDDIR...     
+              + para más valores                                               
+                                                                               
+                           Parámetros adicionales                              
+                                                                               
+Objetos a omitir:                                                              
+  Objeto . . . . . . . . . . . .   *NONE         Nombre, genérico*, *ALL, *NONE
+    Biblioteca . . . . . . . . .     *ALL        Nombre, genérico*, *ALL       
+  Tipo de objeto . . . . . . . .   *ALL          Valor tipo carácter, *ALL...  
+              + para más valores                                               
++F10
+
+Cola mensajes salvar si activo     *NONE         Nombre, *NONE, *WRKSTN        
+  Biblioteca . . . . . . . . . .     *LIBL       Nombre, *LIBL, *CURLIB        
+Miembro de archivo:                                                            
+  Archivo  . . . . . . . . . . .   *ALL          Nombre, *ALL                  
+  Miembro  . . . . . . . . . . .   *ALL          Nombre, genérico*, *ALL, *NONE
+              + para más valores                                               
+              + para más valores                                               
+Salvar vías de acceso  . . . . .   *SYSVAL       *SYSVAL, *NO, *YES            
+Datos de archivo de salvar . . .   *YES          *YES, *NO                     
+Datos de archivo en spool  . . .   *NONE         *NONE, *ALL                   
+Datos de cola  . . . . . . . . .   *NONE         *NONE, *DTAQ                  
+Autorizaciones privadas  . . . .   *NO           *NO, *YES                     
+Almacenamiento . . . . . . . . .   *KEEP         *KEEP, *FREE                  
+Opción . . . . . . . . . . . . .   *ALL          *ALL, *NEW, *OLD, *FREE       
+Opción de miembro base datos . . > *ALL          *MATCH, *ALL, *NEW, *OLD  "siempre ALL"    
+
+
+Permitir diferencias objetos . .   *ALL          *NONE, *ALL, *COMPATIBLE...  "siempre es ALL"
+              + para más valores                                              
+Restaurar en biblioteca  . . . .   YAPI          Nombre, *LIB  "donde se quiere guardar el archivo solicitado"                 
+Restaurar en dispositivo ASP . .   *SAVASPDEV    Nombre, *SAVASPDEV           
+Restaurar en ASP número  . . . .   *SAVASP       1-32, *SAVASP                
+Forzar conversión de objetos:                                                 
+  Convertir al restaurar . . . .   *SYSVAL       *SYSVAL, *NO, *YES           
+  Objetos a convertir  . . . . .                 *RQD, *ALL                   
+Iniciar registro por diario  . .   *YES          *YES, *NO                    
+
+
+
+
+**********************************************************************************************************************
+CPYF + F4
+
+Desde archivo  . . . . . . . . . > TRXCOBRO      Nombre                        
+  Biblioteca . . . . . . . . . . >   GXOPERA     Nombre, *LIBL, *CURLIB        
+A archivo  . . . . . . . . . . . > TRXCOBROX     Nombre, *PRINT                
+  Biblioteca . . . . . . . . . . >   YAPI        Nombre, *LIBL, *CURLIB        
+Desde miembro  . . . . . . . . .   *FIRST        Nombre, genérico*...          
+A miembro o etiqueta . . . . . .   *FIRST        Nombre, *FIRST, *FROMMBR, *ALL
+Sustituir o a¦adir registros . .   *REPLACE      *NONE, *ADD, *REPLACE...      
+Crear archivo  . . . . . . . . .   *YES          *NO, *YES                     
+Formato de impresión . . . . . .   *CHAR         *CHAR, *HEX                   
+
+

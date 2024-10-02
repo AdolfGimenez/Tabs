@@ -1,0 +1,226 @@
+select * from GXFINDTA.tcltsb where TSBESTA = 'RE'
+
+select * from gxtrjdta.TEnECx where ECXIDCONEX='AS400CLEARING'
+
+select * from GXFINDTA.TCLTSB
+
+
+UPDATE GXFINDTA.TCLTSB
+SET TSBESTA = 'PE',
+TSBMOTIVO = 'REINTENTO RECHAZO CODIGO 014'
+WHERE TSBESTA = 'RE'
+AND TSBCOME = '014';
+
+
+select * from GXFINDTA.TCLTSB
+WHERE TSBESTA = 'PE'
+AND TSBCOME = '014';
+
+
+
+
+-- Ver transacciones pendinetes o con error
+
+    SELECT * FROM GXFINDTA.TCLTSB WHERE TSBESTA = 'PE'
+    
+    SELECT * FROM GXFINDTA.TCLTSB WHERE TSBESTA = 'EN'
+    
+
+   SELECT * FROM GXFINDTA.TCLTSB WHERE TSBESTA = 'RE' and TSBCOME='040'
+   
+   SELECT * FROM GXFINDTA.TCLTSB WHERE TSBESTA = 'RE' and TSBCOME='013'
+   
+ SELECT * FROM GXFINDTA.TCLTSB WHERE TSBESTA = 'RE' and TSBCOME='997'
+ 
+ SELECT * FROM GXFINDTA.TCLTSB WHERE TSBESTA = 'RE' and TSBCOME='998'
+ 
+ SELECT * FROM GXFINDTA.TCLTSB WHERE TSBESTA = 'PE' 
+ 
+ SELECT * FROM GXFINDTA.TCLTSB WHERE TSBDEME like '%SIPAP%'
+ 
+ SELECT * FROM GXFINDTA.TCLTSB WHERE TSBESTA = 'RE'  and TSBBACR='1020'
+ 
+ SELECT * FROM GXFINDTA.TCLTSB WHERE TSBBACR='1020' and TSBFEAC>='2021-06-16 21:00:00'
+ 
+ SELECT * FROM GXFINDTA.TCLTSB WHERE TSBCODSWD='BCNAPYPA' and TSBCODSWC='BCNAPYPA' and TSBFEAC>='2021-02-03 20:40:00' TSBESTA = 'PE' and 
+ 
+Select opidliq, opnroref,opncomer,opimpor, opcodbco, opstatob, opcampoa from gxopera.opliqui where opidliq > '21061604863654';
+
+; --Cuentas Internas
+Select * from gxfindta.tcltsb where tsbidop > 1271173 and tsbcodswd <>tsbcodswc ; --Sipap
+
+[21:16] Silvestre Walter Bernal Riquelme
+    Select opidliq, opnroref,opncomer,opimpor, opcodbco, opstatob, opcampoa from gxopera.opliqui where opidliq > '21061604863654';
+Select * from gxfindta.tcltsb where tsbidop > 1271173 and tsbcodswd = tsbcodswc ; --Cuentas Internas
+Select * from gxfindta.tcltsb where tsbidop > 1271173 and tsbcodswd <>tsbcodswc ; --Sipap
+
+SELECT * FROM GXTRJDTA.TDSCAL
+
+ 
+
+select * from gxtrjdta.TDSPAS
+
+ 
+u99hernann
+
+
+UPDATE GXFINDTA.TCLTSB
+   SET TSBESTA = 'PE',
+       TSBMOTIVO = 'CASO FUERA HORARIO SIPAP'
+WHERE TSBESTA = 'RE'
+AND   TSBCOME = '013';
+   
+
+
+UPDATE GXTRJDTA.TENECX
+SET ECXHORADES = '02:17:00'
+WHERE ECXCODENT = 9000
+AND ECXIDCONEX = 'AS400CLEARING';
+
+
+UPDATE GXFINDTA.TCLTSB
+SET TSBESTA = 'PE',
+TSBMOTIVO = 'CASO FUERA HORARIO SIPAP'
+WHERE TSBESTA = 'RE'
+AND TSBCOME in ('013', '098')
+
+
+select * from yapi.TCLTSB
+WHERE TSBESTA = 'RE'
+AND TSBCOME in ('013', '098')
+
+
+UPDATE GXTRJDTA.TENECX
+SET ECXHORADES = '04:30:00'
+WHERE ECXCODENT = 9000
+AND ECXIDCONEX = 'AS400CLEARING';
+
+select * from GXTRJDTA.TENECX
+
+UPDATE GXFINDTA.TCLTSB
+   SET TSBESTA = 'AC',
+       TSBCOME = '002',
+       TSBDEME = 'ACREDITADO ',
+       TSBMOTIVO = 'CASO CODIGO 040 - 07/12/2020',
+       TSBFECCON = '20201207',
+       TSBCONSN = 'S'
+WHERE TSBIDOP in (271265, 271370);
+
+update gxfindta.tcltsb set TSBESTA='AN',TSBMOTIVO= 'ANULACION POR CIERRE DE MES' where TSBTPOP='04' and tsbfeac >= '2020-11-01 00:00:00' and tsbfeac <= '2020-11-30 23:59:59' and TSBESTA<>'AC'
+
+select * from GXFINDTA.tcltsb where TSBESTA = 'PE'
+
+
+
+[17:33] Ricardo Arce
+    
+
+select * from GXFINDTA.tcltsb where TSBESTA = 'RE' and TSBCOME = '040'
+
+select TSBESTA, TSBDEME, tsbmotivo from GXFINDTA.TCLTSB
+WHERE TSBIDOP = 205010;
+
+select TSBESTA, TSBDEME, tsbmotivo from GXFINDTA.TCLTSB
+WHERE TSBIDOP = 208413;
+
+select TSBESTA, TSBDEME, tsbmotivo from GXFINDTA.TCLTSB
+WHERE TSBIDOP = 198295;
+
+UPDATE GXFINDTA.TCLTSB
+SET TSBESTA = 'AC',
+TSBCOME = '002',
+TSBDEME = 'ACREDITADO ',
+TSBMOTIVO = 'CASO CODIGO 001 - 30/11/2020'
+WHERE TSBIDOP in (214222,231111,232350,232622,233840,234333,236735,236879,236894,236900,236987,236989,237739,237821,238119,238666,
+238960,239573,239678,239816,239935,240209,240227,240265,240740,240871,240897,240904,241172,241379,241459,241566,
+242703,243364,243503,243514,243960,244243,244281,244479,244566,244639,244712,244785,244897,244903,244979,245023,
+245120,245124,245199,245259,245352,245399,245564,245709,245726,245784,245805,246055,246181,246264,246265,246318,
+246352,246460,246534,246537,246578);
+
+
+
+UPDATE GXFINDTA.TCLTSB
+SET TSBESTA = 'AC',
+TSBCOME = '002',
+TSBDEME = 'ACREDITADO ',
+TSBMOTIVO = 'CASO CODIGO 040 - 17/12/2020',
+TSBFECCON = '20201217',
+TSBCONSN = 'S'
+WHERE TSBIDOP in (319821,320079);
+
+
+select tsbtpop TipoOp, tsbdeop operacion, tsbesta Estado,tsbcome Codigo, tsbdeme Mensaje, count(*)Cantidad , sum(tsbimpo) Importe
+from gxfindta.tcltsb where tsbfeac >= '2020-12-24 15:00:00' and tsbfeac <= '2020-12-28 23:59:59' and tsbcoco <> '0100001'
+and tsbesta='PE'
+group by tsbtpop, tsbdeop, tsbcome, tsbesta, tsbdeme order by  tsbtpop,tsbesta, tsbcome
+
+
+
+Update gxfindta.tcltsb set tsbesta = 'PE', tsbbacr = 1020, tsbctcr = '4024335118', tsbtpcr = 'CC', tsbdene = 'SUPERMERCADO RINCON NORTEÃO', tsbidtpdoc = 'RUC', tsbnrodoc = '1811937-9', tsbdoccom = '1811937-9'
+where tsbidop = 287793;
+
+
+UPDATE GXFINDTA.TCLTSB
+   SET TSBESTA = 'PE',
+       TSBMOTIVO = 'CASO FUERA HORARIO SIPAP'
+WHERE TSBESTA = 'RE'
+AND   TSBCOME = '013';
+
+
+INSERT INTO GXTRJDTA.TDSCAL(  CALFECHA,  CALDIAJUL,  CALANHO,  CALDIAHAB,  CALOBSERB,  CALUSULTUP,  CALFHULTUP
+)
+VALUES(  '20211228',  362,  2020,  'S',  '',  'SQL',  '2020-12-28 09:31:00.000');
+
+
+select tsbtpop TipoOp, tsbdeop operacion, tsbesta Estado,tsbcome Codigo, tsbdeme Mensaje, count(*)Cantidad , sum(tsbimpo) Importe
+from gxfindta.tcltsb where tsbfeac >= '2020-12-24 15:00:00' and tsbfeac <= '2020-12-28 23:59:59' and tsbcoco <> '0100001'
+and tsbesta='PE'
+group by tsbtpop, tsbdeop, tsbcome, tsbesta, tsbdeme order by  tsbtpop,tsbesta, tsbcome
+
+UPDATE GXTRJDTA.TDSPWS
+SET PWSTEPETIC = 250
+WHERE PWSIDWEBS = 'ACREDCONWS';
+
+
+[16:36] Ricardo Arce
+    SELECT * FROM GXTRJDTA.TDSCAL  where calusultup='SQL'
+    
+    delete GXTRJDTA.TDSCAL  where calusultup='SQL'
+    
+sELECT * FROM GXTRJDTA.TDSCAL 
+
+select * from gxtrjdta.TDSPAS WHERE PASIDPARSI = 'DIAHABILRV';
+
+
+Select tsbdeop, tsbesta, tsbdeme, count(*) cantidad, sum(tsbimpo)Importe
+from gxfindta.tcltsb where date(tsbfege) >= '2021-06-17' and tsbesta not in ('AC','RE')
+group by tsbdeop,tsbesta, tsbdeme
+
+-------------------------------------------------------------------------------------------------------------------------
+
+
+-- Ver transacciones pendinetes o con error
+
+
+
+SELECT * FROM GXFINDTA.TCLTSB WHERE TSBESTA = 'PE'
+
+SELECT * FROM GXFINDTA.TCLTSB WHERE TSBESTA = 'EN'
+
+
+
+SELECT * FROM GXFINDTA.TCLTSB WHERE TSBESTA = 'RE' and TSBCOME='040'
+
+SELECT * FROM GXFINDTA.TCLTSB WHERE TSBESTA = 'RE' and TSBCOME='013'
+
+SELECT * FROM GXFINDTA.TCLTSB WHERE TSBESTA = 'RE' and TSBCOME='997'
+
+update GXFINDTA.TCLTSB set TSBESTA = 'PE'
+WHERE TSBESTA = 'RE' and TSBCOME='997'
+
+SELECT * FROM GXFINDTA.TCLTSB WHERE TSBESTA = 'RE' and TSBCOME='998'
+
+update GXFINDTA.TCLTSB set TSBESTA = 'PE'
+WHERE TSBESTA = 'RE' and TSBCOME='998'
+
+
