@@ -1,0 +1,41 @@
+-- VER ID de la PK en producción y poner la secuencia(SGNUMCOD) y el numero actual(SGNUMACT) que corresponda
+INSERT INTO GXSEGDTA.TSGNUM
+(SGNUMCOD, SGNUMOBJ, SGNUMINI, SGNUMACT, SGNUMSET, SGNUMDESC, SGNUMPRG, SGNUMUNT)
+VALUES(152, 'TCMGRU              ', 1, 12, 'N', 'GRUPO RUBRO                                       ', 'SQL                 ', 0);
+INSERT INTO GXSEGDTA.TSGNUM
+(SGNUMCOD, SGNUMOBJ, SGNUMINI, SGNUMACT, SGNUMSET, SGNUMDESC, SGNUMPRG, SGNUMUNT)
+VALUES(153, 'TCMPCR              ', 1, 0, 'N', 'PLANTILLA                                        ', '                    ', 0);
+INSERT INTO GXSEGDTA.TSGNUM
+(SGNUMCOD, SGNUMOBJ, SGNUMINI, SGNUMACT, SGNUMSET, SGNUMDESC, SGNUMPRG, SGNUMUNT)
+VALUES(154, 'TCMCON              ', 1, 0, 'S', 'TRN CLIENTE/SUCURSAL/CONTACTO                     ', '                    ', 0);
+INSERT INTO GXSEGDTA.TSGNUM
+(SGNUMCOD, SGNUMOBJ, SGNUMINI, SGNUMACT, SGNUMSET, SGNUMDESC, SGNUMPRG, SGNUMUNT)
+VALUES(155, 'TCMMMD              ', 1, 3, 'N', 'MARCA DISPOSITIVO/MODELO                          ', '                    ', 3);
+INSERT INTO GXSEGDTA.TSGNUM
+(SGNUMCOD, SGNUMOBJ, SGNUMINI, SGNUMACT, SGNUMSET, SGNUMDESC, SGNUMPRG, SGNUMUNT)
+VALUES(156, 'TCMCAT              ', 1, 0, 'N', 'CATEGORIA                                         ', 'SQL                 ', 0);
+INSERT INTO GXSEGDTA.TSGNUM
+(SGNUMCOD, SGNUMOBJ, SGNUMINI, SGNUMACT, SGNUMSET, SGNUMDESC, SGNUMPRG, SGNUMUNT)
+VALUES(157, 'TCMMDI              ', 1, 3, 'N', 'MARCA DISPOSITIVO                                 ', 'SQL                 ', 0);
+INSERT INTO GXSEGDTA.TSGNUM
+(SGNUMCOD, SGNUMOBJ, SGNUMINI, SGNUMACT, SGNUMSET, SGNUMDESC, SGNUMPRG, SGNUMUNT)
+VALUES(158, 'TCMTCD              ', 1, 4, 'N', 'TIPO CONEXIÓN DISPOSITIVO                         ', 'SQL                 ', 0);
+INSERT INTO GXSEGDTA.TSGNUM
+(SGNUMCOD, SGNUMOBJ, SGNUMINI, SGNUMACT, SGNUMSET, SGNUMDESC, SGNUMPRG, SGNUMUNT)
+VALUES(159, 'TCMRUB              ', 1, 0, 'N', 'RUBRO                                             ', 'SQL                 ', 0);
+INSERT INTO GXSEGDTA.TSGNUM
+(SGNUMCOD, SGNUMOBJ, SGNUMINI, SGNUMACT, SGNUMSET, SGNUMDESC, SGNUMPRG, SGNUMUNT)
+VALUES(160, 'TCMTCO              ', 1, 3, 'N', 'TIPO CONTACTO                                     ', 'SQL                 ', 0);
+INSERT INTO GXSEGDTA.TSGNUM
+(SGNUMCOD, SGNUMOBJ, SGNUMINI, SGNUMACT, SGNUMSET, SGNUMDESC, SGNUMPRG, SGNUMUNT)
+VALUES(161, 'TCMTSO              ', 1, 0, 'N', 'TIPO SOCIEDAD                                     ', 'SQL                 ', 0);
+INSERT INTO GXSEGDTA.TSGNUM
+(SGNUMCOD, SGNUMOBJ, SGNUMINI, SGNUMACT, SGNUMSET, SGNUMDESC, SGNUMPRG, SGNUMUNT)
+VALUES(162, 'TCMZON              ', 1, 0, 'N', 'ZONA                                     ', 'SQL                 ', 0);
+INSERT INTO GXSEGDTA.TSGNUM
+(SGNUMCOD, SGNUMOBJ, SGNUMINI, SGNUMACT, SGNUMSET, SGNUMDESC, SGNUMPRG, SGNUMUNT)
+VALUES(163, 'TCMCLI              ', 1, 0, 'N', 'CLIENTE                                           ', 'SQL                 ', 0);
+INSERT INTO GXSEGDTA.TSGNUM
+(SGNUMCOD, SGNUMOBJ, SGNUMINI, SGNUMACT, SGNUMSET, SGNUMDESC, SGNUMPRG, SGNUMUNT)
+VALUES(164, 'TCMGEC              ', 1, 6, 'N', 'GRUPO ECONOMICO                                   ', 'SQL                 ', 0);
+

@@ -1,0 +1,48 @@
+Select substr(OPIDTRA, 5, 4) secu, (substr(OPFEREA, 7, 2)||'/'||substr(OPFEREA, 5, 2)||'/'||substr(OPFEREA, 1, 4)) freal,
+substr(OPFECOM, 7, 2)||'/'||substr(OPFECOM, 5, 2)||'/'||substr(OPFECOM, 1, 4)fcomercial,
+substr(digits(OPHOTRN), 3, 2)||':'||substr(digits(OPHOTRN), 5, 2)||':'||substr(digits(OPHOTRN), 7, 2),
+substr(optarj,1,6)||'XXXXXX'||substr(optarj,13,4) Tarjeta,opcomer Comercio,
+opmonto Icompra, opcomi comision, opcoment comentidad, opivaent ivaentidad, opcombps combepsa, opivabps ivabps, opmonto Neto, opcodaut codaut, substr(opidtra,1,8) origen
+from gxopera.opmovi where opfecom between '20220131' and '20220131'
+and substr(opidtra,1,1) <> 'T'
+and OPTIPTAR = 'DEB'
+and opcodtrn = '014000' -- Adelanto CNB
+and SUBSTR(OPCOMER,1,2) = '86'
+order by opfecom, opcomer, optarj
+
+--CNB para ver en drconbep un dia antes
+-- Ver control CNB para dividir despues
+select count(*), lfcotr, sum(limpgs) from libdebito.drconbep where lfcotr >='20220120' and lcodtr='014000' and lesttr='A' and lcretr='00' group by lfcotr
+--CNB para dividr
+-- Verificar que no haya montos que superen los 9.999.999.999
+Select * from libdebito.COPAGO0P  where pgcmov='1'
+Select * from gxopera.opago0p where pgcmov='1'
+--Si supera, se debe divir los dos montos en uno nuevo
+/* Ejemplo si hay dos montos de 12.000.000.000, tenemos que crear un nuevo registro con insert y poner el sobrante
+
+los montos de 12.000.000.000, hacer update y que sean 9.000.000.000 y el sobrante poner en nuevo registro.
+
+Ejemplo dos montos de 12.000.000.000 = 24.000.000.000
+Debe quedar 
+
+9.000.000.000
+9.000.000.000
+y crear un nuevo registro con el monto faltante en este caso ejemplo 
+
+6.000.000.000
+
+Tener en cuenta el ID PGIDTR que no se repita, ver el ultimo del dia y sumarle uno mas, pero el insert hacer en base a uno de los montos grandes.
+
+Con copy selected as insert
+
+Para ver el ultimo id Select * from yapi.opago0p order by PGIDTR desc
+
+Al hacer insert, copiar el ultimo id, sumarle uno y poner el monto faltante
+
+TODOS LOS MONTOS SIN PUNTOS, SOLO LOS PUNTOS DE DECIMALES
+
+Controlar todo antes de informar a tesoreria
+
+Hacer el mismo paso por COPAGO0P
+
+*/

@@ -1,0 +1,119 @@
+--Transacciones en linea--
+--resumen--
+SELECT COUNT(*) Cantidad,
+       SUM(opimpor) Importe,
+       opmensaj Mensaje,
+       opcodbco Banco
+FROM gxopera.opliqui
+WHERE opfecliq >= '20220221'
+AND   substr (opcampoa,1,6) = '703002'
+AND   opstat NOT IN ('00','77','88')
+GROUP BY opmensaj,
+         opcodbco
+ORDER BY banco DESC,
+         cantidad DESC
+--detalle--
+         SELECT *FROM gxopera.opliqui WHERE opfecliq >= '20220221' AND substr(opcampoa,1,6) = '703002' AND opstat NOT IN ('00','77','88')--and opcodbco <> 64
+         ORDER BY opcanrei DESC
+--reporte--
+         SELECT a.opncomer cod_comercio,
+         b.codeno denominacion,
+         b.corucn ruc,
+         b.enemiso banco_pagador,
+         c.pardescri descripcion_banco,
+         COUNT(*) cantidad_trx,
+         SUM(a.opimpor) monto_total,
+         b.coteln telefono,
+         b.coemail mail FROM gxopera.opliqui a INNER JOIN gxbdbps.comaeaf b ON a.opncomer = b.cocomer INNER JOIN gxopera.clparf c ON b.enemiso = c.parcodbco 
+         WHERE opfecliq >= '20220221' AND substr(opcampoa,1,6) = '703002' AND opstat NOT IN ('00','77','88') GROUP BY a.opncomer,
+         b.codeno,
+         b.corucn,
+         b.coteln,
+         b.coemail,
+         c.pardescri,
+         b.enemiso
+--tabla de respuestas de bepsa por marca--
+
+         SELECT *FROM libdebito.tbcret0p
+         
+--tabla de maestro de transacciones
+
+         SELECT *FROM libdebito.tbctra0p WHERE TXDTRX LIKE '%CONSULTA%'
+         
+--PARA VERIFICAR Y PROCESAR EL REINTENTO bnf
+
+SELECT *FROM gxopera.opliqui WHERE opfecliq >= '20211220' AND substr(opcampoa,1,6) = '703002' AND OPIDLIQ IN (
+'22011206010320',
+'22011206010311',
+'22011206010301',
+'22011206010287',
+'22011206010282',
+'22011206010260',
+'22011206010250',
+'22011206010204',
+'22011206010173',
+'22011206010150',
+'22011206010126',
+'22011206010105',
+'22011206010097',
+'22011206010065',
+'22011206010030',
+'22011206010013',
+'22011206009865',
+'22011206009794',
+'22011206009772',
+'22011206009715')
+
+--PARA VERIFICAR Y PROCESAR EL REINTENTO bbva
+--Ingresar a as400 e ingresar el comando
+addlible gxweb *last , para corroborar que haya añadido la biblioteca se usa el comando: edtlibl y tiene que aparecer GXWEB en la lista si o si
+
+campos a verificar en select 
+
+ejecutar comando en sesion abierta as400
+controlar en worbench que este ok
+OPSTATOB = 00
+OPMENSOB = 00 APRPOBADA DEBEN ESTAR
+
+Select *
+from gxopera.opliqui where OPIDLIQ in (
+'22011106002056',
+'22011106002018',
+'22011106001977',
+'22011106001970',
+'22011106001923',
+'22011106001846',
+'22011106001796',
+'22011106001771',
+'22011106001768',
+'22011106001761',
+'22011106001694',
+'22011106001686',
+'22011106001665',
+'22011106001562',
+'22011106001550',
+'22011106001549',
+'22011106001546',
+'22011106001539',
+'22011106001536',
+'22011106001523',
+'22011106001500',
+'22011106001488',
+'22011106001456',
+'22011106001453',
+'22011106001445',
+'22011106001402',
+'22011106001382',
+'22011106001381',
+'22011106001158',
+'22011106001065',
+'22011106001001',
+'22011106000999',
+'22011106000989',
+'22011106000982',
+'22011106000960',
+'22011106000906',
+'22011106000877',
+'22011106000837')
+order by OPIDLIQ desc
+

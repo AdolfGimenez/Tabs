@@ -1,0 +1,110 @@
+-- Tabla de asiento
+select * from contabilid.ccasi20 where asfech='201130' and ASCOUS='U99DENISSE' AND ASDESC LIKE '%36618%'
+
+-- tablas relacionadas
+ccccc20
+cctc20
+ccmba20
+
+select * from contabilid.ccasi21 where  ASIMPO='22000.00'
+
+select * from contabilid.ccasi21 where asnras='12280'
+
+delete contabilid.ccasi21 where asnras='12280'
+
+
+select * from yapi.ccasi21hf where asnras='12280'
+
+update yapi.ccasi21hf set ASNRAS='30500'
+where asnras='12280'
+
+
+select max(ASNRAS) from contabilid.ccasi20 where asfech>'201200'
+
+select * from contabilid.ccasi20 where asnras=30500 and asfech>'201200'
+
+select * from contabilid.ccasi20 
+where asnras='1934' and asfech=201103
+
+delete contabilid.ccasi20 where asnras='1934' and asfech=201103
+
+
+select * from contabilid.ccasi20 
+where   asfech=201201 and ASCOUS='U99DENISSE' AND ASIMPO='7211723.00'
+
+select * from contabilid.ccasi21
+where asfech=210127  and ASCOUS='U99HILKA' AND ASIMPO='15220565.00' and asfech=210127 
+
+
+select * from contabilid.ccasi21
+where ASNRAS='2172'
+
+select * from gxopera.trxinst
+
+
+SELECT * FROM GXOPERA.FLICOM WHERE LINRO='15387';
+
+delete GXOPERA.FLICOM WHERE LINRO='15387';
+
+SELECT * FROM GXOPERA.FLICOM1 WHERE LINROINS='15387';
+
+delete GXOPERA.FLICOM1 WHERE LINROINS='15387';
+
+
+-- ayuda para altas
+
+
+select * from gxbdbps.tdemis where TDBINNRO='627431' and tdbinentid='5110'
+
+
+
+
+select * from gxbdbps.tdemisnov WHERE TDFECHENT='20210304' order by lfectr desc
+
+select * from gxbdbps.DRMAEAF where akenti='110' and AKAQTX like '%ELISA HIDALGO%'
+
+SELECT * FROM LIBDEBITO.EMBDEB0P
+
+SELECT * FROM LIBDEBITO.EMBNOVDIA
+----------------------
+--GE04NIV--
+select * from  CONTABILID.GE04NIV 
+where nicous='U99LILIAN';
+
+select * from contabilid.ge04niv
+where nisist='CX'
+and ninive='G3'
+
+INSERT INTO CONTABILID.GE04NIV (NICOUS, NISIST, NINIVE) 
+VALUES('U99CARMEN', 'CX', 'G3');
+
+
+INSERT INTO CONTABILID.GE04NIV (NICOUS, NISIST) 
+VALUES('U99CARMEN', 'SJ');
+
+--GE03ACC--EXCLUSIVO CONTABILIDAD
+select * from contabilid.ge03acc
+where accous='U99LILIAN'
+
+INSERT INTO CONTABILID.GE03ACC (ACCOUS, ACPROG, ACOPER)
+VALUES('U99LILIAN', 'CC302R', '0')
+
+TATACUS
+select * from contabilid.tatacus
+where tacous='U99LILIAN';
+
+select * from contabilid.tatacus
+where tasucu='01' and taarea='03';
+
+
+INSERT INTO CONTABILID.TATACUS (TACOUS, TASUCU, TAAREA, TADEPA)
+VALUES('U99CARMEN', '01', '03', 0)
+          
+
+--E05PRO--
+select * from contabilid.ge05pro
+where prprog in ('CC122R', 'CC123R', 'CC125R', 'CC126R', 'CC129R', 'CC152R')                          
+GE04NIV
+GE03ACC
+tatacus
+

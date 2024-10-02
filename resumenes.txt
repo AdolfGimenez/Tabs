@@ -1,0 +1,15 @@
+/*resumen de transacciones tigo money y billetera personal ver si sube.
+000052 Tigo Money, 567102 Billetera personal*/
+------------------------------------------------------------------------------------
+select count(*) Cantidad ,lcretr Cod_Retorno,coddes Descripcion_COD 
+,LFECTR FECHA_REAL,lesttr Estado,lcodtr COD_TRX ,SUM(limpgs) importe
+,substr(lidtra,1,1) Origen,A.TXDTRX DETALLES
+from libdebito.drconbep
+inner join LIBDEBITO.TBCTRA0P A on A.TXCTRX = lcodtr
+right join libdebito.tbcret0p on lcretr = codnro
+WHERE  lfectr= '20200616'
+--and lcodtr in ('000052','567102')
+and limpgs>1
+and  codmar = 'BEPS'
+group by lcretr,coddes,lesttr,lcodtr,TXDTRX,LFECTR,substr(lidtra,1,1),lfectr
+order by lcodtr,cantidad desc

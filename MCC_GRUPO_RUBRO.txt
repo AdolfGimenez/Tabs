@@ -1,0 +1,217 @@
+--TCMGRU
+INSERT INTO GXFINDTA.TCMGRU
+(GRUCODIGO, GRUDESCOR, GRUDESLAR, GRUUSULTUP, GRUFHULTUP)
+VALUES(1, 'SERVICIOS           ', 'SERVICIOS VARIOS                                            ', 'SQL', '2020-11-18 14:23:00.000');
+INSERT INTO GXFINDTA.TCMGRU
+(GRUCODIGO, GRUDESCOR, GRUDESLAR, GRUUSULTUP, GRUFHULTUP)
+VALUES(2, 'MINORISTA           ', 'VENTAS AL POR MENOR                                         ', 'SQL', '2020-11-18 14:23:00.000');
+INSERT INTO GXFINDTA.TCMGRU
+(GRUCODIGO, GRUDESCOR, GRUDESLAR, GRUUSULTUP, GRUFHULTUP)
+VALUES(3, 'INDUSTRIA QUIMICA   ', 'INDUSTRIAS/COMERCIO DE PRODUCTOS QUÍMICOS                   ', 'SQL', '2020-11-18 14:23:00.000');
+INSERT INTO GXFINDTA.TCMGRU
+(GRUCODIGO, GRUDESCOR, GRUDESLAR, GRUUSULTUP, GRUFHULTUP)
+VALUES(4, 'AUTOMOTRIZ          ', ' INDUSTRIAS/COMERCIO SECTOR AUTOMOTRIZ                      ', 'SQL', '2020-11-18 14:23:00.000');
+INSERT INTO GXFINDTA.TCMGRU
+(GRUCODIGO, GRUDESCOR, GRUDESLAR, GRUUSULTUP, GRUFHULTUP)
+VALUES(5, 'INMOBILIARIO        ', 'SECTOR INMOBILIARIO                                         ', 'SQL', '2020-11-18 14:23:00.000');
+INSERT INTO GXFINDTA.TCMGRU
+(GRUCODIGO, GRUDESCOR, GRUDESLAR, GRUUSULTUP, GRUFHULTUP)
+VALUES(6, 'FINANCIERO          ', 'SECTOR FINANCIERO                                           ', 'SQL', '2020-11-18 14:23:00.000');
+INSERT INTO GXFINDTA.TCMGRU
+(GRUCODIGO, GRUDESCOR, GRUDESLAR, GRUUSULTUP, GRUFHULTUP)
+VALUES(7, 'EDUCACIÓN           ', 'SECTOR EDUCACIONAL                                          ', 'SQL', '2020-11-18 14:23:00.000');
+INSERT INTO GXFINDTA.TCMGRU
+(GRUCODIGO, GRUDESCOR, GRUDESLAR, GRUUSULTUP, GRUFHULTUP)
+VALUES(8, 'SALUD               ', 'SECTOR DE LA SALUD                                          ', 'SQL', '2020-11-18 14:23:00.000');
+INSERT INTO GXFINDTA.TCMGRU
+(GRUCODIGO, GRUDESCOR, GRUDESLAR, GRUUSULTUP, GRUFHULTUP)
+VALUES(9, 'MAYORISTA           ', 'COMERCIOS MAYORISTAS                                        ', 'SQL', '2020-11-18 14:23:00.000');
+INSERT INTO GXFINDTA.TCMGRU
+(GRUCODIGO, GRUDESCOR, GRUDESLAR, GRUUSULTUP, GRUFHULTUP)
+VALUES(10, 'AGROPECUARIO        ', 'AGRICOLA/GANADERIA/FORESTAL/AMBIENTAL                       ', 'SQL', '2020-11-18 14:23:00.000');
+INSERT INTO GXFINDTA.TCMGRU
+(GRUCODIGO, GRUDESCOR, GRUDESLAR, GRUUSULTUP, GRUFHULTUP)
+VALUES(11, 'INDUSTRIAS VARIAS   ', 'TEXTIL/IMPRENTAS/METALURGICAS/FRIGORIFICOS/PLASTICOS        ', 'SQL', '2020-11-18 14:23:00.000');
+INSERT INTO GXFINDTA.TCMGRU
+(GRUCODIGO, GRUDESCOR, GRUDESLAR, GRUUSULTUP, GRUFHULTUP)
+VALUES(12, 'SIN LUCRO           ', 'SIN FINES DE LUCRO                                          ', 'MIGRACION ', '2020-11-18 14:23:00.000');
+
+--TCMMCC
+
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(742, 'Veterinary Services                                                             ', 0, 'R', 'SQL', '2020-11-18 10:00:00.000', 'Servicios veterinarios                                                          ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(1234, '#N/D                                                                            ', 0, ' ', 'SQL', '2020-11-18 10:00:00.000', '                                                                                ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(4121, 'Taxicabs/Limousines                                                             ', 0, 'R', 'SQL', '2020-11-18 10:00:00.000', 'Taxis / Limusinas                                                               ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(4214, 'Motor Freight Carriers and Trucking - Local and Long Distance, Moving andStorage', 0, 'R', 'SQL', '2020-11-18 10:00:00.000', 'Autotransportistas y camiones: locales y de larga distancia                     ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(4722, 'Travel Agencies, Tour Operators                                                 ', 0, 'X', 'SQL', '2020-11-18 10:00:00.000', 'Agencias de viajes, Tour operadores                                             ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(4784, 'Tolls/Bridge Fees                                                               ', 0, 'R', 'SQL', '2020-11-18 10:00:00.000', 'Peajes / Tarifas de puentes                                                     ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(4812, 'Telecommunication Equipment and Telephone Sales                                 ', 0, 'R', 'SQL', '2020-11-18 10:00:00.000', 'Equipo de Telecomunicación y Ventas Telefónicas                                 ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(4814, 'Telecommunication Services                                                      ', 0, 'R', 'SQL', '2020-11-18 10:00:00.000', 'Servicios de telecomunicación                                                   ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(5047, 'Medical, Dental, Ophthalmic, and Hospital Equipment and Supplies                ', 0, 'R', 'SQL', '2020-11-18 10:00:00.000', 'Equipos y suministros médicos                                                   ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(5094, 'Precious Stones and Metals, Watches and Jewelry                                 ', 0, 'R', 'SQL', '2020-11-18 10:00:00.000', 'Piedras Preciosas y Metales, Relojería y Joyería                                ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(5122, 'Drugs, Drug Proprietaries, and Druggist Sundries                                ', 0, 'R', 'SQL', '2020-11-18 10:00:00.000', 'Medicamentos,artículos diversos del farmacéutico                                ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(5192, 'Books, Periodicals, and Newspapers                                              ', 0, 'R', 'SQL', '2020-11-18 10:00:00.000', 'Libros, publicaciones periódicas y periódicos                                   ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(5200, 'Home Supply Warehouse Stores                                                    ', 0, 'R', 'SQL', '2020-11-18 10:00:00.000', 'Almacenes de suministros para el hogar                                          ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(5211, 'Lumber, Building Materials Stores                                               ', 0, 'R', 'SQL', '2020-11-18 10:00:00.000', 'Madera, Tiendas de materiales de construcción                                   ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(5231, 'Glass, Paint, and Wallpaper Stores                                              ', 0, 'R', 'SQL', '2020-11-18 10:00:00.000', 'Tiendas de vidrio, pintura y papel tapiz                                        ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(5251, 'Hardware Stores                                                                 ', 0, 'R', 'SQL', '2020-11-18 10:00:00.000', 'Ferreterías                                                                     ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(5399, 'Miscellaneous General Merchandise                                               ', 0, 'R', 'SQL', '2020-11-18 10:00:00.000', 'Mercancía general miscelánea                                                    ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(5411, 'Grocery Stores, Supermarkets                                                    ', 0, 'R', 'SQL', '2020-11-18 10:00:00.000', 'Supermercados, Supermercados                                                    ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(5422, 'Freezer and Locker Meat Provisioners                                            ', 0, 'R', 'SQL', '2020-11-18 10:00:00.000', 'Aprovisionadores de carne para congeladores y casilleros                        ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(5462, 'Bakeries                                                                        ', 0, 'R', 'SQL', '2020-11-18 10:00:00.000', 'Panaderías                                                                      ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(5499, 'Miscellaneous Food Stores ? Convenience Stores and Specialty Markets            ', 0, 'R', 'SQL', '2020-11-18 10:00:00.000', 'Tiendas de alimentos misceláneos                                                ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(5511, 'Car & Truck Dealers (New & Used) Sales, Service, Repairs Parts and Leasing      ', 0, 'R', 'SQL', '2020-11-18 10:00:00.000', 'Concesionarios de automóviles y camiones                                        ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(5541, 'Service Stations                                                                ', 0, 'R', 'SQL', '2020-11-18 10:00:00.000', 'Estaciones de servicio                                                          ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(5651, 'Family Clothing Stores                                                          ', 0, 'R', 'SQL', '2020-11-18 10:00:00.000', 'Tiendas de ropa familiar                                                        ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(5661, 'Shoe Stores                                                                     ', 0, 'R', 'SQL', '2020-11-18 10:00:00.000', 'Tiendas de zapatos                                                              ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(5691, 'Men?s, Women?s Clothing Stores                                                  ', 0, 'R', 'SQL', '2020-11-18 10:00:00.000', 'Tiendas de ropa para hombres y mujeres                                          ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(5697, 'Tailors, Alterations                                                            ', 0, 'R', 'SQL', '2020-11-18 10:00:00.000', 'Sastres, Reformas                                                               ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(5699, 'Miscellaneous Apparel and Accessory Shops                                       ', 0, 'R', 'SQL', '2020-11-18 10:00:00.000', 'Tiendas de ropa y accesorios diversos                                           ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(5712, 'Furniture, Home Furnishings, and Equipment Stores, Except Appliances            ', 0, 'R', 'SQL', '2020-11-18 10:00:00.000', 'Tiendas de muebles, muebles para el hogar y equipos                             ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(5719, 'Miscellaneous Home Furnishing Specialty Stores                                  ', 0, 'R', 'SQL', '2020-11-18 10:00:00.000', 'Tiendas especializadas en decoración del hogar misceláneas                      ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(5722, 'Household Appliance Stores                                                      ', 0, 'R', 'SQL', '2020-11-18 10:00:00.000', 'Tiendas de electrodomésticos                                                    ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(5811, 'Caterers                                                                        ', 0, 'F', 'SQL', '2020-11-18 10:00:00.000', 'Catering                                                                        ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(5812, 'Eating Places, Restaurants                                                      ', 0, 'F', 'SQL', '2020-11-18 10:00:00.000', 'Lugares para comer, Restaurantes                                                ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(5813, 'Drinking Places                                                                 ', 0, 'F', 'SQL', '2020-11-18 10:00:00.000', 'Lugares para beber                                                              ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(5814, 'Fast Food Restaurants                                                           ', 0, 'F', 'SQL', '2020-11-18 10:00:00.000', 'Restaurantes de comida rápida                                                   ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(5921, 'Package Stores?Beer, Wine, and Liquor                                           ', 0, 'R', 'SQL', '2020-11-18 10:00:00.000', 'Tiendas de paquetes: cerveza, vino y licores                                    ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(5941, 'Sporting Goods Stores                                                           ', 0, 'R', 'SQL', '2020-11-18 10:00:00.000', 'Tiendas de artículos deportivos                                                 ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(5943, 'Stationery Stores, Office, and School Supply Stores                             ', 0, 'R', 'SQL', '2020-11-18 10:00:00.000', 'Papelería, Oficina y Tiendas de útiles escolares                                ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(5945, 'Hobby, Toy, and Game Shops                                                      ', 0, 'R', 'SQL', '2020-11-18 10:00:00.000', 'Tiendas de pasatiempos, juguetes y juegos                                       ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(5970, 'Artist?s Supply and Craft Shops                                                 ', 0, 'R', 'SQL', '2020-11-18 10:00:00.000', 'Tiendas de artesanía y suministros para artistas                                ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(4816, 'COMPUTER NETWORK/INFORMATION SERVICES                                           ', 0, 'R', 'SQL       ', '2021-07-28 15:52:00.000', 'SERVICIOS DE INFORMACIÓN / RED DE COMPUTADORAS                                  ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(4899, 'CABLE SERVICES                                                                  ', 0, 'R', 'SQL       ', '2021-07-28 15:52:00.000', 'SERVICIOS DE CABLE                                                              ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(5734, 'COMPUTER SOFTWARE STORE                                                         ', 0, 'R', 'SQL       ', '2021-07-28 15:52:00.000', 'TIENDA DE SOFTWARE DE COMPUTADORA                                               ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(5735, 'RECORDING STUDIO                                                                ', 0, 'R', 'SQL       ', '2021-07-28 15:52:00.000', 'ESTUDIO DE GRABACIÓN                                                            ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(5815, 'PROD DIGIT, BOOKS, FILMS, MUSIC                                                 ', 0, 'R', 'SQL       ', '2021-07-28 15:52:00.000', 'PROD DIGIT, LIBROS, PELÍCULAS, MÚSICA                                           ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(5816, 'DIGITAL PRODUCTS, GAMES                                                         ', 0, 'R', 'SQL       ', '2021-07-28 15:52:00.000', 'PRODUCTOS DIGITALES, JUEGOS                                                     ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(5817, 'DIGITAL PRODUCTS, APPLICATIONS                                                  ', 0, 'R', 'SQL       ', '2021-07-28 15:52:00.000', 'PRODUCTOS DIGITALES, APLICACIONES                                               ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(5818, 'DIGITAL PRODUCTS, MULTI CATEGORIES                                              ', 0, 'R', 'SQL       ', '2021-07-28 15:52:00.000', 'PRODUCTOS DIGITALES, MULTI CATEGORÍAS                                           ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(5968, 'DIRECT MARKETING-CONTINUITY/SUBSCRIPTION                                        ', 0, 'R', 'SQL       ', '2021-07-28 15:52:00.000', 'MARKETING DIRECTO-CONTINUIDAD / SUSCRIPCIÓN                                     ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(7311, 'ADVERTISING                                                                     ', 0, 'R', 'SQL       ', '2021-07-28 15:52:00.000', 'PUBLICIDAD                                                                      ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(7372, 'AUTOMATIC TRANSMISSION SERVICES OF D                                            ', 0, 'R', 'SQL       ', '2021-07-28 15:52:00.000', 'SERVICIOS DE TRANSMISIÓN AUTOMÁTICA DE D                                        ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(7399, 'COMMERCIAL SERVICES                                                             ', 0, 'R', 'SQL       ', '2021-07-28 15:52:00.000', 'SERVICIOS COMERCIALES                                                           ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(7829, 'MOTION PICTURE AND VIDEO TAPE PRODUCTION                                        ', 0, 'R', 'SQL       ', '2021-07-28 15:52:00.000', 'PRODUCCIÓN DE IMÁGENES EN MOVIMIENTO Y CINTA DE VÍDEO                           ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(7994, 'SPARE PARTS FOR VIDEO GAMES-ENTERTAINMENT                                       ', 0, 'R', 'SQL       ', '2021-07-28 15:52:00.000', 'REPUESTOS PARA VIDEOJUEGOS-ENTRETENIMIENTO                                      ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(7995, 'CASINOS-BETTING-GAMES OF CHANCE-N / USE                                         ', 0, 'R', 'SQL       ', '2021-07-28 15:52:00.000', 'CASINOS-APUESTAS-JUEGOS DE OPORTUNIDAD-N / USO                                  ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(8220, 'COLLEGES, UNIVERSITIES, PROFESSIONAL SCHOOLS                                    ', 0, 'O', 'SQL       ', '2021-07-28 15:52:00.000', 'COLEGIOS, UNIVERSIDADES, ESCUELAS PROFESIONALES                                 ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(8244, 'SCHOOLS OF BUSINESS AND SECRETARIATS                                            ', 0, 'O', 'SQL       ', '2021-07-28 15:52:00.000', 'ESCUELAS DE NEGOCIOS Y SECRETARIAS                                              ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(8249, 'ESCUELAS DE ARTES Y OFICIOS                                                     ', 0, 'O', 'SQL       ', '2021-07-28 15:52:00.000', 'ESCUELAS DE ARTES Y OFICIOS                                                     ');
+INSERT INTO GXFINDTA.TCMMCC
+(MCCCODIGO, MCCDESCRI, GRUCODIGO, MCCTCC, MCCUSULTUP, MCCFHULTUP, MCCDESCRE)
+VALUES(8299, 'EDUCATIONAL SERVICES                                                            ', 0, 'O', 'SQL       ', '2021-07-28 15:52:00.000', 'SERVICIOS EDUCATIVOS                                                            ');

@@ -1,0 +1,68 @@
+---------------------------------------------------------------------------------------------------------------------------
+--localidad reingenieria
+select * from GXFINDTA.TCMRCI where RCINOMCIU like '%SAN ALBERTO%'
+
+select * from GXTRJDTA.TDGCIU WHERE CIUDSCIUD  like '%SAN ALBERTO%'
+
+select * from GXFINDTA.TCOCIU WHERE CIUDESCRI like '%SAN ALBERTO%' 
+----------------------------------------------------------------------------------------------------------------
+INSERT INTO GXFINDTA.TCMRCI
+( RDECODDEP, RCICODCIU, RCICIUERP, RCINOMCIU, RCIUSULTUP, RCIFHULTUP
+)
+VALUES
+( 15, 9, '259', 'POZO COLORADO', 'U99ROJAS' , '2022-08-01 11:35:20.000'
+);
+----------------------------------------------------------------------------------------------------------------
+INSERT INTO GXTRJDTA.TDGCIU
+( CIUIDCIUD, DEPIDDEPT, CIUDSCIUD, CIUUSULTUP, CIUFHULTUP
+)
+VALUES
+( 9, 15, 'POZO COLORADO', 'MIGRACION ', '2020-04-23 18:00:00.000'
+);
+----------------------------------------------------------------------------------------------------------------
+INSERT INTO GXFINDTA.TCOCIU
+( DEPCOD, CIUCODNUE, CIUCODACT, CIUDESCRI, CIUUSULTUP, CIUFHULTUP
+)
+VALUES
+( 15, 9, '195', 'POZO COLORADO', 'U99ROJAS', '2022-08-01 11:42:07.000'
+);
+----------------------------------------------------------------------------------------------------------------
+--Tareas #37073 ALQUILER DE POS - SETIEMBRE
+/*Elimina facturas generadas de manera incorrecta*/
+
+Select * from gxopera.factura where FACFECH = '20220902' and factimbr = '15662553' and factnro between 10030031025 and 10030036040;
+Delete gxopera.factura where FACFECH = '20220902' and factimbr = '15662553' and factnro between 10030031025 and 10030036040;
+/*No se generaron detalles relacionadas*/
+
+Select * from gxopera.factura1 where factimbr = '15662553' and factnro between 10030031025 and 10030036040;
+/*El numerador de facturas no fue actualizado en el rango afectado*/
+
+Select * from gxopera.factura2 where FACTURA2TIMBRADO = '15662553' and FACTURA2TIPO = 'NOR';
+------hOy
+----------------------------------------------------------------------------------------------------------------
+------------------------------tablas de comercios reing.
+SELECT * FROM GXFINDTA.TCMCLI t2 WHERE CLIRUC = '932416-0';
+SELECT * FROM GXFINDTA.TCMCLI t2 WHERE CLIDENCOM LIKE '%PETROCHA%'; -- tabla cliente reing.
+SELECT * FROM GXFINDTA.TCMCLI t2 WHERE CLICLICOD = 17491;
+SELECT * FROM GXFINDTA.TCMSUC t WHERE SUCDENCOM LIKE '%BIGGIE%';--CLICLICOD = 925; --tabla de sucursales relacion con tabla de cliente.
+SELECT * FROM GXFINDTA.TCMSUC t WHERE CLICLICOD = 9397;
+SELECT * FROM GXFINDTA.TCOCNA t WHERE COCOMER = '0100922';---tabla de relación actual y reing.
+select * from gxfindta.tcocna where cliclicod = 17623
+SELECT * FROM GXFINDTA.TCOCNA WHERE CNADENCOM LIKE '%BANCO RIO%';
+SELECT * FROM gxfindta.TCMSUC t WHERE SUCFECALT = '20220914';
+----------------------------------------------------------------------------------------------------------------
+/*Cambio de cuenta*/
+select * from gxbdbps.comaeaf where COCOMER ='0703051'
+and ADNUMCTA = '0626103507'
+
+update gxbdbps.comaeaf set ADNUMCTA ='0626103507' where COCOMER ='0703051'
+and ADNUMCTA = '10082480006'
+
+SELECT * FROM  GXFINDTA.tcmliq where CLICLICOD ='13520'
+
+update GXFINDTA.tcmliq set LIQNROCUE ='0626103507' where CLICLICOD ='13520'
+----------------------------------------------------------------------------------------------------------------
+--CAMBIO DE TIPO DE CUENTA
+SELECT * FROM  GXFINDTA.tcmliq where CLICLICOD ='13520'
+
+update GXFINDTA.tcmliq set LIQTIPCUE ='CA' where CLICLICOD ='13520'

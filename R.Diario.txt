@@ -1,0 +1,94 @@
+--Monitoreo Adquirencia Mastercard
+select cast(TO_DATE(cast(lfectr as varchar(8)),'YYYYMMDD')as date) AS FECHA , lcodbc AS MARCA,lenemi EMISOR, COUNT(*) CANTIDAD,substr(lidtra,1,1) Origen,lesttr AS ESTADO, lcretr AS COD_RETORNO, coddes Descripcion_COD,CAST(SUM(limpgs)AS bigint) importe
+from libdebito.drconbep
+inner join LIBDEBITO.TBCTRA0P A on A.TXCTRX = lcodtr
+right join libdebito.tbcret0p on lcretr = codnro
+where lfectr='20210517' and   lcodbc = 'MST' and codmar='MSTC'
+and lenemi in ('530','560','570','590')
+--and lcretr in '91'
+--and lhortr between '080300' and '104700'
+GROUP BY Lfectr, lcretr, lcodbc,LENEMI,coddes, lesttr,substr(lidtra,1,1)
+order by substr(lidtra,1,1) desc, lcretr asc, cantidad desc;
+
+--ADQ.VISA  CONTINENTAL---------
+select lenemi EMISOR,ennombr ENTIDAD, COUNT(*) CANTIDAD,substr(lidtra,1,1) Origen,lesttr AS ESTADO, lcretr AS COD_RETORNO, coddes Descripcion_COD,CAST(SUM(limpgs)AS bigint) importe
+from libdebito.drconbep 
+inner join LIBDEBITO.TBCTRA0P A on A.TXCTRX = lcodtr
+right join libdebito.tbcret0p on lcretr = codnro
+right join gxbdbps.gentiaf ON (ENEMISO=LENemi)
+where lfectr='20210517' and   lcodbc = 'VSA' and codmar='VISA'
+and lenemi='540'
+GROUP BY lcretr, lcodbc,LENEMI,coddes, lesttr,substr(lidtra,1,1),ennombr
+order by substr(lidtra,1,1) desc, lcretr asc, cantidad desc;
+
+-- Visa de Emisor
+select cast(TO_DATE(cast(lfectr as varchar(8)),'YYYYMMDD')as date) AS FECHA, lcodbc AS MARCA,lenemi EMISOR,ennombr ENTIDAD, COUNT(*) CANTIDAD
+,lesttr AS ESTADO, lcretr AS COD_RETORNO, coddes Descripcion_COD,CAST(SUM(limpgs)AS bigint) importe
+from libdebito.drconbep
+inner join LIBDEBITO.TBCTRA0P A on A.TXCTRX = lcodtr
+right join libdebito.tbcret0p on lcretr = codnro
+right join gxbdbps.gentiaf ON (ENEMISO=LENemi) and   lcodbc = 'VSA' and codmar='VISA'
+where lfectr='20210517'
+and lcodbc='VSA' and  codmar = 'VISA'
+and lenemi in ('015','020')
+GROUP BY Lfectr, lcretr, lcodbc,LENEMI,coddes, lesttr,ennombr
+order by lenemi desc , lcretr asc, cantidad desc;
+
+--MST ADQUIRENCIA PROCARD
+select cast(TO_DATE(cast(lfectr as varchar(8)),'YYYYMMDD')as date) AS FECHA , lcodbc AS MARCA,lenemi EMISOR, COUNT(*) CANTIDAD,substr(lidtra,1,1) Origen,lesttr AS ESTADO, lcretr AS COD_RETORNO, coddes Descripcion_COD,CAST(SUM(limpgs)AS bigint) as Importe
+from libdebito.drconbep
+inner join LIBDEBITO.TBCTRA0P A on A.TXCTRX = lcodtr
+right join libdebito.tbcret0p on lcretr = codnro
+where lfectr='20210517' and   lcodbc = 'MST' and codmar='MSTC'
+and lenemi in ('510') ---and lnfisc='422745'
+GROUP BY Lfectr, lcretr, lcodbc,LENEMI,coddes, lesttr,substr(lidtra,1,1)
+order by substr(lidtra,1,1) desc , lcretr asc, cantidad desc;
+
+--Visa Adquiriente  Procard--########################################################################################
+select cast(TO_DATE(cast(lfectr as varchar(8)),'YYYYMMDD')as date) AS FECHA , lcodbc AS MARCA,lenemi EMISOR, COUNT(*) CANTIDAD,lesttr AS ESTADO, lcretr AS COD_RETORNO, coddes Descripcion_COD,CAST(SUM(limpgs)AS bigint) as Importe
+from libdebito.drconbep
+inner join LIBDEBITO.TBCTRA0P A on A.TXCTRX = lcodtr
+right join libdebito.tbcret0p on lcretr = codnro
+where lfectr='20210517' and lcodbc='VSA' and codmar='VISA'
+and lenemi in ('510')
+GROUP BY Lfectr, lcretr, lcodbc,LENEMI,coddes, lesttr
+order by lcretr asc, cantidad;
+
+
+    ---RESUMEN TARJETAS DINELCO 703002-703020-703040#############################################################################################################################################################--
+select cast(TO_DATE(cast(lfectr as varchar(8)),'YYYYMMDD')as date) AS FECHA , lcodbc AS MARCA,lenemi EMISOR,LBINPR BIN,ENNOMBR entidad, COUNT(*) CANTIDAD,lesttr AS ESTADO,
+lcretr AS COD_RETORNO,substr(lidtra,1,1), coddes Descripcion_COD,CAST(SUM(limpgs)AS bigint) as Importe
+from libdebito.drconbep
+right join libdebito.tbcret0p on lcretr = codnro
+INNER JOIN gxbdbps.gentiaf ON (ENEMISO=LENemi)
+where lfectr='20210517' and codmar='BEPS'--and   lcodbc = 'DIN' and
+and LBINPR in ('703002','703020','703040')--and lhortr between '000000' and '173000'
+GROUP BY Lfectr, lcretr,LBINPR, lcodbc,LENEMI,ennombr,coddes, lesttr,substr(lidtra,1,1)
+order by LENEMI ASC, lcretr asc, cantidad desc;
+
+--Dinelco Debito Cooperativas
+select cast(TO_DATE(cast(lfectr as varchar(8)),'YYYYMMDD')as date) AS FECHA,lenemi EMISOR,ennombr ENTIDAD, COUNT(*) CANTIDAD,substr(lidtra,1,1) Origen,lesttr AS ESTADO, lcretr AS COD_RETORNO, coddes Descripcion_COD,CAST(SUM(limpgs)AS bigint) importe
+from libdebito.drconbep 
+inner join LIBDEBITO.TBCTRA0P A on A.TXCTRX = lcodtr
+right join libdebito.tbcret0p on lcretr = codnro
+right join gxbdbps.gentiaf ON (ENEMISO=LENemi)
+where lfectr='20210517' and codmar='BEPS' and lcodbc = 'DIN'
+AND lenemi IN ('068','070','071','072','073','075','076','077','080','081','083','084','088','089','095','096','100','101','102','103','105','106','107','108','109','110',
+'111','113','124','125','136','137','140','141','144','145','153','158','161','163','165','166','167','168','169','170','171','172','173','174','177','303',
+'304','305','306','307','309','310','311','312','334','340','342','344')
+--and LBINPR in ('703002','703020','703040')--and lcretr in '91'--and lhortr between '080300' and '104700'
+GROUP BY Lfectr, lcretr, lcodbc,LENEMI,ennombr,coddes, lesttr,substr(lidtra,1,1)
+order by LENEMI ASC,cantidad desc;
+
+--RESUMEN DE BILLETERAS
+select cast(TO_DATE(cast(lfectr as varchar(8)),'YYYYMMDD')as date) AS FECHA,lcodtr COD_TRX,A.TXDTRX DETALLES,count(*) Cantidad ,lcretr Cod_Retorno,lesttr Estad,substr(lidtra,1,1) Origen,coddes Descripcion_COD ,CAST(SUM(limpgs)AS bigint) importe
+from libdebito.drconbep
+inner join LIBDEBITO.TBCTRA0P A on A.TXCTRX = lcodtr
+right join libdebito.tbcret0p on lcretr = codnro
+WHERE  lfectr= '20210517'
+and lcodtr in ('000052','567102', '000072')--and lhortr between '190800' and '193000'   and lcretr in ('96') --and lhortr<0000
+and limpgs>1
+and  codmar = 'BEPS'
+group by lcretr,coddes,lesttr,lcodtr,TXDTRX,LFECTR,substr(lidtra,1,1),lfectr
+order by lcodtr, lcretr asc,cantidad desc;
+
