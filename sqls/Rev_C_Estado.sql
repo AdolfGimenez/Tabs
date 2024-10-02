@@ -1,0 +1,87 @@
+---------------------------------------------------------------#reversiones
+select * from libdebito.drconbep where LNRTAR in ('6274315814435783','6274315816621966', '6274315811736641', '6274315811295794','6274315811987730','6274315816661212','6274315811151660')
+and LIMPGS in ('8300','97102','25000','128200','50000','100000','189565') 
+--and LCOTEL in('0984435783','0986621966','0981736641','0981295794','0991987730','0986661212','0981151660') 
+and LFECTR>='20220513';-- and LCOMTR like '%FARMATOTAL LIL%'
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Cambio de estado o reversa
+--CICO EJEMPLO
+--226397384681
+-- Sistema Actual
+select * from gxopera.cicorevr where CICODAUT='226397384681';
+delete FROM gxopera.cicorevr where CICODAUT='226397384681';
+/*se cambia a estado A y 00 encaso que no esté en esos estados. Y si, solo se revisa en reing, y se solicita la reversión, una vez hecho
+  eso verificar si queda con estado R*/
+select * from libdebito.drconbep where lerrnb='233723064276';--ejemplo
+select LESTTR, LCRETR from libdebito.drconbep where lerrnb='302643322833';
+update libdebito.drconbep set LESTTR='A',LCRETR='00' where lerrnb='302643322833';
+
+select * from gxbdbps.tswaut where AUTRRNBEP='233723064276';--ejemplo
+select AUTTRXESTF, AUTTRXESTI from gxbdbps.tswaut where AUTRRNBEP='302643322833';
+update gxbdbps.tswaut set AUTTRXESTF='A', AUTTRXESTI='A'
+where AUTRRNBEP='302643322833';
+
+-- Reingenieria
+SELECT REVNROREF, T.* FROM GXFINDTA.TCLREV T WHERE REVNROREF IN ('302643322833');
+delete FROM GXFINDTA.TCLREV WHERE REVNROREF IN('302643322833');
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------#Reversion cico
+--Me das una mano por favor se encuentra la operación con error, favor realizar el cambio a aprobada para así realizar la reversión.Tareas #31162. Se ve en el Log 
+--en este caso dio SEERVER ERROR, se confirma con la entidad que no se realizó la reversa y la disponibilidad del dinero en la cuenta y luego se prepara las sentencias.
+select * from gxopera.cicorevr
+where CICODAUT='209447992981';
+delete FROM gxopera.cicorevr
+where CICODAUT='209447992981';
+
+select * from libdebito.drconbep where lerrnb='209447992981';
+update libdebito.drconbep set LESTTR='A'
+where lerrnb='209447992981';
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------#PASAR FACTURA DE ESTADO ANULADO A PENDIENTE.Repair-SMD #29617
+--Buenas tardes, favor pasar la factura 001-003-0079942 de fecha 07/03/2022 de estado ANULADO a estado PENDIENTE.
+select * from gxopera.factura where FACTNRO='10030079942' and faclien='4500006';
+
+update gxopera.factura set FACSTATUS='P'
+where FACTNRO='10030079942' and faclien='4500006';
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------#CAMBIO DE ESTADO DE FACTURAS YA COBRADAS.Repair-SMD #29207
+--Favor proceder al cambio de estado de las 4 facturas que se verifican como canceladas a nivel sistema ya que se emitio recibo y los mismos no se encuentran anulados. a su vez al generar el informe de estado de cuenta aparece 0.
+--solo al consultar por CO en el menu facturacion en la opcion Facturas aparece la como pendiente estas facturas.
+select * from gxopera.factura  where FACTNRO='10030025710' and FACLIEN='8600206';
+update gxopera.factura set FACSTATUS='C' 
+where FACTNRO='10030025710' and FACLIEN='8600206';
+
+select * from gxopera.factura  where FACTNRO='10030024979' and FACLIEN='1800378';
+update gxopera.factura set FACSTATUS='C' 
+where FACTNRO='10030024979' and FACLIEN='1800378';
+
+select * from gxopera.factura  where FACTNRO='10030026034' and FACLIEN='0901074';
+update gxopera.factura set FACSTATUS='C' 
+where FACTNRO='10030026034' and FACLIEN='0901074';
+
+select * from gxopera.factura  where FACTNRO='10030018602' and FACLIEN='3700225';
+update gxopera.factura set FACSTATUS='C' 
+where FACTNRO='10030018602' and FACLIEN='3700225';
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------#CASO DE CAMBIO DE ESTADO DE FACTURA 10030013973 Y APLICAR SALDO CERO. Repair-SMD #30445
+/*Favor si pudieran realizar la corrección del estado de la factura de PENDIENTE a COBRANDO ya que la misma tiene dos saldos aplicados y con un importe superior al monto de factura.
+A su vez no corresponde que el saldo sea el que se muestra en sistema y se debe colocar 0.*/
+select * from gxopera.factura where FACTNRO='10030013973' and faclien='3700172';
+
+update  gxopera.factura set FACSALDO=0, FACSTATUS='C' 
+where FACTNRO='10030013973' and faclien='3700172';
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------#Ocultar Movimientos Patrol.Repair-SMD #25672
+select * from gxbdbps.tmoviaf where mvemiso='354' and MVNOVED='*MOVMAN' and MVNOMCO in ('DEV. MANTENIMIENTO ANUAL','DEV. MANTENIMIENTO ANUAL','REV. MANTENIMIENTO ANUAL','REV. INHABILITACION POR MORA','Reversion de intereses','Devolucion cargo por mora')
+union
+select * from gxbdbps.tmoviaf where mvemiso='354' and cmcodig='163';
+
+update gxbdbps.tmoviaf set MVCODRE=66 where mvemiso='354' and MVNOVED='*MOVMAN' and MVNOMCO in ('DEV. MANTENIMIENTO ANUAL','DEV. MANTENIMIENTO ANUAL','REV. MANTENIMIENTO ANUAL','REV. INHABILITACION POR MORA','Reversion de intereses','Devolucion cargo por mora');
+
+update gxbdbps.tmoviaf set MVCODRE=66 where mvemiso='354' and cmcodig='163';
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+select * from gxopera.cicorevr where CICODAUT='211452220355';
+delete FROM gxopera.cicorevr where CICODAUT='211452220355';
+
+select * from libdebito.drconbep where lerrnb='211452220355';
+update libdebito.drconbep set LESTTR='A'where lerrnb='211452220355';
