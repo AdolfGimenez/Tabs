@@ -1,0 +1,93 @@
+--COOPERATIVA CAPIATA
+select  lfectr as Fecha,lhortr as Hora,lidcom as Codigo,lcomtr as Comercio,SUBSTR(lnrtar,1,6)||'XXXXXX'||SUBSTR(lnrtar,13,4) AS Tarjeta,lenemi EMISOR,
+lbinpr as Bin , lcodbc as Marca , limpgs as Monto,lesttr as Estado,lcretr as Retorno,lhisde as Respondido_Por ,leca62 as ATM ,loritr as ATM_POS,lerrnb as Referencia ,lbcocr
+from libdebito.drconbep
+where lfectr between '20220425' and '20220425' and lnrtar like '627431107%' --and lenemi='107' --and lnrtar like '627431110%'  and lenemi='110' 
+order by lhortr desc
+
+----------------CAPIATA--------------------------RECHAZO------------------------------------------------
+select lfectr AS FECHA, lcodbc AS MARCA, lcretr as RETORNO, lesttr as ESTADO, COUNT(*) CANTIDAD
+from libdebito.drconbep  
+where lfectr='20220425' and lnrtar like '627431107%' and lhortr > '000000' 
+GROUP BY Lfectr, lcodbc, lcretr, lesttr 
+
+--coop.   
+--COOPERATIVA Nemby
+select  lfectr as Fecha,lhortr as Hora,lidcom as Codigo,lcomtr as Comercio,SUBSTR(lnrtar,1,6)||'XXXXXX'||SUBSTR(lnrtar,13,4) AS Tarjeta,
+lbinpr as Bin , lcodbc as Marca , limpgs as Monto,lesttr as Estado,lcretr as Retorno,lhisde as Respondido_Por ,leca62 as ATM ,loritr as ATM_POS,lerrnb as Referencia ,lbcocr
+from libdebito.drconbep
+where lfectr between '20220425' and '20220425' and lnrtar like '627431110%'  and lenemi='174' 
+order by lhortr desc ---
+
+--COOOSOFAN
+select  lfectr as Fecha,lhortr as Hora,lidcom as Codigo,lcomtr as Comercio,SUBSTR(lnrtar,1,6)||'XXXXXX'||SUBSTR(lnrtar,13,4) AS Tarjeta,lenemi EMISOR,
+lbinpr as Bin , lcodbc as Marca , limpgs as Monto,lesttr as Estado,lcretr as Retorno,lhisde as Respondido_Por ,leca62 as ATM ,loritr as ATM_POS,lerrnb as Referencia ,lbcocr
+from libdebito.drconbep
+where lfectr between '20220425' and '20220425' and lnrtar like '627431121%' --and lenemi='107' --and lnrtar like '627431110%'  and lenemi='110' 
+order by lhortr desc
+
+--CREDIVIL--
+select  lfectr as Fecha,lhortr as Hora,lidcom as Codigo,lcomtr as Comercio,SUBSTR(lnrtar,1,6)||'XXXXXX'||SUBSTR(lnrtar,13,4) AS Tarjeta,lenemi EMISOR,
+lbinpr as Bin , lcodbc as Marca , limpgs as Monto,lesttr as Estado,lcretr as Retorno,lhisde as Respondido_Por ,leca62 as ATM ,loritr as ATM_POS,lerrnb as Referencia ,lbcocr
+from libdebito.drconbep
+where lfectr between '20220425' and '20220425' and lnrtar like '627431101%' ----and lnrtar like '627431101%' --and lenemi='107' --and lnrtar like '627431110%'  and lenemi='110' 
+order by lhortr desc
+
+--MBURICAO--
+select  lfectr as Fecha,lhortr as Hora,lidcom as Codigo,lcomtr as Comercio,SUBSTR(lnrtar,1,6)||'XXXXXX'||SUBSTR(lnrtar,13,4) AS Tarjeta,lenemi EMISOR,
+lbinpr as Bin , lcodbc as Marca , limpgs as Monto,lesttr as Estado,lcretr as Retorno,lhisde as Respondido_Por ,leca62 as ATM ,loritr as ATM_POS,lerrnb as Referencia ,lbcocr
+from libdebito.drconbep
+where lfectr between '20220425' and '20220425' and lnrtar like '627431113%' ----and lnrtar like '627431101%' --and lenemi='107' --and lnrtar like '627431110%'  and lenemi='110' 
+order by lhortr desc
+
+--CREDISIMPLE--
+select  lfectr as Fecha,lhortr as Hora,lidcom as Codigo,lcomtr as Comercio,SUBSTR(lnrtar,1,6)||'XXXXXX'||SUBSTR(lnrtar,13,4) AS Tarjeta,lenemi EMISOR,
+lbinpr as Bin , lcodbc as Marca , limpgs as Monto,lesttr as Estado,lcretr as Retorno,lhisde as Respondido_Por ,leca62 as ATM ,loritr as ATM_POS,lerrnb as Referencia ,lbcocr
+from libdebito.drconbep
+where lfectr between '20220425' and '20220425' and lnrtar like '627431162%' ----and lnrtar like '627431101%' --and lenemi='107' --and lnrtar like '627431110%'  and lenemi='110' 
+order by lhortr desc
+
+--COOSOFAN-CREDITO-
+select  lfectr as Fecha,lhortr as Hora,lidcom as Codigo,lcomtr as Comercio,SUBSTR(lnrtar,1,6)||'XXXXXX'||SUBSTR(lnrtar,13,4) AS Tarjeta,lenemi EMISOR,
+lbinpr as Bin , lcodbc as Marca , limpgs as Monto,lesttr as Estado,lcretr as Retorno,lhisde as Respondido_Por ,leca62 as ATM ,loritr as ATM_POS,lerrnb as Referencia ,lbcocr
+from libdebito.drconbep
+where lfectr between '20220425' and '20220425' and lnrtar like '627431332%' ----and lnrtar like '627431101%' --and lenemi='107' --and lnrtar like '627431110%'  and lenemi='110' 
+order by lhortr desc
+
+--COOSOFAN-EECTIVO-
+select  lfectr as Fecha,lhortr as Hora,lidcom as Codigo,lcomtr as Comercio,SUBSTR(lnrtar,1,6)||'XXXXXX'||SUBSTR(lnrtar,13,4) AS Tarjeta,lenemi EMISOR,
+lbinpr as Bin , lcodbc as Marca , limpgs as Monto,lesttr as Estado,lcretr as Retorno,lhisde as Respondido_Por ,leca62 as ATM ,loritr as ATM_POS,lerrnb as Referencia ,lbcocr
+from libdebito.drconbep
+where lfectr between '20220425' and '20220425' and lnrtar like '627431319%' ----and lnrtar like '627431101%' --and lenemi='107' --and lnrtar like '627431110%'  and lenemi='110' 
+order by lhortr desc
+
+SELECT lfectr FECHA,lhortr HORA,/*SUBSTR(lnrtar,1,6) || 'XXXXXX' ||SUBSTR(lnrtar,13,4) TARJE*/lnrtar tarje,lexpir VTO,lbinpr bin,lctaor,lctade
+lbcodb,LENEMI ENTIDAD, lcored ,LCODBC MARCA,/*,pdescricion MARCA*/
+lesttr ESTADO,lcretr COD_RETORNO,lcodtr COD_TRX,limpgs IMPORTE,lcotel celular,--coddes DESCRIP_RET,--lbinpr BIN,--
+lerrnb REFE_BEPSA, lidcom COD_COMER,lcomtr LOCAL_COMER, /*txdtrx DESC_TRX,*/LECA62 version_pos,lactfj cod_act,lcautr cod_aut--LNFISC,LPOSEM,LMCCTR,LNFACT--,lntoke--, enemiso BANCO,tgdesc DESCRIPCION
+from libdebito.drconbep --inner join libdebito.tbinproc on lbinpr=pbin
+WHERE lfectr BETWEEN '20220425' AND '20220425'
+and substr(leca62,9,10) like ('%J%')
+and lhortr>020000
+order by lhortr desc
+
+-----nueva consulta sql JPOS POR COMERCIO -----
+
+
+--ADQ MST COMERCIO Resumen
+select lfectr AS FECHA , lcodbc AS MARCA,lenemi EMISOR, COUNT(*) CANTIDAD, lcretr AS COD_RETORNO,lcomtr COMERCIO
+from libdebito.drconbep
+where lfectr='20220425' --and   lcodbc = 'MST' and codmar='MSTC'
+and lenemi in ('530','560','570','590')
+and substr(lidtra,1,1)='P'
+--and lcretr in '91'
+--and lhortr between '080300' and '104700'
+GROUP BY Lfectr, lcretr, lcodbc,LENEMI,lcomtr
+ORDER BY cantidad desc, lcretr asc
+
+--verificar trx por Comercio--
+select lfectr AS FECHA , lhortr AS HORA,SUBSTR(lnrtar,1,6)||'XXXXXX'||SUBSTR(lnrtar,13,4) AS TARJETA, /*PARA ENCRIPTAR TARJETAS*/--
+lidcom AS CODIGO, lcomtr  AS COMERCIO,leca62 Version_Pos,lactfj Activo, limpgs AS MONTO, lcretr AS RETORNO, lesttr AS ESTADO from libdebito.drconbep
+where lfectr between '20220425' and '20220425' AND lcomtr like ('%BIGGIE%') and lenemi in ('530')
+order by lhortr desc 	
+

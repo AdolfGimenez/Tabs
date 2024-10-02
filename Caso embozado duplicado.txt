@@ -1,0 +1,32 @@
+--PASOS A SEGUIR PARA CASO EMBOZADO DUPLICADO
+--Esto ocure porque el usuario ejecuta 2 veces el alta en el sistema de tarjetas web
+
+1- Hacer bk por las dudas de lo que esta duplicado, luego borramos
+SELECT  * from libdebito.embnov0d where crbine='456976' 
+delete libdebito.embnov0d where crbine='456976' 
+
+
+2-  Ubicar los registros en TEDEMIS (Debe ser exactamente lo que Operaciones solicita, tener en cuenta fecha y hora de corte si es que hacen dos altas en un día), ejemplo;
+select * from GXBDBPS.TDEMIS where TDBINENTID='1020' and TDBINNRO='456976' and TDEMUSALT='U99IVANA' AND TDEMFECALT='20201116'
+
+3- Actualizar los registros TDEMIS para que Operaciones vuelva a estirar
+UPDATE GXBDBPS.TDEMIS SET TDEMEST = 'I', TDESTID = '2', TDFECHEMB = '00000000'
+where TDBINENTID='1020' and TDBINNRO='456976' and TDEMUSALT='U99IVANA' AND TDEMFECALT='20201116'
+ 
+4- Ubicar los registros en TEDEMISNOV (Debe ser exactamente lo que Operaciones solicita, tener en cuenta fecha y hora de corte si es que hacen dos altas en un día), ejemplo;
+SELECT * FROM GXBDBPS.TDEMISNOV where TDBINENTID='1020' and   TDBINNRO='456976' and TDUSUENT='U99IVANA' AND TDFECHENT='20201116' 
+
+5- Si hay mas registros de lo que paso Operaciones, es porque se dulicaron, se debe identificar las novedades 2, ver cuantos hay 
+select * from GXBDBPS.TDEMISnov where TDBINENTID='1020' and   TDBINNRO='456976' and TDUSUENT='U99IVANA' AND TDFECHENT='20201116' and TDNRONOV='2'
+
+6- Una vez identificado las novedades 2, debemos eliminarlos, ANTES DEBEMOS SERSIORARNOS QUE NOVEDAD 1 COONCUERDE CON LA CANTIDAD DE TDEMIS, MISMA CANTIDAD DE REGISTROS.
+delete GXBDBPS.TDEMISnov where TDBINENTID='1020' and   TDBINNRO='456976' and TDUSUENT='U99IVANA' AND TDFECHENT='20201116' and TDNRONOV='2'
+
+7- Actualizar los registros TDEMISNOV para que Operaciones vuelva a estirar
+UPDATE GXBDBPS.TDEMISNOV SET TDESTNOV  = '0', TDFECHPROC = '00000000'
+where TDBINENTID='1020' and   TDBINNRO='456976' and TDUSUENT='U99IVANA' AND TDFECHENT='20201116' 
+
+8- Informar a Operaciones que vuelva a procesar Paso 1 y Paso 2 de AS/400.
+
+9. Fin
+

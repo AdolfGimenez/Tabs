@@ -1,0 +1,121 @@
+--sql para verificación de transmisiones
+Select tsbdeop, tsbesta, tsbdeme, count(*) cantidad, sum(tsbimpo)Importe
+from gxfindta.tcltsb where date(tsbfege) >='2022-08-05' --and tsbesta not in ('AC','RE')
+group by tsbdeop,tsbesta, tsbdeme 
+--***********************************************************************************************************************
+--*************************VERIFICA SI ES CORRECTO LA FORMA DE PAGO******************************************************
+--***********************************************************************************************************************
+--Descripcion : algunos movientos registran formas de pago incorrectas
+Select A.*, CASE WHEN B.TSBIDOP IS NULL  THEN 'NO' ELSE 'SI' END AS EXISTE_EN_TCLTSB  from
+   (
+    SELECT
+             MOVRRNBEP,
+             MOVPGON,
+             CASE WHEN SECCOTRX IS NULL THEN 'BATCH' ELSE 'ONLINE' END AS VERIFICACION,
+             Substr (A.MOVNTAR,1,6) as BIN,
+             SUBSTR(A.MOVCODEM,1,4) as EMISOR_ID,
+             MOVDESEM AS EMISOR_DES,
+             MOVCDBCC AS BANCO_COMERCIO_ID,
+             MOVDSBCC AS BANCO_COMERCIO_DESC
+    FROM (SELECT A.MOVRRNBEP,
+                 A.SERCODI,
+                 A.PRECODI,
+                 A.MOVPGON,
+                 A.MOVFCRE,
+                 b.PRECOTRX,
+                 A.MOVICA,
+                 A.MOVCODEM,
+                 C.ENCENTANT,
+                 A.MOVCDBCC,
+                 A.MOVNTAR,
+                 A.MOVDESEM,
+                 A.MOVDSBCC
+          FROM GXFINDTA.TCLMOV AS A
+            INNER JOIN gxfindta.tclpre AS B
+                    ON A.SERCODI = B.SERCODI
+                   AND A.PRECODI = B.PRECODI
+            INNER JOIN GXTRJDTA.TCOENC AS C ON C.ENCENTROL = A.MOVCDBCC
+          WHERE MOVRRNBEP IN (
+'221181780388'
+            )
+            )
+           AS A
+      LEFT JOIN gxopera.TCLSEC AS B
+             ON A.PRECOTRX = B.SECCOTRX
+            AND Substr (SECENBIN,1,6) = Substr (A.MOVNTAR,1,6)
+            AND ENCENTANT = SECCOBCO
+            AND SUBSTR(A.MOVCODEM,1,4) = SUBSTR(B.SECCEMN,1,4)
+            )
+AS A      
+LEFT JOIN GXFINDTA.TCLTSB AS B  ON B.TSBNREF = A.MOVRRNBEP  ;
+--**************************************************************************************************************
+SELECT * FROM gxopera.opliqui where OPNROREF in (
+'219476523599')
+--**************************************************************************************************************
+Select * from gxfindta.tcltsb where tsbnref in (  
+'222485890922',
+'222485900459'
+)
+    
+--**************************************************************************************************************
+--**************************************************************************************************************
+-- ARMAR LLAMANDO A PCLR028
+   --**Este programa carga en transacciones las operaciones Online
+SELECT * FROM
+(SELECT CONCAT('CALL PGM(GXFINPGM/PCLR028) PARM',(CONCAT ((CONCAT ((CONCAT ((CONCAT ((CONCAT (CONCAT ('("',OPIDLIQ),'" "')),AUTRRNBEP)),'" "')),AUTTRXFCHC)),'")'))) AS LLAMADO
+FROM (SELECT OPIDLIQ,
+             AUTTRXFCHC,
+             AUTRRNBEP
+      FROM GXBDBPS.TSWAUT AS A
+        LEFT JOIN GXOPERA.OPLIQUI AS B ON A.AUTRRNBEP = B.OPNROREF
+      WHERE AUTRRNBEP IN (
+'221181774987','221181786307','221181779498','221181775854','221181780355','221181775978','221181781838','221181782512','221181785119','221181784318','221181781153','221181781729','221181783165','221181779905','221181783530','221181786036','221181786583','221181775507','221181774119',
+'221181780521','221181783928','221181777545','221181783528','221181781803','221181777288','221181776426','221181785486','221181783057','221181776350','221181781455','221181777825','221181782523','221181774071','221181781567','221181774840','221181782772','221181774196','221181784660','221181780312',
+'221181784720','221181785765','221181781782','221181774508','221181778245','221181779621','221181775014','221181780135','221181773750','221181781403','221181780302','221181778631','221181786450','221181784867','221181778500','221181775518','221181783173','221181785207','221181783560','221181785897',
+'221181774623','221181777145','221181778148','221181776712','221181777232','221181774273','221181784752','221181785401','221181786876','221181785597','221181786756','221181779963','221181774400','221181781316','221181786136','221181785302','221181774926','221181783273','221181776971','221181786008',
+'221181780813','221181779221','221181779754','221181779778','221181782812','221181785976','221181784130','221181782275','221181774081','221181777285','221181778999','221181782308','221181779145','221181778108','221181778018','221181775202','221181785972','221181784422','221181779464','221181783658',
+'221181773859','221181774879','221181778033','221181776761','221181781007','221181782503','221181775371','221181774332','221181781590','221181775937','221181779902','221181774030','221181777610','221181782485','221181781993','221181775797','221181779456','221181777753','221181785329','221181784377',
+'221181785983','221181780898','221181778611','221181779528','221181786500','221181779177','221181776783','221181775993','221181775498','221181784554','221181775325','221181781301'
+      )));
+--**************************************************************************************************************
+--*************************************************************************************************************
+CALL PGM(GXFINPGM/PCLR028) PARM("22072307140392" "220478534892   " "20220725")
+CALL PGM(GXFINPGM/PCLR028) PARM("22072307140393" "220478534900   " "20220725")
+--*************************************************************************************************************
+--Reporte de T. de Trasmisiones.
+--*************************************************************************************************************
+SELECT TSBIDOP AS Envio_Id,
+       TSBTPOP AS Operacion_Tipo,
+       TSBDEOP AS Operacion_Descripcion,
+       TSBCODSWD AS Cod_Switch_Debito,
+       TSBBADE AS Entidad_Debito,
+       TSBCTDE AS Entidad_Cuenta_Debito,
+       TSBTPDE AS Cuenta_Tipo_Debito,
+       TSBCODSWC AS Cod_Switch_Credito,
+       TSBBACR AS Entidad_Credito,
+       TSBCTCR AS Entidad_Cuenta_Credito,
+       TSBTPCR AS Cuenta_Tipo_Credito,
+       TSBCOCO AS Codigo_Negocio,
+       TSBDENE AS Denominacion_Negocio,
+       TSBNREF AS Nro_Referencia_Lote,
+       TSBIMPO AS Importe,
+       TSBMONE AS Moneda_Id,
+       TSBMONSIG AS Moneda_Sigla,
+       TSBFEGE AS Fecha_de_Generacion,
+       TSBESTA AS Operacion_Estado,
+       TSBCOME AS Codigo_Retorno,
+       TSBDEME AS Mensaje,
+       TSBUSUA AS Usuario_Actualizacion,
+       TSBFEAC AS Fecha_Actualizacion,
+       SERCODI AS Codigo_Servicio,
+       PRECODI AS Codigo_Prestacion,
+       TSBIDTPDOC AS Tipo_Documento_Titular,
+       TSBNRODOC AS Nro_Documento_Titular,
+       TSBDOCCOM AS Nro_Documento_Comercio,
+       TSBMOTIVO AS Motivo_Reenvio,
+       TSBTPOACR AS Tipo_Acreditacion,
+       TSBFECCON AS Fecha_Conciliacion,
+       TSBCONSN AS Conciliado_S_N
+FROM GXFINDTA.TCLTSB
+WHERE TSBFEGE >= '2021-12-20 00:00:00'
+AND   TSBFEGE <= '2021-12-31 00:00:00'

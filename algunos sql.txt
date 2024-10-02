@@ -1,0 +1,18 @@
+para cambiar activo de comercio
+------------------------------------------------------
+select*from gxbdbps.terminal where tertid='13723912'
+-------------------------------------------------------
+Buscar bines
+-------------------------------------------------------
+Select * from libdebito.tbinproc
+where pbin='545289'
+--------------------------------------------------------
+Tablas de Módulo SIPAP
+-------------------------------------------------------
+SELECT * FROM GXFINDTA.TCLMOV;SELECT * FROM GXFINDTA.TCLTEM; --temporal
+
+select * from gxfindta.tclsip;
+diario sipap(se borra diariamente)select * from gxfindta.tclhsp; -- historico de sipap
+
+SELECT * FROM GXSEGDTA.TSGNUM WHERE SGNUMOBJ IN('TCLSIP','TCLHSP');
+

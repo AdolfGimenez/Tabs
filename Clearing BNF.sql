@@ -1,0 +1,69 @@
+SELECT * FROM gxopera.OPAGO3P
+
+SELECT * FROM gxopera.OPAGO3TC
+
+SELECT * FROM gxopera.COPAEN2PHS where bnffecom='20201019'
+
+select * from GXOPERA.OPAGO3TCH where tcfecom='20201019'
+
+**************************************************************************************
+Trabajo:   BNF_ADELAN     Número de entrada:   000028     Estado:   SCD
+**************************************************************************************
+COPAEN2PHS => TEMPORAL OPAGO3P
+--HISTÓRICO
+--TOTAL
+SELECT * FROM gxopera.COPAEN2PHS where bnffecom='20200625'
+--DETALLE
+SELECT * FROM gxopera.COPAEN2PHS where bnffecom='20200625'
+--agrupado
+SELECT sum(bnfimpor),bnffecre,count(*) FROM gxopera.COPAEN2PHS
+where bnffecre between '20200626' and '20200626'
+group by bnffecre
+SELECT sum(bnfimpor),bnffecre,COUNT(*) FROM gxopera.OPAGO3P
+where bnffecre between '20200626' and '20200626'
+group by bnffecre
+__________________________________
+OPAGO3TCH => TEMPORAL OPAGO3TC   *
+__________________________________
+--detalle 
+select * from GXOPERA.OPAGO3TCH where tcfecom='20200625'
+select * from GXOPERA.OPAGO3TC where tcfecom='20200625'
+select sum(tcimpor) from GXOPERA.OPAGO3TC where tcfecom='20200625' and  tctipo='C'
+select * from yapi.OPAGO3TCpr where tcfecom='20200625'
+select * from YAPI.OPAGO3TCHF where tcfecom='20200625'
+--agrupado 
+select tccodmv, TCTIPO, COUNT(*) cant_registros,sum(tcimpor)  importe
+from gxopera.OPAGO3TC where tcfecom='20200625'
+group by tccodmv,tCTIPO
+
+select tccodmv, tcentid, TCTIPO, COUNT(*),sum(tcimpor), TCOBSER from GXOPERA.OPAGO3TCH where tcfecom='20200625'
+group by tccodmv,tcentid, TCTIPO, TCOBSER
+ORDER BY TCTIPO, TCENTID
+
+select tccodmv, tcentid, TCTIPO, COUNT(*),sum(tcimpor), TCOBSER from YAPI.OPAGO3TCHF where tcfecom='20200625'
+group by tccodmv,tcentid, TCTIPO, TCOBSER
+ORDER BY TCTIPO, TCENTID
+
+select * from yapi.OPAGO3phf
+select * from yapi.OPAGO3TCHF
+SELECT * FROM YAPI.OPAGO3TCHF A inner JOIN yapi.OPAGO3TC B ON A.TCENTID=B.TCENTID WHERE b.tcfecom='20200625'
+select tccodmv, sum(tcimpor)  from GXOPERA.OPAGO3TC where tcfecom='20200625'
+group by tccodmv
+select tccodmv, sum(tcimpor)  from GXOPERA.OPAGO3TC where tcfecom='20200625'
+group by tccodmv
+
+select tccodmv, sum(tcimpor)  from yapi.OPAGO3TChf where tcfecom='20200625'
+group by tccodmv
+__________________________________
+OPAGO5PH => TEMPORAL OPAGO5P     *
+__________________________________
+--detalle 
+select * from GXOPERA.OPAGO5PH where pgfecom5='20200626'
+select * from GXOPERA.OPAGO5p where pgfecom5='20200626'
+--agrupado
+select pgcodmov5, COUNT(*), sum(pgimpor5)  from GXOPERA.OPAGO5PH where pgfecom5='20200625'
+group by pgcodmov5
+select pgcodmov5, COUNT(*), sum(pgimpor5)  from GXOPERA.OPAGO5P where pgfecom5='20200625'
+group by pgcodmov5
+**************************************************************************************
+**************************************************************************************

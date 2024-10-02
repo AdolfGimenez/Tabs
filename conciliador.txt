@@ -1,0 +1,13 @@
+SELECT count(*) Cantidad_trx, date(fecha_creacion) 
+FROM public.transaccion
+where fecha_comercial = '2021-05-12'
+group by date(fecha_creacion)
+order by date asc;
+
+-------------------------------------------------------
+
+SELECT count(*) Cantidad_trx, date(fecha_creacion) 
+FROM public.transaccion
+where fecha_creacion >= '2021-05-11 19:00:00' and fecha_creacion <= '2021-05-12 18:59:59'
+group by date(fecha_creacion)
+order by date asc;

@@ -1,0 +1,144 @@
+CIERRE NORMAL
+U99OVELAR
+U99OVELAR
+CIERRE SITC-X
+UPDATE MODEL AL INICIAR KB
+
+1.- HACER EL COMMIT DE CAMBIOS
+2.- PEDIR A PRODUCCION DATOS DE LA FECHA DE CIERRE A CORRER (EJEMPLO: BKTRJ05051) Y PEDIR ARCHIVOS DE NUMERALES (TMPNUM)
+PRE CIERRE : ANTES DE CORRER EL CIERRE DE TARJETAS
+POST CIERRE : BACKUP DEL CIERRE
+TMPNUM : NUMERALES, INTERESES, CALCULOS MORATORIOS, ETC.
+RSTOBJ
+                                                           
+RSTOBJ OBJ(*ALL) SAVLIB(GXBDBPS) DEV(*SAVF) SAVF(YAPI/BKTRJ05051) MBROPT(*ALL) ALWOBJDIF(*ALL) RSTLIB(CIERRELIB)                                          
+
+para guseraf y gustraf (permisos de sitc90 y sitcx)
+CPYF FROMFILE(HERNANLIB/GUSTRAF) TOFILE(CIERRELIB/GUSTRAF) MBROPT(*REPLACE) CRTFILE(*NO)
+
+copia de archivos de numerales, pedir numerales de produccion
+ ===> CPYF FROMFILE(YAPI/TMPNUM) TOFILE(CIERRELIB/TMPNUM) MBROPT(*REPLACE) CRTFILE(*NO)                                                                         
+
+BORRAR NUMERALES DEL DIA DE CIERRE
+delete cierrelib.tmpnum 
+where numfch>='20200505'
+
+MODIFICAR SEGUN FECHA DE CIERRE A PROCESAR
+select * from gxbdbps.tcieraf where enemiso='021' and affecie>'20200600'
+
+CAMBIAR RESTRICCIONES EN CIERRELIB-->RESTRICCIONES QUE ESTAN CON PENDIENTES DE COMPROBACION SI SE DEBE DESHABILITAR Y VOLVER A HABILITAR SIN COMPROBACION DE DATOS
+AIUPRLI1
+ITCUENOCOB1
+
+VERIFICAR QUE ESTAS TABLAS ESTEN VACIAS ANTES DE CORRER EL CIERRE
+select * from cierrelib.tspcie where pcfch = '20200414' order by proccod, subsec --DETALLE
+DELETE cierrelib.tspcie where pcfch = '20200414'--DETALLE
+select * from CIERRELIB.tpcie where pcfch = '20200414' --CABECERA
+delete cierrelib.tpcie where pcfch = '20200414'
+
+se debe matar el proceso de cierre del usuario u99ovelar para poder realizar este paso:
+
+el el tspcie se debe cambiar parametro a 'S' de los siguientes procesos:
+
+UPDATE CIERRELIB.TSPCIE
+   SET SUBEST = 'S'
+WHERE PCFCH = '20200505'
+AND   PROCCOD = 'PRPARTE1    '
+AND   SUBPRC = 'TIPOPROCESO ';
+
+UPDATE CIERRELIB.TSPCIE
+   SET SUBEST = 'S'
+WHERE PCFCH = '20200505'
+AND   PROCCOD = 'PRPARTE1    '
+AND   SUBPRC = 'JOURNAL     ';
+
+UPDATE CIERRELIB.TSPCIE
+   SET SUBEST = 'S'
+WHERE PCFCH = '20200505'
+AND   PROCCOD = 'PRPOSTCIERRE'
+AND   SUBPRC = 'BKP-POST    ';
+
+tipo de cierre
+proceso del journal
+backup post proceso
+
+SE DEBE CAMBIAR DEL ESTADO DE ESPECIAL A NORMAL PARA CORRER SITC90
+select * from cierrelib.gcontrp
+UPDATE CIERRELIB.GCONTRP
+   SET COTIPC = '*NORMAL '
+WHERE COCODI = '001';
+
+CIERRE DE ENTIDADES
+
+PARA CONSULTAR ANTES DEL CIERRE DE ENTIDADES
+select * from CIERRELIB.TCIERAF WHERE ENEMISO='021' AND AFFECIE='20200522'
+
+IMPORTANTE
+si se actualizan los sgtes procedimientos se debe verificar el layout de los codigos de barra
+(cuando se actualizan los procedimientos se actualizan los datos del font)
+
+ptextraconti (impresion de extractos a imprimir)
+buscar en P_TLPAGO
+para solucionar aplicar la fuente c39hrp36dmtt
+tamano 21,7
+
+ptextracontinoimp (impresion de extractos a NO imprimir)
+buscar en P_TLPAGO
+para solucionar aplicar la fuente c39hrp36dmtt
+tamano 21,7
+
+rtextraconti (reimpresion de extractos a imprimir) BUSCAR EN EL FONDO DEL LAYOUT
+buscar en P_TLPAGO
+para solucionar aplicar la fuente c39hrp36dmtt
+tamano 21,7
+
+rtextracontinoimp (reimpresion de extractos a NO imprimir) BUSCAR EN EL FONDO DEL LAYOUT
+buscar en P_TLPAGO
+para solucionar aplicar la fuente c39hrp36dmtt
+tamano 21,7
+
+ptextra2 (PARA TODAS LAS DEMAS ENTIDADES)
+buscar en F_101B
+para solucionar aplicar la fuente c39hrp36dmtt
+tamano 21,7
+---
+buscar en F_001B
+para solucionar aplicar la fuente c39hrp36dmtt
+tamano 21,7
+---
+buscar en F_001B_2
+para solucionar aplicar la fuente c39hrp36dmtt
+tamano 21,7
+
+REXTRA3 (REIMPRESION DE EXTRACTO DE TODAS LAS ENTIDADES EXCEPTO CONTINENTAL)
+buscar en F_101B
+para solucionar aplicar la fuente c39hrp36dmtt
+tamano 21,7
+---
+buscar en F_001B
+para solucionar aplicar la fuente c39hrp36dmtt
+tamano 21,7
+---
+buscar en F_001B_2
+para solucionar aplicar la fuente c39hrp36dmtt
+tamano 21,7
+
+UNA VEZ QUE SE MODIFICA TODO
+GUARDAR (CTRL S) Y BUILD WITH THIS ONLY
+
+CIERRE
+FECHA DE PROCESO VERIFICAR
+CONFIRMAR
+VERIFICAR QUE APARACEN EN LA PANTALLA LA ENTIDAD, TARJETA Y AFINIDAD
+CAMBIAR
+TIPO DE CIERRE
+PROCESO DE JOURNAL
+BACKUP POST PROCESO
+LUEGO DE DARLE OK
+
+
+PARA APRESURAR EL PROCESO
+WA
+U99OVELAR
+2
+PRIORIDAD DE EJECUCION 12

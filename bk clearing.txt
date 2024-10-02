@@ -1,0 +1,31 @@
+Select * from gxopera.oprecle where refech ='20210218'
+Select * from gxopera.opcomis where opcofec ='20210218'
+Select * from gxopera.flicom where lifechd = '20210218'
+Select * from gxopera.flicom1 where lifechd = '20210218'
+Select * from gxopera.opliqui 
+where substr(opcampoa, 41, 8) = '20210218'
+Select * from gxopera.opmovi where opfecom = '20210218'
+
+
+
+select * from gxtrjdta.TDSCAL
+
+SELECT CALDIAHAB FROM TDSCAL WHERE CALFECHA = ?
+
+
+
+
+Select * from gxopera.oprecle where refech ='20210121' and REUSER='U99ARNALDO'
+
+Select * from gxopera.opmovi where opfecom = '20210107'
+
+Select * from gxopera.opcomis where opcofec ='20210107' NO HAY 
+
+
+Select * from gxopera.flicom where lifechd = '20210107' and LIUSER='U99ARNALDO'
+Select * from gxopera.flicom1 where lifechd = '20210107' AND LICOMER='0301685'
+
+
+
+
+

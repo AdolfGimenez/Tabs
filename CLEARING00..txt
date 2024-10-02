@@ -1,0 +1,22 @@
+--Tabla de Autorizaciones
+select * from gxbdbps.tswaut where  AUTTRXFCHC='20200904';
+select AUTESTCLE from gxbdbps.tswaut where  AUTTRXFCHC='20200904' and AUTCODSER='PAGFAC' AND AUTCODPRE='PFTA';
+
+--update gxbdbps.tswaut set AUTESTCLE = 'P' where  AUTTRXFCHC='20200904' and AUTESTCLE = 'C' //and AUTCODSER='PAGFAC' AND AUTCODPRE='PFTA'
+
+--Tabla de fecha
+select * from GXFINDTA.TCLFEC;
+--UPDATE GXFINDTA.TCLFEC SET FECANT = '20200903',FECPRO = '20200904',FECSIG = '20200907' WHERE FECID = '002';
+
+--Tablas de procesos
+select * from GXFINDTA.TCLCSP where cpcfec='20200904'; --detalle
+--delete from GXFINDTA.tclcsp where cpcfec='20200904'
+select * from GXFINDTA.TCLCPC where cpcfec='20200904'; --Cabecera
+--delete from GXFINDTA.TCLCPC where cpcfec='20200904'
+
+--Tabla Temporal
+select * FROM GXFINDTA.TCLTPC WHERE TPCFPRO='20200904'
+
+--Tabla Movimientos
+select MOVCDBCC from GXFINDTA.TCLMOV WHERE  sercodi='COMPRA'  aND  MOVFPRO='20200904'; --Cabecera
+select * from GXFINDTA.tclmod where movidmov in (3842739,3842741): --detalle

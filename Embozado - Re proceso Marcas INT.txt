@@ -1,0 +1,71 @@
+Re proceso embozado.
+
+Re proceso de embozado (Marcas internaciones, sobre todo, VISA CONTI BIN 456976, algunos casos VISA BNF 488234).
+
+1- Primero Operaciones debe pasar los registros a re procesar, CI es lo importante.
+
+2- Ubicar en la tabla de historico por CI los registros, ejemplo:
+
+select * from  libdebito.EMBNOVHSTD  
+where crbine='456976' 
+and crdocu in('4342464', 
+'6067935', 
+'3790412', 
+'5339273', 
+'7145780')         
+and CRFEEJ='20201112'
+
+3- Una vez que tengamos ubicados los registros exactos (Puede que haya en diferentes fechas, debemos tomar la ultima tarjeta embozada).
+
+4- Copiar la sentencia sql a pantalla verde as400
+
+5- strsql
+
+6- shift f1, opc 1, sacar sentencia en archivos opc 3, poner nombre nomenclatura embozadoXX en yapi siempre.
+
+7- Una vez generado el archivo auxiliar, ejecutar para limpiar los registros ya que son procesados:
+
+update yapi/embozadoXX set CRUSEJ='', CRHOEJ=0, CRFEEJ=0
+
+8- Luego  debemos copiar a la tabla embnov0d
+
+CPYF FROMFILE(YAPI/EMBOZADOXX) TOFILE(LIBDEBITO/EMBNOV0D) MBROPT(*ADD)
+
+SIEMPRE *ADD, CREATE ARCHIVO *NO
+
+9- Informar a operaciones que ya puede procesar el Paso 2 de embozado AS/400
+
+10- Una vez que procese, debemos borrar los registros para que no quede duplicado.
+
+delete  libdebito.EMBNOVHSTD  
+where crbine='456976' 
+and crdocu in('4342464', 
+'6067935', 
+'3790412', 
+'5339273', 
+'7145780')         
+and CRFEEJ='20201112'
+
+y de TGEMBHAF, ubicar los registros y borrar, ejemplo de hoy:
+
+SELECT * FROM libdebito.TGEMBHAF
+where CRCLAT='VSA'
+and crdocu in('4342464', 
+'6067935', 
+'3790412', 
+'5339273', 
+'7145780')        
+and crenti='020'
+and CRFEEJ='20201112'
+
+delete libdebito.TGEMBHAF
+where CRCLAT='VSA'
+and crdocu in('4342464', 
+'6067935', 
+'3790412', 
+'5339273', 
+'7145780')        
+and crenti='020'
+and CRFEEJ='20201112'
+
+

@@ -1,0 +1,15 @@
+-- dinelco movil
+
+select * from GXSWTDTA.TDMprsrv where prsrdoc='3434423'
+
+
+select * from GXSWTDTA.TDMprsrv where prsrdoc='3256456'
+
+
+select * from GXSWTDTA.TDMprsrv where PRSRTEL='0981852667'
+
+--DINELCO GIROS
+select * from dcash.DC_0014
+
+select * from gxbdcon.gxlousu where usuaid='U99HERNAN'
+

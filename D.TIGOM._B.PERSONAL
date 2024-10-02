@@ -1,0 +1,323 @@
+--detalle de transacciones tigo money y billetera personal
+select  lfectr fecha_real,lhortr hora ,lnrtar tarj,lerrnb refeREncia,lesttr estado,lcretr cod_retorno,lcodtr cod_trx,limpgs importe,lidcom cod_atm,lcomtr comercio,
+lactfj Activo,leca62 Version,lcotel linea_cel
+--select count(*) Cantidad,lcretr Cod_Retorno,lesttr Estado--, lbinpr BIN ,limpgs importe,substr(lidtra,1,1) Origen
+--select *
+from libdebito.drconbep where lfectr between '20210122' and '20210119' --and lhortr <'204500'
+and lenemi in ('581','571','591')
+--and substr(lidtra,1,1) = 'T'
+--and lcodtr in ('000052','567102')
+--and lesttr='A'
+--and lcretr = '19'
+--group by lcretr,lesttr
+order by lhortr desc
+
+
+/*resumen de transacciones tigo money y billetera personal
+000052 Tigo Money, 567102 Billetera personal*/
+select  count (*), lfectr FchTrx, sum (limpgs) Importe, substr(lidtra,1,1) IdTrx, lcretr CodRes, lesttr Estado,lcodtr--,lcotel
+from libdebito.drconbep
+ where lfectr between '20210122' and '20210122'
+and lcodtr in ( '567101','567102')
+--and substr(lidtra,1,1) = 'P' and lcretr = '00' and lesttr = 'D'  --and lhortr between 000000 and 090000   
+GROUP BY  lfectr,  limpgs , substr(lidtra,1,1) , lcretr , lesttr,lcodtr-- ,lcotel
+
+select LFECTR FECHA_REAL,count(*) Cantidad ,lesttr Estado,lcretr Cod_Retorno,coddes Descripcion_COD ,lcodtr COD_TRX ,TXDTRX DETALLES,SUM(limpgs) importe,substr(lidtra,1,1) Origen
+
+from libdebito.drconbep
+inner join LIBDEBITO.TBCTRA0P A on TXCTRX = lcodtr
+right join libdebito.tbcret0p on lcretr = codnro
+WHERE  lfectr between '20210122' and '20210122'
+and lcodtr in ('000052','567102')
+and limpgs>1
+--and lesttr in ('A','R','Q') 
+and  codmar = 'BEPS' 
+group by lcretr,coddes,lesttr,lcodtr,TXDTRX,LFECTR,substr(lidtra,1,1),lfectr
+order by lcodtr,cantidad desc  
+
+04:14 04:25 BAJADA DE SERVICIO
+
+
+-----MONITOREO ADQUIRENCIA MST-----------------
+select lfectr AS FECHA , lcodbc AS MARCA,lenemi EMISOR,/*lbinpr as Bin,*/ lcretr AS RETORNO,/*coddes AS Descripcion_COD,*/ lesttr AS ESTADO, COUNT(*) CANTIDAD
+from libdebito.drconbep
+--inner join LIBDEBITO.TBCTRA0P A on TXCTRX = lcodtr
+--INNER join libdebito.tbcret0p on lcretr = codnro
+where lfectr='20201027'  and lcodbc = 'MST'
+and lenemi in ('530') --and lcretr = '91' ---and    lerrnb = '017180487558'--,'560','590')
+GROUP  BY Lfectr, lcodbc,LENEMI, lesttr , lcretr--,lbinpr--,coddes
+
+SELECT * from libdebito.drconbep where lfectr='20200714'  and lcodbc = 'MST'
+and lenemi in ('530') and lcretr = '00' AND LESTTR = 'A'
+
+--ADQ MST Resumen
+select lfectr AS FECHA , lcodbc AS MARCA,lenemi EMISOR, COUNT(*) CANTIDAD,substr(lidtra,1,1) Origen,lesttr AS ESTADO, lcretr AS COD_RETORNO, coddes Descripcion_COD,CAST(SUM(limpgs)AS bigint) as Importe
+from libdebito.drconbep
+inner join LIBDEBITO.TBCTRA0P A on A.TXCTRX = lcodtr
+right join libdebito.tbcret0p on lcretr = codnro
+where lfectr='20201006' and   lcodbc = 'MST' and codmar='MSTC'
+and lenemi in ('530','560','570','590')
+--and lcretr in '91'
+--and lhortr between '080300' and '104700'
+GROUP BY Lfectr, lcretr, lcodbc,LENEMI,coddes, lesttr,substr(lidtra,1,1)
+order by substr(lidtra,1,1) desc, cantidad desc
+
+----------------ADQUIRENCIA VISA EMISOR Y ADQ-----------------
+select lfectr AS FECHA , lcodbc AS MARCA,lenemi EMISOR,lbinpr as Bin, lcretr AS RETORNO, lesttr AS ESTADO, COUNT(*) CANTIDAD
+--lfectr fecha_real,lhortr hora,substr(lerrnb,2,13) refencia,lnrtar tarje_trx,b.vipannmbr tarje_visa,lctaor tarjeta2_lc,lcodbc MARCA,lenemi entidad,lesttr estado,lcretr cod_retorno,lcodtr cod_trx,limpgs importe,lidcom cod_comercio,
+--lcomtr comercio,lcotel,b.virol,b.vif044rmsg mensaje
+from libdebito.drconbep 
+inner join visa.vistrndta b on lerrnb=virrnbepsa 
+where lfectr='20201004' 
+and lenemi in ('015','500')
+GROUP  BY Lfectr, lcodbc,LENEMI,lbinpr, lesttr , lcretr
+
+-------/*monitoreo de Visa Adquirencia*/---------------
+
+SELECT lfectr FECHA,lfcotr fecha_com,lhortr HORA,/*SUBSTR(lnrtar,1,6) || 'XXXXXX' ||SUBSTR(lnrtar,13,4) */
+lnrtar TARJE,lctaor,lcotel,
+LENEMI ENTIDAD, LCODBC MARCA,lhisde Destino,/*,pdescricion MARCA*/
+--SELECT lfectr FECHA,lhortr HORA, lntoke, LCODBC MARCA,/*,pdescricion MARCA*/
+lesttr ESTADO,lcretr COD_RETORNO,--coddes DESCRIP_RET,--lbinpr BIN,--,pdescricion MARCA_ENTIDAD,
+lerrnb REFE_BEPSA, lidcom COD_COMER,lcomtr LOCAL_COMER,limpgs IMPORTE,
+lcodtr COD_TRX,leca62 Version_Pos,lcored,LNFISC,LPOSEM,LMCCTR,LNFACT--,lntoke--, enemiso BANCO,tgdesc DESCRIPCION
+--select lfectr fecha_real,lenemi emisor,lcretr cod_retorno,count(*) cantidad
+--select substr(lerrnb,2,14) referencia ,lfectr fecha,lhortr hora,limpgs importe,lesttr retorno,lcretr estado
+from libdebito.drconbep
+WHERE lfectr BETWEEN '20201027' AND '20201027'
+--and lhortr between '214500' and '215000'
+and lcodbc='VSA'  
+and lenemi = '510' 
+--in ('015','020')
+--and lbinpr='443078'
+--and lnfisc='422745'
+--and lenemi in ('015','500')
+--and lnrtar='6274315713708420'
+--and lcodtr='567102'
+--and lhortr between '155500' and '162000'
+order by lhortr desc
+
+--Visa de Emisor 
+select lfectr AS FECHA , lcodbc AS MARCA,lenemi EMISOR, COUNT(*) CANTIDAD,lesttr AS ESTADO, lcretr AS COD_RETORNO, coddes Descripcion_COD
+from libdebito.drconbep
+inner join LIBDEBITO.TBCTRA0P A on A.TXCTRX = lcodtr
+right join libdebito.tbcret0p on lcretr = codnro
+where lfectr='20201027' and lcodbc='VSA' and lenemi in ('015','020')
+and  codmar = 'VISA'
+GROUP BY Lfectr, lcretr, lcodbc,LENEMI,coddes, lesttr
+order by lcretr asc, cantidad desc
+
+--Visa Adquiriente --CON ATMS CON EMV ACTIVO
+select lfectr AS FECHA , lcodbc AS MARCA,lenemi EMISOR, COUNT(*) CANTIDAD,lesttr AS ESTADO, lcretr AS COD_RETORNO, coddes Descripcion_COD
+from libdebito.drconbep
+inner join LIBDEBITO.TBCTRA0P A on A.TXCTRX = lcodtr
+right join libdebito.tbcret0p on lcretr = codnro
+where lfectr='20200905' and lcodbc='VSA' and  codmar = 'VISA'
+--and lnfisc='422745' 
+and lenemi in ('500')
+GROUP BY Lfectr, lcretr, lcodbc,LENEMI,coddes, lesttr
+order by lcretr asc, cantidad desC
+
+--Adquirencia Mastercard 
+select lfectr AS FECHA , lcodbc AS MARCA,lenemi EMISOR, COUNT(*) CANTIDAD,lesttr AS ESTADO, lcretr AS COD_RETORNO, coddes Descripcion_COD
+from libdebito.drconbep
+inner join LIBDEBITO.TBCTRA0P A on A.TXCTRX = lcodtr
+right join libdebito.tbcret0p on lcretr = codnro
+where lfectr='20200930' and   lcodbc = 'MST' and codmar='MSTC'
+and lenemi in ('530','560','570','590')
+--and lenemi='510'
+GROUP BY Lfectr, lcretr, lcodbc,LENEMI,coddes, lesttr
+order by lcretr asc, cantidad desc
+
+--ADQ CONTI
+    select lenemi emisor, ennombr ENTIDAD,lcretr cod_retorno,coddes Descripcion_COD,count(*) cantidad,sum(limpgs)
+from libdebito.drconbep INNER JOIN gxbdbps.gentiaf ON (ENEMISO=LENemi)
+inner join LIBDEBITO.TBCTRA0P A on A.TXCTRX = lcodtr
+right join libdebito.tbcret0p on lcretr = codnro
+WHERE lfectr BETWEEN '20210122' AND '20210122'
+and lenemi='540'
+group by lenemi,lcretr,ennombr,coddes
+ORDER BY CANTIDAD DESC
+
+--RETORNO--
+select lfectr fecha_real,lcretr cod_retorno,count(*)cantidad,lbinpr bin,pdescricion MARCA
+from libdebito.drconbep  inner join libdebito.tbinproc on lbinpr=pbin
+WHERE lfectr BETWEEN '2020080' AND '20200803'
+and lcretr='80' --and lactfj='13756136' --and lidcom ='8600862'
+group by lfectr ,lcretr,lbinpr,pdescricion
+
+
+-- transaccion con Chip Banda y otros de un determinado ATM 
+
+    SELECT lfectr FECHA,lfcotr fecha_com,lhortr HORA,
+lnrtar TARJE,LENEMI ENTIDAD, LCODBC MARCA,
+lesttr ESTADO,lcretr COD_RETORNO,
+lerrnb REFE_BEPSA, lidcom COD_COMER,lcomtr LOCAL_COMER,limpgs IMPORTE,substr(leca62,1,4) ATM,
+lcodtr COD_TRX,lnfisc COD_ADQ_BPS,
+(CASE WHEN LPOSEM in ('9010','9020','910','920') THEN 'BANDA MAGNETICA'
+WHEN LPOSEM = '0510' THEN 'CHIP'
+WHEN LPOSEM = '0710' THEN 'CONTACLESS' else 'VACIO' END) Tipo_lectura
+from libdebito.drconbep
+WHERE lfectr BETWEEN '20210203' AND '20210204'
+--and lcodbc='VSA'
+and substr(lidtra,1,4)='T065'
+order by lhortr desc
+ 
+
+--- monitorear visa ADQ y EMI
+
+    select lfectr fecha_real,lhortr hora,substr(lerrnb,2,13) refencia,lnrtar tarje_trx,b.vipannmbr tarje_visa,lcodbc MARCA,lenemi entidad,
+lesttr estado,lcretr cod_retorno,lcodtr cod_trx,limpgs importe,lidcom cod_comercio,
+lcomtr comercio,b.virol,b.vif044rmsg mensaje
+from libdebito.drconbep 
+inner join visa.vistrndta b on lerrnb=virrnbepsa
+where lfectr between '20200812' and '20200812'
+--and lnrtar ='4882340010063886'
+--and b.virrnbepsa='016278880939'
+order by lhortr desc
+
+//*CONSULTA DE TRX MST*//865900
+select lfectr FECHA, lhortr HORA,LCODTR COD_TRX, lnrtar tarjeta,lexpir,lcodbc marca,lenemi, lerrnb referencia,lidtra dispo, lidcom codigo, lcomtr comercio,leca62 DISPO, limpgs importe, lcretr retorno, coddes Descripcion, lesttr estado,
+(CASE WHEN LPOSEM in ('9010','9020','910','920') THEN 'BANDA MAGNETICA'  WHEN LPOSEM = '0510' THEN 'CHIP' WHEN LPOSEM = '0710' THEN 'CONTACLESS'   WHEN LPOSEM ='0100' THEN 'INTERNET'  else 'VACIO' END)MOD_ENTRADA,LNFACT PAIS--LNRTAR,LIMPDS,LCOMTR,LCODTR 
+ from libdebito.drconbep  
+  right join libdebito.tbcret0p on lcretr = codnro 
+ where  lfectr='20210204' --and substr(lidtra,1,1) = 'P' -
+--and lcretr = '91'
+--and lbinpr= '600691'  --and lexpir = '2007'  -- and   lcodbc = 'MST' --and codmar='MSTC'
+--and lenemi = '510' --in ('530','560','570','590')
+--and lenemi in ('015','020','500')
+--and lcodtr= '304010'
+and lcodbc in ('MST')
+ AND CODMAR = 'BEPS'
+--AND LHORTR between '000000' and '063000'
+order by lhortr desc
+
+//*CONSULTA DE TRX VISA*//
+select lfectr FECHA, lhortr HORA,LCODTR COD_TRX, lnrtar tarjeta,lexpir,lcodbc marca,lenemi, lerrnb referencia,lidtra dispo, lidcom codigo, lcomtr comercio,leca62 DISPO, limpgs importe, lcretr retorno,coddes Descripcion, lesttr estado,
+(CASE WHEN LPOSEM in ('9010','9020','910','920') THEN 'BANDA MAGNETICA'  WHEN LPOSEM = '0510' THEN 'CHIP' WHEN LPOSEM = '0710' THEN 'CONTACLESS'   WHEN LPOSEM ='0100' THEN 'INTERNET'  else 'VACIO' END)MOD_ENTRADA,LNFACT PAIS--LNRTAR,LIMPDS,LCOMTR,LCODTR 
+ from libdebito.drconbep   
+ right join libdebito.tbcret0p on lcretr = codnro
+ where  lfectr='20210204' --and substr(lidtra,1,1) = 'P' -
+--and lcretr in ('96')
+--and lbinpr= '601637'  --and lexpir = '2007'  -- and   lcodbc = 'MST' --and codmar='MSTC'
+--and lenemi in ('530','560','570','590')
+--and lenemi = '510' --in ('015','020','500')
+and lcodbc in ('VSA')
+ AND CODMAR = 'BEPS'
+--AND LHORTR between '220000' and '230500'
+order by lhortr desc
+
+--detalle de transacciones tigo money y billetera personal
+select  lfectr fecha_real,lhortr hora ,lnrtar tarj,lerrnb refeREncia,lesttr estado,lcretr cod_retorno,lcodtr cod_trx,limpgs importe,lidcom cod_atm,lcomtr comercio,
+lactfj Activo,leca62 Version,lcotel linea_cel
+--select count(*) Cantidad,lcretr Cod_Retorno,lesttr Estado--, lbinpr BIN ,limpgs importe,substr(lidtra,1,1) Origen
+--select *
+from libdebito.drconbep where lfectr between '20210204' and '20210204' --and lhortr <'204500'
+and lenemi in ('581','571','591')
+--and lbinpr in '488234'
+--and substr(lidtra,1,1) = 'T'
+--and lcodtr in ('000052','567102')
+--and lesttr='A'
+--and lcretr = '19'
+--group by lcretr,lesttr
+order by lhortr desc
+
+--ADQ VISA PROCARD
+    select substr(LHORTR,1,2) ,lenemi emisor, lcretr cod_retorno,coddes Descripcion_COD, lesttr estado,count(*) cantidad
+   from libdebito.drconbep 
+--INNER JOIN gxbdbps.gentiaf ON (ENEMISO=LENemi)
+inner join LIBDEBITO.TBCTRA0P A on A.TXCTRX = lcodtr
+right join libdebito.tbcret0p on lcretr = codnro
+WHERE lfectr BETWEEN '20210114' AND '20210114'
+and lenemi='510'
+and lcodbc in ('VSA') AND CODMAR = 'BEPS'
+group by lenemi,lcretr,lesttr,coddes,substr(LHORTR,1,2) 
+
+
+
+
+--detalle de transacciones tigo money y billetera personal
+select  lfectr fecha_real,lhortr hora ,lnrtar tarj,lerrnb refeREncia,lesttr estado,lcretr cod_retorno,lcodtr cod_trx,limpgs importe,lidcom cod_atm,lcomtr comercio,
+lactfj Activo,leca62 Version,lcotel linea_cel
+--select count(*) Cantidad,lcretr Cod_Retorno,lesttr Estado--, lbinpr BIN ,limpgs importe,substr(lidtra,1,1) Origen
+--select *
+from libdebito.drconbep where lfectr between '20210122' and '20210122' --and lhortr <'204500'
+--and lenemi in ('581','571','591')
+--and substr(lidtra,1,1) = 'T'
+--and lcodtr in '567102' --('000052','567102')
+--and lesttr='A'
+and lenemi='591'
+--and lcretr = '19'
+--group by lcretr,lesttr
+order by lhortr desc
+
+[13:01] Marco Alvarez
+    
+--MST ADQUIRENCIA PROCARD
+select lfectr AS FECHA , lcodbc AS MARCA,lenemi EMISOR, COUNT(*) CANTIDAD,substr(lidtra,1,1) Origen,lesttr AS ESTADO, lcretr AS COD_RETORNO, coddes Descripcion_COD,CAST(SUM(limpgs)AS bigint) as Importe
+from libdebito.drconbep
+inner join LIBDEBITO.TBCTRA0P A on A.TXCTRX = lcodtr
+right join libdebito.tbcret0p on lcretr = codnro
+where lfectr='20201028' and   lcodbc = 'MST' and codmar='MSTC'
+and lenemi in ('510') ---and lnfisc='422745'
+GROUP BY Lfectr, lcretr, lcodbc,LENEMI,coddes, lesttr,substr(lidtra,1,1)
+order by substr(lidtra,1,1) desc, cantidad desc
+
+
+
+
+--Visa Adquiriente  Procard--########################################################################################
+select lfectr AS FECHA , lcodbc AS MARCA,lenemi EMISOR, COUNT(*) CANTIDAD,lesttr AS ESTADO, lcretr AS COD_RETORNO, coddes Descripcion_COD
+from libdebito.drconbep
+inner join LIBDEBITO.TBCTRA0P A on A.TXCTRX = lcodtr
+right join libdebito.tbcret0p on lcretr = codnro
+where lfectr='20201028' and lcodbc='VSA'
+and lenemi in ('510')
+GROUP BY Lfectr, lcretr, lcodbc,LENEMI,coddes, lesttr
+order by lcretr asc, cantidad desc
+
+                   TRANSACCIONES DE POS JPOS                                            *
+******************************************************************************************
+SELECT lfectr FECHA,lhortr HORA,/*SUBSTR(lnrtar,1,6) || 'XXXXXX' ||SUBSTR(lnrtar,13,4) TARJE*/lnrtar tarje,lexpir VTO,lbinpr bin,lctaor,lctade
+lbcodb,LENEMI ENTIDAD, lcored ,LCODBC MARCA,/*,pdescricion MARCA*/
+lesttr ESTADO,lcretr COD_RETORNO,lcodtr COD_TRX,limpgs IMPORTE,lcotel celular,--coddes DESCRIP_RET,--lbinpr BIN,--
+lerrnb REFE_BEPSA, lidcom COD_COMER,lcomtr LOCAL_COMER, /*txdtrx DESC_TRX,*/LECA62 version_pos,lactfj cod_act,lcautr cod_aut--LNFISC,LPOSEM,LMCCTR,LNFACT--,lntoke--, enemiso BANCO,tgdesc DESCRIPCION
+from libdebito.drconbep --inner join libdebito.tbinproc on lbinpr=pbin
+WHERE lfectr BETWEEN '20210122' AND '20210122'
+and substr(leca62,9,10) like ('%J%')
+--and lhortr>120000
+order by lhortr desc
+-----------------------------------
+
+[12:09] Jose Enciso.
+    --update para JPOS  => se ejecuta antes de que el tecnico le de inicializar 
+UPDATE GXBDBPS.COMMS
+   SET COMMPRIVAL = '10.251.251.250',
+       COMMPRITCP = '11001',
+       COMMSECVAL = '10.251.251.250',
+       COMMSECTCP = '11001'
+WHERE COMMID = '02  ';
+select * from gxbdbps.comms where commid='02'
+
+
+--update para voler a la configuración original. => se ejecuta despues que el tecnico haya confirmado la inicializacion
+
+UPDATE GXBDBPS.COMMS
+   SET COMMPRIVAL = '10.251.251.250',
+       COMMPRITCP = '5010',
+       COMMSECVAL = '10.251.251.250',
+       COMMSECTCP = '5010'
+WHERE COMMID = '02  ';
+ ********************************************************************
+SELECT lfectr FECHA,lhortr HORA,/*SUBSTR(lnrtar,1,6) || 'XXXXXX' ||SUBSTR(lnrtar,13,4) TARJE*/lnrtar tarje,lexpir VTO,lbinpr bin,
+lbcodb,LENEMI ENTIDAD, lcored ,LCODBC MARCA,/*,pdescricion MARCA*/
+lesttr ESTADO,lcretr COD_RETORNO,lcodtr COD_TRX,limpgs IMPORTE,lcotel celular,--coddes DESCRIP_RET,--lbinpr BIN,--
+lerrnb REFE_BEPSA, lidcom COD_COMER,lcomtr LOCAL_COMER, /*txdtrx DESC_TRX,*/LECA62 version_pos,lactfj cod_act,lcautr cod_aut--LNFISC,LPOSEM,LMCCTR,LNFACT--,lntoke--, enemiso BANCO,tgdesc DESCRIPCION
+from libdebito.drconbep --inner join libdebito.tbinproc on lbinpr=pbin
+WHERE lfectr BETWEEN '20201102' AND '20201102'
+and substr(leca62,9,10) like ('%J%')
+--and lhortr>120000
+--and lidcom not in ('302179','6000392')
+order by lhortr desc
+
+

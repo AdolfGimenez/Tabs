@@ -1,0 +1,31 @@
+-- Verificar carga de bines de Reing
+select * from gxbdbps.nut999 where DBGTBLID = 'TDGBIN'
+select * from gxbdbps.nut999 where DBGTBLID = 'TDGBIN' and DBGOBJID = 'APAUT003';
+select * from gxbdbps.nut999 where DBGTBLID = 'TDGBIN' and DBGOBJID = 'APAUT010';
+
+
+select * from libdebito.drconbep where lfectr='20210421'  and lhortr>='000000' and LORITR='P' order by lhortr desc
+
+select * from libdebito.drconbep where lfectr='20210421'  and lhortr>='000000' and LORITR='A' order by lhortr desc
+
+	select * from libdebito.drconbep where lfectr = '20210421' and leca62 like '%J%'  order by lhortr desc 
+	
+
+--Total 3 registros
+Update gxopera.oplicre set opcreimpn = 0, OPCRESTAT = '00',  OPCREMEN = 'RECUPERO DE ACRED DUPLICADA FCRE 05/01/2021' where opcrefcom = '20210420' and opcrestat = '91' and opcrecom in
+('0700951','1001925','3100056')
+
+
+select * from LIBDEBITO.SWITCHENT 
+
+
+INSERT INTO LIBDEBITO.SWITCHENT 
+(SENTID,SENTNOM,SENTCOM,SENTPUE,SENTIP,SENTFEC,SENTUSR) 
+
+VALUES (33,'CNXRPGWALL','COMSVR01',5155,'10.1.254.234',20210421,current user); 
+
+
+select * from gxsegdta.tsgnum where SGNUMOBJ='TCLRTC'
+
+
+select * from GXFINDTA.TCLRTC 

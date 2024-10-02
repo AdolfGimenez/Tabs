@@ -1,0 +1,15 @@
+[14:23] Hernan Farias
+    se pasa con la siguiente sentencia
+
+[14:23] Hernan Farias
+    Select substr(OPIDTRA, 5, 4) secu, (substr(OPFEREA, 7, 2)||'/'||substr(OPFEREA, 5, 2)||'/'||substr(OPFEREA, 1, 4)) freal,
+substr(OPFECOM, 7, 2)||'/'||substr(OPFECOM, 5, 2)||'/'||substr(OPFECOM, 1, 4)fcomercial,
+substr(digits(OPHOTRN), 3, 2)||':'||substr(digits(OPHOTRN), 5, 2)||':'||substr(digits(OPHOTRN), 7, 2),
+substr(optarj,1,6)||'XXXXXX'||substr(optarj,13,4) Tarjeta,opcomer Comercio,
+opmonto Icompra, opcomi comision, opcoment comentidad, opivaent ivaentidad, opcombps combepsa, opivabps ivabps, opmonto Neto, opcodaut codaut, substr(opidtra,1,8) origen
+from gxopera.opmovi where opfecom = '20210730'
+and substr(opidtra,1,1) <> 'T'
+and OPTIPTAR = 'DEB'
+and opcodtrn = '014000' -- Adelanto CNB
+and SUBSTR(OPCOMER,1,2) = '86'
+order by opfecom, opcomer, optarj

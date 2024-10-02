@@ -1,0 +1,52 @@
+Visualizar un archivo
+DSPPFM
+
+Visualizar un archivo
+RUNQRY QRYFILE
+
+Visualizar archivo - Asistente para consultas sql
+STRQRY
+
+Copiar
+CPYF
+
+Borrar
+DLTF
+
+Trabajos agendados
+WRKJOBSCDE
+
+Borrar contenido de archivo
+CLRPFM
+
+Renombrar objetos
+RNMOBJ
+
+Actualizar 
+UPDDTA
+
+
+SIGNOFF
+STRDFU
+DSPJOBLOG -- todo lo que hiciste hasta ahora
+f10 y f18
+
+DSPLOG
+
+Trabajar con programas
+WRKPGM
+
+Trabajr con objetos  
+WRKOBJ
+
+GO CMDAUT
+
+GOCMDTAP
+INZTAP -- inicializar cinta
+SAVLIB -- guardar biblioteca
+RSTLIB -- restaurar biblioteca
+SAVOBJ -- guardar archivos
+CRTSAVF -- crear archivo de salvado
+RSTOBJ -- restaurar objetos
+SBMJOB -- someter trabajo
+

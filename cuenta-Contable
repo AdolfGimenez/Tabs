@@ -1,0 +1,13 @@
+--para cuenta contable.
+select (CASE WHEN ascosu = '01' THEN 'BALANCE GUARANIES - OFICINA CENTRAL' ELSE '' END)cod_sucursal,ascoct CUENTA,(asnras||'/'||asnrli) AS Asiento,
+ SUBSTR(asfech,5,2)||'-'||SUBSTR(asfech,3,2)||'-'||SUBSTR(asfech,1,2)fecha,ascprv coD_COMER,CLNOMB CLIENTE,clruco RUC,asdesc DESCRIPCION,ascodb TIPO,INTEGER(SUM(ASIMPO))IMPORTE
+from CONTABILID.CCASI21
+--left JOIN GXBDBPS.COMAEAF C ON C.COCOMER = substr(digits(ascprv), 6, 7)
+LEFT JOIN CONTABILID.FICLIEN ON CLCODO = ASCODE AND CLCOCL = ascprv
+RIGHT JOIN contabilid.TATMONE ON TMCMON = ASCMON
+where  asfech BETWEEN '211201' and '211231'
+and ascosu= '01'
+and ascmon = '1'
+and ascoct = '201007202800410'  and ascodb in ('DB','CR') --CLNOMB like '%ANDE%' --and ascodb = 'DB' AND ascprv = '200943'
+GROUP BY ascprv,ascosu,TMDESC,ascoct,asnras,asnrli,asfech,CLNOMB,clruco,asdesc,ascodb
+

@@ -1,0 +1,109 @@
+/*------------------------------------------------------------------*/
+/*                                                                  */
+/*    BACKUP DIARIO DE OBJETOS EN PRODUCCION                        */
+/*                                                                  */
+/*------------------------------------------------------------------*/
+VUELVE:     PGM
+
+ /*GXOPERA  MODIF.29/09/16 */
+
+             SAVOBJ     OBJ(OPMOVI OPRECLE OPENTID OPENTID1 FACTURA +
+                          FACTURA1 FARTICU FCOBROS FCTACLI FLICOM +
+                          FLICOM1 FMONEDA FMONEDA1 FNOREMI FPARAME +
+                          FPLACTA FTIPROD FLICOM2 OPMOVI OPRECLE +
+                          FCTACOM FLICOM FLICOM1 OPAGO0P OPAGO1P +
+                          OPAGO3P OPAGO3TC OPAGO1PHIS OPREATM +
+                          FACTURA FACTURA1 FACTURA2 FCOBROS RECIBOS +
+                          OPLIQUI) LIB(GXOPERA) DEV(TAP05) +
+                          ENDOPT(*LEAVE) UPDHST(*YES) +
+                          SAVACT(*SYNCLIB) ACCPTH(*NO) SAVFDTA(*NO)
+             MONMSG     MSGID(CPF3771)
+             MONMSG     MSGID(CPF0000)
+
+             SAVOBJ     OBJ(*ALL) LIB(GXMONI) DEV(TAP05) +
+                          ENDOPT(*LEAVE) UPDHST(*YES) +
+                          SAVACT(*SYNCLIB) ACCPTH(*NO) SAVFDTA(*NO)
+             MONMSG     MSGID(CPF0000)
+
+ /*CONTABILIDAD */
+
+             SAVOBJ     OBJ(*ALL) LIB(CONTABILID) DEV(TAP05) +
+                          OBJTYPE(*FILE) ENDOPT(*LEAVE) UPDHST(*YES) +
+                          SAVACT(*SYNCLIB) ACCPTH(*NO) SAVFDTA(*NO)
+             MONMSG     MSGID(CPF0000)
+
+ /*SUELCON      */
+             SAVOBJ     OBJ(*ALL) LIB(SUELCON) DEV(TAP05) +
+                          OBJTYPE(*FILE) ENDOPT(*LEAVE) UPDHST(*YES) +
+                          SAVACT(*SYNCLIB) ACCPTH(*NO) SAVFDTA(*NO)
+             MONMSG     MSGID(CPF0000)
+
+ /*DATOS ENVIADOS AL BANCO - SGTC*/
+
+             SAVOBJ     OBJ(HADELTC HCOMPTC HEMBTC HMOVITC HPAGOSTC +
+                          HRESOP HRSADEL HRSCOMI HRSDIARIO +
+                          HPGCOMER) LIB(GXBDSGTC) DEV(TAP05) +
+                          OBJTYPE(*FILE) ENDOPT(*LEAVE) UPDHST(*YES) +
+                          SAVACT(*SYNCLIB) ACCPTH(*NO) SAVFDTA(*NO)
+             MONMSG     MSGID(CPF0000)
+
+ /*DINELCO TRANSFERENCIA */
+
+             SAVOBJ     OBJ(*ALL) LIB(DCASH) DEV(TAP05) +
+                          ENDOPT(*LEAVE) UPDHST(*YES) +
+                          SAVACT(*SYNCLIB) SAVFDTA(*NO)
+             MONMSG     MSGID(CPF0000)
+
+ /*SISTEMA SHOPPING*/
+
+             SAVOBJ     OBJ(SOLENT SOLENT1 SOLTRN SOLUSR SOLNUM) +
+                          LIB(SOLDB) DEV(TAP05) ENDOPT(*LEAVE) +
+                          UPDHST(*YES) SAVACT(*SYNCLIB) ACCPTH(*NO) +
+                          SAVFDTA(*NO)
+             MONMSG     MSGID(CPF0000)
+
+ /*DINELCO DEBITO   MODIF.29/09/16 */
+
+             SAVOBJ     OBJ(*ALL) LIB(GXBDBPS) DEV(TAP05)   +
+                          ENDOPT(*LEAVE) UPDHST(*YES) +
+                          SAVACT(*SYNCLIB) ACCPTH(*NO) SAVFDTA(*NO)
+             MONMSG     MSGID(CPF0000)
+
+ /*SWITCH  */
+             SAVOBJ     OBJ(DRCONBEP TGEMBHAF COPRCLA0P TBATMS0P +
+                          TBBINE0P TBCOTZ0P TBCRET0P TBCTRA0P +
+                          TBEPAD0P OPEMAEHST) LIB(LIBDEBITO) +
+                          DEV(TAP05) ENDOPT(*LEAVE) UPDHST(*YES) +
+                          SAVACT(*SYNCLIB) ACCPTH(*NO) SAVFDTA(*NO)
+             MONMSG     MSGID(CPF0000)
+
+             SAVOBJ     OBJ(TGSVBEP) LIB(GXDEBITO) DEV(TAP05) +
+                          ENDOPT(*LEAVE) UPDHST(*YES) +
+                          SAVACT(*SYNCLIB) ACCPTH(*NO) SAVFDTA(*NO)
+             MONMSG     MSGID(CPF0000)
+
+ /*JOURNAL */
+             SAVOBJ     OBJ(*ALL) LIB(@JRNRCVLIB) DEV(TAP05) +
+                          ENDOPT(*LEAVE) UPDHST(*YES) SAVACT(*NO) +
+                          ACCPTH(*NO) SAVFDTA(*NO)
+             MONMSG     MSGID(CPF3771)
+             MONMSG     MSGID(CPF0000)
+
+             SAVOBJ     OBJ(*ALL) LIB(@AUDRCVLIB) DEV(TAP05) +
+                          ENDOPT(*LEAVE) UPDHST(*YES) SAVACT(*NO) +
+                          ACCPTH(*NO) SAVFDTA(*NO)
+             MONMSG     MSGID(CPF3771)
+
+
+ /*FEATMSLIB    */
+             SAVOBJ     OBJ(AZLHT ADRPY AZDTE ADOCD) LIB(FEATMSLIB) +
+                          DEV(TAP05) ENDOPT(*LEAVE) UPDHST(*YES) +
+                          SAVACT(*SYNCLIB) ACCPTH(*NO) SAVFDTA(*NO)
+             MONMSG     MSGID(CPF0000)
+
+ /*SISTEMA MENU    */
+ /*          SAVOBJ     OBJ(BKTRJ*) LIB(GXBDBKP) DEV(TAP05) +
+                          UPDHST(*YES) SAVACT(*SYNCLIB)  */
+
+             DSPTAP     DEV(TAP05) DATA(*SAVRST) OUTPUT(*PRINT)
+ FIN:        ENDPGM                                                

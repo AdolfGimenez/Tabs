@@ -1,0 +1,36 @@
+select lfectr AS FECHA , lcodbc AS MARCA,lenemi EMISOR
+,lbinpr as Bin, lcretr AS RETORNO, lesttr AS ESTADO, COUNT(*) CANTIDAD
+from libdebito.drconbep
+where lfectr='20200624'
+--AND LCRETR IN '91'
+--AND LHORTR > '140000' 
+--and lhortr > '205000'
+and lenemi in ('530')--,'560','590')
+GROUP BY Lfectr, lcodbc,LENEMI,lbinpr, lesttr , lcretr
+order by lcretr asc
+------------------------------------------------------------
+------------------mst Bepsa
+select lfectr Fecha, lhortr Hora, lcodbc Marca, lenemi Emisor, lbinpr Bin, lnrtar Tarjeta
+,lcretr Retorno, lesttr Estado, loritr,LHISDE EMISOR from libdebito.drconbep
+--where lhortr between '175506' and '191548'
+where lfectr in '20200624'
+--and lenemi='530'
+and lcodbc='VSA'
+and lnfisc='422745'
+--and lcodbc in 'MST'
+--and lhisde in 'CONT'
+and lhortr > '170300'
+and lcretr in '91' --('91','96')
+--and lcretr in ('91','96','00')
+--AND LESTTR IN 'R'
+--and lfectr in '20200525'
+--and lbinpr like ('502026%','601638%')
+--and lbinpr like '601638%'
+--and lbinpr like '601639%'
+--and lbinpr like '601637%'
+--and lbinpr like '606257%'
+--and lbinpr like '606372%'
+--and lbinpr like '541863%'
+--and lbinpr like '230671%'
+--and lbinpr like '502026'
+order by lhortr desc
