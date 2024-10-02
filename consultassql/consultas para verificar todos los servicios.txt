@@ -1,0 +1,107 @@
+
+--RESUMEN PARA EL GRUPALES DE NOC Y INFRA--
+------------------------------------------****************INFORME---WASAP************************************--------------------------------------
+--Visa de Emisor por grupo
+select lfectr AS FECHA , lcodbc AS MARCA,lenemi EMISOR, COUNT(*) CANTIDAD,lesttr AS ESTADO,
+ lcretr AS COD_RETORNO, coddes Descripcion_COD
+from libdebito.drconbep
+inner join LIBDEBITO.TBCTRA0P A on A.TXCTRX = lcodtr
+right join libdebito.tbcret0p on lcretr = codnro
+where lfectr='20201028' and lcodbc='VSA' and lenemi in ('015','020')
+GROUP BY Lfectr, lcretr, lcodbc,LENEMI,coddes, lesttr
+order by lcretr asc, cantidad desc
+
+ 
+
+--Visa Adquiriente --CON ATMS CON EMV ACTIVO por grupo
+select lfectr AS FECHA , lcodbc AS MARCA,lenemi EMISOR, COUNT(*) CANTIDAD,
+lesttr AS ESTADO, lcretr AS COD_RETORNO, coddes Descripcion_COD
+from libdebito.drconbep
+inner join LIBDEBITO.TBCTRA0P A on A.TXCTRX = lcodtr
+right join libdebito.tbcret0p on lcretr = codnro
+where lfectr='20201028' and lcodbc='VSA'
+and lnfisc='422745' and lenemi in ('500')
+GROUP BY Lfectr, lcretr, lcodbc,LENEMI,coddes, lesttr
+order by lcretr asc, cantidad desc
+
+ 
+
+--Visa Adquiriente Procard --CON ATMS CON EMV ACTIVO por grupo
+select lfectr AS FECHA , lcodbc AS MARCA,lenemi EMISOR, COUNT(*) CANTIDAD,
+lesttr AS ESTADO, lcretr AS COD_RETORNO, coddes Descripcion_COD
+from libdebito.drconbep
+inner join LIBDEBITO.TBCTRA0P A on A.TXCTRX = lcodtr
+right join libdebito.tbcret0p on lcretr = codnro
+where lfectr='20201028' and lcodbc='VSA'
+and lenemi in ('510')
+GROUP BY Lfectr, lcretr, lcodbc,LENEMI,coddes, lesttr
+order by lcretr asc, cantidad desc
+
+
+--nuevo MST CON IMPORTE--ADQ MST Resumen
+select lfectr AS FECHA , lcodbc AS MARCA,lenemi EMISOR, COUNT(*) CANTIDAD,substr(lidtra,1,1) Origen,lesttr AS ESTADO, 
+lcretr AS COD_RETORNO, coddes Descripcion_COD,CAST(SUM(limpgs)AS bigint) as Importe
+from libdebito.drconbep
+inner join LIBDEBITO.TBCTRA0P A on A.TXCTRX = lcodtr
+right join libdebito.tbcret0p on lcretr = codnro
+where lfectr='20201028' and   lcodbc = 'MST' and codmar='MSTC'
+and lenemi in ('530','560','570','590')--and lcretr in '91'--and lhortr between '080300' and '104700'
+GROUP BY Lfectr, lcretr, lcodbc,LENEMI,coddes, lesttr,substr(lidtra,1,1)
+order by substr(lidtra,1,1) desc, cantidad desc
+
+ 
+
+--Visa ADQ Continental--por grupo
+select lenemi emisor, ennombr ENTIDAD,lcretr cod_retorno,count(*) cantidad,CAST(SUM(limpgs)AS int) Importe
+from libdebito.drconbep INNER JOIN gxbdbps.gentiaf ON (ENEMISO=LENemi)
+WHERE lfectr BETWEEN '20201028' AND '20201028'
+and lenemi='540'
+group by lenemi,lcretr,ennombr
+ORDER BY CANTIDAD DESC
+
+ 
+
+---RESUMEN BILLETERAS#############################################################################################################################################################--
+select count(*) Cantidad ,lcretr Cod_Retorno,coddes Descripcion_COD ,LFECTR FECHA_REAL,lesttr Estado,lcodtr COD_TRX ,CAST(SUM(limpgs)AS bigint) importe,substr(lidtra,1,1) Origen
+,A.TXDTRX DETALLES
+from libdebito.drconbep
+inner join LIBDEBITO.TBCTRA0P A on A.TXCTRX = lcodtr
+right join libdebito.tbcret0p on lcretr = codnro
+WHERE  lfectr= '20201028'
+and lcodtr in ('000052','567102','000072')
+and limpgs>1
+and  codmar = 'BEPS'--and lenemi='581'
+group by lcretr,coddes,lesttr,lcodtr,TXDTRX,LFECTR,substr(lidtra,1,1),lfectr
+order by lcodtr,cantidad desc 
+
+
+---RESUMEN TARJETAS DINELCO 703002-703020-703040#############################################################################################################################################################--
+select lfectr AS FECHA , lcodbc AS MARCA,lenemi EMISOR,LBINPR BIN,ENNOMBR entidad, COUNT(*) CANTIDAD,lesttr AS ESTADO, 
+lcretr AS COD_RETORNO, coddes Descripcion_COD,CAST(SUM(limpgs)AS bigint) as Importe
+from libdebito.drconbep
+right join libdebito.tbcret0p on lcretr = codnro
+INNER JOIN gxbdbps.gentiaf ON (ENEMISO=LENemi)
+where lfectr='20200113' and codmar='BEPS'--and   lcodbc = 'DIN' and 
+and LBINPR in ('703002','703020','703040')--and lcretr in '91'--and lhortr between '080300' and '104700'
+GROUP BY Lfectr, lcretr,LBINPR, lcodbc,LENEMI,ennombr,coddes, lesttr
+order by LENEMI ASC,cantidad desc
+
+
+--totalizador
+select count(*) cantidad,corucn ruc, adnumcta cuenta from gxbdbps.comaeaf where corucn='80016096-7' and costat='0'
+group by corucn,adnumcta
+CANTIDAD	RUC	            CUENTA
+150   	  80016096-7     	001066175       
+86	      80016096-7     	970628          
+9	        80016096-7     	1066175         
+3	        80016096-7     	1441613         
+1	        80016096-7     	400002617       
+--detalle
+select cocomer,codeno,adnumcta,enemiso from gxbdbps.comaeaf where corucn='80016096-7' and costat='0'
+order by cocomer desc
+249 filas retornadas.
+archivo adjunto en el redmine
+--actualización
+update gxbdbps.comaeaf set adnumcta='0107920031', enemiso='057' 
+where corucn='80016096-7' and costat='0'
+249 comercios actualizados

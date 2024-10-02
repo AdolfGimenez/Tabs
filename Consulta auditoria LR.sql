@@ -1,0 +1,42 @@
+/*TEMPORAL*/
+SELECT a.mvemiso Emisor,a.MTNUMTA tarjeta, a.MVNUMCT cuenta ,
+b.cenumdo nro_ci,b.mtnopla titular,a.MVFEPRO fecha_proceso,
+a.mvferea fecha_real, a.MVIMPO2 importe,mvcodre cod_respuesta_trx,
+a.mvcodco cod_mov,a.mvnomco descripcion,a.mvcodau cod_aut,
+a.mvnoved novedad,a.mvdispo DISPOSITIVO,a.mvidusr USUARIO
+FROM gxbdbps.tmoviaf a
+ inner join gxbdbps.tmtaraf b on a.mtnumta=b.mtnumta
+WHERE a.mvemiso in ('151')
+--('117','118','120','151','155','159','159','160','601','603','606')
+and a.mvferea between '20200523' and '20200716'
+
+/*HISTORICO DE MOVIMIENTOS*/ --,'155','117') ORDER BY a.MTNUMTA
+SELECT a.hmemiso EMISOR,a.HmNUMTA tarjeta, a.HmNUMCT cuenta ,
+ b.cenumdo nro_ci,b.mtnopla titular,a.HmFEPRO fecha_proceso,
+ a.Hmferea fecha_real, a.HmIMPO2 importe,
+hmcodre Cod_respuesta_trx,a.hmtipot mov_C_D,a.Hmcodco cod_mov,
+a.Hmnomco descripcion,a.Hmcodau cod_aut,
+a.Hmnoved novedad,a.Hmdispo DISPOSITIVO,a.Hmidusr USUARIO
+select *
+FROM gxbdbps.thmovaf a 
+inner join gxbdbps.tmtaraf b on a.hmnumta=b.mtnumta
+WHERE a.hmemiso in '151'-- and b.cenumdo in ('1883250','2523211')
+and a.hmnumta IN ('6274311510002139','6274311510000471')
+and a.hmfepro between '20160101' and '20201231' 
+and hmtipot='C'
+AND HMFEPRO IN ('20160304','20180314','20180419','20180507','20180608','20180802','20180810','20181016',
+'20181108','20181112','20181206','20190125','20190206','20190208','20190322','20190417','20190510',
+'20190531','20190612','20190618','20190621','20190712','20190731','20190903','20191003','20191024',
+'20191029','20191104','20191122','20200102','20200110','20200206','20200221','20200320')
+ORDER BY a.hmNUMTA
+/*HISTORICO DE MOVIMIENTOS*/
+SELECT * FROM gxbdbps.thmovaf
+WHERE hmemiso='319' ORDER BY hMNUMTA
+
+
+MTNUMTA	MTULTSC	BLCODIG	MTSTATS	ENEMISO	SUCODIG	CETIPOD	CENUMDO	BIBINES	AFAFINI	MCNUMCT	MTTIPOT	MTCLVIP	MTNOPLA	MTEMPRE	MTFECRE	MTFEEMI	MTFEBAJ	MTFEVEN	MTFEVE2	MTMBOLE	MTMRECU	MTFEREC	MTNOVED	MTCODS2	MTNUTAA	MTRETEN	MTRENOV	MTCOBRA	MTFEPED	MTUSPED	MTUSEMI	MTESTVE	MTESTEX	MTESTBL	MTESTMO	MTESTHA	MTFEBLQ
+6274311120028904	0	05	3	112	000	C	5402275        	627431	001	112040028618	1	 	LILIAN ROMERO       	                              	20101115	20101125	00000000	1311	0	 	 	00000000	 	000	                	E	S	S	20101115	U99OLMEDO 	BEPSA     	 	 	B	 	 	20120329
+6274311510000471	0	04	3	151	000	C	1993249        	627431	001	151040000474	1	 	LILIAN ROMERO       	                              	20150424	20150430	20180411	1804	0	 	 	00000000	 	000	                	R	N	S	20170113	U99LILIAN 	U99IVANA  	 	 	B	 	 	20180312
+6274311550000779	0	04	1	155	000	C	1993249        	627431	001	155040000772	1	 	LILIAN ROMERO       	                              	20160129	20180201	00000000	2001	0	 	 	00000000	 	000	                	R	N	S	20191227	U99BARTRIN	U99ANDREA 	V	 	B	 	 	20200104
+6274311510002139	0	04	3	151	000	C	1993249        	627431	001	151040000474	1	 	LILIAN ROMERO       	                              	20170113	20180412	00000000	2104	0	 	 	00000000	 	000	6274311510000471	R	S	S	20170113	          	U99CARMEN 	 	 	B	 	 	20200520
+6274311550002734	0	04	1	155	000	C	1993249        	627431	001	155040000772	1	 	LILIAN ROMERO       	                              	20191227	20200204	00000000	2202	0	 	 	00000000	 	000	6274311550000779	R	S	S	20200203	U99BARTRIN	U99BARTRIN	 	 	B	 	 	20200525

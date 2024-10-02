@@ -1,0 +1,35 @@
+SITC90
+C:\Users\jenciso\Documents\wjview.exe /cp:p GXWS.jar "/d:GXWSLocation=C:\ProgramData\GeneXus Web Start" com.genexus.deployment.client.GXWS "http://10.1.254.200/sitc90" "SITC90" "uginicio"
+Facturacion
+C:\Users\jenciso\Documents\wjview.exe /cp:p GXWS.jar "/d:GXWSLocation=C:\ProgramData\Genexus Web Start" com.genexus.deployment.client.GXWS "file://\\10.1.254.200\distribucion\FacturacionEvo\/" "FacturacionEvo2" "uinicio" "/C:ShowWarningOnce=Warning: Using FIL
+Sistema de Produccion
+C:\Users\jenciso\Documents\wjview.exe /cp:p GXWS.jar "/d:GXWSLocation=C:\ProgramData\Genexus Web Start" com.genexus.deployment.client.GXWS "http://10.1.254.200/nclearing" "ClearingEvo" "uinicio"
+
+
+ATMCMTI200
+ATMCSRVPRC
+ATMCIDUSR
+ATMCAUTUSR
+ATMCAUTPIN
+ATMCPRTDTA
+CREATEPGM
+
+
+
+•	Movimientos-Servicios
+o	Compras
+o	Dinelco Efectivo
+o	Red de pagos
+o	CICO 
+	Cash IN
+	Cash OUT
+	Giros
+o	Venta de minutos
+	POS
+	WEB
+	ATM
+o	Pago de Factura
+	POS
+	WEB
+	ATM
+o	Adelanto

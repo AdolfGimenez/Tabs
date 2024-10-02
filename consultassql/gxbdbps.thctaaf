@@ -1,0 +1,20 @@
+select
+HCNUMCT	Numerodecuenta,HCAAMM Anoymesdecierre,HCNUMCO	Numerodecontrol,HCFECIE		Fechadecierre,
+HCFEVTO	Fechadevencimiento,HCEMISO		Entidademisora,HCCODSC		Codigodesucursal,
+HCBINES	CodigodeBIN,HCAFINI		Codigodeafinidad,HCLIMCO	Limitecreditoparacompras,
+HCLIMCU	Limitecompracuotas,HCDISCO	Disponibleparacompras,HCDISCU	Disponiblecompracuotas,
+HCSAFAC	Saldoafacturar,HCSFNVE	Saldofacturadonovencido,HCSALFI	Saldofinanciado,
+HCSALDO	Saldoactual,HCPAGMI	Pagominimo,HCSALMO	Saldoenmora,HCDIAMO	Diasenmora,HCHISMO	Historicodemora,
+HCAPHVT	Acumpagoshastavencimiento,HCAPDVT	Acumpagosdespuesvencimiento,HCINTNO	Tasainteresnormal,HCINTMO	Tasainteresmoratorio,HCINTPU	Tasainterespunitorio,
+HCINTCU	Tasainterescompracuotas,HCINTCA	TasainterescuotasATM,HCINTRE	Tasainteresrefinanc,HCPORPG	Porcentajepagominimo,HCSALPM	Saldopagominimo,
+HCCODRE		Codigoderetencion,HCTINFI	Interesdefinanciacion,HCTINMO	Interesmoratorio,HCTINPU	Interesespunitorios,HCTACDO	Actosydocumentos,HCCAEXC	Cargoporexceso,
+HCCACOL	Cargoporcompraslocales,HCCACOI	Cargoporcomprasinternac,HCCASER	Cargoporservicio,HCCASEF	Cargosegurocontrafraude,HCCASEV	Cargoporsegurodevida,
+HCCAVIA	Cargoasistenciaalviajero,HCCAATM	CargoporadelantoATM,HCCAPOS	CargoporadelantoPOS,HCSUIVA	SumatoriadeIVA,HCSUFIN	Sumatoriamovfinanc,
+HCSUNFI	Sumatoriamovnofinanc,HCAUTPE	Autorizacionespendientes,HCCUOPE	Saldocompraencuotas,HCADEPE	Saldoadelantoencuotas,HCREFPE	Saldoderefinanciacion,
+HCFINSU	Intfinancensuspenso,HCMORSU	Intmoratensuspenso,HCPUNSU	Intpunitensuspenso,HCSALTO	hcsalto,HCEXCES	Exesoenestecierre,HCCAMOR	Cargopormora,
+HCPORFI	PorScompfinanc,HCNUMPA	Numerodepagina,HCNUFIN	Numeraldefinanciacion,HCNUMOR	Numeralmoratorio,HCNUPUN	Numeralpunitorio,HCNUCOM	Numeralcomprasdelmes,
+HCNUCOA	Numeralcomprasmesanterior,HCCOFIN	Comprasfinanciablesdelmes,HCFECI2		FechaProximoCierre,HCFEVE2		FechaProximoVencimiento,HCIVA05	SumatoriadeIVA5
+from gxbdbps.thctaaf
+where  hcaamm in ('201902','201903','201904') 
+and hcnumct in (20112100001,20112100002,20112100003)
+

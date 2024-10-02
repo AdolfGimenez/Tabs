@@ -1,0 +1,34 @@
+/*PARA VERIFICACION LUEGO DEL CIERRE DE TARJETAS*/
+select a.mcnumct "Cuenta",b.mtnumta Tarjeta, b.mtnopla Titular, mcstats "Estado", mclimco+mclimcu "Linea", mcdisco+mcdiscu "Disponible Tabla", 
+(mclimco - (mcsafac + mcsfnve + mcsalfi + mcapcoc + mcapcoa + mccuopc + mccuopa))+  (mclimcu - (mccuope + mcadepe + mcapcuc + mcapcua + mcrefpe)) "Disponible Real"
+from gxbdbps.tmctaaf a LEFT join gxbdbps.tmtaraf b on a.mcnumct=b.mcnumct
+  where mcstats='1' and mcemiso in ('117')
+   AND B.mtnumta IN ('6274311170003088')
+('6274311510000174','6274311510000521','6274311510001628','6274311510002097','6274311510002154',
+'6274311510002394','6274311510002410','6274311510003160','6274311510003426','6274311510003491','6274311510003939',
+'6274311510003970','6274311510004044')
+/*Disponible contado*/
+update gxbdbps.tmctaaf set mcdisco = mclimco - (mcsafac + mcsfnve + mcsalfi + mcapcoc + mcapcoa + mccuopc + mccuopa)
+335.053 actualizadas.
+/*Disponible cuotas*/
+update gxbdbps.tmctaaf set mcdiscu = mclimcu - (mccuope + mcadepe + mcapcuc + mcapcua + mcrefpe)
+
+select * from gxbdbps.tmtaraf where mcnumct=151040000177
+
+
+select * from gxbdbps.tmoviaf where mtnumta='6274311510000174'
+
+select * from  gxbdbps.tmoviaf
+--REPORTE DE MOVIMIENTOS CIERRE ACTUAL----
+select a.mvferea,a.mvhora,b.MTNUMTA,b.mtnopla,b.cenumdo,mvnumct,mvnomco,mvcodco,mvnoved,mvimpo2,mvcodau,mvdispo,mvcodre,mvcupon
+from gxbdbps.tmoviaf a inner join gxbdbps.tmtaraf b on a.mtnumta=b.mtnumta where mvemiso='151'
+and a.mtnumta in
+('6274311510000174','6274311510000521','6274311510001628','6274311510002097','6274311510002154',
+'6274311510002394','6274311510002410','6274311510003160','6274311510003426','6274311510003491','6274311510003939',
+'6274311510003970','6274311510004044')
+--REPORTE DE MOVIMIENTOS DE HISTORICO----
+select a.hmferea,a.hmhora,a.hmNUMTA,b.mtnopla,b.cenumdo,hmnumct,hmnomco,hmcodco,HMnoved,HMimpo2,HMcodau,HMdispo,HMcodre,HMcupon 
+from gxbdbps.tHmovaf a inner join gxbdbps.tmtaraf b on a.HMnumta=b.mtnumta where hmemiso='151' and hmferea between '20190901' and '20191112'
+and b.mtnumta in ('6274311510000174','6274311510000521','6274311510001628','6274311510002097','6274311510002154',
+'6274311510002394','6274311510002410','6274311510003160','6274311510003426','6274311510003491','6274311510003939',
+'6274311510003970','6274311510004044')

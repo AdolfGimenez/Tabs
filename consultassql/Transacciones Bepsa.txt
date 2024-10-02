@@ -1,0 +1,37 @@
+/*OPMOVI - (Detalle Compras)*/
+Select opferea fecha_real,opfecom fecomercial, opliqde Feliquidacion, opnoref Referencia,OPRADOR OPERADOR, ENTCODCOM COMEREMI,openemi Emisor,ENTNMENTID DESEMISOR, ENCENTACT EMISORNEW, (SELECT ENEMISO FROM GXBDBPS.COMAEAF WHERE COCOMER = ENTCODCOM)BCOEMISOR,OPCOMER Comercio, B.COCOMER COENTIDAD, opadmin Administrador,ennombr dENOMINACION, B.ENEMISO BANCOPAGADOR, PARBCOPAI BCOPAGADORNEW,
+opcodtrn Transaccion, TXDTRX DESCRIPCION,opstatus estado,lcodbc marca,optiptar tipo_tarj,lnfisc adq,entbina producto,
+(case when lmarca = 'L' then 'LOCAL' when lmarca = 'I' then 'INTERNACIONAL' when lmarca = 'R' then 'INTERCOUNTRY' when lmarca = 'E' then 'EXTRANJERO' ELSE '' END) ambito,
+(case when LNFISC in ('443073','472040') THEN 'BANCARD' when LNFISC = '449780' THEN 'BNF' when LNFISC ='461958' THEN 'AUSTRALIA' when LNFISC ='459834' THEN 'MILAN ITALIA' END) descrip_amb,
+(Case when substr(opidtra,1,1) = 'T' then 'ATM' when substr(opidtra,1,1) = 'A' then 'APP' else 'POS' end) Dispo, substr(optarj,1,6)BIN,
+(CASE WHEN SECENBCO= 'S' THEN 'ONLINE' ELSE 'BATCH' END) TIPOOPERACION,
+opmonto Monto, opcomi Comision, opcoment COMIENT, opcombps COMIBPS, opivaent IVAENTI, opivabps IVABPS, OPRENTA RENTA, OPREIVA IVARENTA
+from gxopera.opmovi
+inner join libdebito.drconbep x on lerrnb = opnoref and substr(digits(lidcom), 6, 7)= opcomer
+left join gxopera.opentid1 on entcodi = openemi and substr(entbin,1,6) = substr(optarj,1,6)
+INNER JOIN GXBDBPS.COMAEAF B ON OPCOMER = COCOMER
+left JOIN gxbdbps.gentiaf A ON opadmin = A.enemiso
+LEFT JOIN GXOPERA.TCLSEC ON OPENEMI = SECCOEM AND SUBSTR(OPTARJ,1,6) = SUBSTR(SECENBIN,1,6) AND OPCODTRN = SECCOTRX AND SECCOBCO = B.ENEMISO
+INNER JOIN LIBDEBITO.TBCTRA0P ON OPCODTRN = TXCTRX
+LEFT JOIN GXTRJDTA.TCOENC ON OPENEMI = ENCENTANT AND SUBSTR(ENCENTROL,5,2) = '01'
+LEFT JOIN GXTRJDTA.TDGENT ON ENCENTACT = ENTCODENT
+LEFT JOIN GXOPERA.CLPARF ON B.ENEMISO = PARCODBCO
+where opfecom between '{?FechaD}' and '{?FechaH}' AND SUBSTR(OPIDTRA,1,1) <> 'T'
+union
+/*OPMOVI - (Detalle ATM)*/
+Select opferea fecha_real,opfecom fecomercial, opliqde Feliquidacion,opnoref Referencia,OPRADOR OPERADOR, ENTCODCOM COMEREMI,openemi Emisor,ENTNMENTID DESEMISOR, ENCENTACT EMISORNEW, (SELECT ENEMISO FROM GXBDBPS.COMAEAF WHERE COCOMER = ENTCODCOM)BCOEMISOR,OPCOMER Comercio, B.COCOMER COENTIDAD, opadmin Administrador,ennombr dENOMINACION, B.ENEMISO BANCOPAGADOR, PARBCOPAI BCOPAGADORNEW,
+opcodtrn Transaccion, TXDTRX DESCRIPCION, opstatus estado,lcodbc marca,optiptar tipo_tarj,lnfisc adq,entbina producto,
+(case when lmarca = 'L' then 'LOCAL' when lmarca = 'I' then 'INTERNACIONAL' when lmarca = 'R' then 'INTERCOUNTRY' when lmarca = 'E' then 'EXTRANJERO' ELSE '' END) ambito,
+(case when LNFISC in ('443073','472040') THEN 'BANCARD' when LNFISC = '449780' THEN 'BNF' when LNFISC ='461958' THEN 'AUSTRALIA' when LNFISC ='459834' THEN 'MILAN ITALIA' END) descrip_amb,
+(Case when substr(opidtra,1,1) = 'T' then 'ATM' when substr(opidtra,1,1) = 'A' then 'APP' else 'POS' end) Dispo, substr(optarj,1,6)BIN,
+'BATCH' TIPOOPERACION,
+opmonto Monto, opcomi Comision, opcoment COMIENT, opcombps COMIBPS, opivaent IVAENTI, opivabps IVABPS, OPRENTA RENTA, OPREIVA IVARENTA
+from gxopera.opmovi
+inner join libdebito.drconbep x on lerrnb = opnoref and substr(digits(lidcom), 6, 7)= opcomer
+left join gxopera.opentid1 on entcodi = openemi and substr(entbin,1,6) = substr(optarj,1,6)
+INNER JOIN GXBDBPS.COMAEAF B ON opadmin = coenadm and substr(cocomer,1,2) = '45' AND COSTAT = 0 AND COENADM <> '999'
+INNER JOIN gxbdbps.gentiaf A ON opadmin = A.enemiso INNER JOIN LIBDEBITO.TBCTRA0P ON OPCODTRN = TXCTRX
+LEFT JOIN GXTRJDTA.TCOENC ON OPENEMI = ENCENTANT AND SUBSTR(ENCENTROL,5,2) = '01'
+LEFT JOIN GXTRJDTA.TDGENT ON ENCENTACT = ENTCODENT
+LEFT JOIN GXOPERA.CLPARF ON B.ENEMISO = PARCODBCO
+where opfecom between '{?FechaD}' and '{?FechaH}' AND SUBSTR(OPIDTRA,1,1) = 'T'
