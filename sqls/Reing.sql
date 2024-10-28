@@ -25,7 +25,7 @@ SELECT * FROM GXFINDTA.TCMCLI t2 WHERE CLIDENCOM LIKE '%PETROCHA%'; -- tabla cli
 SELECT * FROM GXFINDTA.TCMCLI t2 WHERE CLICLICOD = 15168;
 SELECT * FROM GXFINDTA.TCMSUC t WHERE CLICLICOD = 2905  and SUCDENCOM LIKE '%BIGGIE%';--CLICLICOD = 925; --tabla de sucursales relacion con tabla de cliente.
 SELECT * FROM GXFINDTA.TCMSUC t WHERE CLICLICOD = 6268;
-SELECT * FROM GXFINDTA.TCOCNA t WHERE COCOMER = '1302981';---tabla de relación actual y reing.
+SELECT * FROM GXFINDTA.TCOCNA t WHERE COCOMER = '1302981';---tabla de relaci?n actual y reing.
 select * from gxfindta.tcocna where cliclicod = 19220;
 SELECT * FROM GXFINDTA.TCOCNA WHERE CNADENCOM LIKE '%BANCO RIO%';
 SELECT * FROM gxfindta.TCMSUC t WHERE SUCFECALT = '20220914';
@@ -59,7 +59,7 @@ and ADNUMCTA = '10082480006';
 SELECT CLICLICOD, LIQNOMTIT, LIQNROCUE FROM  GXFINDTA.tcmliq where CLICLICOD ='13613';
 update GXFINDTA.tcmliq set LIQNROCUE ='1701015625' where CLICLICOD ='9258';
 
-SELECT * FROM GXFINDTA.TCOCNA t WHERE COCOMER = '0705590';---tabla de relación actual y reing.
+SELECT * FROM GXFINDTA.TCOCNA t WHERE COCOMER = '0705590';---tabla de relaci?n actual y reing.
 ----sistema actual
 SELECT * FROM gxbdbps.comaeaf c WHERE c.COCOMER in ('0801697', '0801698', '0802106');
 SELECT c.ADNUMCTA, c.COCOMER, c.CODENO FROM gxbdbps.comaeaf c WHERE c.COCOMER in ('0801697', '0801698', '0802106');
@@ -225,7 +225,7 @@ Update gxbdbps.comaeaf set TIPACODI = '3', ENEMISO = '146' ,ADTICTA = 1 , ADNUMC
 --Actualiza datos del titular TCODPP
 Select DPPTDC,DPPNDC,DPPNYA from gxbdbps.tcodpp where cocomer in ('0705742','8106656','8606099');
 Update gxbdbps.tcodpp set DPPTDC = 'CI' ,DPPNDC = '2147311', DPPNYA = 'MARCELINO ALVAREZ SOSA' where cocomer in ('0705742','8106656','8606099');
-/*Descripción Campo — [Valor por defecto Obs
+/*Descripci?n Campo ? [Valor por defecto Obs
   COMAEAF
 TIPO DE PAGO: TARJETA PREPAGA [TIPACODI 3|Tarjeta prepaga
 ENTIDAD PAGADORA: BEPSA PAGO COMERCIOS ENEMISO Depende del valor que esta en el redmine
@@ -413,7 +413,7 @@ SELECT * FROM LIBDEBITO.TGEMBHAF WHERE CRDOCU='4555861';
 ---TARJETA INHABILITADA favor habilitar.
 UPDATE GXTRJDTA.TTCTRJ SET TRJFORBLOQ='T' WHERE TRJNROTRJ='6274310213024747';
 --ELIMINAR DICHO CLIENTE
---N°de tarjeta:456976******0236 Tareas #35781
+--N?de tarjeta:456976******0236 Tareas #35781
 --Ci:3256943
 
 DELETE FROM GXBDBPS.TDEMIS
@@ -511,7 +511,7 @@ WHERE CDBIDCTA='0126097403  ' AND CADADHERE=1 AND CDBCODENT=1040;
 DELETE FROM GXTRJDTA.TTDCDB
 WHERE CDBIDCTA='0126097403  ' AND CDBCODENT=1040;
 
----añadir localidad en reing.
+---a?adir localidad en reing.
 INSERT INTO GXFINDTA.TCMRCI
 ( RDECODDEP, RCICODCIU, RCICIUERP, RCINOMCIU, RCIUSULTUP, RCIFHULTUP
 )
@@ -647,7 +647,7 @@ Delete FROM gxbdbps.tmtaraf where CENUMDO ='6582482' and MCNUMCT = '040050001394
 select * from gxbdbps.tmctaaf where  MCNUMDO ='6582482' and mcnumct= '040050001394';
 Delete FROM gxbdbps.tmctaaf where  MCNUMDO ='6582482' and mcnumct= '040050001394';
 
---tmpnum por restrigción referencial
+--tmpnum por restrigci?n referencial
 select * from gxbdbps.tmpnum where MCNUMCT in ('040050000935','040050001394');
 delete FROM gxbdbps.tmpnum where MCNUMCT in ('040050000935','040050001394');
 
@@ -697,7 +697,7 @@ UPDATE GXTRJDTA.TTDCAD
 SET CADNMBANMG='NUNEZ/MARIA'
 WHERE CDBIDCTA='1424318718  ' AND CADADHERE=0 AND CDBCODENT=1020;
 ---------------------------------------------------------------------------------------------------
---incluir código de comercio en la lista negra
+--incluir c?digo de comercio en la lista negra
 SELECT * FROM GXAUTDTA.TAUBKL;
 INSERT INTO GXAUTDTA.TAUBKL
 (
@@ -711,7 +711,7 @@ VALUES
   20221130,
   'COMERCIO REPORTADO');
 ----------------------------------------------------------------------------------------------------
-/*Modificación masiva de costo normal_ Continental*/
+/*Modificaci?n masiva de costo normal_ Continental*/
 /*LOS DATOS SE TOMAN DEL EXEL EN CUESTION*/
 UPDATE GXBDBPS.COAFMAF SET AFMONTO = 90909 		WHERE AFCOMER = '5600178';
 UPDATE GXBDBPS.COAFMAF SET AFMONTO = 90909 		WHERE AFCOMER = '5700134';
@@ -786,7 +786,7 @@ WHEN MATCHED THEN
 SELECT * FROM GXFINDTA.TCMDIS t WHERE DISACTCOD='21982155' ;
 --DISESTADO campo para ver el estado
 --DISFECBAJ fecha de baja
-SELECT * FROM GXBDBPS.COAFMAF C2 WHERE C2.AFCODI;--ACTIVO | EL CAMPO AFCOMER TIEN QUE ESTAR VACIÓ SI ESTA EN BAJA
+SELECT * FROM GXBDBPS.COAFMAF C2 WHERE C2.AFCODI;--ACTIVO | EL CAMPO AFCOMER TIEN QUE ESTAR VACI? SI ESTA EN BAJA
 --------------------------------------------
 UPDATE GXFINDTA.TCMDIS
 SET DISESTADO='A',  DISFECBAJ=''

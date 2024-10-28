@@ -42,3 +42,9 @@ alter table transaction
 
 alter table transaction
     add alias varchar(255) null;
+
+select c.id, c.code, c.name, l.*, p.*
+from integrator.point_of_sale p, integrator.`local` l, integrator.commerce c
+where l.id  = p.local_id
+and l.commerce_id = c.id
+and p.pos_id  = '80000505';

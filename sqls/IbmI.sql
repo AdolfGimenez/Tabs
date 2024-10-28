@@ -79,7 +79,7 @@ WHERE AUTHORIZATION_NAME = 'U99ADOLFO'
 ORDER BY A.MESSAGE_TIMESTAMP DESC;
 ------------------------------------
 --sintaxis de como tomar la informacion del espacio ocupado en los ifs..
---prueba con la función SQL qsys2.ifs_object_statistics  Te paso un ejemplo
+--prueba con la funci?n SQL qsys2.ifs_object_statistics  Te paso un ejemplo
 select path_name, object_type, data_size, object_owner, create_timestamp, access_timestamp,
        data_change_timestamp, object_change_timestamp
   from table (
@@ -90,7 +90,7 @@ select path_name, object_type, data_size, object_owner, create_timestamp, access
    where  data_size is not null and object_owner not in ('QSYS')
    order by 3 desc
    limit 10;
---Esto te devuelve los 10 directorios más pesados, excluyendo /qsys. Lo saqué de los ejemplos publicados en SQL Script de ACS
+--Esto te devuelve los 10 directorios m?s pesados, excluyendo /qsys. Lo saqu? de los ejemplos publicados en SQL Script de ACS
 --usuarios
 SELECT *
        --CAST(TEXT_DESCRIPTION AS VARCHAR(50) CCSID 284) AS TEXT_DESCRIPTION,
@@ -133,6 +133,7 @@ DESCRIPTION,  LAST_SUCCESSFUL_SUBMISSION_JOB ULTIMA_EJEC,  LAST_ATTEMPTED_SUBMIS
 FROM QSYS2.SCHEDULED_JOB_INFO SJI
     WHERE STATUS='SCHEDULED'
 ORDER BY SCHEDULED_TIME ASC;
+SELECT * FROM QSYS2.SCHEDULED_JOB_INFO SJI WHERE SJI.STATUS !='SCHEDULED';
 -- WRKOUTQ OUTPUT(*PRINT)
 select *from OUTPUT_QUEUE_INFO;
 --inidices
@@ -141,7 +142,7 @@ SELECT * FROM QSYS2.SYSINDEXES WHERE INDEX_SCHEMA='LIBDEBITO';
 SELECT * FROM QSYS2.SYSINDEXSTAT S2 WHERE INDEX_NAME LIKE '%UTCOENC1%';
 --DSPFD POR SQL
 SELECT * FROM qsys2.syspartitionstat S;
----------------VER MENSAJES y quien las respondió
+---------------VER MENSAJES y quien las respondi?
 SELECT A.MESSAGE_TIMESTAMP,
        A.MESSAGE_ID,
        A.FROM_JOB,
@@ -217,7 +218,7 @@ QSYS2.Display_Journal(
 ----------------------
 /*NECESITO RECUPERAR EL NOMBRE CORTE Y EL NOMBRE LARGO DE LOS PROCEDIMIENTOS ALMACENADOS, QSYS2/SYSPROCS ME INFORMA NOMBRE LARGOS,
 SI HAGO UN WRKOBJPDM ME INFORMA LOS NOMBRES CORTOS, DESDE YA MUCHAS GRACIAS
- Les paso la solución*/
+ Les paso la soluci?n*/
 SELECT SYSTEM_PROGRAM_SCHEMA SCHEMA, SYSTEM_PROGRAM_NAME NAME_C,
        SUBSTR(PROGRAM_NAME, 1, 40) NAME_L,
        SUBSTR(PROGRAM_TYPE, 1, 10) TYPE,
@@ -238,7 +239,7 @@ WHERE JOESD LIKE 'D%'
 SELECT * FROM QSYS2.JOURNAL_INFO
          WHERE REMOVE_FIXED_LENGTH_DETAIL = 'YES'
              OR FIXED_LENGTH_DATA_INCLUDES_REMOTE_ADDRESS = 'NO';
-----------------------------------VER QUIEN ELIMINÓ COSAS
+----------------------------------VER QUIEN ELIMIN? COSAS
 SELECT *
 --entry_timestamp, user_name, qualified_job_name, program_library, program_name, object_library, object_name, object_type, entry_type, entry_type
 FROM TABLE (systools.audit_journal_DO (
@@ -307,10 +308,10 @@ FROM TABLE ( QSYS2.DISPLAY_JOURNAL(
 WHERE PATH_NAME LIKE '%BUS%'
    OR PATH_NAME LIKE '%bus%';  -- <<< Replace 'ASCENT' and 'ascent' with the name of the object that has been deleted/moved or renamed.
 ------------------------------------------------------
---Te paso un ejemplo, de físicos con acceso secuencial
+--Te paso un ejemplo, de f?sicos con acceso secuencial
 select * from qsys2.sysfiles where native_type = 'PHYSICAL' and access_path_keyed = 'NO' ;
---si además de saber la cantidad de registros, necesitas saber la Cantidad de Registros Eliminados para poder reorganizar
---lo que sea necesario, te dejo una query que me ha sido de mucha utilidad, eñ resultado te da Cantidad de Registros
+--si adem?s de saber la cantidad de registros, necesitas saber la Cantidad de Registros Eliminados para poder reorganizar
+--lo que sea necesario, te dejo una query que me ha sido de mucha utilidad, e? resultado te da Cantidad de Registros
 -- Eliminados, Porcentaje de Registros Eliminados y Cantidad de Registros Totales,
 SELECT TRIM(SYSTEM_TABLE_SCHEMA)
            CONCAT '/' CONCAT
@@ -333,7 +334,7 @@ FROM QUSRSYS.QAPMCCCNTB;
 --------------------------------
 -- https://www.ibm.com/docs/en/i/7.5?topic=services-ended-job-info-table-function
 -- Which job used the most temporary storage? (today or yesterday)
---Qué trabajo utilizó la mayor cantidad de almacenamiento temporal
+--Qu? trabajo utiliz? la mayor cantidad de almacenamiento temporal
 select PEAK_TEMPORARY_STORAGE, MESSAGE_TIMESTAMP as job_end_time, FROM_USER, FROM_JOB, FROM_JOB_NAME, FROM_JOB_USER, FROM_JOB_NUMBER,
        JOB_INTERFACE, FROM_PROGRAM, CPU_TIME, NUMBER_OF_STEPS, JOB_END_CODE, JOB_END_DETAIL,
        SECONDARY_ENDING_CODE, SECONDARY_ENDING_CODE_DETAIL, JOB_ENTERED_SYSTEM_TIME,
@@ -346,7 +347,7 @@ select PEAK_TEMPORARY_STORAGE, MESSAGE_TIMESTAMP as job_end_time, FROM_USER, FRO
 ------------------------------------------------------------------
 -- https://www.ibm.com/docs/en/i/7.5?topic=services-ended-job-info-table-function
 -- Which jobs were the top 5 CPU consumers, by day, over the last week?
---Qué trabajos fueron los 5 principales consumidores de CPU, por día, durante la última semana
+--Qu? trabajos fueron los 5 principales consumidores de CPU, por d?a, durante la ?ltima semana
 with x as (
     select row_number() over (
              partition by date(message_timestamp)
@@ -379,3 +380,14 @@ where
    R.tabschema=C.tabschema and
    R.tabname=C.tabname
 group by R.reftabschema, R.reftabname, R.tabschema, R.tabname, R.constname;
+
+---PUERTOS
+SELECT *
+FROM QSYS2.NETSTAT_INFO
+WHERE LOCAL_ADDRESS LIKE '%10.254.254.250%'
+  AND PROTOCOL = 'TCP'
+  AND LOCAL_PORT IN (SELECT LOCAL_PORT
+                     FROM QSYS2.NETSTAT_INFO
+                     WHERE LOCAL_ADDRESS LIKE '%10.254.254.250%'
+                       AND PROTOCOL = 'TCP'
+                       AND TCP_STATE = 'LISTEN');

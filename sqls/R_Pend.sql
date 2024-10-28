@@ -45,13 +45,13 @@ SBMJOB CMD(CALL PGM(LIBDEBITO/NCLPR0077) PARM('000022102407714978')) JOB(CLER_RI
 -- REINTENTO MASIVO CONTINENTAL
 SBMJOB CMD(CALL PGM(LIBDEBITO/NCLR001) PARM('00010')) JOB(CLER_CONTI) USER(QCOMUNICA) ===> PARAMETRO CANTIDAD REGISTRO A PROCESAR ANTES DEL DELAY
 ------------------------------------------------------------------------------------------------------------------------------------------
--- Verificación en OPLIQUI
+-- Verificaci?n en OPLIQUI
 Select * from gxopera.opliqui where opnroref in ('224492238701','224492241451');
--- Verificación en transmisiones
+-- Verificaci?n en transmisiones
 Select * from gxfindta.tcltsb where tsbnref in ('203229429514',
 '204532951311');
 ------------------------------------------------------------------------------------------------------------------------------------------
--------------------------------#Para reprocesar trasmisiones (Pero se debe verificar primero si no se utilizo en un recupero de retención)
+-------------------------------#Para reprocesar trasmisiones (Pero se debe verificar primero si no se utilizo en un recupero de retenci?n)
 --Ingresar a as400 e ingresar el comando
 addlible gxweb *last, edtlibl
 --Call para AS

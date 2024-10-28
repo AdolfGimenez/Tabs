@@ -117,7 +117,7 @@ SELECT substr(fecha_operacion,5,4)||substr(fecha_operacion,3,2)||substr(fecha_op
 FROM public.transaccion where fecha_comercial = '2023-03-27' and estado_procesado = 'Comisionado' order by id;
 
 SELECT *
-FROM PUBLIC.TRANSACCION WHERE FECHA_OPERACION='06062023' AND EMPRE_ORIGEN='0008';
+FROM PUBLIC.TRANSACCION WHERE FECHA_OPERACION='07102024' AND EMPRE_ORIGEN='0008';
 
 SELECT *
 FROM PUBLIC.TRANSACCION WHERE FECHA_OPERACION='12102023' AND hora_operacion>='231000' AND EMPRE_DESTINO='0008';
@@ -132,12 +132,10 @@ FROM EMPE E;
 
 SELECT *
 FROM PUBLIC.TRANSACCION T WHERE T.FECHA_OPERACION>='21112023' AND T.IMPORTE='100000';
-595972290081
 
-595972129027
 
 SELECT * FROM PUBLIC.PARAMETROS_CONFIGURACION PC;
 ---------------
 
-select * from public.transaccion t
+select * from public.transaccion t WHERE t.FECHA_OPERACION=''
 where t.fecha_comercial in ('2024-02-12','2024-02-13','2024-02-14','2024-02-15','2024-02-16')

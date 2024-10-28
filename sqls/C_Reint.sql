@@ -1,4 +1,4 @@
-/*El socket transmite la transacción si Conti tiene de su lado con estado RE (rechazado) o RV (reversado)*/
+/*El socket transmite la transacci?n si Conti tiene de su lado con estado RE (rechazado) o RV (reversado)*/
 ---------------------------------------------------------------------------------------------------------------
 --para ver permisos con exclude
 Select * from QSYS2.OBJECT_PRIVILEGES WHERE SYSTEM_OBJECT_SCHEMA = 'QGPL' and object_authority ='*EXCLUDE';
@@ -8,7 +8,7 @@ SELECT ENEMISO FROM GXBDBPS.COMAEAF WHERE COCOMER='0301557';--ver banco credito
 SELECT * FROM GXOPERA.CLPARF WHERE PARCODBCO='064';--ver que banco es por codigo del comaeaf --064-vision
 SELECT * FROM gxfindta.tclsct;--tabla de cuenta por banco
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---sql para verificaciÃ³n de transmisiones
+--sql para verificación de transmisiones
 SELECT TSBDEOP, TSBESTA, TSBDEME, COUNT(*) CANTIDAD, SUM(TSBIMPO) IMPORTE --substr(TSBFEGE, 1, 10 )
 FROM GXFINDTA.TCLTSB
 WHERE DATE(TSBFEGE) >= '2024-04-19'
@@ -68,7 +68,7 @@ CL: CALL PGM(GXFINPGM/PCLR028) PARM('22081707308003' '222987112331  ' '20220912'
 /*pero trx con la 703002 en comercios que pagamos via Continental (itau, vision, sudameris, etc) debe llegar hasta transmisiones
 solo llega hasta opliqui si el banco del comercio son RIO, BBVA, Tarjeta Prepaga, BNF*/
 --------------------------------------------------------------------------------------------------------------------------------------------------
----ver si está para pagar / pago a comercio...
+---ver si est? para pagar / pago a comercio...
 SELECT DISTINCT t.AUTPANNRO, t.AUTCODCOMB, t.AUTBINEMI, TRIM(t.AUTRRNBEP) referencia,t.AUTMARTAR, t.AUTTIPTAR, t.AUTPROTAR, t.AUTTRXFCHF, t.AUTTRXFCHC,t.AUTDISTIP, t.AUTMARTAR,
 t.AUTTIPTAR, t.AUTTRXESTF, t.AUTCODRET, d.LESTTR, d.LCRETR, t.AUTCOMRAZ, t.AUTMONTDES, t.AUTESTCLE, t.AUTCODSER , t.AUTCODPRE,b.ECCDSERRCC, o.OPENEMI, t2.MOVPGON ,
 o.OPNOREF, (opmonto-opcomi-oprenta-opreiva) neto ,t2.MOVRRNBEP,t2.MOVIDLT,  t2.MOVNETO, o2.OPIDLIQ, o2.OPCODBCO,o3.OPCREREF oplicre_ref,t3.IMBIDOP im_id, dd.RTDMONAMRT retencion,
@@ -115,7 +115,7 @@ select * from gxfindta.tclrtc where RTCCOMERC='0700154'; --retenciones cabezera
 select * from gxfindta.tclrtd where RTCIDRETEN=1587; --re. detalle
 select * from gxfindta.tclmov where movrrnbep='225796057706' and movcomer='0200716' and movfpro='20220914' AND movidmov=60589970;
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------
-/*Invoca proceso de Replicación del DRCONBEP A TSWAUT */
+/*Invoca proceso de Replicaci?n del DRCONBEP A TSWAUT */
 CALL PGM(GXPGBPS/APAUT011) PARM('20230206' '303648262705');
 CL: CALL PGM(GXPGBPS/APAUT011) PARM('20220915' '2000096372781'); --referencia y fecha LFCOTR del drconbep
 CALL PGM(GXPGBPS/PAUTCOP) PARM('20220708' '218975644886')
@@ -169,7 +169,7 @@ SELECT *
 FROM GXFINDTA.TCLTPC
 WHERE TPCRRNBEP IN ('222085016228','222085024075','222085010967','222084857205','222085018529','222084946056','222084894925');
 --------------------------------------------------------------------------------------------------------------------------------------------------
---Justamente Will izo esas verificaciones, y faltaría en el TCLMOV
+--Justamente Will izo esas verificaciones, y faltar?a en el TCLMOV
 SELECT MOVRRNBEP,
        TPCRRNBEP,
        TPCESCLE FROM GXFINDTA.TCLTPC AS A LEFT JOIN GXFINDTA.TCLMOV AS B ON B.MOVRRNBEP = A.TPCRRNBEP WHERE TPCRRNBEP IN ('222085016228','222085024075','222085010967','222084857205');
@@ -179,7 +179,7 @@ para que le tome a estas transacciones
 Que hay que procesar Aldo Ayala, el cierre o correr un programa?
 El cierre
 consulta es el Proceso Cierre bancario o a que te referis con cierre
-al cierre del día
+al cierre del d?a
 se tendria que cambia la fecha del sistema para simular la fecha 05/08
 luego cambiar el estado de los procesos
 pero ahora esta pendiente el proceso de fecha 08/08*/
@@ -294,7 +294,7 @@ LNFISC, ENEADM,ENEPRO, LCODPR, LCOPRO, LCOCOM, LCOIVA, LCOADQ,
 LNTOKE from libdebito.drconbep where lerrnb ='408205461678';
 -- se guarda en adolfolib.auxiliar
 SELECT * FROM ADOLFOLIB.YAPIJOEL;
---SE AGREGA FECHA DEL DIA DE LA EJECUCIÓN Y SE HACE EL UPDATE EN LA AS400
+--SE AGREGA FECHA DEL DIA DE LA EJECUCI?N Y SE HACE EL UPDATE EN LA AS400
 update ADOLFOLIB.AUXILIAR set lfectr='20240417', lfcotr='20240417'; --y lfecotr
 
 SELECT * FROM LIBDEBITO.PRUEBCLR;
@@ -343,7 +343,7 @@ CALL PGM(GXFINPGM/PCLR184) PARM('461108406531' '20240112' ''); --carga todas las
 SELECT AUTRRNBEP, AUTTRXFCHC, AUTESTCLE, T.* FROM GXBDBPS.TSWAUT T WHERE AUTRRNBEP IN ('461108406531');--AUTRRNBEP AUTTRXFCHC
 Update libdebito.drconbep set lfcotr = '20230309'
 where lerrnb in
---PARA TENER EN CUENTA, SI ESTA EN TCLMOV TENER EN CUENTA FEPROCESO Y FCREDITO IGUALAR--hoy y mañana tiene que ser siempre que sea fecha comercial
+--PARA TENER EN CUENTA, SI ESTA EN TCLMOV TENER EN CUENTA FEPROCESO Y FCREDITO IGUALAR--hoy y ma?ana tiene que ser siempre que sea fecha comercial
 SELECT MOVFPRO, MOVFCRE, M.* FROM GXFINDTA.TCLMOV M WHERE MOVRRNBEP IN ('360700074898','360700075046','360500073376');
 SELECT MOVRRNBEP, MOVFCRE, MOVFPRO, MOVIDLT, MOVPGON FROM GXFINDTA.TCLMOV WHERE MOVRRNBEP='363600093290';
 --------------------------------------------------------carga tclmov
@@ -351,7 +351,7 @@ SELECT * FROM GXOPERA.OPMOVI WHERE OPNOREF IN ('290600024714'); -- A MONITOREAR
 --PARA CARGAR OPMOVI EN CASO QUE YA CARGE REING. TRAE DEL TCLMOV, HACE LA CONVIVENCIA ENTRE REING Y ACTUAL.
 --PSIT008  Parm(&MOVRRNBEP,&MOVESTA,&Retorno);
 CALL PGM(GXPGBPS/PSIT008) PARM('290600024714' 'A' '');
----para eso también hay que tener en cuenta que sea online ya que solo las trx online.
+---para eso tambi?n hay que tener en cuenta que sea online ya que solo las trx online.
 SELECT distinct (movpgon) FROM GXFINDTA.TCLMOV WHERE MOVRRNBEP IN ('290600024714');
 -------------------------------------------------------------------------------carga apau
 CALL PGM(GXPGBPS/PA11TST) PARM('20230206');--LFCOTR  fecha comercial compa
@@ -408,28 +408,28 @@ select count(*) from libdebito.drconbep where lfcotr='20221031' and LCRETR='00' 
 ------------------------------
 -------------------caso no cuponamiento-----------------------------
 SELECT * FROM GXBDBPS.TSWAUT WHERE AUTRRNBEP IN ('235732861641');--NO SE CUPONA, SE VERIFICA ESAS 2 TABLAS Y SE CAMBIA F. INC PARA QUE LO PROCESE EN EL CLEARING CUPONAMIENTO DE LA NOCHE
-SELECT * FROM GXBDBPS.TMOVIAF WHERE MVSECUE='235732861641'; -- DE ACA A OPMOVI Y LUEGO NORMAL. LAS CREIDTOS SON BATCH, SE LE SUMA CON SUS MOVIMIENTOS DEL DÍA
+SELECT * FROM GXBDBPS.TMOVIAF WHERE MVSECUE='235732861641'; -- DE ACA A OPMOVI Y LUEGO NORMAL. LAS CREIDTOS SON BATCH, SE LE SUMA CON SUS MOVIMIENTOS DEL D?A
 SELECT * FROM GXBDBPS.THMOVAF WHERE HMSECUE='235732861641';
 --llamado para convivencia
 CALL PGM(GXFINPGM/PCLR166) PARM(('20230522') ('') (''));--carga tclcup desde tswaut
 CALL PGM(GXFINPGM/PCLR182) PARM(('20230522') ('') (''));---PROCESA TRX CONTADO
 CALL PGM(GXFINPGM/PCLR218) PARM(('20230522') ('') (''));--PROCESA TRX EN CUOTAS
----PARA VER CAMPOS NULOS EN LA TABLA YA QUE DIÓ ERROR EN INDICE DEL TMTARAF
+---PARA VER CAMPOS NULOS EN LA TABLA YA QUE DI? ERROR EN INDICE DEL TMTARAF
 Select * from gxbdbps.tmtaraf where substr(mtnumta,1,6) = '545289' and cenumdo is null;
 --cuponamiento
 Select * from gxfindta.tclcup where cupfeccom ='20230203';
 ---ver si hay campos nulos
 SELECT * FROM GXBDBPS.TMTARAF WHERE MTNUMTA IN (Select cupntar from gxfindta.tclcup where cupfeccom ='20230203');
 --------------------------------------------------------------------
------------------cuando no está en flicom hay que ver ésto.
-SELECT * FROM GXBDBPS.COMAEAF WHERE COCOMER='8606100'; --hay que cambiar el banco de comercio (enemiso) y verificar la cuenta, ademas del tipo de acreditación (tipacodi)deberia ser acreditación en cuenta.
+-----------------cuando no est? en flicom hay que ver ?sto.
+SELECT * FROM GXBDBPS.COMAEAF WHERE COCOMER='8606100'; --hay que cambiar el banco de comercio (enemiso) y verificar la cuenta, ademas del tipo de acreditaci?n (tipacodi)deberia ser acreditaci?n en cuenta.
 ------------------------------------------------------------------------------------------------
 CALL PGM(GXFINPGM/PCLR182) parm('20230206' '' '');
 ------------------------------------------------------------------------------------------------
 /*Verifiacion de transacciones con error*/
 Select tpcrrnbep,sercodi, precodi, tpcdisp, tpcfpro, tpccodco, tpcmarca, tpcprod, tpcorig, TPCIMPGS,tpcescle, a.ecccderrcc, B.ECCDSERRCC
 from gxfindta.tcltpc A INNER JOIN gxfindta.tclecc B ON A.ECCCDERRCC = B.ECCCDERRCC where tpcrrnbep = '313081323059';
-/*CASO ACREDITACIÓN*/
+/*CASO ACREDITACI?N*/
 select * from gxbdbps.tmoviaf where MVFEVAL>='20220101' and MVIDUSR='U99RODRI';
 select * from gxbdbps.tmoviaf where MVFEVAL>='20220101' and MVIDUSR='U99JCESAR';
 
@@ -437,7 +437,7 @@ SELECT * FROM GXTRJDTA.TMOMEP WHERE MEPFCHAFE>='20230101' AND MEPUSULTUP='U99ROD
 
 SELECT * FROM GXBDBPS.AIT002 WHERE AITCTRJNRO='4224102223077245';--visa-SI ES 27 CREA EL MOVIMIENTO DEL UN INCOMING
 SELECT * FROM GXBDBPS.NUT999 WHERE DBGUSRID='U99RODRI' AND DBGFH>='2023-02-21 00:07:05' AND DBGOBJID LIKE '%AEI002%'
-AND DBGMSG LIKE '%4224102223077245%'; -- PARA VER SI CONINCIDE CON LA HORA DE AFECTACIÓN
+AND DBGMSG LIKE '%4224102223077245%'; -- PARA VER SI CONINCIDE CON LA HORA DE AFECTACI?N
 
 SELECT * FROM GXBDBPS.IPMDTAE WHERE IPMFNAME LIKE '%T11230%' AND IPMDELN='3';
 

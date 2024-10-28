@@ -1,0 +1,462 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="Jpts_59_T" uuid="b7bc9c90-950f-4345-b2fb-272fbdba60df">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <schema-control>AUTOMATIC</schema-control>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://10.1.254.59:5432/postgres</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="Qa" uuid="eed12cfb-77d1-4b78-a570-ca83ad73deeb">
+      <driver-ref>db2.jtopen</driver-ref>
+      <synchronize>true</synchronize>
+      <schema-control>MANUAL</schema-control>
+      <jdbc-driver>com.ibm.as400.access.AS400JDBCDriver</jdbc-driver>
+      <jdbc-url>jdbc:as400://10.254.102.254</jdbc-url>
+      <jdbc-additional-properties>
+        <property name="database.jdbc.dont.escape" value="true" />
+      </jdbc-additional-properties>
+      <working-dir>$ProjectFileDir$</working-dir>
+      <driver-properties>
+        <property name="auto commit" value="false" />
+      </driver-properties>
+    </data-source>
+    <data-source source="LOCAL" name="Desa" uuid="a124057e-6d45-4cf1-9bb7-e6a0f54c6918">
+      <driver-ref>db2.jtopen</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.ibm.as400.access.AS400JDBCDriver</jdbc-driver>
+      <jdbc-url>jdbc:as400://10.11.254.184</jdbc-url>
+      <jdbc-additional-properties>
+        <property name="database.jdbc.dont.escape" value="true" />
+      </jdbc-additional-properties>
+      <working-dir>$ProjectFileDir$</working-dir>
+      <driver-properties>
+        <property name="auto commit" value="false" />
+      </driver-properties>
+    </data-source>
+    <data-source source="LOCAL" name="Empe_C" uuid="8e42e418-1535-468d-adf6-04d4460e1236">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <schema-control>AUTOMATIC</schema-control>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://10.1.254.236:5432/postgres</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="Empe_S" uuid="44dee880-a401-4d73-a658-740781127f11">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <schema-control>AUTOMATIC</schema-control>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://10.1.254.235:5432/postgres</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="Prod_26" uuid="bf706d40-a732-4eab-9548-02f8510ba0ac">
+      <driver-ref>db2.jtopen</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.ibm.as400.access.AS400JDBCDriver</jdbc-driver>
+      <jdbc-url>jdbc:as400://10.2.25.26</jdbc-url>
+      <jdbc-additional-properties>
+        <property name="database.jdbc.dont.escape" value="true" />
+      </jdbc-additional-properties>
+      <working-dir>$ProjectFileDir$</working-dir>
+      <driver-properties>
+        <property name="auto commit" value="false" />
+      </driver-properties>
+    </data-source>
+    <data-source source="LOCAL" name="K2B_P" uuid="6e083a8f-430d-4d0c-b4d6-d475d9f90463">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://10.11.253.22:3306/k2b_prod</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="K2B_S" uuid="663c1c44-b6fd-4ca6-9287-e4c889c41b33">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://10.254.102.91:3306/k2b_prod</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="PrProd" uuid="c7aeed71-a2c0-4ee9-9198-fcefaabe576f">
+      <driver-ref>db2.jtopen</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.ibm.as400.access.AS400JDBCDriver</jdbc-driver>
+      <jdbc-url>jdbc:as400://10.2.25.33</jdbc-url>
+      <jdbc-additional-properties>
+        <property name="database.jdbc.dont.escape" value="true" />
+      </jdbc-additional-properties>
+      <working-dir>$ProjectFileDir$</working-dir>
+      <driver-properties>
+        <property name="auto commit" value="false" />
+      </driver-properties>
+    </data-source>
+    <data-source source="LOCAL" name="Portal" uuid="28da40ef-1bac-4a40-9eeb-1b59045d6544">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <schema-control>AUTOMATIC</schema-control>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://10.1.254.52:5432/portal</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="K2B_D" uuid="e83bf5ec-b86c-4d33-bb48-effda6f884d0">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://10.254.102.21:3306/k2b_preprod</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="Sirius_P" uuid="1f078c37-c321-4e10-838c-f2b5e1644326">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <schema-control>AUTOMATIC</schema-control>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://fdigital.bepsa.com.py:5432/sirius</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="Sirius_D" uuid="d597daeb-981d-4189-8dd5-9914a3ebe632">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <schema-control>AUTOMATIC</schema-control>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://10.254.102.140:5432/sirius</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="BDatos" uuid="c633f848-4953-48a9-92f5-87e547659ec1">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <schema-control>AUTOMATIC</schema-control>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://10.1.254.51:5432/postgres</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="Fact_D" uuid="9cf1e3a5-4732-4ded-b2c4-8e33ec212d95">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <schema-control>AUTOMATIC</schema-control>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://10.254.102.35:5432/asientos</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="Fact_P" uuid="5540b211-6810-45f0-a944-194873726d0f">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <schema-control>AUTOMATIC</schema-control>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://10.1.254.130:5432/asientos</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="Pgs_D" uuid="5dd67261-d976-47b0-a8a5-dba3c79c83fe">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <schema-control>AUTOMATIC</schema-control>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://10.1.254.52:5432/pagos_digitales_db</jdbc-url>
+      <jdbc-additional-properties>
+        <property name="database.postgres.introspect.system.schemas" value="true" />
+      </jdbc-additional-properties>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="GeoIntegrador" uuid="baa97631-1cab-4d32-adfc-3d870057abdd">
+      <driver-ref>mariadb</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.mariadb.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mariadb://10.1.254.107:3306/integrator</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="Gth" uuid="89c7a5d8-8d37-442b-9fc2-6244feb3bd58">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <schema-control>AUTOMATIC</schema-control>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://10.254.102.152:5432/GTHBEPSA</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="FAct_Q" uuid="45158f9b-1b2a-46dc-acd6-ad296832e2eb">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <schema-control>AUTOMATIC</schema-control>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://10.254.102.99:5432/asientos</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="Db2MN1" uuid="d3038c19-9827-4803-8a2d-10e758a8dce4">
+      <driver-ref>db2.jtopen</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.ibm.as400.access.AS400JDBCDriver</jdbc-driver>
+      <jdbc-url>jdbc:as400://10.254.102.244</jdbc-url>
+      <jdbc-additional-properties>
+        <property name="database.jdbc.dont.escape" value="true" />
+      </jdbc-additional-properties>
+      <working-dir>$ProjectFileDir$</working-dir>
+      <driver-properties>
+        <property name="auto commit" value="false" />
+        <property name="errors" value="full" />
+        <property name="decimal separator" value="," />
+      </driver-properties>
+    </data-source>
+    <data-source source="LOCAL" name="Db2MN2" uuid="8d6cb4a3-d00b-44bc-9b32-f7a7baf35b83">
+      <driver-ref>db2.jtopen</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.ibm.as400.access.AS400JDBCDriver</jdbc-driver>
+      <jdbc-url>jdbc:as400://10.254.102.245</jdbc-url>
+      <jdbc-additional-properties>
+        <property name="database.jdbc.dont.escape" value="true" />
+      </jdbc-additional-properties>
+      <working-dir>$ProjectFileDir$</working-dir>
+      <driver-properties>
+        <property name="auto commit" value="false" />
+        <property name="errors" value="full" />
+        <property name="decimal separator" value="," />
+      </driver-properties>
+    </data-source>
+    <data-source source="LOCAL" name="SPI_P" uuid="b1168614-aeeb-4f67-9a49-78066597c565">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <schema-control>AUTOMATIC</schema-control>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://10.1.254.58:5432/BCP_SPI</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="Flash_T" uuid="00be8b01-c181-49d5-acea-c09c89cfc7ac">
+      <driver-ref>db2.jtopen</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.ibm.as400.access.AS400JDBCDriver</jdbc-driver>
+      <jdbc-url>jdbc:as400://10.12.254.74</jdbc-url>
+      <jdbc-additional-properties>
+        <property name="database.jdbc.dont.escape" value="true" />
+      </jdbc-additional-properties>
+      <working-dir>$ProjectFileDir$</working-dir>
+      <driver-properties>
+        <property name="auto commit" value="false" />
+        <property name="errors" value="full" />
+        <property name="decimal separator" value="," />
+      </driver-properties>
+    </data-source>
+    <data-source source="LOCAL" name="SPI_D" uuid="2dd6a5d4-88a7-4cd8-91bb-9e2c26c0fd4a">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <schema-control>AUTOMATIC</schema-control>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://10.254.102.35:5432/asientos</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="GeoCom" uuid="09e3a43e-2f39-46f7-a788-194c6fa4b198">
+      <driver-ref>mariadb</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.mariadb.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mariadb://10.1.254.111:3306/geoswitch_ng_bepsa</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="Flash_C" uuid="7051d8d8-d927-46de-9bd1-e01c99959012">
+      <driver-ref>db2.jtopen</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.ibm.as400.access.AS400JDBCDriver</jdbc-driver>
+      <jdbc-url>jdbc:as400://10.2.25.27</jdbc-url>
+      <jdbc-additional-properties>
+        <property name="database.jdbc.dont.escape" value="true" />
+      </jdbc-additional-properties>
+      <working-dir>$ProjectFileDir$</working-dir>
+      <driver-properties>
+        <property name="auto commit" value="true" />
+        <property name="errors" value="full" />
+        <property name="decimal separator" value="," />
+        <property name="number separator" value="." />
+      </driver-properties>
+    </data-source>
+    <data-source source="LOCAL" name="Prod" uuid="48cb6c3d-6066-42fa-b7f3-920e07ea0218">
+      <driver-ref>db2.jtopen</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.ibm.as400.access.AS400JDBCDriver</jdbc-driver>
+      <jdbc-url>jdbc:as400://10.254.254.250</jdbc-url>
+      <jdbc-additional-properties>
+        <property name="database.jdbc.dont.escape" value="true" />
+      </jdbc-additional-properties>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="GeoCom2" uuid="be0440ba-818e-4d90-8721-002223cc9433">
+      <driver-ref>mariadb</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.mariadb.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mariadb://10.1.254.113:3306/geoswitch_ng_bepsa</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="Local" uuid="379e2f71-6fbb-4a0c-b8b7-718f05b38bc1">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/postgres</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="Empe_C_Desa" uuid="d1b7bbb6-9d71-414c-a470-8f5deb352b93">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <schema-control>AUTOMATIC</schema-control>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://10.11.254.178:5432/postgres</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="Lilakc" uuid="8fc6116f-91ad-4559-bba1-20ed6ed7d4a1">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <schema-control>AUTOMATIC</schema-control>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://pcomercio-bus-db.bepsa.com.py:5432/lilakc</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="Jpts_60_T" uuid="8df51eb4-6aba-488b-8f91-155320470192">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <schema-control>AUTOMATIC</schema-control>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://10.1.254.60:5432/postgres</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="Jpts_61_C" uuid="9e3065c8-d46e-4684-813b-37fe589caa34">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <schema-control>AUTOMATIC</schema-control>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://10.1.254.61:5432/postgres</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="Jpts_62_C" uuid="aa3bc1c2-3718-411e-ac43-bb058483d6d5">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <schema-control>AUTOMATIC</schema-control>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://10.1.254.62:5432/postgres</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="GrandNode" uuid="82c3f0f9-1eef-4c5d-87b1-903c3a9b41ea">
+      <driver-ref>mongo</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.dbschema.MongoJdbcDriver</jdbc-driver>
+      <jdbc-url>mongodb://10.1.254.53:27017/grandnodebepsa</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="Bops01" uuid="757163de-0d71-45a5-9a17-c9509a796ef6">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <schema-control>AUTOMATIC</schema-control>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://db-bops02.bepsa.com.py:5432/kong_db_01</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="Bops02" uuid="cfb84309-76a4-4171-b186-858ec57e909b">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <schema-control>AUTOMATIC</schema-control>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://db-bops02.bepsa.com.py:5432/kong_db_02</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="PrPord_Asto" uuid="399194cd-a12a-4642-ab35-c378f9b6dba8">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <schema-control>AUTOMATIC</schema-control>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://10.1.254.35:5432/postgres</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="DTWH_Asto" uuid="d6b5508c-5f42-4c71-81a6-3c57b4e41484">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <schema-control>AUTOMATIC</schema-control>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://10.1.254.131:5432/postgres</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="Hist_DB2" uuid="3df76cdb-245e-4a21-975a-2f1e38c6bde1">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <schema-control>AUTOMATIC</schema-control>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://10.1.254.37:5432/postgres</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="ProdBkSql" uuid="74efd381-f435-42ab-87d8-2e6a776cedb7">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <schema-control>AUTOMATIC</schema-control>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://10.1.254.38:5432/postgres</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="Empe_S_Qa" uuid="477ea8e9-b75f-4707-a0b1-d5bb723f8615">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <schema-control>AUTOMATIC</schema-control>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://10.11.254.216:5432/postgres</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="Empe_C_Qa" uuid="b39e92a1-d9c4-4be8-8c11-c708ebec57d5">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <schema-control>AUTOMATIC</schema-control>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://10.11.254.217:5432/postgres</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="Empe_S_Desa" uuid="1419b63b-8b3c-40b0-b53b-fd787e66ccaa">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <schema-control>AUTOMATIC</schema-control>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://10.11.254.178:5432/postgres</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="Portabilidad" uuid="1b156e64-c06c-41ff-b8dd-090af8322245">
+      <driver-ref>hsqldb.remote</driver-ref>
+      <synchronize>true</synchronize>
+      <configured-by-url>true</configured-by-url>
+      <jdbc-driver>org.hsqldb.jdbcDriver</jdbc-driver>
+      <jdbc-url>jdbc:hsqldb:hsql://10.1.254.233/portabilidad</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="AtmCentra" uuid="be3b92f7-6779-4d84-9c04-6526bd1f7768">
+      <driver-ref>sqlserver.ms</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</jdbc-driver>
+      <jdbc-url>jdbc:sqlserver://10.1.254.250\sa:1433</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="Portal_D" uuid="16a24e31-4898-42d7-a903-37b8fb319268">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <schema-control>AUTOMATIC</schema-control>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://10.254.102.48:5432/postgres</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="GeoIntegrador_D" uuid="97c06d93-7c90-4241-afdd-11b5f3905826">
+      <driver-ref>mariadb</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.mariadb.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mariadb://10.254.102.33:3306/integrator</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="Portal_Q" uuid="dfe80c98-fa9c-4c6d-b94e-d54cdece1f6b">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <schema-control>AUTOMATIC</schema-control>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://10.254.102.99:5432/portal</jdbc-url>
+      <jdbc-additional-properties>
+        <property name="SHOW_TEMPLATE_DATABASES" value="true" />
+        <property name="database.postgres.introspect.system.schemas" value="true" />
+      </jdbc-additional-properties>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="ChipCentre" uuid="2fd6ae1c-58a1-418b-a77d-cf9fdafb4212">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <schema-control>AUTOMATIC</schema-control>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://10.254.103.50:5432/postgres</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+  </component>
+</project>

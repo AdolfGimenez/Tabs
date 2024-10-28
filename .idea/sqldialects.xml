@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/JPTS.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/PORTALWEB.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/SilverSipap.sql" dialect="DB2_IS" />
+    <file url="file://$PROJECT_DIR$/sqls/Api_s.sql" dialect="DB2_IS" />
+    <file url="file://$PROJECT_DIR$/sqls/Bus_D.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/sqls/C.Transac.sql" dialect="DB2_IS" />
+    <file url="file://$PROJECT_DIR$/sqls/CCenter.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/sqls/C_Reint.sql" dialect="DB2_IS" />
+    <file url="file://$PROJECT_DIR$/sqls/DIARIOS.sql" dialect="DB2_IS" />
+    <file url="file://$PROJECT_DIR$/sqls/EMPES.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/sqls/GeoIntegrator.sql" dialect="MariaDB" />
+    <file url="file://$PROJECT_DIR$/sqls/ID-Exist.sql" dialect="DB2_IS" />
+    <file url="file://$PROJECT_DIR$/sqls/IbmI.sql" dialect="DB2_IS" />
+    <file url="file://$PROJECT_DIR$/sqls/K2B.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/sqls/Legacy.sql" dialect="DB2_IS" />
+    <file url="file://$PROJECT_DIR$/sqls/RRHH.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/sqls/R_Pend.sql" dialect="DB2_IS" />
+    <file url="file://$PROJECT_DIR$/sqls/Reing.sql" dialect="DB2_IS" />
+    <file url="file://$PROJECT_DIR$/sqls/Sirius.sql" dialect="PostgreSQL" />
+  </component>
+</project>

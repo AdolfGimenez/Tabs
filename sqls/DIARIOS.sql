@@ -1,6 +1,7 @@
 --231290010802051--lote anulado para no pagar
 --------------------------------------------------------------------------
 select mcdisco saldo,  mcnumta tarjeta,   T.* from gxbdbps.tmctaaf T where mcnumta='6274311550006321';
+SELECT * FROM GXBDBPS.TMTARAF T;
 ----------------------------
 SELECT ODLBNM, ODOBNM, ODOBTP, ODOBAT, ODCDAT, ODSIZU * ODBPUN,ODUDAT, O.*
 FROM moleda.objetos o
@@ -346,7 +347,7 @@ NROTRANSACCION referencia, REF_EXTRACTO lote,AUTORIZACION, CTABANCO AS CTA_COMER
 FROM tt;
 ---DESCRIPCION COMPRAS POR QR
 
-/*Verificación de Facturas Comercios CLaro (No Operadora)*/
+/*Verificaciï¿½n de Facturas Comercios CLaro (No Operadora)*/
 SELECT SUBSTR(MOVFCRE, 1, 6)  PERIODO,
        MOVCODCLI,
        MOVCODSUC,
@@ -493,38 +494,112 @@ SET O.OPCOMI   = (SELECT SUM(CASE WHEN MODTPPA = 'COME' THEN MODCOMI + MODCOIV E
 WHERE O.OPCODTRN = '000054'
   AND O.OPIDTRA = '';
 ------------------------------------------------------------------
-UPDATE GXWEB.OPLIQUI o
-SET OPNROCTC = '20006'
-WHERE OPNROREF = '409611763302';
+Select movftrx fechatrx,  movrrnbep nrotransaccion, (CASE WHEN movtpta = 'D' THEN 'DEBITO' ELSE 'CREDITO' END)  tipotarjeta, movcoau Autorizacion, movdesem Emisor, substr(movntar,1,6)||'XXXXXX'||substr(movntar,13,4) tarjeta,
+movmarc marca, 1 cuotas, '600' moneda,  movcoam origen, movcomer codsucursal, movdeno sucursal, a.sercodi tipo, movcodpr procesadora,
+movcodis dispositivo, movesta estado, movidlt nroresumen, movimpo importe, (OPCOMENT+OPCOMBPS) COMISION, (OPIVAENT+OPIVABPS) IVACOMISION, OPRENTA RENTA, OPREIVA IVARENTA, (OPMONTO-OPCOMENT-OPCOMBPS-OPIVAENT-OPIVABPS-OPRENTA-OPREIVA) NETO,
+MOVCDBCC CODBANCO, movctbcc CTABANCO, MOVCOCO PORCENCOMISION, substr(cast(varchar(tsbfeac) as char(10)),1,4)||substr(cast(varchar(tsbfeac) as char(10)),6,2)||substr(cast(varchar(tsbfeac) as char(10)),9,2) fechaacreditacion, (CASE WHEN MOVPGON= 'O'  THEN 'LINEA' WHEN  MOVPGON= 'B' THEN 'LOTE' ELSE 'PENDIENTE' END) TIPOOPERACION, tsbnref REF_EXTRACTO, tsbnref ref_bepsa
+from gxfindta.tclmov a
+inner join gxopera.opmovi b on movrrnbep = opnoref and MOVFPRO = OPFECOM and opstatus = 'A'
+left join gxfindta.tcltsb c on movrrnbep = tsbnref and tsbtpop = '01'
+WHERE MOVFPRO IN (SELECT FECANT FROM gxfindta.TCLFEC WHERE FECID= '001')
+and movpgon = 'O' and MOVRUC = '80052468-3' and movesta = 'A'
+UNION
+/*Transacciones Reversadas Online*/
+Select movftrx fechatrx,  movrrnbep nrotransaccion, (CASE WHEN movtpta = 'D' THEN 'DEBITO' ELSE 'CREDITO' END)  tipotarjeta, movcoau Autorizacion, movdesem Emisor, substr(movntar,1,6)||'XXXXXX'||substr(movntar,13,4) tarjeta,
+movmarc marca, 1 cuotas, '600' moneda,  movcoam origen, movcomer codsucursal, movdeno sucursal, a.sercodi tipo, movcodpr procesadora,
+movcodis dispositivo, movesta estado, movidlt nroresumen, movimpo importe, (OPCOMENT+OPCOMBPS) COMISION, (OPIVAENT+OPIVABPS) IVACOMISION, OPRENTA RENTA, OPREIVA IVARENTA, (OPMONTO-OPCOMENT-OPCOMBPS-OPIVAENT-OPIVABPS-OPRENTA-OPREIVA) NETO,
+MOVCDBCC CODBANCO, movctbcc CTABANCO, MOVCOCO PORCENCOMISION, substr(cast(varchar(tsbfeac) as char(10)),1,4)||substr(cast(varchar(tsbfeac) as char(10)),6,2)||substr(cast(varchar(tsbfeac) as char(10)),9,2) fechaacreditacion, (CASE WHEN MOVPGON= 'O'  THEN 'LINEA' WHEN  MOVPGON= 'B' THEN 'LOTE' ELSE 'PENDIENTE' END) TIPOOPERACION, tsbnref REF_EXTRACTO, tsbnref ref_bepsa
+from gxfindta.tclmov a
+inner join gxopera.opmovi b on movrrnbep = opnoref and MOVFPRO = OPFECOM and opstatus = 'E'
+left join gxfindta.tcltsb c on movrrnbep = tsbnref and tsbtpop = '03'
+WHERE MOVFPRO IN (SELECT FECANT FROM gxfindta.TCLFEC WHERE FECID= '001')
+and movpgon = 'O' and MOVRUC = '80052468-3' and movesta = 'R'
+UNION
+/*Transacciones Aprobadas Batch <> Red de pagos*/
+Select movftrx fechatrx,  movrrnbep nrotransaccion, (CASE WHEN movtpta = 'D' THEN 'DEBITO' ELSE 'CREDITO' END)  tipotarjeta, movcoau Autorizacion, movdesem Emisor, substr(movntar,1,6)||'XXXXXX'||substr(movntar,13,4) tarjeta,
+movmarc marca, 1 cuotas, '600' moneda,  movcoam origen, movcomer codsucursal, movdeno sucursal, a.sercodi tipo, movcodpr procesadora,
+movcodis dispositivo, movesta estado, movidlt nroresumen,(Case when sercodi = 'DINEFE' THEN (OPMONTO-OPCOMENT-OPCOMBPS-OPIVAENT-OPIVABPS-OPRENTA-OPREIVA) ELSE movimpo END) importe, (CASE WHEN sercodi = 'DINEFE' THEN 0 ELSE (OPCOMENT+OPCOMBPS)END) COMISION,
+(CASE WHEN sercodi = 'DINEFE' THEN 0 ELSE (OPIVAENT+OPIVABPS)END) IVACOMISION, OPRENTA RENTA, OPREIVA IVARENTA, (OPMONTO-OPCOMENT-OPCOMBPS-OPIVAENT-OPIVABPS-OPRENTA-OPREIVA) NETO,
+MOVCDBCC CODBANCO, movctbcc CTABANCO, MOVCOCO PORCENCOMISION, movfcre fechaacreditacion, 'LOTE' TIPOOPERACION, opcreref REF_EXTRACTO, MOVIDLT ref_bepsa
+from gxfindta.tclmov a
+inner join gxopera.opmovi b on movrrnbep = opnoref and MOVFPRO = OPFECOM
+left join gxopera.oplicre c on movfpro = opcrefcom and movcomer = opcrecom
+WHERE MOVFPRO IN (SELECT FECANT FROM gxfindta.TCLFEC WHERE FECID= '001')
+and movpgon = 'B' and MOVRUC = '80052468-3' AND SERCODI <> 'REDPAG'
+UNION
+/*Transacciones Aprobadas Batch = Red de pagos*/
+Select movftrx fechatrx,  movrrnbep nrotransaccion, (CASE WHEN movtpta = 'D' THEN 'DEBITO' ELSE 'CREDITO' END)  tipotarjeta, movcoau Autorizacion, movdesem Emisor, substr(movntar,1,6)||'XXXXXX'||substr(movntar,13,4) tarjeta,
+movmarc marca, 1 cuotas, '600' moneda,  movcoam origen, movcomer codsucursal, movdeno sucursal, a.sercodi tipo, movcodpr procesadora,
+movcodis dispositivo, movesta estado, movidlt nroresumen,  (Case when sercodi = 'REDPAG' THEN OPMONTO  ELSE movimpo END) importe, (CASE WHEN sercodi = 'REDPAG' THEN 0 ELSE (OPCOMENT+OPCOMBPS)END) COMISION, (CASE WHEN sercodi = 'REDPAG' THEN 0 ELSE (OPIVAENT+OPIVABPS)END) IVACOMISION, OPRENTA RENTA, OPREIVA IVARENTA, OPMONTO NETO,
+MOVCDBCC CODBANCO, movctbcc CTABANCO, MOVCOCO PORCENCOMISION, movfcre fechaacreditacion, 'LOTE' TIPOOPERACION, opcreref REF_EXTRACTO, MOVIDLT ref_bepsa
+from gxfindta.tclmov a
+inner join gxopera.opmovi b on movrrnbep = opnoref and MOVFPRO = OPFECOM
+left join gxopera.oplicre c on movfpro = opcrefcom and movcomer = opcrecom
+WHERE MOVFPRO IN (SELECT FECANT FROM gxfindta.TCLFEC WHERE FECID= '001')
+and movpgon = 'B' and MOVRUC = '80052468-3' AND SERCODI = 'REDPAG';
 
-UPDATE GXOPERA.OPLIQUI o
-SET OPNROCTC = '20006'
-WHERE OPNROREF = '409611763302';
+SELECT * FROM LIBDEBITO.DRCONBEP D WHERE D.LERRNB='428588798138';
 
-SELECT * FROM GXOPERA.OPLIQUI O WHERE OPNROREF = '409611763302';
+SELECT * FROM GXFINDTA.TCMTIF GT WHERE GT.CLICLICOD=10879;
+SELECT * FROM
+GXBDBPS.AUTARAF WHERE ATFEREA >='20241014';
 
-select * from asientos.tclmov_asientos_trx where asiento_k2b_numero = '89300';
+SELECT * FROM LIBDEBITO.LINPORTA t WHERE LNUMER='971873921';
+--0971873921
+--0 985710199
+SELECT /*USUCODCAT ID, USUAIDCAT CI, USUCOCOMER COMERCIO, USUNOMCAT NOMBRE, USUESTCAT CATEGORIA,
+USUTELCAT TELEFONO, TUSRID TIPOUSUARIO, USUPASSCAT PASS, USUADMCAT CODCAJERO,
+USUCORUCCAT RUC, USUCAMBPASCAT NECESITACAMBIARPASS*/ *
+FROM GXWEB.USUCAT L
+WHERE l.USUTELCAT = '0971873921';
+SELECT * FROM GXBDBPS.COMAEAF C2 WHERE C2.COCOMER='4300051';
+SELECT * FROM GXBDBPS.COMAEXD C2 WHERE C2.COCOMER='4300051';
 
-SELECT * FROM GXBDBPS.HSMDTA;
+SELECT * FROM GXFINDTA.TCLMOV T WHERE T.MOVRRNBEP='419952092097';
 
-SELECT * FROM ADOLFOLIB.HSMDTA;
+    DELETE  FROM VISA.NRT_RRN_EX c where NRTLOGFECH='2024-10-07'
+AND NRTLOGHORA BETWEEN '00:14:34' AND  '02:03:33';
 
-SELECT * FROM GXFINDTA.TCLTSB T WHERE T.TSBNREF IN ('241100014600054','241130014600054','241140014600054','241150014600054');
+
+    SELECT DATA_QUEUE_LIBRARY, DATA_QUEUE_NAME , MAXIMUM_MESSAGE_LENGTH, CURRENT_MESSAGES
+FROM QSYS2.DATA_QUEUE_INFO WHERE DATA_QUEUE_NAME LIKE '%ACFIREC%';
+
+SELECT d.DEPID, d.DEPFECH, d.DEPMONTO, d.DEPFORPAG, d.DEPNROBOL, d.DEPCOM, d.DEPCITIT, d.DEPNOMTITU, d.DEPUSUID, d.DEPUSU,
+      d.DEPFECHA, d.DEPHORA, d.DEPESTADO, d.DEPUSUCONF, d.DEPFECHCONF, d.DEPPRODUC, d.DEPBANCO, d.DEPNROASI, d.DEPCTABCO, CLICLICOD, SUCSUCCOD, CNACTAMAD
+FROM GXWEB.DEPCICO d
+--LEFT JOIN GXFINDTA.TCOCNA tc ON TRIM(d.DEPCOM) = TRIM(tc.COCOMER)
+      WHERE d.DEPID = 7982
+LEFT JOIN GXFINDTA.TCOCNA tc ON TRIM(d.DEPCOM) = TRIM(tc.COCOMER)
+      LIMIT 1;
+
+SELECT COUNT(*)  FROM VISA.LOGCNV02A
+       WHERE DATE (FECHA)<= '2024-10-01';
+
+SELECT * FROM GXFINDTA.TCLTSB T WHERE TSBIDOP IN (10992284, 13775615);
+SELECT * FROM GXFINDTA.TCLTSB T WHERE TSBIDOP IN (13762526,12753117);
+SELECT * FROM GXFINDTA.TCLTSB T WHERE TSBIDOP IN (11449669,13549000);
+SELECT * FROM GXFINDTA.TCLTSB T WHERE TSBIDOP IN (12753145,13714404);
+SELECT * FROM GXFINDTA.TCLTSB T WHERE TSBIDOP IN (11277458,13659495);
+SELECT * FROM GXFINDTA.TCLTSB T WHERE TSBIDOP IN (12753172,13720648);
+SELECT * FROM GXFINDTA.TCLTSB T WHERE --T.TSBNREF='422763945761';
+DATE (TSBFEGE)>='2024-10-01' AND TSBTPOACR='O' AND TSBCOCO='0800833';
+
+DELETE  FROM VISA.NRT_RRN_EX c where NRTLOGFECH='2024-10-21'
+AND NRTLOGHORA BETWEEN '00:14:47' AND  '08:03:05' ;
+
+-
+SELECT DATA_QUEUE_LIBRARY, DATA_QUEUE_NAME , MAXIMUM_MESSAGE_LENGTH, CURRENT_MESSAGES
+FROM QSYS2.DATA_QUEUE_INFO WHERE DATA_QUEUE_NAME LIKE '%ACFIREC%';
+
+----COMERCIOS_WEB
+SELECT * GXBDCON.GXLOFUN;
+SELECT * FROM GXDEBITO.JRNCOMAEAF J;
+SELECT * FROM GXDEBITO.JRNCOMAEXD J;
+
+SELECT * FROM QUSRTOOLS.HSMMSGRETC;
 
 
-SELECT * FROM gxopera.opago1p OP where pgcomer = '4500001' AND PGIDTRN=240425585010
+SELECT  COUNT(*)
+FROM GXBDBPS.TSWAUT WHERE AUTTRXFCHC='20241016';
 
-Update gxopera.opago1p set pgnocta = 8191198, pgticta = 0 WHERE PGIDTRN=240425585010 AND pgcomer = '4500001';
-
-SELECT * FROM GXFINDTA.TCLTSB WHERE TSBNREF='241150038606270';
-
-SELECT * FROM GXFINDTA.TCLTSB WHERE TSBCOCO='8606270';
-
-UPDATE GXFINDTA.TCLTSB SET TSBUSUA='CONTIWSUSR' WHERE TSBNREF='241150038606270';
-
-SELECT * FROM GXFINDTA.tcltsb WHERE TSBNREF = '409611763302';
-
-UPDATE  GXFINDTA.tcltsb
-SET TSBESTA = 'AC', TSBDEME = 'ACREDITADO',TSBCOME = '002' ,TSBMOTIVO = 'REDMINE #73427'
-WHERE TSBNREF = '409611763302';
 

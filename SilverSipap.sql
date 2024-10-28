@@ -10,7 +10,7 @@ WHERE TSBIDOP = 3705684;
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ------Cambia estado para el reintento de Pagos SIPAP-----------------/*#35934- Insertado SIPAP pero no enviado*/--------/*Marca Pendiente SIPAP-20220906*/
 Select * from gxfindta.tcltsb where tsbbacr <> '1020' and tsbesta = 'IN' and  tsbfege <= '2022-10-05 08:30:00'; --139 registros
-Update gxfindta.tcltsb  set tsbesta = 'PE', tsbmotivo = 'SIPAP (IN) NO TRANSMITIDO 20221005' where tsbbacr <> '1020' and tsbesta = 'IN' and  tsbfege <= '2022-10-05 08:30:00'; 
+Update gxfindta.tcltsb  set tsbesta = 'PE', tsbmotivo = 'SIPAP (IN) NO TRANSMITIDO 20221005' where tsbbacr <> '1020' and tsbesta = 'IN' and  tsbfege <= '2022-10-05 08:30:00';
 ----con ids especificos
 Select * from gxfindta.tcltsb where  tsbesta = 'IN' and tsbidop in (4424531,4438740,4440505,4447272,4447273,4447321,4447381,4443384)
 Update gxfindta.tcltsb  set tsbesta = 'PE', tsbmotivo = 'SIPAP (IN) NO TRANSMITIDO 20220826' where tsbesta = 'IN' and tsbidop in (4424531,4438740,4440505,4447272,4447273,4447321,4447381,4443384)
@@ -25,24 +25,24 @@ Update gxfindta.tcltsb  set tsbesta = 'PE', tsbmotivo = 'DEBITO (IN) NO TRANSMIT
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------/*Para poner como pendiente los debitos que imputaron hoy
 Select * from gxfindta.tcltsb where tsbesta = 'IN' and tsbtpop = '04' and date(tsbfege) = '2022-08-22'; --6 registros
-Update gxfindta.tcltsb  set tsbesta = 'PE', tsbmotivo = 'DEBITO (IN) NO TRANSMITIDO 20220822' where tsbesta = 'IN' and tsbtpop = '04' and date(tsbfege) = '2022-08-22';
+Update gxfindta.tcltsb??set tsbesta = 'PE', tsbmotivo = 'DEBITO (IN) NO TRANSMITIDO 20220822' where tsbesta = 'IN' and tsbtpop = '04' and date(tsbfege) = '2022-08-22';
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Select * from gxfindta.tcltsb where tsbesta = 'PE'  and tsbfeac >= '2022-08-19 08:30:00';
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------/*/*CUENTAS INTERNAS NO TRANSMITIDAS*/
 Select * from gxfindta.tcltsb where tsbbacr = '1020' and tsbesta = 'IN' and  tsbfege <= '2022-09-06 08:00:00'; --3043 REGISTROS
 Update gxfindta.tcltsb set tsbesta = 'PE', tsbmotivo = 'INTERNA (IN) NO TRANSMITIDO 20220906' where tsbbacr = '1020' and tsbesta = 'IN' and  tsbfege <= '2022-09-06 08:00:00';
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------  
-----------------------------------------/*/*Corrige Nro de Cuenta Dèbito (le falto un cero delante y poner en PE)*/
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------/*/*Corrige Nro de Cuenta D?bito (le falto un cero delante y poner en PE)*/
 Update gxfindta.tcltsb set tsbctde = '0104913400', tsbesta = 'PE' where tsbmotivo = 'REDMINE NRO 36786' and tsbcome = '008'; --4.725
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------/*/*Marca para Envio Pagos SIPAP (Batch)*/
 Select * from gxfindta.tcltsb where tsbbacr <> '1020' and tsbesta = 'IN' and tsbtpoacr = 'B'; --1339 registros
-Update gxfindta.tcltsb  set tsbesta = 'PE', tsbmotivo = 'SIPAP (IN) NO TRANSMITIDO 20220826' where tsbbacr <> '1020' and tsbesta = 'IN' and tsbtpoacr = 'B';
+Update gxfindta.tcltsb??set tsbesta = 'PE', tsbmotivo = 'SIPAP (IN) NO TRANSMITIDO 20220826' where tsbbacr <> '1020' and tsbesta = 'IN' and tsbtpoacr = 'B';
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------/*Para poner como pendiente los debitos que imputaron hoy
 Select * from gxfindta.tcltsb where tsbesta = 'IN' and tsbtpop = '04' and date(tsbfege) = '2022-08-22'; --6 registros
-Update gxfindta.tcltsb  set tsbesta = 'PE', tsbmotivo = 'DEBITO (IN) NO TRANSMITIDO 20220822' where tsbesta = 'IN' and tsbtpop = '04' and date(tsbfege) = '2022-08-22';
+Update gxfindta.tcltsb??set tsbesta = 'PE', tsbmotivo = 'DEBITO (IN) NO TRANSMITIDO 20220822' where tsbesta = 'IN' and tsbtpop = '04' and date(tsbfege) = '2022-08-22';
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -----------------------------------Para cambiar fecha de CLEaring
 UPDATE GXFINDTA.TCLPFC SET PFCVALCHR = 'N' WHERE PFCIDPARM = 'CIERRECLEARING ';
@@ -60,27 +60,28 @@ DELETE gxopera.opago1p where PGIDUSR = 'U99KATERIN' and pgidtrn in ('22101834561
 
 /*20221220 - Transacciones afectadas*/
 
-Select * from gxbdbps.tswaut where autrrnbep in 
+Select * from gxbdbps.tswaut where autrrnbep in
 ('229307500932','229307500947','229307501132','229307501239','229307501376','229307501452','229307501461','229307501488'
 ,'229307501592','229307501598','229307501603','229307501616','229307501629','229307501644','229307501740','229307502005'
 ,'229307502166','229307502427','229307502431','229307502593','229307502939','229307503057','229307503206','229307503472'
 ,'229307503559','229307503791','229307503924','229307504107','229307504114','229307504182','229307504235');
 --Actualiza a Online en tclmov --32 registros
 
-Update gxfindta.tclmov set movpgon = 'O' where movrrnbep in 
+Update gxfindta.tclmov set movpgon = 'O' where movrrnbep in
 ('229307500932','229307500947','229307501132','229307501239','229307501376','229307501452','229307501461','229307501488'
 ,'229307501592','229307501598','229307501603','229307501616','229307501629','229307501644','229307501740','229307502005'
 ,'229307502166','229307502427','229307502431','229307502593','229307502939','229307503057','229307503206','229307503472'
 ,'229307503559','229307503791','229307503924','229307504107','229307504114','229307504182','229307504235');
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---Para el caso que se necesite habilitar la imputación
+--Para el caso que se necesite habilitar la imputacion
 SELECT PFCIDPARM,PFDIDGRUP,PFDVALCHR1 FROM GXFINDTA.TCLPFD WHERE PFCIDPARM = 'PCLR154' AND PFDIDGRUP = 'EJECUCION';
 UPDATE GXFINDTA.TCLPFD SET PFDVALCHR1 = 'N' WHERE PFCIDPARM = 'PCLR154' AND PFDIDGRUP = 'EJECUCION';
+SELECT * FROM GXFINDTA.TCLPFD T WHERE PFCIDPARM = 'PCLR154' AND PFDIDGRUP = 'EJECUCION';
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --Corrige el dato de la orden de pago pendiente en transmisiones #39632
 Select * from gxfindta.tcltsb where tsbnref = '289100015728';
-Update gxfindta.tcltsb set tsbtpop = '01', tsbdeop = 'CREDITO A COMERCIOS', tsbcodswd = 'BCNAPYPA', tsbbade = 1020, 
-tsbctde = '0102184061', tsbesta = 'PE', tsbmotivo = 'redmine #39632',tsbtpde = 'CC', tsbcodswc = 'FICSPYPA', 
+Update gxfindta.tcltsb set tsbtpop = '01', tsbdeop = 'CREDITO A COMERCIOS', tsbcodswd = 'BCNAPYPA', tsbbade = 1020,
+tsbctde = '0102184061', tsbesta = 'PE', tsbmotivo = 'redmine #39632',tsbtpde = 'CC', tsbcodswc = 'FICSPYPA',
 tsbbacr = 2080 where tsbnref = '289100015728';
 PARAMETRIZACIONES PARA LA REINGENIERIA
 --PARBCOPAI=5034 = LAMBARE - PARCSWIFT=CLAMPYPAXXXX (050)
@@ -122,3 +123,35 @@ Select * from gxtrjdta.tdgenr where entcodent =2137;
 INSERT INTO GXTRJDTA.TDGENR
 (ENTCODENT,ROLIDROL,ENRENTROL,ENRPERPAGO,ENRUSULTUP,ENRFHULTUP,ENRTIPOCON,ENRBCOPAGA)
 VALUES (2137,4,213704,' ',current user, current timestamp,'IND',1020);
+--------------------------
+/*Corrección de Fecha de liquidación para compensacion de Operadoras (616 registros) */
+Select movftrx, movfpro, movfecliq, sercodi, precodi, movimpo, movneto
+from gxfindta.tclmov where MOVFECLIQ = '20240930' AND SERCODI in ('CICO','VTAMIN','PAGFAC');
+Update gxfindta.tclmov set movfecliq = '20241011' where MOVFECLIQ = '20240930' AND SERCODI in ('CICO','VTAMIN','PAGFAC');
+-------DE BNF A BNF
+SELECT * FROM GXOPERA.OPAGO1PHIS O1P WHERE O1P.PGCOMER='0802484' AND O1P.PGFETRN BETWEEN '20240901' AND '20240930'
+--RED DE PAGOS
+SELECT * FROM GXOPERA.OPAGO5PH O5P WHERE O5P.PGCOMER5='COD_COMER_86';
+--sentencias para agregar los datos bancarios en el detalle transaccional
+Select
+    movidmov,movfpro,movcomer, movdeno, movcodcli, movcodsuc,movidlt,movcodem, movdesem, movntar,sercodi,
+    precodi, movfpgo, movcdbcc, movdsbcc, movctbcc, movbcab,movncbcab, movdsbcc,movpgon, movimpo, movneto
+from gxfindta.tclmov
+where movfpro = '20241014' and movcomer = '8615919';;
+UPDATE GXFINDTA.TCLMOV
+SET MOVCDBCC  = 102004,
+    MOVDSBCC  = 'CONTINENTAL',
+    MOVBCAB   = 1020,
+    MOVNCBCAB = 'CONTINENTAL',
+    MOVCTBCC  = '3405632669'
+WHERE MOVIDLT = '242880038615919';
+----
+---reporte solo de pagos a bnf que no estan en trasmisiones
+SELECT
+    T.MOVIDLT  LOTE, T.SERCODI  SERVICIO, T.MOVFPRO  FECHA_PROCESO, T.MOVFCRE  FECHA_CREDITO, T.MOVFTRX  FECHA_TRX,
+    T.MOVESTA  ESTADO, T.MOVCODIS DISPOSITIVO, T.MOVFPGO  FOMRA_PAGO, T.MOVNETO  NETO, T.MOVCOMER COMERCIO,
+    T.MOVCDBCC BANCO_COMERCIO, T.MOVDENO  DENOMNINACION, T.MOVRAZO  RAZON_SOCIAL, T.MOVRUC   RUC, T.MOVMARC  MARCA,
+    T.MOVCDBCC COD_BANCO_COM, T.MOVDSBCC BANCO, T.MOVCTBCC CUENTA, T.MOVAFIN  AFINIDAD, T.MOVPGON  TIPO_ACRE
+FROM GXFINDTA.TCLMOV T
+WHERE T.MOVCOMER = '0802484' AND T.MOVCDBCC ='100204'
+  AND T.MOVFCRE BETWEEN '20240901' AND '20240930';

@@ -13,7 +13,7 @@ SELECT * FROM SIFEN.DOCUMENTOELECTRONICO D WHERE D.IDDE IN (
 
 SELECT * FROM SIFEN.TIPOESTADODE T ;
 SELECT * FROM SIFEN.LOTEDETALLEEVENTO L WHERE L.IDDE = 542647
-order BY IDDE, FECHORAEVENTO;                                                       --Historico por el que pasa un DE. De aquí se puede sacar el lote
+order BY IDDE, FECHORAEVENTO;                                                       --Historico por el que pasa un DE. De aqu? se puede sacar el lote
 
 SELECT * FROM SIFEN.DOCUMENTOELECTRONICO D WHERE D.IDDE='510160'--D.IDTIPOESTADODEULTIMO=7;--D.IDDE = 443395 ;
 SELECT * FROM SIFEN.LOTEDETALLEEVENTORESPMENSAJE L WHERE L.MENSAJE ILIKE '%RUC del emisor%' ;
@@ -23,7 +23,7 @@ SELECT --DISTINCT(L.IDLOTE)
 490076,487536,485802,487710,488441,489229,491864,492306,492575);
 ---CASO DE_ACTIVO- MUDANZA SILVANA --REPROCESO
 SELECT * FROM SIFEN.DOCUMENTOELECTRONICO D WHERE D.IDTIPOESTADODEULTIMO=7;--D.IDDE = 443395 ;--SE CONSULTA ESTADO 7 QUE ES IGUAL A ACTIVO
---vemos si cumplen con los 5 procesos o mas de recepción, kude, notifiacion, envió. si está solo con 4 registros x cada idde no se fue.
+--vemos si cumplen con los 5 procesos o mas de recepci?n, kude, notifiacion, envi?. si est? solo con 4 registros x cada idde no se fue.
 SELECT /*DISTINCT(L.IDLOTE)*/ * FROM SIFEN.LOTEDETALLEEVENTO L
  WHERE L.IDDE IN (496005,510314,510658,510704,510913);--AND DATE(fechoraevento)>='2024-01-23';
 
@@ -36,7 +36,7 @@ SELECT * FROM  SIFEN.LOTE L  WHERE L.IDLOTE='32867';
 INSERT INTO SIFEN.LOTE (IDEMPRESA, IDLOTE, IDTIPODOCUMENTOELECTRONICO, FECALTA, FECFIN, ACTIVO, OBS, IDTIPOLOTE, IDTIPOEVENTO, AUD_FECALTA, AUD_FECMODIF, AUD_IDUSUARIOALTA, AUD_IDUSUARIOMODIF)
 VALUES (2::INTEGER, DEFAULT, 1::INTEGER, '2024-01-31 11:10:20.000000'::TIMESTAMP, NULL::TIMESTAMP, FALSE::DO_BOO_ACTIVO, 'Creado al momento de insertar el lotedetalleevento.'::TEXT, 1::INTEGER, 1::INTEGER, NULL::TIMESTAMP, NULL::TIMESTAMP, NULL::INTEGER, NULL::INTEGER);
 ------------
---se copia el nuevo lote a todos los idde para el envío,
+--se copia el nuevo lote a todos los idde para el env?o,
 UPDATE SIFEN.LOTEDETALLEEVENTO SET idlote=32749
                                WHERE IDDE IN (515977,515984,515991);
 ---
@@ -96,12 +96,12 @@ SELECT * FROM sirius.sifen.DOCUMENTOELECTRONICO D WHERE idde IN (551079, 559595)
 SELECT *  FROM sifen.fn_cp_lote_proceso_linea('SECDO', 'PROC') ;
 SELECT * FROM SIFEN.GENERALDERECEPTOR G WHERE G.IDDE='478996';
 
---Esto nos retorna SIFEN, los documentos que figuran en este select aún se encuentra en procesamiento. Como les dije ayer, esto depende de la SET
+--Esto nos retorna SIFEN, los documentos que figuran en este select a?n se encuentra en procesamiento. Como les dije ayer, esto depende de la SET
 --Dale NO hay problemas Sil muchas gracias
 
---Pero también tenes documentos encolados que no se fueron a la SET. Recomiento esperar, que estos que aún se estan procesando retorne todo
---Y así identificar a los que se quedaron encolados
-----dale dale está bien estamos entonces.! Respondeme el correo porfa para la evidencia
+--Pero tambi?n tenes documentos encolados que no se fueron a la SET. Recomiento esperar, que estos que a?n se estan procesando retorne todo
+--Y as? identificar a los que se quedaron encolados
+----dale dale est? bien estamos entonces.! Respondeme el correo porfa para la evidencia
 
 --Okis, me desconecto. Quedo atenta, chau
 /*
@@ -277,8 +277,8 @@ BEGIN
                       OR
                      (chk.nrotimbrado IS NOT NULL AND (chk.cdc IS NOT NULL OR chk.idempresasirius IS NOT NULL))
                     )) THEN
-		SELECT base.fn_errorsifen_launcher(NULL::TEXT, -- la función coloca SQLState "Error de Primer Nivel"
-										   'Solo debe enviar información de DE por una de las claves (p/la búsqueda) que son: Interna, Sifen, Timbrado; no debe incluir varios.'::VARCHAR,
+		SELECT base.fn_errorsifen_launcher(NULL::TEXT, -- la funci?n coloca SQLState "Error de Primer Nivel"
+										   'Solo debe enviar informaci?n de DE por una de las claves (p/la b?squeda) que son: Interna, Sifen, Timbrado; no debe incluir varios.'::VARCHAR,
 										   NULL::VARCHAR);
 	END IF;
 
@@ -333,7 +333,7 @@ BEGIN
 			   left join sifen.lotedetalleeventorespmensaje lresp on l.idempresa = lresp.idempresa
 			   											    	 and l.idde = lresp.idde
 			   											    	 and l.idlote = lresp.idlote
-		 WHERE -- Búsqueda por Clave-Interna
+		 WHERE -- B?squeda por Clave-Interna
          	   chk.idempresasirius IS NOT NULL
            AND chk.iddesirius IS NOT NULL
 
@@ -345,7 +345,7 @@ BEGIN
            AND chk.codempresa IS NULL
            AND chk.nrotimbrado IS NULL
 
-         	   -- SDEDO = DE Anulado (Anulado en Sirius, jamás se envió a Sifen)
+         	   -- SDEDO = DE Anulado (Anulado en Sirius, jam?s se envi? a Sifen)
            AND tede.codigo IS NOT NULL
 
 		UNION ALL
@@ -399,7 +399,7 @@ BEGIN
 			   left join sifen.lotedetalleeventorespmensaje lresp on l.idempresa = lresp.idempresa
 			   							    and l.idde = lresp.idde
 			   							    and l.idlote = lresp.idlote
-		 WHERE -- Búsqueda por Clave-Interna
+		 WHERE -- B?squeda por Clave-Interna
          	   chk.idempresasirius IS NULL
            AND chk.iddesirius IS NULL
 
@@ -411,7 +411,7 @@ BEGIN
            AND chk.codempresa IS NULL
            AND chk.nrotimbrado IS NULL
 
-         	   -- SDEDO = DE Anulado (Anulado en Sirius, jamás se envió a Sifen)
+         	   -- SDEDO = DE Anulado (Anulado en Sirius, jam?s se envi? a Sifen)
            AND tede.codigo IS NOT NULL
 
 		UNION ALL
@@ -470,7 +470,7 @@ BEGIN
 																		     AND chk.codcaja = emsuca.codigo
 								  INNER JOIN sifen.tipodocumentoelectronico tde ON em.idempresa = tde.idempresa
 																			   AND chk.codtipodocumentoelectronico_erp = tde.codigo
-				 		    WHERE -- Búsqueda por Clave-Interna
+				 		    WHERE -- B?squeda por Clave-Interna
 								  chk.idempresasirius IS NULL
 							  AND chk.iddesirius IS NULL
 
@@ -503,7 +503,7 @@ BEGIN
                     AND idcaja = q.idcaja AND idtipodocumentoelectronico = q.idtipodocumentoelectronico)
 
 
-			   -- SDEDO = DE Anulado (Anulado en Sirius, jamás se envió a Sifen)
+			   -- SDEDO = DE Anulado (Anulado en Sirius, jam?s se envi? a Sifen)
 		   AND tede.codigo IS NOT NULL
 		ORDER BY 1, 8, 9, 13, 14, 15 limit 1;
 
@@ -785,3 +785,6 @@ INSERT INTO
     sifen.lotedetalleevento
     (idempresa, idlote, idde, idtipoevento, idtipoestadoevento, idtipoestadode, fechoraevento, obs, errsqlstate, errstacktrace, aud_fecalta, aud_fecmodif, aud_idusuarioalta, aud_idusuariomodif)
 VALUES (2, 34151, 556019, 4, 1, 1, '2024-04-04 10:30:03.908894', 'cambio por DB. Rechazo falso SIFEN', null, null, null, null, null, null);
+
+SELECT * FROM
+             sirius.sifen.DOCUMENTOELECTRONICO D WHERE D.IDENTIFICADORDE='0180011012900100201360652202406281673992945'

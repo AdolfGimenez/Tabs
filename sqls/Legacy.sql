@@ -1,4 +1,4 @@
---para vaciar tabla de instructivo que arroja error al querer procesar ya que está cargado. Tare #56082
+--para vaciar tabla de instructivo que arroja error al querer procesar ya que estï¿½ cargado. Tare #56082
 SELECT * FROM GXOPERA.TRXINST WHERE INSFECARGA>='20240319' AND INSEMISO='057';--SE FILTRA POR EL BANCO EN CUESTION
 --DELETE FROM GXOPERA.TRXINST T WHERE INSFECARGA>='20240115' AND INSEMISO='064';
 SELECT * FROM GXBDBPS.GENTIAF G --WHERE ENEMISO='064';
@@ -46,8 +46,8 @@ select * from gxopera.fcobros where /*COMNRO='10030075009' AND*/ COMRECNRO in('1
 SELECT COUNT(*) FROM GXOPERA.FCOBROS F WHERE COMRECNRO BETWEEN '1197116' AND '1201379';
 --DELETE FROM GXOPERA.FCOBROS WHERE COMRECNRO='1194770';--obs: para eliminar recibmos hay que ajustar las fact. relacionadas al recibo, poner en P, y ajustar los saldos
 update gxopera.fcobros set COMSTATUS='A' /*COMFEREAL='20220913'*/ where COMRECNRO='1197116';
-----------pantalla de impresión de recibos
-SELECT * FROM GXOPERA.RECIBOS WHERE RID='140632';--AND RCONCEPT like'%10030021458%';/*AND RFECH='20230106' AND RID='140101';*/ --Can. Fact. Nº 10030064913(05/12/22) y Can. Fact. Nº 10030080018(06/01/23)#
+----------pantalla de impresiï¿½n de recibos
+SELECT * FROM GXOPERA.RECIBOS WHERE RID='140632';--AND RCONCEPT like'%10030021458%';/*AND RFECH='20230106' AND RID='140101';*/ --Can. Fact. Nï¿½ 10030064913(05/12/22) y Can. Fact. Nï¿½ 10030080018(06/01/23)#
 select * from gxopera.recibos where RTOTFACT='50000.00' and RFECH='20220919';
 select * from gxopera.RECIBO where COMIMPOR='50000.00';
 --facturas     /*si se ponde en P hay que ajustar el SALDO == que la FACTURA TOTAL
@@ -68,10 +68,10 @@ SELECT * FROM GXOPERA.TALONA T WHERE TALODESDE>='138601' AND TALOHASTA='138650';
 
 DELETE FROM GXOPERA.CUSTODE WHERE CUSTOUSRD='U99LUCIA' AND CUSTOREC='140371';
 SELECT * FROM GXOPERA.CUSTODE WHERE CUSTOREC>='140370';
------para verificación de Descripción del término de pago - documenta y pagoo express  Tarea #55519
+-----para verificaciï¿½n de Descripciï¿½n del tï¿½rmino de pago - documenta y pagoo express  Tarea #55519
 select * from gxopera.fcobros WHERE COMRECNRO='1236302';--where COMNRO='10030033873' AND COMRECNRO='1206494';
 UPDATE GXOPERA.FCOBROS T SET T.COMPAGO = 'A' WHERE T.COMNRO = 10030007795 AND T.COMRECNRO='1183088';
-/* Cheque= C | Efectivo= E | Débito Bancario= B | Nota= N | Dinelco Débito= D | Procard Débito= P | Transf/Deposito= T | Chq/Efec= 2 | Inst D/C= I
+/* Cheque= C | Efectivo= E | Dï¿½bito Bancario= B | Nota= N | Dinelco Dï¿½bito= D | Procard Dï¿½bito= P | Transf/Deposito= T | Chq/Efec= 2 | Inst D/C= I
 | Giros Tigo= G | BC-Documenta= A | BC-Express= X */
 -----------------------------------------------------
 SELECT * FROM GXOPERA.FACTURA1;
@@ -90,7 +90,7 @@ UPDATE GXBDBPS.COMAEAF SET ZONACODI='03', COCHZONA='03' WHERE COCOMER='0100037';
 select * from gxbdbps.tmtaraf where MCNUMCT='020120500143';
 update gxbdbps.tmtaraf set MTESTEX='' where MCNUMCT='020120500143';
 -------------------------------------------------------------------------------------------------
-----rendición
+----rendiciï¿½n
 select * from GXOPERA.FCOBROS where COMNRORND ='24740' AND COMRECNRO IN ('1257247','1257248','1257249','1257250');
 --AND COMCOMER IN ('0802083','0802316'); --1206524, 1206527
 UPDATE GXOPERA.FCOBROS SET COMFECHA = '00000000', COMNROASI = 0, COMNRORND = 0, COMFECRND = '00000000'
@@ -116,7 +116,7 @@ WHERE BS15CODCOM = '0702508';
 SELECT * FROM GXBDBPS.COAFMAF WHERE AFCOMER='1900404';
     UPDATE GXBDBPS.COAFMAF SET AFMONTO =90909 WHERE AFCOMER = '1900404';
 -----------------------------
---TAREA #57432 GENERÓ INSTRUCITIVO Y NO CARGÓ LA TOTALIDAD EN TSB
+--TAREA #57432 GENERï¿½ INSTRUCITIVO Y NO CARGï¿½ LA TOTALIDAD EN TSB
 select * from gxopera.flicom1 where linroins = '20340' and licomer in
 (select tsbcoco from gxfindta.tcltsb where tsbtpop = '04' and date(tsbfege) ='2023-12-13');--4742
 /*cambio de estado del instructivo*/
@@ -130,14 +130,14 @@ NOT IN (select tsbcoco from gxfindta.tcltsb where tsbtpop = '04' and date(tsbfeg
 UPDATE GXOPERA.TRXINST T SET INSTATUS='B'where inspgentid = '19896' AND INSTATUS='A' AND INSFACLIEN
 IN ((select licomer from gxopera.flicom1 where linroins = '19896' and licomer NOT IN
 (select tsbcoco from gxfindta.tcltsb where tsbtpop = '04' and date(tsbfege) = '2023-08-18')));
-/* Listo p/ Generar Recibo= A --DEBERÍA DE ESTAR EN TRASMISIONES
+/* Listo p/ Generar Recibo= A --DEBERï¿½A DE ESTAR EN TRASMISIONES
    Pendiente Instructivo= P
-   Pendiente Recibo= B son los que no están en Reing. pero si en el legacy sistema facturación//NO SE FUE O NO SE GENERO
-PARA LOS QUE ESTÁN EN TSB Y ESTABAN ACREDITADOS LISTO=A*/
+   Pendiente Recibo= B son los que no estï¿½n en Reing. pero si en el legacy sistema facturaciï¿½n//NO SE FUE O NO SE GENERO
+PARA LOS QUE ESTï¿½N EN TSB Y ESTABAN ACREDITADOS LISTO=A*/
 UPDATE GXOPERA.TRXINST T SET INSTATUS='A' WHERE INSFACLIEN IN (
 (select licomer from gxopera.flicom1 where linroins = '19858' and licomer in
 (select tsbcoco from gxfindta.tcltsb where tsbtpop = '04' and date(tsbfege) = '2023-08-07' AND TSBESTA='AC')));
-/*PARA LOS QUE ESTÁN EN TSB Y NO ESTABAN ACREDITADOS LISTO=P*/
+/*PARA LOS QUE ESTï¿½N EN TSB Y NO ESTABAN ACREDITADOS LISTO=P*/
 UPDATE GXOPERA.TRXINST T SET INSTATUS='B' WHERE INSFACLIEN IN (
 (select licomer from gxopera.flicom1 where linroins = '19858' and licomer in
 (select tsbcoco from gxfindta.tcltsb where tsbtpop = '04' and date(tsbfege) = '2023-08-07' AND TSBESTA<>'AC')));
@@ -170,8 +170,8 @@ WHERE AFCOMER IN ('0700139','0700161','0700204','0700445','0700623','0700871','0
 SELECT * FROM GXBDBPS.AITCOT A WHERE A.COTFEC>='20231113';
 -------------------------
 ---CASO http://10.1.254.18/issues/66800
----LA MISMA SE CORTÓ EL PROCESO DE GENERACIÓN DE RECIBOS POR INSTRUCTIVO MASIVO. TODAS ESTAN OK EN EN TRASMISIONES,
---PERO LA MIATD APROX. GENERÓ RECIBOS Y AFECTO EL SALDO EN FACTURA, LOS OTROS NO POR CORTARSE EL PROCESO DE LA VPN
+---LA MISMA SE CORTï¿½ EL PROCESO DE GENERACIï¿½N DE RECIBOS POR INSTRUCTIVO MASIVO. TODAS ESTAN OK EN EN TRASMISIONES,
+--PERO LA MIATD APROX. GENERï¿½ RECIBOS Y AFECTO EL SALDO EN FACTURA, LOS OTROS NO POR CORTARSE EL PROCESO DE LA VPN
 ---------------------------------------------------------------------------------------------------------------------------
 --PARA SOLUCIONAR LA MISMA SE DEBE DE INSERTAR EN TRXINST  NUEVAMENTE LAS OPERACIONES Y PONER EN ESTADO A PARA QUE PUEDAN GENERAR RECIBOS.
     --MODELO DE DATOS DE TRXINST CON SUS CAMPOS.
@@ -179,9 +179,9 @@ SELECT * FROM GXBDBPS.AITCOT A WHERE A.COTFEC>='20231113';
 /*INSFACTIPO,      INSFACTNRO, INSFACTIMB,  INSFACLIEN, INSFACTOT, INSFACFECH,   INSNROCTA, INSLICODTR, INSTATUS,    INSPGENTID,       INSCOFACTU,        INSEMISO, INSTICTA, INSMONEDA, INSLIFECHD,  INSFECARGA*/
 --CRE O INSFACTIO, FACUTURA,   TIMBRADO,    COMERCIO,   FACSALDO,  FECHAFACTURA, ADNUMCTA,   010001,     A,        NR0 INSTRUCTIVO,   COFACTU(COMAEAF),   ENDURO,   ADTICTA,   600,      FEHCAGENERA, FECHA GENERACION RECIBO
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-/*Listo p/ Generar Recibo= A --DEBERÍA DE ESTAR EN TRASMISIONES AC
+/*Listo p/ Generar Recibo= A --DEBERï¿½A DE ESTAR EN TRASMISIONES AC
    Pendiente Instructivo= P
-   Pendiente Recibo= B son los que no están en Reing. pero si en el legacy sistema facturación*/
+   Pendiente Recibo= B son los que no estï¿½n en Reing. pero si en el legacy sistema facturaciï¿½n*/
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 /*---NAME         | VALOR P/ INENEMISO
 Bco. Itau         |  055
@@ -189,10 +189,10 @@ Bco. Continental  |  057
 BNF               |  002
 Bco. Regional     |  059
 Procesadora Pro...|  510
-Bco. Visión       |  054
+Bco. Visiï¿½n       |  054
 Bco. BBVA         |  064   */
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
----QUERY USADO PARA ARMAR LA ESTRUCTURA EN CASE A COMERCIOS QUE YA LA CHICA DE COBRANZAS IDENTIFICÓ EN LOS FALTANTES.
+---QUERY USADO PARA ARMAR LA ESTRUCTURA EN CASE A COMERCIOS QUE YA LA CHICA DE COBRANZAS IDENTIFICï¿½ EN LOS FALTANTES.
 SELECT F.FACTIPO,
        F.FACTNRO,
        F.FACTIMBR,
@@ -205,7 +205,7 @@ SELECT F.FACTIPO,
        F.IDMONEDA
 FROM GXOPERA.FACTURA F
          INNER JOIN GXBDBPS.COMAEAF C2 ON C2.COCOMER = F.FACLIEN
-WHERE F.FACSTATUS = 'P' ---A TODOS LOS QUE NO SE GENERÓ EL RECIBO QUEDAN EN PENDINTE
+WHERE F.FACSTATUS = 'P' ---A TODOS LOS QUE NO SE GENERï¿½ EL RECIBO QUEDAN EN PENDINTE
   AND F.FACLIEN IN (
                     '0201175',
                     '0302888',
@@ -214,19 +214,19 @@ WHERE F.FACSTATUS = 'P' ---A TODOS LOS QUE NO SE GENERÓ EL RECIBO QUEDAN EN PEND
                   '10030077713',
                   '10030078231');--GROUP BY F.FACLIEN; /*etc...-*/
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---O CORRER ESTO PERO ALREVEZ, BUSCA EL INSTRUCTIVO EN CLEARING SI ESTAN TODOS. SERÍA CORRER DESDE PLICOM HACIA TRXINST, FCOBROS Y FACTURA
+--O CORRER ESTO PERO ALREVEZ, BUSCA EL INSTRUCTIVO EN CLEARING SI ESTAN TODOS. SERï¿½A CORRER DESDE PLICOM HACIA TRXINST, FCOBROS Y FACTURA
 select * from gxopera.flicom1 where linroins = '20340' and licomer in
 (select tsbcoco from gxfindta.tcltsb where tsbtpop = '04' and date(tsbfege) ='2023-12-13');--4742
 ------------------------------------------------------------------------------------------------------------------------
 ----------------fORMULA DEL EXCEL
 /*=CONCATENAR("INSERT INTO GXOPERA.TRXINST (INSFACTIPO, INSFACTNRO, INSFACTIMB, INSFACLIEN, INSFACTOT, INSFACFECH, INSNROCTA, INSLICODTR, INSTATUS, INSPGENTID, INSCOFACTU, INSEMISO, INSTICTA, INSMONEDA, INSLIFECHD, INSFECARGA)
 VALUES ('";A5;"','";B5;"','";C5;"','";D5;"','";E5;"','";F5;"','";G5;"','010001', 'A','20340','";H5;"','057','";I5;"','";J5;"','20231213','20231214');")*/
------------------------------------------------------------IGUAL A LO QUE ESTÁ ABAJO-------------------------------------------------------------
+-----------------------------------------------------------IGUAL A LO QUE ESTï¿½ ABAJO-------------------------------------------------------------
 INSERT INTO GXOPERA.TRXINST (INSFACTIPO, INSFACTNRO, INSFACTIMB, INSFACLIEN, INSFACTOT, INSFACFECH, INSNROCTA, INSLICODTR, INSTATUS, INSPGENTID, INSCOFACTU, INSEMISO, INSTICTA, INSMONEDA, INSLIFECHD, INSFECARGA)
 VALUES ('CR', '10030079307', '16444256', '0801277', '240000', '20231205', '6321033963', '010001', 'A', '20340', '0801277', '057', '1', '600', '20231213', '20231214');
 ------------------------------------------------------------------------------------------------------------------------
---se inserta espectacularmente, pero le da clave duplicada, al principio se piensa que es la tabla de auditoría
-SELECT * FROM GXOPERA.AUDFACT A ORDER BY AUDFECH DESC;--AUDITORÍA
+--se inserta espectacularmente, pero le da clave duplicada, al principio se piensa que es la tabla de auditorï¿½a
+SELECT * FROM GXOPERA.AUDFACT A ORDER BY AUDFECH DESC;--AUDITORï¿½A
 ----pero es la tabla historico de instrutivo.. Delete masivo por dicho nro de instructivo
 DELETE FROM GXOPERA.INSTHIS I WHERE I.HISLINNRO='20340';
 --------------------------------------------------------- opa --------------------------------------------------------------
@@ -242,7 +242,7 @@ SELECT * FROM GXBDCON.GXLOPERDET WHERE USUCOD = 859;--AND FUNCOD IN(496);
 SELECT * FROM GXBDCON.GXLOPERDET WHERE USUCOD = 561 AND FUNCOD NOT IN (SELECT FUNCOD FROM GXBDCON.GXLOPERDET WHERE USUCOD = 859);--AND FUNCOD IN(496);
 SELECT * FROM GXBDBPS.GENTIAF g WHERE ENEMISO = 189;
 
---SISTEMA DE PRODUCICÓN --KB CLEARING REPUESTO --- PERMISOS
+--SISTEMA DE PRODUCICï¿½N --KB CLEARING REPUESTO --- PERMISOS
 SELECT *FROM GXBDCON.Gxlousu WHERE USUAID IN ('U99ADOLFO','U99HERNAN');--usuario
 SELECT *FROM GXBDCON.Gxlosis; --sistema
 SELECT *FROM GXBDCON.Gxlofun; --funcionalidad
@@ -267,3 +267,218 @@ from gxopera.opmovi inner join gxbdbps.comaeaf on (opcomer = cocomer)
 where CORUCN='80025401-5' and substr(opcomer, 1, 2) IN ('81', '86') and substr(opferea, 1, 4) = '2024' and substr(opferea, 5, 2) between '02' and '02'
 group by substr(opferea, 1, 6), opcomer, codeno;
 SELECT * FROM gxopera.opmovi;
+-----------------------------------------
+Select *
+--pgidtrn,pgfecom, pgtipo, pgnocta, pgimpor, pgcomer,pgfecre, PGIDUSR,op.PGFEPRO, op.PGHOPRO
+from gxopera.opago1p op where op.PGIDUSR='U99KATERIN';
+--AND pgcomer = '4500001' and pgidtrn = '240325569872';
+---------------------------------------------
+Update gxopera.opago1p set pgnocta = 8191198, pgticta = 0
+                       WHERE PGIDTRN=240425585010 AND pgcomer = '4500001';
+------------------------------------------------------
+--Mov 021/176
+WITH MOV AS
+(SELECT
+	T1 . MVSECUE MOVNREF ,  --30-NRO REF,
+	T1 . MVEMISO MOVENT ,  --1-ENTIDAD,
+	T1 . MVFEPRO MOVFECC ,  --20- FEC COMERCIAL,
+	T1 . MVAFINI MOVAFI ,  --2-AFINIDAD,
+	T1 . MVNUMCT MOVCTA ,  --3-CUENTA,
+	T2 . MCNUMDO MOVDOC ,  -- 4-CEDULA DE IDENTIDAD
+	T1 . MTNUMTA MOVNUMTA ,  --5-NRO DE TARJETA,
+	T1 . MVTIPTA MOVTIPTA ,  --6-TIPO DE TC,
+	T1 . MVCODSC MOVSUC ,  --7-SUC DE LA TC,
+--	COALESCE ( T3 . CESEXO , 'M' ) MOVSEX,  -- 8- SEX DEL CLIENTE
+( CASE
+WHEN T3 . CESEXO = '' OR T3 . CESEXO IS NULL THEN
+'M'
+ELSE
+T3 . CESEXO
+END ) MOVSEX ,
+	T1 . CMCODIG MOVCODM ,  --9-COD MOV
+	T4 . CMDESCR MOVDESM ,  --10-DESCRIP MOV,
+	T4 . CMTIPOM MOVTIPOM ,  --11- TIPO MOV,
+	T4 . CMSAFAC MOVASALF ,  --12-AFECTA A SALDO A F,
+	T4 . CMSFNVE MOVASFNV ,  --13-AFECTA SALDO FNV,
+	T4 . CMSALFI MOVSALFI ,  --14-AFECTA SALDO FI,
+	T4 . CMCUOPE MOVACUP ,  --15-AFECTA CUOTAS PEND,
+	T4 . CMADEPE MOVACUAP ,  --16-AFECTA CUOTA ADELANTO PEND,
+	T4 . CMREFPE MOVACURP ,  --17- AFECTA CUOTA DE REF PEND,
+	T4 . CMAPAGO MOVACUMP ,  --18-AFECTA ACUM PAGOS,
+	T1 . MVFEREA MOVFECR ,  --19-FEC REAL,
+	( CASE DAYOFWEEK ( DATE ( SUBSTRING ( CHAR ( T1 . MVFEREA ) , 1 , 4 ) || '-' || SUBSTRING ( CHAR ( T1 . MVFEREA ) , 5 , 2 ) || '-' || SUBSTRING ( CHAR ( T1 . MVFEREA ) , 7 , 2 ) ) )
+			WHEN 1 THEN 'Domingo'
+			WHEN 2 THEN 'Lunes'
+			WHEN 3 THEN 'Martes'
+			WHEN 4 THEN 'Miercoles'
+			WHEN 5 THEN 'Jueves'
+			WHEN 6 THEN 'Viernes'
+			WHEN 7 THEN 'Sabado'
+		END ) MOVDIAS ,  --21Dia de la semana
+	T1 . MVIMPO2 MOVIMPO ,  --22-IMPORTE SIN DECIMALES,
+	T1 . MVCODCO MOVCODC ,  --23- COD COMERCIO,
+	REPLACE ( ( REPLACE ( ( REPLACE ( ( REPLACE ( ( REPLACE ( ( REPLACE ( ( REPLACE ( T1 . MVNOMCO , 'Ã‘' , 'N' ) ) , '*' , ' ' ) ) , '?' , ' ' ) ) , ',' , ' ' ) ) , '"' , ' ' ) ) , '''' , ' ' ) ) , ';' , ' ' ) MOVDESC ,  --24-DESCRIP COMERCI
+--O
+	COALESCE ( T5 . RUDESC , 'TODOS' ) MOVRUB ,  --25-RUBRO,
+	COALESCE ( T7 . LODESC , 'TODOS' ) MOVLOCC ,  --26-LOCALIDAD COM,
+	COALESCE ( T6 . CORUCN , ' ' ) MOVRUCC ,  --27-RUC COMER,
+	COALESCE ( T1 . MVMECAC , ' ' ) MOVMCC ,  --28-MCC,
+	'000' MOVCANCU ,  --29-CANT CUOTAS,
+	T1 . MVCODAU MOVCODAU ,  --31-COD AUTORIZACION,
+	T1 . MVIDUSR MOVUSU ,  --32- USU QUE IMPUTO,
+	COALESCE ( T8 . MEPIDPROMO , '0' ) MOVPROMO ,  --33-ID PROMO,
+	T1 . MVCUPON MOVCUPON ,  --34-COD CUPON,
+	CASE
+		WHEN T8 . MEPNROCOMP <> ''
+			THEN T8 . MEPNROCOMP
+		ELSE
+			T1 . MVSECUE
+	END MOVCOMPG ,  --35-COMPROBANTE PAGO APIS
+	'T' MOVTIP
+	FROM ( ( ( ( ( ( ( GXBDBPS . TMOVIAF T1
+	INNER JOIN GXBDBPS . TMCTAAF T2 ON T1 . MVNUMCT = T2 . MCNUMCT )
+	LEFT JOIN GXBDBPS . GCLIEAF T3 ON T2 . MCTIPOD = T3 . CETIPOD AND T2 . MCNUMDO = T3 . CENUMDO AND T1 . MVEMISO = T3 . ENEMISO )
+	INNER JOIN GXBDBPS . TCMOVAF T4 ON T1 . CMCODIG = T4 . CMCODIG )
+	LEFT JOIN GXBDBPS . CORUBAF T5 ON SUBSTRING ( T1 . MVCODCO , 1 , 2 ) = T5 . RUCODI )
+	LEFT JOIN GXBDBPS . COMAEAF T6 ON T1 . MVCODCO = T6 . COCOMER )
+	LEFT JOIN GXBDBPS . COLOCAF T7 ON T6 . LOCODI = T7 . LOCODI )
+	LEFT JOIN GXTRJDTA . TMOMEP T8 ON T8 . MEPIDCTA = T1 . MVNUMCT AND T8 . MEPIDMOVCL = T1 . MVCUPON AND T1 . MVCUPON <> 0 AND T8 . MEPFCHPRO = T1 . MVFEPRO )
+	WHERE T1 . MVCODRE = 0 AND T1 . MVEMISO IN ('021','176') AND T1 . MVFEPRO >= '20230101'
+	AND T1.CMCODIG = '579'--NOT IN ( '123' , '103' , '104' , '124' , '105' , '125' , '106' , '126' , '107' , '127' , '011' ) AND ( T1 . CMCODIG < '900' )
+UNION ALL
+SELECT
+	T1 . CUMVSEC MOVNREF ,  --30-NRO REF,
+	T1 . CUEMISO MOVENT ,  --1-ENTIDAD,
+	T1 . CUFECOM MOVFECC ,  --20- FEC COMERCIAL,
+	T1 . CUAFINI MOVAFI ,  --2-AFINIDAD,
+	T1 . CUNUMCT MOVCTA ,  --3-CUENTA,
+	T2 . MCNUMDO MOVDOC ,  -- 4-CEDULA DE IDENTIDAD
+	T1 . MTNUMTA MOVNUMTA ,  --5-NRO DE TARJETA,
+	T3 . MTTIPOT MOVTIPTA ,  --6-TIPO DE TC,
+	T1 . CUCODSC MOVSUC ,  --7-SUC DE LA TC,
+--	COALESCE ( T4 . CESEXO , 'M' ) MOVSEX ,  -- 8- SEX DEL CLIENTE
+( CASE
+WHEN T4 . CESEXO = '' OR T4 . CESEXO IS NULL THEN
+'M'
+ELSE
+T4 . CESEXO
+END ) MOVSEX ,
+	T1 . CMCODIG MOVCODM ,  --9-COD MOV,
+	T5 . CMDESCR MOVDESM ,  --10-DESCRIP MOV,
+	T5 . CMTIPOM MOVTIPOM ,  --11- TIPO MOV,
+	T5 . CMSAFAC MOVASALF ,  --12-AFECTA A SALDO A F,
+	T5 . CMSFNVE MOVASFNV ,  --13-AFECTA SALDO FNV,
+	T5 . CMSALFI MOVSALFI ,  --14-AFECTA SALDO FI,
+	T5 . CMCUOPE MOVACUP ,  --15-AFECTA CUOTAS PEND,
+	T5 . CMADEPE MOVACUAP ,  --16-AFECTA CUOTA ADELANTO PEND,
+	T5 . CMREFPE MOVACURP ,  --17- AFECTA CUOTA DE REF PEND,
+	T5 . CMAPAGO MOVACUMP ,  --18-AFECTA ACUM PAGOS,
+	T1 . CUFEREA MOVFECR ,  --19-FEC REAL,
+	CASE DAYOFWEEK ( DATE ( SUBSTRING ( CHAR ( T1 . CUFEREA ) , 1 , 4 ) || '-' || SUBSTRING ( CHAR ( T1 . CUFEREA ) , 5 , 2 ) || '-' || SUBSTRING ( CHAR ( T1 . CUFEREA ) , 7 , 2 ) ) )
+		WHEN 1 THEN 'Domingo'
+		WHEN 2 THEN 'Lunes'
+		WHEN 3 THEN 'Martes'
+		WHEN 4 THEN 'Miercoles'
+		WHEN 5 THEN 'Jueves'
+		WHEN 6 THEN 'Viernes'
+		WHEN 7 THEN 'Sabado'
+	END MOVDIAS ,  --21Dia de la semana
+	T1 . CUIMPOR MOVIMPO ,  --22-IMPORTE SIN DECIMALES,
+	T1 . CUCODCO MOVCODC ,  --23- COD COMERCIO,
+	REPLACE ( ( REPLACE ( ( REPLACE ( ( REPLACE ( ( REPLACE ( ( REPLACE ( ( REPLACE ( T1 . CUNOMCO , 'Ãƒ?' , 'N' ) ) , '*' , ' ' ) ) , '?' , ' ' ) ) , ',' , ' ' ) ) , '"' , ' ' ) ) , '''' , ' ' ) ) , ';' , ' ' ) MOVDESC ,  --24-DESCRIP COMERC --IO
+	COALESCE ( T6 . RUDESC , 'TODOS' ) MOVRUB ,  --25-RUBRO,
+	COALESCE ( T8 . LODESC , 'TODOS' ) MOVLOCC ,  --26-LOCALIDAD COM,
+	COALESCE ( T7 . CORUCN , ' ' ) MOVRUCC ,  --27-RUC COMER,
+	COALESCE ( T6 . RUMCC , ' ' ) MOVMCC ,  --28-MCC,
+	T1 . CUCANCU MOVCANCU ,  --29-CANT CUOTAS,
+	T1 . CUCODAU MOVCODAU ,  --31-COD AUTORIZACION,
+	T1 . CUIDUSR MOVUSU ,  --32- USU QUE IMPUTO,
+	COALESCE ( T9 . CUPIDPRO , '0' ) MOVPROMO ,  --34-ID-PROMO
+	COALESCE ( T9 . CUPCODI , '0' ) MOVCUPON ,  --NRO CUPON
+	T1 . CUMVSEC MOVCOMPG ,  --35-COMPROBANTE PIN APIS
+	'C' MOVTIP
+	FROM GXBDBPS . TCUOTAF T1
+	INNER JOIN GXBDBPS . TMCTAAF T2 ON T1 . CUNUMCT = T2 . MCNUMCT
+	INNER JOIN GXBDBPS . TMTARAF T3 ON T1 . MTNUMTA = T3 . MTNUMTA
+	LEFT JOIN GXBDBPS . GCLIEAF T4 ON T2 . MCTIPOD = T4 . CETIPOD AND T2 . MCNUMDO = T4 . CENUMDO AND T1 . CUEMISO = T4 . ENEMISO
+	INNER JOIN GXBDBPS . TCMOVAF T5 ON T1 . CMCODIG = T5 . CMCODIG
+	LEFT JOIN GXBDBPS . CORUBAF T6 ON SUBSTRING ( T1 . CUCODCO , 1 , 2 ) = T6 . RUCODI
+	LEFT JOIN GXBDBPS . COMAEAF T7 ON T1 . CUCODCO = T7 . COCOMER
+	LEFT JOIN GXBDBPS . COLOCAF T8 ON T7 . LOCODI = T8 . LOCODI
+	LEFT JOIN GXFINDTA . TCLCUP T9 ON T9 . CUPNTAR = T1 . MTNUMTA AND T9 . CUPRRNMI = T1 . CUMVSEC AND T9 . CUPCOAU = T1 . CUCODAU AND T9 . CUPCOCO = T1 . CUCODCO	WHERE T1 . CUSTATS <> 'R'
+	AND T1 . CUEMISO IN ('021','176') AND T1 . CUFECOM >= '20230101'	 AND
+	T1 . CMCODIG = '579' --NOT IN ( '123' , '103' , '104' , '124' , '105' , '125' , '106' , '126' , '107' , '127' , '011' , '159' ) AND T1 . CMCODIG < '900'
+UNION ALL
+	SELECT
+	T1 . HMSECUE MOVNREF ,  --30-NRO REF,
+	T1 . HMEMISO MOVENT ,  --1-ENTIDAD,
+	T1 . HMFEPRO MOVFECC ,  --20- FEC COMERCIAL,
+	T1 . HMAFINI MOVAFI ,  --2-AFINIDAD,
+	T1 . HMNUMCT MOVCTA ,  --3-CUENTA,
+	T2 . MCNUMDO MOVDOC ,  -- 4-CEDULA DE IDENTIDAD
+	T1 . HMNUMTA MOVNUMTA ,  --5-NRO DE TARJETA,
+	T1 . HMTIPTA MOVTIPTA ,  --6-TIPO DE TC,
+	T1 . HMCODSC MOVSUC ,  --7-SUC DE LA TC,
+--	COALESCE ( T3 . CESEXO , 'M' ) MOVSEX ,  -- 8- SEX DEL CLIENTE
+( CASE
+WHEN T3 . CESEXO = '' OR T3 . CESEXO IS NULL THEN
+'M'
+ELSE
+T3 . CESEXO
+END ) MOVSEX ,
+	T1 . HMCODIG MOVCODM ,  --9-COD MOV
+	T4 . CMDESCR MOVDESM ,  --10-DESCRIP MOV,
+	T4 . CMTIPOM MOVTIPOM ,  --11- TIPO MOV,
+	T4 . CMSAFAC MOVASALF ,  --12-AFECTA A SALDO A F,
+	T4 . CMSFNVE MOVASFNV ,  --13-AFECTA SALDO FNV,
+	T4 . CMSALFI MOVSALFI ,  --14-AFECTA SALDO FI,
+	T4 . CMCUOPE MOVACUP ,  --15-AFECTA CUOTAS PEND,
+	T4 . CMADEPE MOVACUAP ,  --16-AFECTA CUOTA ADELANTO PEND,
+	T4 . CMREFPE MOVACURP ,  --17- AFECTA CUOTA DE REF PEND,
+	T4 . CMAPAGO MOVACUMP ,  --18-AFECTA ACUM PAGOS,
+	T1 . HMFEREA MOVFECR ,  --19-FEC REAL,
+	( CASE DAYOFWEEK ( DATE ( SUBSTRING ( CHAR ( T1 . HMFEREA ) , 1 , 4 ) || '-' || SUBSTRING ( CHAR ( T1 . HMFEREA ) , 5 , 2 ) || '-' || SUBSTRING ( CHAR ( T1 . HMFEREA ) , 7 , 2 ) ) )
+			WHEN 1 THEN 'Domingo'
+			WHEN 2 THEN 'Lunes'
+			WHEN 3 THEN 'Martes'
+			WHEN 4 THEN 'Miercoles'
+			WHEN 5 THEN 'Jueves'
+			WHEN 6 THEN 'Viernes'
+			WHEN 7 THEN 'Sabado'
+		END ) MOVDIAS ,  --21Dia de la semana
+	T1 . HMIMPO2 MOVIMPO ,  --22-IMPORTE SIN DECIMALES,
+	T1 . HMCODCO MOVCODC ,  --23- COD COMERCIO,
+	REPLACE ( ( REPLACE ( ( REPLACE ( ( REPLACE ( ( REPLACE ( ( REPLACE ( ( REPLACE ( T1 . HMNOMCO , 'Ãƒ?' , 'N' ) ) , '*' , ' ' ) ) , '?' , ' ' ) ) , ',' , ' ' ) ) , '"' , ' ' ) ) , '''' , ' ' ) ) , ';' , ' ' ) MOVDESC ,  --24-DESCRIP COMERC
+	COALESCE ( T5 . RUDESC , 'TODOS' ) MOVRUB ,  --25-RUBRO,
+	COALESCE ( T7 . LODESC , 'TODOS' ) MOVLOCC ,  --26-LOCALIDAD COM,
+	COALESCE ( T6 . CORUCN , ' ' ) MOVRUCC ,  --27-RUC COMER,
+	COALESCE ( T1 . HMMECAC , ' ' ) MOVMCC ,  --28-MCC,
+	'000' MOVCANCU ,  --29-CANT CUOTAS,
+	T1 . HMCODAU MOVCODAU ,  --31-COD AUTORIZACION,
+	T1 . HMIDUSR MOVUSU ,  --32- USU QUE IMPUTO,
+	COALESCE ( T8 . MEPIDPROMO , '0' ) MOVPROMO ,  --33-ID PROMO,
+	T1 . HMCUPON MOVCUPON ,  --34-COD CUPON,
+	CASE
+		WHEN T8 . MEPNROCOMP <> ''
+			THEN T8 . MEPNROCOMP
+		ELSE
+			T1 . HMSECUE
+	END MOVCOMPG ,  --35-COMPROBANTE PAGO APIS
+	'H' MOVTIP --, t1.hmidusr usuario
+	FROM GXBDBPS . THMOVAF T1
+	INNER JOIN GXBDBPS . TMCTAAF T2 ON T1 . HMNUMCT = T2 . MCNUMCT
+	LEFT JOIN GXBDBPS . GCLIEAF T3 ON T2 . MCTIPOD = T3 . CETIPOD AND T2 . MCNUMDO = T3 . CENUMDO AND T1 . HMEMISO = T3 . ENEMISO
+	INNER JOIN GXBDBPS . TCMOVAF T4 ON T1 . HMCODIG = T4 . CMCODIG
+	LEFT JOIN GXBDBPS . CORUBAF T5 ON SUBSTRING ( T1 . HMCODCO , 1 , 2 ) = T5 . RUCODI
+	LEFT JOIN GXBDBPS . COMAEAF T6 ON T1 . HMCODCO = T6 . COCOMER
+	LEFT JOIN GXBDBPS . COLOCAF T7 ON T6 . LOCODI = T7 . LOCODI
+	LEFT JOIN GXTRJDTA . TMOMEP T8 ON T8 . MEPIDCTA = T1 . HMNUMCT AND T8 . MEPIDMOVCL = T1 . HMCUPON AND T1 . HMCUPON <> 0 AND T8 . MEPFCHPRO = T1 . HMFEPRO
+	WHERE T1 . HMCODRE = 0 AND T1 . HMEMISO IN ('021','176') AND T1 . HMFEPRO >= '20230101'
+	AND T1 . HMCODIG = '579') --NOT IN ( '123' , '103' , '104' , '124' , '105' , '125' , '106' , '126' , '107' , '127' , '011' ) AND T1 . HMCODIG < '900' ) )
+SELECT MOVNREF REFERENCIA, MOVENT ENTIDAD, MOVFECC FECHACOMERCIAL, MOVAFI AFINIDAD, MOVCTA CUENTA, MOVDOC CEDULAIDENTIDAD, LEFT(MOVNUMTA,6)||'XXXXXX'||right(MOVNUMTA,4) TARJETA,
+MOVTIPTA TIPOTC, MOVSUC SUCURSALTC, MOVSEX SEXO, MOVCODM CODMOV, MOVDESM DESCRIPMOV, MOVTIPOM TIPOMOV, MOVASALF AFECTASALDOAF, MOVASFNV AFECTSALDOFNV,
+MOVSALFI AFECTSALDOFI, MOVACUP AFECTCUOTPEND, MOVACUAP AFECTCUOTAADELPEND, MOVACURP AFECTCUOTAREFPEND, MOVACUMP AFECTACUMPAG, MOVFECR FECHREAL, MOVDIAS DIASEMANA,
+MOVIMPO IMPORTE, MOVCODC CODCOMERCIO, MOVDESC DESCCOMER, MOVRUB RUBRO, MOVLOCC LOCALIDAD, MOVRUCC RUCCOMER, MOVMCC MCC, MOVCANCU CANTCUOTAS,
+MOVCODAU CODAUTORIZACION, MOVUSU USUARIOIMPUTO, MOVPROMO IDPROMO, MOVCUPON CODCUPON, MOVCOMPG COMPROBANTPAGOAPI, MOVTIP
+FROM MOV;
+---------------
