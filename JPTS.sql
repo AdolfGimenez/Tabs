@@ -55,39 +55,39 @@ select * from tranlog t where transaction_token = '2024082600702424';
 SELECT * from keys_cybersource_shops where cybersource_shop_id = 'dinelco_mf_001969000006';
 
 update keys_cybersource_shops
-set cybersource_public_key = '82c8c803-01b5-4709-b787-e52f0ea3bb90',
-    cybersource_private_key = 'w2/B3si/Pqr0vii7PILOCpPYmxZoAYxb2ihb3Eh+JDE='
-where cybersource_shop_id = 'dinelco_mf_001969000006';
+set cybersource_public_key = '05d756fe-ff5a-476d-af2a-9d8dc0777a88',
+    cybersource_private_key = 'iCF8+S7T/+hTYPPnCYBc+j5rjJzmQp0hoq83pq3aTTo='
+where cybersource_shop_id = 'dinelco_mf_001969000008';
 
 update keys_cybersource_shops set
-cybersource_public_key = 'f0c74694-91b4-48d3-a887-026f4d2683c7',
-cybersource_private_key ='Voan5Twg7fSM08THtVf7aYlz3ewsV/Cl0Jv+ZNpy0bw='
-where cybersource_shop_id =  'dinelco_mf_001969000007';
+cybersource_public_key = '962d25f8-46f2-4f0e-bae1-65aed1bd7f30',
+cybersource_private_key ='DLKlCCIbGXtcco5P5+YtJn3qD2ePvQ+tNjS9z/++tcw='
+where cybersource_shop_id =  'dinelco_mf_001969000009';
 
 update keys_cybersource_shops set
-cybersource_public_key = 'a7606707-374e-471e-a07e-3727cbce004f',
-cybersource_private_key = 'ikUL0sGF1GV4tyPz23Y3Hb5V4GMu2nxbtajZVPKkrXA='
-where cybersource_shop_id =  'dinelco_mf_001969000005';
+cybersource_public_key = '934ab2d6-f696-43ee-be94-ad2359e26064',
+cybersource_private_key = '/5Gt7VKW0YW7szdDyGjs0iCtfeFRZ02jmSDMT2yFWF0='
+where cybersource_shop_id =  'dinelco_mf_001969000006';
 
 update keys_cybersource_shops set
-cybersource_public_key = 'd56ea9e1-2409-4189-9d11-b45594896261',
-cybersource_private_key = 'sjYkKGe2/0UzRGqrNhpb0Io0/RHwDzWjzxeDkNKR4fg='
-where cybersource_shop_id =  'dinelco_mf_001969000010';
-
-update keys_cybersource_shops set
-cybersource_public_key = '2fe49a66-f163-446e-82b0-714137b4a687',
-cybersource_private_key = 'p+5+OPYUhOI3Z89OLbVRYRGjshwYXDNGNyMm0ogIUnA='
-where cybersource_shop_id = 'dinelco_mf_001969000013';
-
-update keys_cybersource_shops set
-cybersource_public_key = '0c82fd3d-6a5c-4528-ad9a-9b1cfd5576f3',
-cybersource_private_key = 'r6HIGK1X4L7AHYUvaRnWatLICF1r+l8UEQMQXRHBIgw='
-where cybersource_shop_id =  'dinelco_mf_001969000011';
-
-update keys_cybersource_shops set
-cybersource_public_key = '3bb8bff0-b7e5-4a54-b414-d241c8fa3513',
-cybersource_private_key = 'D3D8aIDD6h6bH81IY1M370vkohzpZWrF2UzJRd6YVto='
+cybersource_public_key = '77e6b199-b547-402e-9f9d-278d084cfdf4',
+cybersource_private_key = 'vvXuTXj8s4Nm7SbWPMSgOXOgbDKAOPC8EK8nsRuk214='
 where cybersource_shop_id =  'dinelco_mf_001969000012';
+
+update keys_cybersource_shops set
+cybersource_public_key = '8cd78ba8-48f2-4ace-9c67-0ea7ea5c1d3f',
+cybersource_private_key = 'WoUle0w32ERj6uN7kJkiRMINCBbiM24rZT8fTeQNcMk='
+where cybersource_shop_id = 'dinelco_mf_001969000011';
+
+update keys_cybersource_shops set
+cybersource_public_key = 'b881a151-ce2f-4e45-bf54-f758ba1d1f5c',
+cybersource_private_key = 'cNNT+D4jTbg1qA/VYK0qQajQH7NVT0ToxBJ+vPhZBPc='
+where cybersource_shop_id =  'dinelco_mf_001969000013';
+
+update keys_cybersource_shops set
+cybersource_public_key = '35a280ef-dde5-482f-ad73-610d9cb11179',
+cybersource_private_key = 'SCiPTRPtOqDwCWV+PwS4XWq3D09JuwL6+KxhiwEf8Sw='
+where cybersource_shop_id =  'dinelco_mf_001969000010';
 
 update keys_cybersource_shops set
 cybersource_public_key = '0e0e3014-cc0e-4d9c-a93c-c90b6b3963f4',

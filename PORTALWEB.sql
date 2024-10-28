@@ -196,14 +196,14 @@ SELECT * FROM public.ROLES_X_USUARIOS RXU WHERE RXU.USUARIO_ID='03c8162a-6b45-43
 INSERT INTO
     public.roles_x_usuarios (rol_id, usuario_id, insertado_el, modificado_el, activo, insertado_por, modificado_por) VALUES ( 1, 'bdaf16f0-d93c-4414-978a-ae1e8fd3b981', '2023-07-22 14:47:44.997312', '2023-07-22 14:47:44.997312', true, null, null);
 --AUTH_DB
-SELECT * FROM EQWEDI_AUTH_DB.PUBLIC.USUARIOS U WHERE U.NRO_DOCUMENTO='3534283'
+SELECT * FROM EQWEDI_AUTH_DB.PUBLIC.USUARIOS U WHERE U.NRO_DOCUMENTO='3319151'
 U.CORREO LIKE 'vayala@bepsa.com.py';
 
 SELECT t.* FROM public.refresh_tokens t WHERE t.USUARIO_ID='8b3e942c-abc7-45a9-9f53-c240e4020352';
-SELECT * FROM public.GRUPOS_ACCESOS_APIS_X_USUARIOS GAAXU WHERE GAAXU.USUARIO_ID='8b3e942c-abc7-45a9-9f53-c240e4020352';
+SELECT * FROM public.GRUPOS_ACCESOS_APIS_X_USUARIOS GAAXU WHERE GAAXU.USUARIO_ID='feafa23e-c9ef-43cd-bb91-fd5328344806';
 --POCODI_DB
-SELECT * FROM public.PERSONAS_FISICAS PF where upper(apellido) = 'TROCHE';
-SELECT * FROM public.USUARIOS U WHERE U.PERSONA_FISICA_ID IN (3715);
+SELECT * FROM public.PERSONAS_FISICAS PF where upper(apellido) = 'BENITEZ'; --PF.NRO_DOCUMENTO='3319151'
+SELECT * FROM public.USUARIOS U WHERE U.PERSONA_FISICA_ID IN (962);
 
 SELECT * FROM public.SOCKET_CLIENTS SC WHERE SC.USUARIO_ID='8b3e942c-abc7-45a9-9f53-c240e4020352';
 SELECT * FROM correos_principales_usuarios WHERE USUARIO_ID='8b3e942c-abc7-45a9-9f53-c240e4020352';
@@ -498,14 +498,14 @@ UPDATE public.EMPRESAS_CLIENTES EC SET PAGO_DIGITAL_SUSCRIPCION_KEY='_*****_' WH
 
 -----casos de comercios ya existen y como lleva de la db2 al portal
 ---query de obtención desde db2 al portal
-onst getByCliCodSucCod = async(params:{
+/*const getByCliCodSucCod = async(params:{
     comsuc?:string,
 })=> {
     let where = " WHERE a.SUCESTADO NOT IN ('B') ";
     if(params.comsuc) {
         where += ` AND (a.CLICLICOD, a.SUCSUCCOD) in (VALUES ${params.comsuc})`;
     }
-    const query = `
+    const query = `*/
         SELECT (
             SELECT T.COCOMER FROM GXFINDTA.TCOCNA T
             WHERE T.CLICLICOD = a.CLICLICOD AND T.SUCSUCCOD = a.SUCSUCCOD
@@ -526,12 +526,12 @@ onst getByCliCodSucCod = async(params:{
         INNER JOIN GXFINDTA.TCMCLI b ON a.CLICLICOD = b.CLICLICOD
         ${where}
         ORDER BY a.CLICLICOD, a.SUCSUCCOD`;
-
-    const queryCounter = `
+/*
+    const queryCounter = `*/
         SELECT COUNT(*) as TOTAL
         FROM GXFINDTA.TCMSUC a
         INNER JOIN GXFINDTA.TCMCLI b ON a.CLICLICOD = b.CLICLICOD
-        ${where}`;
+/*      ${where}`;
 
     const empresasClientes = await Promise.all([
         queryDB(query),
@@ -542,7 +542,7 @@ onst getByCliCodSucCod = async(params:{
         total: empresasClientes[1][0]?.TOTAL
     };
 };
--------------------------
+*/-------------------------
 --sucursales_bepsa
 SELECT *
 FROM SUCURSALES_BEPSA_DB2 SBD
