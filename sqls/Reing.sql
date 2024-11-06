@@ -821,5 +821,51 @@ ON a.CLICLICOD = b.CLICLICOD
 WHERE b.CLICLICOD = 22435/*poner del numero de cliente que se necesita*/
 AND b.SUCSUCCOD = 1/*poner del numero de sucursal que se necesita*/ ;
 
-SELECT * FROM GXSEGDTA.TSGUSR r WHERE r.SGUSRID = 'U99DCOLMAN'
-select * from GXSEGDTA.TSGARU t WHERE t.SGUSRCOD = 3084
+SELECT * FROM GXSEGDTA.TSGUSR r WHERE r.SGUSRID = 'U99DCOLMAN';
+select * from GXSEGDTA.TSGARU t WHERE t.SGUSRCOD = 3084;
+-------------------------------
+---query de movimientos de retenciones - yanini
+SELECT CASE
+           WHEN A.SETRETSTA = 'A' THEN 'Aprobado'
+           WHEN A.SETRETSTA = 'P' THEN 'Pendiente'
+           WHEN A.SETRETSTA = 'R' THEN 'REvertido'
+           WHEN A.SETRETSTA = 'C' THEN 'Cancelado'
+           WHEN A.SETRETSTA = 'PI' THEN 'Pendiente_incoming'
+           ELSE 'Desconocido' END ESTADO,
+       A.SETRRNBEP                  NRO_REFERENCIA,
+       A.SETFECPRO                  FECHA_PROCESO,
+       A.SETIMPCOD                  COD_IMPUESTO,
+       A.SETCODMCC                  MCC,
+       A.SETCICLIE                  DOC_CLIENTE,
+       A.SETNOMPLA                  CLIENTE,
+       A.SETRZNPRV                  PROVEEDOR,
+       A.SETMVDSPA                  PAIS_ORIGEN,
+       A.SETMARCA                   MARCA,
+       A.SETTIPTAR                  TIPO_TARJETA,
+       A.SETCODEM                   EMISOR,
+       A.SETMONTO                   IMPORTE_ORIGEN,
+       A.SETLIMPAU                  IMPORTE_LOCAL,
+       A.SETIMPIVA                  IMPORTE_IVA,
+       A.SETIMPREN                  IMPORTE_RENTA,
+       B.RETESTPRO                  RESPUESTA_SET,
+       B.RETTXTPRO,
+       B.RETNROCMP                  NRO_COMPROBANTE,
+       A.SETFECAC                   FECHA_ACT,
+       A.SETUSUAC                   USUARIO
+FROM GXFINDTA.TCLSET A
+         INNER JOIN GXFINDTA.TCLRET B
+              ON A.SETIDRET = B.RETIDRET
+WHERE A.SETFECPRO BETWEEN '20241001' AND '20241031';
+
+SELECT * from gxfindta.tclset t
+WHERE t.SETFECPRO BETWEEN '20241001' AND '20241031';
+
+Select
+*from gxfindta.tclset a JOIN  GXFINDTA.TCLRET b
+ON a.SETidRet = b.RETIdRet
+WHERE a.SETFecPro = '20240930'; --- trae datos
+
+Select
+*from gxfindta.tclset a JOIN  GXFINDTA.TCLRET b
+ON a.SETidRet = b.RETIdRet
+WHERE a.SETFecPro = '20241001'; -- NO trae datos, el campo SETidRet esta vacio en tclset

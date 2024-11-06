@@ -19,7 +19,10 @@ SELECT *
 FROM PUBLIC.BUSDATOS_TRANSACCIONES
 ORDER BY OPERACION_ID DESC;
 ----------------------------------------
-SELECT CURRENT_MESSAGES FROM QSYS2.DATA_QUEUE_INFOWHERE DATA_QUEUE_LIBRARY = 'GXFINDTA' AND DATA_QUEUE_NAME = 'AUTSNDDTQ';
+--Para corrobar que si la COLA de DATOS demora en obtener informacion
+CALL GXFINPGM.SPFIN003 ( 'AUTSNDDTQ' , 'GXFINDTA' , 120 , VALOR , 5 ) ;
+---cola de datos
+SELECT CURRENT_MESSAGES FROM QSYS2.DATA_QUEUE_INFO WHERE DATA_QUEUE_LIBRARY = 'GXFINDTA' AND DATA_QUEUE_NAME = 'AUTSNDDTQ';
 SELECT COUNT(*)
 FROM GXFINDTA.TBDAUV
 WHERE OP_RRNBEPSA = '               ';
@@ -55,3 +58,9 @@ SELECT * FROM sch_rpl_entidademisora.configuracion_entidad_emiadq;
 INSERT INTO sch_rpl_entidademisora.configuracion_entidad_emiadq
 (configuracion_id, configuracion_cod_entidad_destino, configuracion_destino, configuracion_tipo, configuracion_estado, configuracion_fecha_alta, configuracion_fecha_modi)
 VALUES(3, 1040, 'RIO', 'ENTIDAD', 'A', '2024-02-26', NULL);
+
+
+select bt.*, e.*
+from sch_rpl_entidademisora.replicacion_entidad_emisora e, public.busdatos_transacciones bt
+where e.replicacion_operacion_id = bt.operacion_id
+and e.replicacion_estado_replica = 'N';

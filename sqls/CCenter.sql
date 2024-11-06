@@ -437,7 +437,7 @@ SELECT C.MOVRRNBEP                                                              
           AND F.SUCURSALID = C.MOVCODSUC
           AND F.STATUSID LIKE '%APROBADO%'
           AND F.TARGETFACTID = 'FactComercios'
-          AND F.PERIODOID = '09'
+          AND F.PERIODOID = '10'
           AND F.EJERCICIOID = '2024')                                                                                      COMPROBANTE,
        (SELECT T.SUCDIRECC FROM DATOS.GXFINDTA_TCMSUC T WHERE T.CLICLICOD = C.MOVCODCLI AND T.SUCSUCCOD = C.MOVCODSUC)     DIRECCION_SUC,
        C.MOVFTRX                                                                                                           FECHA_TRX,
@@ -451,15 +451,15 @@ SELECT C.MOVRRNBEP                                                              
        SUM(C.MOVRENT)                                                                                                      IMPORTERENTA,
        SUM(C.MOVIVREN)                                                                                                     IMPORTEIVARENTA,
        SUM(C.MOVNETO)                                                                                                      IMPORTENETO
-FROM FACTURACIONBEPSA.TCLMOV_TMP_COMERCIOS_202409_FACTCOMERCIOS C
+FROM FACTURACIONBEPSA.TCLMOV_TMP_COMERCIOS_202410_FACTCOMERCIOS C
 --WHERE movopde = 700405 --para operadoras
 WHERE C.MOVCODCLI IN (SELECT C.CLICLICOD FROM DATOS.GXFINDTA_TCMCLI C WHERE C.CLIRUC LIKE '%80024659%')
---AND C.MOVCODSUC=1 -- NOT IN ('1', '8')
+AND C.MOVCODSUC=3 -- NOT IN ('1', '8')
 GROUP BY C.MOVCODCLI, C.MOVCODSUC, C.MOVCOMER, C.MOVDENO, C.MOVFTRX, C.MOVFPRO, C.MOVFCRE, C.MOVTPTA ,C.MOVRRNBEP
 ORDER BY C.MOVCODCLI, C.MOVCODSUC, C.MOVFTRX, C.MOVFPRO, C.MOVFCRE;
 -------------------------
 SELECT * FROM asientos.facturacionbepsa.CLIENTE C WHERE  C.CLIENTERUC='80097276';
-SELECT * FROM asientos.facturacionbepsa.SUCURSAL S WHERE S.CLIENTEID=11113;
+SELECT * FROM asientos.facturacionbepsa.SUCURSAL S WHERE S.CLIENTEID=11373;
 SELECT * FROM asientos.facturacionbepsa.CLIENTE C WHERE C.CLIENTEID=11113;
 ------------------------- reporte modelo pdf
 SELECT C.movrrnbep                                                                                                         Id_Transac,
@@ -2968,7 +2968,7 @@ SET FACVENTASIRIUSPDFPATH = '/opt/fe/KuDE/' ||
                            FACVENTACOMPROBANTESET || '.xml'
 WHERE --STATUSID = 'DTE_APROBADO'
   --AND TARGETFACTID = 'FACTALQPOS'
-    FACVENTAFECHA = '2024-10-07'
+    FACVENTAFECHA = '2024-10-31'
   AND FACVENTASIRIUSPDFPATH IS NULL;
 
 DROP TABLE
@@ -3058,7 +3058,7 @@ LIMIT 10;
 
 
 SELECT * FROM asientos.datos.GXFINDTA_TCMTIF GT WHERE GT.CLICLICOD=10879;
-----recobos a generar
+----recibos a generar
 SELECT
         a.debretregid,a.debretregcanalid,a.debretregfechapeticion,f.facventafecha,a.debrettimbradoid,a.debrettipoclienteid,
         a.debretclienteid,a.debretsucursalid,a.debretcomprobset,a.debretmotivoid,a.debretmonedaid,a.debretcomprobimporte,
@@ -3117,7 +3117,28 @@ WHERE F.FACVENTAFECHA = '2024-10-23'
 DELETE FROM FACTURACIONBEPSA.FACVENTA_ERRORES FE;
 ------------------------------------------------------
 
-SELECT * FROM asientos.facturacionbepsa.RECCOBRO R WHERE R.RECCOBROCOMPROBANTESET IN (
-'001-500-0000033',
-'001-500-140685',
-'001-500-140685');
+SELECT --*
+    F.TARGETFACTID,
+    F.TIPOCLIENTEID,
+    F.STATUSID, count(F.FACVENTANUMERO)
+FROM FACTURACIONBEPSA.FACVENTA F
+where F.TARGETFACTID = 'FactComercios'
+AND F.TIPOCLIENTEID = 'Comercio'
+AND F.FACVENTAFECHA = '2024-10-31'
+GROUP BY F.TARGETFACTID,
+    F.TIPOCLIENTEID,
+    F.STATUSID;
+
+DROP TABLE PUBLIC.SOLICITUDES;
+SELECT * FROM PUBLIC.SOLICITUDES S; ---WHERE S.FACVENTACLIRUC IN ('80077406-0')--,'80030535-3')
+CREATE TABLE PUBLIC.SOLICITUDES AS (
+SELECT * FROM asientos.facturacionbepsa.FACVENTA F where F.TARGETFACTID = 'FactComercios'
+AND F.TIPOCLIENTEID = 'Comercio' AND F.STATUSID='DTE_APROBADO' and F.PERIODOID=10 AND F.FACVENTACLIRUC IN ('80100764-0') );
+--UPDATE public.SOLICITUDES S SET FACVENTACLIEMAIL='lidia.valenzuela@biggie.com.py'
+SELECT * FROM asientos.facturacionbepsa.PERIODOTARGETFACTCYCLE P WHERE P.PERIODOID=10 AND P.TARGETFACTID='FactComercios'
+AND P.EJERCICIOID=2024;
+
+SELECT * FROM asientos.facturacionbepsa.FACVENTA F WHERE F.FACVENTADESC LIKE '%KILO%'
+
+--cambiar correo farmatotal por administracion@farmatotal.com.py
+--todo por kilo

@@ -595,7 +595,7 @@ SELECT * FROM k2b_prod.ASIENTOCONTABLE A;
 SELECT * FROM k2b_prod.ASIENTOCONTABLEDETALLE A WHERE A.ASIENTOID = 133663;
 SELECT * FROM k2b_prod.TIPOASIENTOCONTABLE T WHERE T.TIPOASIENTOCODIGO LIKE '%VISA%';
 #-------DEPURAR SIMULACRO
-    TRUNCATE TABLE k2b_prod.instanciaproceso
+    TRUNCATE TABLE k2b_prod.instanciaproceso;
 #k2b_prod.entidadinstanciadatosadjuntos
 #k2b_prod.instanciaproceso;
 
