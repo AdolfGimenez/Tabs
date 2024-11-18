@@ -165,7 +165,7 @@
       <jdbc-url>jdbc:mariadb://10.1.254.107:3306/integrator</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="Gth" uuid="89c7a5d8-8d37-442b-9fc2-6244feb3bd58">
+    <data-source source="LOCAL" name="Gth_D" uuid="89c7a5d8-8d37-442b-9fc2-6244feb3bd58">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <schema-control>AUTOMATIC</schema-control>
@@ -302,7 +302,7 @@
       <synchronize>true</synchronize>
       <schema-control>AUTOMATIC</schema-control>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://pcomercio-bus-db.bepsa.com.py:5432/lilakc</jdbc-url>
+      <jdbc-url>jdbc:postgresql://pcomercio-bus-db.bepsa.com.py:5432/keycloack</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
     <data-source source="LOCAL" name="Jpts_60_T" uuid="8df51eb4-6aba-488b-8f91-155320470192">
@@ -329,11 +329,11 @@
       <jdbc-url>jdbc:postgresql://10.1.254.62:5432/postgres</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="GrandNode" uuid="82c3f0f9-1eef-4c5d-87b1-903c3a9b41ea">
-      <driver-ref>mongo</driver-ref>
+    <data-source source="LOCAL" name="Crm-Bepsa" uuid="82c3f0f9-1eef-4c5d-87b1-903c3a9b41ea">
+      <driver-ref>mongo.4</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.dbschema.MongoJdbcDriver</jdbc-driver>
-      <jdbc-url>mongodb://10.1.254.53:27017/grandnodebepsa</jdbc-url>
+      <jdbc-url>mongodb://10.1.254.53:27017/</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
     <data-source source="LOCAL" name="Bops01" uuid="757163de-0d71-45a5-9a17-c9509a796ef6">
@@ -463,6 +463,14 @@
       <synchronize>true</synchronize>
       <jdbc-driver>org.mariadb.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mariadb://10.254.102.24:3306/geoswitch_ng_bepsa</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="Gth" uuid="94416793-dffc-43d9-a01e-9882787046b6">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <schema-control>AUTOMATIC</schema-control>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://10.11.253.30:5432/GTHBEPSA</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

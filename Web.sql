@@ -644,4 +644,42 @@ SELECT * FROM public.USUARIOS_NIVELES_ACCESO UNA WHERE UNA.USUARIO_ID='5e7eae64-
 
 INSERT INTO PUBLIC.USUARIOS_NIVELES_ACCESO ( USUARIO_ID, NIVEL_ACCESO_ID, INSERTADO_EL)
 VALUES ( '5e7eae64-b02f-46a0-800e-d334ac1eba46', 2, CURRENT_TIMESTAMP);
------------------------------
+--------------- onboarding --------------
+select * from onboarding_access_registration oar;
+select * from onboarding_access_registration_detail oard;
+--onboarding con nro ruc
+SELECT OAR.*, CASE WHEN PF.RUC_NORMALIZADO IS NULL THEN PJ.RUC_NORMALIZADO ELSE PF.RUC_NORMALIZADO END AS RUC
+FROM ONBOARDING_ACCESS_REGISTRATION OAR
+         JOIN EMPRESAS_CLIENTES EC ON EC.ID = OAR.EMPRESA_ID
+         JOIN PERSONAS P ON P.ID = EC.PERSONA_ID
+         LEFT JOIN PERSONAS_FISICAS PF ON P.ID = PF.PERSONA_ID
+         LEFT JOIN PERSONAS_JURIDICAS PJ ON P.ID = PJ.PERSONA_ID;
+
+GRANT SELECT , INSERT, UPDATE, DELETE ON
+    TABLE onboarding_access_registration, onboarding_access_registration_detail TO 'user';
+
+---DB2 query para validar datos de usuario Para lo de onboarding
+SELECT b.CLIRUC RUC, b.CLIRAZSOC RAZON_SOCIAL, C.COCOMER, a.CLICLICOD, a.SUCSUCCOD SUCURSAL, a.SUCDENCOM DENOMINACION,
+		a.SUCDIRECC DIRECCION, a.SUCCORREO CORREO, (CASE WHEN D.SERCODI = '' THEN 'PRINCIPAL' ELSE D.SERCODI END) SERVICIO,
+		(CASE WHEN D.SERCODI = '' THEN 'CUENTA_PRINCIPAL' ELSE SERDESC END)DESC_SERVICIO, D.LIQENTCOD COD_BANCO, F.ENTNCENTID DESC_BANCO,D.LIQNROCUE NRO_CUENTA
+		FROM GXFINDTA.TCMSUC a
+		INNER JOIN GXFINDTA.TCMCLI b ON a.CLICLICOD = b.CLICLICOD
+		INNER JOIN GXFINDTA.TCOCNA C ON a.CLICLICOD = C.CLICLICOD  AND a.SUCSUCCOD = C.SUCSUCCOD
+		INNER JOIN GXFINDTA.TCMLIQ D ON a.CLICLICOD = D.CLICLICOD AND a.SUCSUCCOD = D.SUCSUCCOD
+		LEFT JOIN GXFINDTA.TCLSER E ON D.SERCODI = E.SERCODI
+		INNER JOIN GXTRJDTA.TDGENT F ON D.LIQENTCOD = F.ENTCODENT
+		WHERE b.CLIRUC LIKE '%80011012-9%'
+		AND SUBSTR(C.COCOMER,1,2) NOT IN ('45''81','86','95') AND D.SERCODI = '' AND a.SUCMATRIZ = 'S' LIMIT 1;
+-------------------
+
+select cl.* from cliente_linkdepagos cl
+join comprobantes_transacciones ct on ct.cliente_id = cl.id
+where ct.rrn in ('431902925844', '431902953142', '431902974427', '431902990028', '431902996489');
+
+select  ct.*, cl.*
+from comprobantes_transacciones ct
+left join cliente_linkdepagos cl on cl.id  = ct.cliente_id
+where ct.id in(440,505,520,522,528);
+
+--- para ver cod comercio asociado a dinelco_mf | pago digital db
+select * from comercios c where cybersource_merchant_id like '%dinelco_mf%'

@@ -75,14 +75,14 @@ select * from facturacionbepsa.tipoasientocontable t;
 ------------------------------#20230915#--------------------------------------
 SELECT * FROM asientos.email_users;
 -----##marcas
-SELECT * from marcas.transactions where fecha >= '2023-11-30';
+SELECT * from marcas.transactions where fecha >= '2024-11-14';
 select * from marcas.transactions_visa where report_date >='20MAR24';
 SELECT * from marcas.mastercard_switch where REPORT_WORK_OF >= '02/01/24';
 /*tablas marcas
 Para SWITCH
 delete from marcas.mastercard_switch where report_work_of >= '12/01/23';
 Para MST DUAL
-delete from marcas.transactions where fecha = '2023-11-30';
+delete from marcas.transactions where fecha = '2024-11-14';
 Para VISA
 delete from marcas.transactions_visa where report_date >='20OCT24';
 ---MST
@@ -3131,14 +3131,100 @@ GROUP BY F.TARGETFACTID,
 
 DROP TABLE PUBLIC.SOLICITUDES;
 SELECT * FROM PUBLIC.SOLICITUDES S; ---WHERE S.FACVENTACLIRUC IN ('80077406-0')--,'80030535-3')
-CREATE TABLE PUBLIC.SOLICITUDES AS (
-SELECT * FROM asientos.facturacionbepsa.FACVENTA F where F.TARGETFACTID = 'FactComercios'
-AND F.TIPOCLIENTEID = 'Comercio' AND F.STATUSID='DTE_APROBADO' and F.PERIODOID=10 AND F.FACVENTACLIRUC IN ('80100764-0') );
+CREATE TABLE PUBLIC.SOLICITUDES AS (SELECT * FROM ASIENTOS.FACTURACIONBEPSA.FACVENTA F
+                                    WHERE F.TARGETFACTID = 'FACTALQPOS'--'FactComercios'
+                                      AND F.TIPOCLIENTEID = 'Comercio'
+                                      AND F.STATUSID = 'DTE_APROBADO'
+                                      AND F.PERIODOID = 11--IN (10, 11)
+                                      --AND facventaid=798756 ); --IN (798756, 800041,800729 ));
+                                      AND F.FACVENTACLIRUC='80100764-0');
+                                      --IN ('80077406-0','80100764-0', '80077406-0', '80030535-3') );
+
 --UPDATE public.SOLICITUDES S SET FACVENTACLIEMAIL='lidia.valenzuela@biggie.com.py'
 SELECT * FROM asientos.facturacionbepsa.PERIODOTARGETFACTCYCLE P WHERE P.PERIODOID=10 AND P.TARGETFACTID='FactComercios'
 AND P.EJERCICIOID=2024;
+SELECT * FROM asientos.facturacionbepsa.FACVENTA F
+WHERE F.FACVENTAFECHA='2024-11-06' AND F.STATUSID='DE_ERROR';
 
-SELECT * FROM asientos.facturacionbepsa.FACVENTA F WHERE F.FACVENTADESC LIKE '%KILO%'
+SELECT * FROM asientos.facturacionbepsa.FACVENTASTATUS F WHERE F.FACVENTAID=811805;
+SELECT * FROM asientos.facturacionbepsa.SUCURSAL C WHERE C.CLIENTEID=7172;
+--target's
+SELECT * from FACTURACIONBEPSA.PERIODOTARGETFACT T WHERE T.EJERCICIOID=2024 AND T.PERIODOID=10;
 
---cambiar correo farmatotal por administracion@farmatotal.com.py
---todo por kilo
+SELECT * FROM asientos.facturacionbepsa.FACVENTA F WHERE F.FACVENTACOMPROBANTESET='001-003-0045675';
+SELECT * FROM asientos.facturacionbepsa.FACVENTACUOTA F WHERE F.FACVENTAID=277142
+SELECT * FROM asientos.facturacionbepsa.RECCOBRO R WHERE R.EJERCICIOID=2024 AND R.PERIODOID=05;
+SELECT * FROM asientos.facturacionbepsa.RECCOBRODET R;
+
+select * from
+facturacionbepsa.fn_get_reccobro_by_ejercicios_periodos_targets
+('2024', '5', 'FACTALQPOS', '001', '500', null, null, null, null, null, '2024-05-01', '2024-05-31', null, null, null,null, null, null, null);
+
+SELECT * FROM FACTURACIONBEPSA.FACVENTA F WHERE F.FACVENTACLIRUC='80019742-9' AND F.PERIODOID=10;
+---gemera liq. comercios
+SELECT * FROM facturacionbepsa.fn_get_facturas_a_generar();
+
+SELECT
+			tmov.movcodcli AS cliente, tmov.movcodsuc AS sucursal, tmov.movrazo, tmov.movruc,
+			tmov.movidtpdoc, tmov.movdeno, tmov.movfpro AS fecha, tmov.movftrx AS movftrx, tmov.movfcre AS movfcre,
+			tmov.movfecliq AS movfecliq, COUNT(tmov.movfpro) AS cantReg, SUM(tmov.movimpo) AS movimpo, SUM(tmov.movimco) AS movimco,
+			SUM(tmov.movivco) AS movivco, SUM(tmov.movrent) AS movrent, SUM(tmov.movneto) AS movneto, SUM(tmov.movivren) AS movivren
+		  FROM trusted_zone.gxfindta_tclmov tmov
+			WHERE
+			  tmov.movfcre BETWEEN (TO_CHAR(v_rango_fechas[1]::date, 'YYYYMMDD')) AND (TO_CHAR(v_rango_fechas[2]::date, 'YYYYMMDD'))
+			    AND (tmov.sercodi = 'COMPRA'
+			      OR (tmov.sercodi in ('DEBAUT', 'ECOM')
+			      	  AND tmov.PRECODI in ( 'PREC', 'BTNP')
+			      	  AND tmov.movcodis = 'WEB'
+			      	  AND tmov.movruc != '80050172-1')
+			      OR (tmov.sercodi = 'PUNTOS' AND tmov.PRECODI = 'CAPU'))
+			   and trim(tmov.movruc) = '80016096-7'
+			   AND (tmov.movivco + tmov.movimco) <> 0
+			GROUP BY
+				tmov.movcodcli,
+				tmov.movcodsuc,
+				tmov.movrazo,
+				tmov.movruc,
+				tmov.movidtpdoc,
+				tmov.movdeno,
+				tmov.movfpro,
+				tmov.movftrx,
+				tmov.movfcre,
+				tmov.movfecliq;
+
+SELECT
+			tmov.movcodcli AS cliente, tmov.movcodsuc AS sucursal, tmov.movrazo, tmov.movruc,
+			tmov.movidtpdoc, tmov.movdeno, tmov.movfpro AS fecha, tmov.movftrx AS movftrx, tmov.movfcre AS movfcre,
+			tmov.movfecliq AS movfecliq, COUNT(tmov.movfpro) AS cantReg, SUM(tmov.movimpo) AS movimpo, SUM(tmov.movimco) AS movimco,
+			SUM(tmov.movivco) AS movivco, SUM(tmov.movrent) AS movrent, SUM(tmov.movneto) AS movneto, SUM(tmov.movivren) AS movivren
+		  FROM trusted_zone.gxfindta_tclmov tmov
+			WHERE
+			  tmov.movfcre BETWEEN (TO_CHAR(v_rango_fechas[1]::date, 'YYYYMMDD')) AND (TO_CHAR(v_rango_fechas[2]::date, 'YYYYMMDD'))
+			    AND (tmov.sercodi = 'COMPRA'
+			      OR (tmov.sercodi in ('DEBAUT', 'ECOM')
+			      	  AND tmov.PRECODI in ( 'PREC', 'BTNP')
+			      	  AND tmov.movcodis = 'WEB'
+			      	  AND tmov.movruc != '80050172-1')
+			      OR (tmov.sercodi = 'PUNTOS' AND tmov.PRECODI = 'CAPU'))
+			   and trim(tmov.movruc) != '80016096-7'
+			   AND (tmov.movivco + tmov.movimco) <> 0
+			GROUP BY
+				tmov.movcodcli,
+				tmov.movcodsuc,
+				tmov.movrazo,
+				tmov.movruc,
+				tmov.movidtpdoc,
+				tmov.movdeno,
+				tmov.movfpro,
+				tmov.movftrx,
+				tmov.movfcre,
+				tmov.movfecliq;
+
+
+
+SELECT * FROM TRUSTED_ZONE.GXFINDTA_TCLMOV T
+WHERE T.MOVRRNBEP IN
+('419751364016', '419951984110', '419149687734','419851644862', '420052401155', '419952092097','419149549199');
+
+SELECT * FROM asientos.facturacionbepsa.FACVENTA F WHERE F.TARGETFACTID='SeguroMedico' AND F.EJERCICIOID=2024 AND F.FACVENTAFECHA>='2024-08-15'
+AND facventacliruc='4483116-1'

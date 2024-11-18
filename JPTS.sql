@@ -52,7 +52,7 @@ select * from public.tranlog t WHERE date>='2024-03-02 13:11:31.955000'  AND ss_
 
 select * from tranlog t where transaction_token = '2024082600702424';
 
-SELECT * from keys_cybersource_shops where cybersource_shop_id = 'dinelco_mf_001969000006';
+SELECT * from keys_cybersource_shops where cybersource_shop_id = 'dinelco_mf_000196900017';
 
 update keys_cybersource_shops
 set cybersource_public_key = '05d756fe-ff5a-476d-af2a-9d8dc0777a88',
@@ -74,28 +74,5 @@ cybersource_public_key = '77e6b199-b547-402e-9f9d-278d084cfdf4',
 cybersource_private_key = 'vvXuTXj8s4Nm7SbWPMSgOXOgbDKAOPC8EK8nsRuk214='
 where cybersource_shop_id =  'dinelco_mf_001969000012';
 
-update keys_cybersource_shops set
-cybersource_public_key = '8cd78ba8-48f2-4ace-9c67-0ea7ea5c1d3f',
-cybersource_private_key = 'WoUle0w32ERj6uN7kJkiRMINCBbiM24rZT8fTeQNcMk='
-where cybersource_shop_id = 'dinelco_mf_001969000011';
-
-update keys_cybersource_shops set
-cybersource_public_key = 'b881a151-ce2f-4e45-bf54-f758ba1d1f5c',
-cybersource_private_key = 'cNNT+D4jTbg1qA/VYK0qQajQH7NVT0ToxBJ+vPhZBPc='
-where cybersource_shop_id =  'dinelco_mf_001969000013';
-
-update keys_cybersource_shops set
-cybersource_public_key = '35a280ef-dde5-482f-ad73-610d9cb11179',
-cybersource_private_key = 'SCiPTRPtOqDwCWV+PwS4XWq3D09JuwL6+KxhiwEf8Sw='
-where cybersource_shop_id =  'dinelco_mf_001969000010';
-
-update keys_cybersource_shops set
-cybersource_public_key = '0e0e3014-cc0e-4d9c-a93c-c90b6b3963f4',
-cybersource_private_key = 'sYYPm5XPmPWac2+UtlJt8rJrGqErEMu8D+MY/Qm7feo='
-where cybersource_shop_id =  'dinelco_mf_001969000009';
-
-update keys_cybersource_shops set
-cybersource_public_key = '7bcf7b78-f792-4099-9e8b-b522afa36b0d',
-cybersource_private_key = 'UkOiRZuvmfFOyaNrz+4g/do8s7F5X6CI8Z7pfW1sYVM='
-where cybersource_shop_id =  'dinelco_mf_001969000008';
 ---------------------------------------------------
+select * from cybersource_merchant_routing where merchant_id = '000000006901988'

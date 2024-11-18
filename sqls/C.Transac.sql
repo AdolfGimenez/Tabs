@@ -872,7 +872,7 @@ order by lhortr desc;
 select --*
 lfectr fecha,substr((lhortr + 10000000), 3, 2) Hora, count(*) Cant, sum(limpgs) Importe,substr(lidtra, 1, 1) Origen --por hora por y atm
 from libdebito.drconbep
-where lfectr between '20230513' and '20230513'
+where lfectr between '20241113' and '20241113'
 --LFCOTR = '20221005' AND LIDCOM <> 100001 AND   LESTTR = 'A' AND   LCRETR = '00' --para contar trx pos y atm
 and substr(lidtra, 1, 1) in ('T','P')
 group by lfectr,substr((lhortr + 10000000), 3, 2) ,substr(lidtra, 1, 1), lfectr

@@ -126,22 +126,20 @@ select * from gxbdbps.comaeaf where enemiso = '002'*/
 /*call pgm*/
 -- replicacion de trx en linea al tclmov
 --update GXBDBPS.TSWAUT SET AUTESTCLE='P' WHERE AUTRRNBEP ='309268187565';
--- parametros (nro_referencia, fecha_comercial)
-CL: CALL PGM(GXFINPGM/PCLR029) PARM('309268187565' '20230403'); -- tener en cuenta que en el tswaut el campo AUTESTCLE='P'
+-- parametros (nro_referencia, fecha_comercial = AUTTRXFCHC)
+CL: CALL PGM(GXFINPGM/PCLR029) PARM('419149549199' '20240709'); -- tener en cuenta que en el tswaut el campo AUTESTCLE='P'
 
 -- pagar una trx en linea 703002 de un comercio cuyo banco es Conti
 -- paramtros (id_opliqui, referencia, fecha_comercial)
 CL: CALL PGM(GXFINPGM/PCLR028) PARM('23040208782085' '309268187565' '20230403');
-
-
 SELECT * from LIBDEBITO.logpos0p WHERE ENV512 LIKE '%308865624777%';
 
 CL: CALL PGM(GXPGBPS/APAUT011) PARM('20220915' '2000096372781'); --referencia y fecha LFCOTR del drconbep
 
-
 CL: CALL PGM(GXFINPGM/PCLR184) PARM('360900075984' '20230215' '');
 --carga todas las tablas de las 703020
---parm(in:&AUTRRNBEP, in:&FECPRO, out: &RETORNO); PONER EN P ESTADO DE CLEARING y cambiar la fecha comercial en tswaut y drconbep a la fecha real en la cual se procesa
+--parm(in:&AUTRRNBEP, in:&FECPRO, out: &RETORNO);
+-- PONER EN P ESTADO DE CLEARING y cambiar la fecha comercial en tswaut y drconbep a la fecha real en la cual se procesa
 
 SELECT AUTRRNBEP, AUTTRXFCHC, AUTESTCLE, T.* FROM GXBDBPS.TSWAUT T WHERE AUTRRNBEP IN ('303648369594');
 --AUTRRNBEP AUTTRXFCHCUpdate libdebito.drconbep set lfcotr = '20230309'where lerrnb in
@@ -152,8 +150,6 @@ STRJRNPF FILE(WILLIANLIB/MIGRA_TARJ) JRN(@JOURNAL/QSQJRN)
 
 ver bloqueos
 WRKOBJLCK OBJ(LIBDATO/MIGRA_TARJ) OBJTYPE(*FILE)
-
-
 /********************************/
 SELECT * FROM LIBDEBITO.DRCONBEP WHERE LERRNB='301841123554';
 

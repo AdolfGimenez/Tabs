@@ -18,16 +18,6 @@ COMMENT ON COLUMN gth.EMPM100.EmpVerEstRec IS 'Ver columna Estado de Liquidaciï¿
 
 SELECT * FROM GTH.RHMHLQ;
 
-SELECT
-    E.personro COD_EMPLEADO,
-    E.personomb NOMB_COMPLETO,
-    E.personro DOCUMENTO,
-    persomail CORREO,
-    persosex SEXO
-    FROM GTH.rhm100 E
-INNER JOIN GTH.RHMFAM R ON E.PERSONRO = R.PERSONRO
-INNER JOIN GTH.BAMPRF B ON E.carcod = B.carcod
-
 SELECT * FROM "GTHBEPSA".gth.RHEMPLE R WHERE R.FUNCNRO='5107555'; --FUNCIONARIOS
 SELECT * FROM "GTHBEPSA".gth.RHMCRG R;
 --datos laborales
@@ -74,3 +64,11 @@ WHERE T1.EMPID = '1'
   AND T1.CLNROLIQ = '554'
 ORDER BY T1.EMPID, T1.FUNCNRO, T1.CLNROLIQ
 2024-10-08 17:32:40.191 -03 [20356] usrgth@GTHBEPSA DETAIL:  parameters: $1 = '1', $2 = '', $3 = '554'
+
+
+---consulta empleado
+select em.empid as "Cod. Empleado", r.personomb as "Nombre Completo", r.personro as "Nro Documento",
+r.persomail as "Correo", em.carcod as "Cod Cargo", c.cardes as "Cargo", em.funcjeid as "Id Jefe Inmmediato",
+em.funcest as "Estado"
+from gth.rhemple em, gth.rhm100 r, gth.rhmcrg c
+where em.funcnro = r.personro and em.carcod = c.carcod
