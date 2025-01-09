@@ -272,6 +272,7 @@ Select *
 --pgidtrn,pgfecom, pgtipo, pgnocta, pgimpor, pgcomer,pgfecre, PGIDUSR,op.PGFEPRO, op.PGHOPRO
 from gxopera.opago1p op where op.PGIDUSR='U99KATERIN';
 --AND pgcomer = '4500001' and pgidtrn = '240325569872';
+SELECT * FROM GXOPERA.OPAGO1PHIS O1P WHERE PGIDUSR='U99KATERIN' AND PGFECOM='20241118';
 ---------------------------------------------
 Update gxopera.opago1p set pgnocta = 8191198, pgticta = 0
                        WHERE PGIDTRN=240425585010 AND pgcomer = '4500001';

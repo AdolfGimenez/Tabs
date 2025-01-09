@@ -25,9 +25,9 @@ SELECT empre_origen, empre_destino, estado, count(*) Cantidad, sum(importe) Tota
  order by empre_origen, empre_destino;
 
 ----CONCILIADOR--------
-SELECT count(*) Cantidad_trx, fecha_creacion, fecha_comercial
+SELECT count(*) Cantidad_trx--, fecha_creacion, fecha_comercial
   FROM public.transaccion
- where fecha_comercial = '2020-12-28'
+ where fecha_comercial = '2024-12-30'
  group by fecha_creacion, fecha_comercial
  order by fecha_creacion asc;
 
@@ -41,7 +41,7 @@ SELECT count(*) Cantidad_trx, date(fecha_creacion)
 ---#######################################################################################################################################################################################---
 select *
   from public.transaccion
- where id_empre_origen in ('446285061')
+ where id_empre_origen in ('446285061');
 select id, id_empre_origen, empre_origen, numero_origen, empre_destino, numero_destino, importe, fecha_operacion,
        hora_operacion, codigo_respuesta, mensaje_error, numero_autorizacion, fecha_creacion, fecha_liquidacion
   from public.transaccion
@@ -138,4 +138,42 @@ SELECT * FROM PUBLIC.PARAMETROS_CONFIGURACION PC;
 ---------------
 
 select * from public.transaccion t WHERE t.FECHA_OPERACION=''
-where t.fecha_comercial in ('2024-02-12','2024-02-13','2024-02-14','2024-02-15','2024-02-16')
+where t.fecha_comercial in ('2024-02-12','2024-02-13','2024-02-14','2024-02-15','2024-02-16');
+
+
+select * FROM PUBLIC.TRANSACCION T WHERE T.FECHA_COMERCIAL='2024-09-24' and ESTADO = 'Aprobado';
+--rollback
+UPDATE TRANSACCION
+SET ESTADO_PROCESADO  = 'Pendiente'
+  , ID_SUMARIZACION   = NULL
+  , COMISION          = 0
+  , ESTADO_SUMARIZADO = NULL
+WHERE ESTADO = 'Aprobado'
+AND FECHA_COMERCIAL='2024-09-24';
+ --- AND FECHA_COMERCIAL = TO_DATE((SELECT PC.VALOR FROM PARAMETROS_CONFIGURACION PC WHERE PC.NOMBRE = 'FC_ANTERIOR'), 'DD-MM-YYYY')
+
+--TRUNCATE TABLE public.LIQUIDACION;
+
+DELETE
+FROM LIQUIDACION
+WHERE FECHA_COMERCIAL = '2024-09-24';
+--where fecha_comercial = TO_DATE((SELECT pc.valor FROM parametros_configuracion pc WHERE pc.nombre = 'FC_ANTERIOR'), 'DD-MM-YYYY')
+
+SELECT * FROM public.PARAMETROS_CONFIGURACION PC;
+
+SELECT * FROM public.LIQUIDACION L order by fecha_comercial desc;
+
+SELECT * FROM public.COMISION C;
+CREATE TABLE conciliador.PUBLIC.BK_EMPES AS (
+SELECT * FROM public.EMPE E);
+
+SELECT * FROM switch.public.EMPE E;
+SELECT * FROM public.PARAMETROS_CONFIGURACION PC;
+
+SELECT * FROM switch.public.TRANSACCION T WHERE DATE(fecha_creacion) ='2024-12-29';
+
+SELECT * FROM public.USUARIO U WHERE U.ID(63);
+SELECT * FROM public.ROL R;
+SELECT * FROM public.ROL_PERMISO RP;
+
+

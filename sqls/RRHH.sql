@@ -58,17 +58,36 @@ TM1.FUNCNRO = 5107555*/
 ORDER BY TM1.EMPID, TM1.FUNCNRO;
 ---liquidacion
 SELECT T1.EMPID, T1.FUNCNRO AS FUNCNRO, T1.CLNROLIQ, COALESCE(T2.LQTOTDES, 0) AS LQTOTDES, COALESCE(T2.LQTOTHAB, 0) AS LQTOTHAB
-FROM (GTH.RHMLIQ T1 LEFT JOIN (SELECT EMPID, CLNROLIQ, FUNCNRO, SUM(LQIMPREMU) AS LQTOTHAB, SUM(LQIMPDESC) AS LQTOTDES FROM GTH.RHMLIQ10 GROUP BY EMPID, CLNROLIQ, FUNCNRO) T2 ON T2.EMPID = T1.EMPID AND T2.CLNROLIQ = T1.CLNROLIQ AND T2.FUNCNRO = T1.FUNCNRO)
+FROM (GTH.RHMLIQ T1 LEFT JOIN (SELECT EMPID, CLNROLIQ, FUNCNRO, SUM(LQIMPREMU) AS LQTOTHAB, SUM(LQIMPDESC) AS LQTOTDES
+FROM GTH.RHMLIQ10 GROUP BY EMPID, CLNROLIQ, FUNCNRO) T2 ON T2.EMPID = T1.EMPID AND T2.CLNROLIQ = T1.CLNROLIQ AND T2.FUNCNRO = T1.FUNCNRO)
 WHERE T1.EMPID = '1'
-  AND T1.FUNCNRO = '5701247'
-  AND T1.CLNROLIQ = '554'
-ORDER BY T1.EMPID, T1.FUNCNRO, T1.CLNROLIQ
-2024-10-08 17:32:40.191 -03 [20356] usrgth@GTHBEPSA DETAIL:  parameters: $1 = '1', $2 = '', $3 = '554'
+  AND T1.FUNCNRO = '5107555'
+  AND T1.CLNROLIQ = '633'
+ORDER BY T1.EMPID, T1.FUNCNRO, T1.CLNROLIQ;
 
+SELECT * FROM "GTHBEPSA".gth.RHMLIQ R WHERE R.LQFEC >='2024-10-30' AND R.FUNCNRO='5107555';
+SELECT * FROM "GTHBEPSA".gth.RHEMPLE R; --FUNCIONARIOS
+SELECT * FROM "GTHBEPSA".gth.RHM100 R; --PERSONAS
+SELECT * FROM "GTHBEPSA".gth.RHMLIQ10 R --DETALLE DE LA LIQUIDACION
+             WHERE R.EMPID = '1' AND R.CLNROLIQ='597';
 
 ---consulta empleado
 select em.empid as "Cod. Empleado", r.personomb as "Nombre Completo", r.personro as "Nro Documento",
 r.persomail as "Correo", em.carcod as "Cod Cargo", c.cardes as "Cargo", em.funcjeid as "Id Jefe Inmmediato",
 em.funcest as "Estado"
 from gth.rhemple em, gth.rhm100 r, gth.rhmcrg c
-where em.funcnro = r.personro and em.carcod = c.carcod
+where em.funcnro = r.personro and em.carcod = c.carcod;
+
+SELECT * FROM "GTHBEPSA".gth.RHMCRG R;
+--DELETE FROM "GTHBEPSA".gth.RHMCRG R ;
+SELECT * FROM "GTHBEPSA".gth.GDC002 G;
+--DELETE from "GTHBEPSA".gth.GDC002 G;
+-- RHMCRG y GDC002
+
+alter table gth.almue10 add almdiasv numeric (2, 0);
+alter table gth.almue10 add almdiasrs numeric (2, 0);
+alter table gth.almue10 add almdiasp numeric (2, 0);
+alter table gth.almue10 alter column almmrcinc type numeric (5, 2);
+-----
+SELECT * FROM gth.RHMLIQFIN R;
+select * from gth.RHMLIQFINLOG R;

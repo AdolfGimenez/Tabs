@@ -14,7 +14,7 @@ SELECT * FROM GXWEB.FLICOM WHERE LICOMER='0801381' AND LIFECHD BETWEEN '20210424
 SELECT * FROM GXWEB.FLICOM1 WHERE LICOMER='0801381' AND LIFECHD BETWEEN '20210424' AND '20210429';
 SELECT * FROM GXWEB.OPRECLE WHERE RECOMER='0801381' AND REFECH BETWEEN '20210424' AND '20210429';
 
-SELECT * FROM GXWEB.OPMOVI WHERE OPNOREF IN ('111455506987','111956910957','111956880525','111856385481')
+SELECT * FROM GXWEB.OPMOVI WHERE OPNOREF IN ('111455506987','111956910957','111956880525','111856385481');
 
 INSERT INTO GXWEB.GXLOUSUDET (USUCOD,COCOMER,CORUCN) VALUES (2009,'0701125',NULL);
 
@@ -548,17 +548,17 @@ SELECT *
 FROM SUCURSALES_BEPSA_DB2 SBD
          INNER JOIN EMPRESAS_CLIENTES_BEPSA ECB ON SBD.CLIENTE_BEPSA_ID = ECB.ID
          INNER JOIN EMPRESAS_CLIENTES EC ON EC.EMPRESA_CLIENTE_BEPSA_ID = ECB.ID
-WHERE ECB.COD_CLIENTE_BEPSA IN ('11654');
+WHERE ECB.COD_CLIENTE_BEPSA IN ('11042');
 
-SELECT * FROM public.SUCURSALES_BEPSA_DB2 S WHERE S.CLIENTE_BEPSA_ID=722;
-
+SELECT * FROM public.SUCURSALES_BEPSA_DB2 S WHERE S.CLIENTE_BEPSA_ID=7041;
+SELECT * FROM public.SUCURSALES S WHERE S.COMERCIO_ID=7058;
 --sucursales y comercios
 SELECT *
 FROM SUCURSALES S
          INNER JOIN COMERCIOS C ON S.COMERCIO_ID = C.ID
          INNER JOIN EMPRESAS_CLIENTES EC ON C.EMPRESA_CLIENTE_ID = EC.ID
          INNER JOIN EMPRESAS_CLIENTES_BEPSA ECB ON EC.EMPRESA_CLIENTE_BEPSA_ID = ECB.ID
-WHERE ECB.COD_CLIENTE_BEPSA IN ('12300')
+WHERE ECB.COD_CLIENTE_BEPSA IN ('11042')
 ORDER BY SUCURSAL_BEPSA_DB2_ID;
 ----ver empresa
 SELECT ECB.COD_CLIENTE_BEPSA, EC.*
@@ -567,9 +567,9 @@ FROM EMPRESAS_CLIENTES EC
 --inner join personas_fisicas p1 on p1.persona_id = p.id
          INNER JOIN PERSONAS_JURIDICAS P1 ON P1.PERSONA_ID = P.ID
          INNER JOIN PUBLIC.EMPRESAS_CLIENTES_BEPSA ECB ON ECB.ID = EC.EMPRESA_CLIENTE_BEPSA_ID
-WHERE P1.RUC_NORMALIZADO IN ('80050172-1');
+WHERE P1.RUC_NORMALIZADO IN ('80018400-9');
 -------------VER COMERCIOS
-SELECT * FROM public.COMERCIOS C WHERE C.EMPRESA_CLIENTE_ID=749;
+SELECT * FROM public.COMERCIOS C WHERE C.EMPRESA_CLIENTE_ID=8175;
 SELECT * FROM public.EMPRESAS_CLIENTES EC;
 
 SELECT * FROM public.USUARIOS U WHERE U.NRO_DOCUMENTO LIKE '%80050172%';
@@ -647,6 +647,8 @@ VALUES ( '5e7eae64-b02f-46a0-800e-d334ac1eba46', 2, CURRENT_TIMESTAMP);
 --------------- onboarding --------------
 select * from onboarding_access_registration oar;
 select * from onboarding_access_registration_detail oard;
+
+delete from onboarding_access_registration where user_email = 'contabilidad@resortyacht.com.py';
 --onboarding con nro ruc
 SELECT OAR.*, CASE WHEN PF.RUC_NORMALIZADO IS NULL THEN PJ.RUC_NORMALIZADO ELSE PF.RUC_NORMALIZADO END AS RUC
 FROM ONBOARDING_ACCESS_REGISTRATION OAR
@@ -671,7 +673,6 @@ SELECT b.CLIRUC RUC, b.CLIRAZSOC RAZON_SOCIAL, C.COCOMER, a.CLICLICOD, a.SUCSUCC
 		WHERE b.CLIRUC LIKE '%80011012-9%'
 		AND SUBSTR(C.COCOMER,1,2) NOT IN ('45''81','86','95') AND D.SERCODI = '' AND a.SUCMATRIZ = 'S' LIMIT 1;
 -------------------
-
 select cl.* from cliente_linkdepagos cl
 join comprobantes_transacciones ct on ct.cliente_id = cl.id
 where ct.rrn in ('431902925844', '431902953142', '431902974427', '431902990028', '431902996489');
@@ -682,4 +683,158 @@ left join cliente_linkdepagos cl on cl.id  = ct.cliente_id
 where ct.id in(440,505,520,522,528);
 
 --- para ver cod comercio asociado a dinelco_mf | pago digital db
-select * from comercios c where cybersource_merchant_id like '%dinelco_mf%'
+select * from comercios c where cybersource_merchant_id like '%dinelco_mf%';
+
+select c.nombre as nombre_comercio, c.id, c.id_interno, c.empresa_cliente_id_interno, c.empresa_cliente_id,
+con.tag, con.valor
+from configuraciones con
+inner join comercios c on con.comercio_id::uuid = c.id::uuid
+where c.id_interno in ('6901787', '6901588');
+
+
+select * from public.ordenes_pago op
+where op.rrn_retorno in ('490506234785','490506234761')
+and op.authorization_id in('697966','697906');
+
+--checkout_plataform
+select * from merchants m
+join cybersource_merchant_info cmi
+on cmi.id = m.cs_merchant_id;
+
+  -- pk mPT6c9lr6EELMKJVB/bp+MSFr+Dg3ylw7ezWVLeu63s=
+-- pvk  2a5b73fe-9ae6-4d1c-9a9f-24d4aef80a30
+
+SELECT * FROM public.MERCHANTS M WHERE M.ID=3;
+SELECT * FROM public.CYBERSOURCE_MERCHANT_INFO CMI WHERE CMI.ID=5;
+--base pago digital
+select * from tarjetas t join medios_pago mp on t.medio_pago_id = mp.id
+where t.nro_tarjeta_enmascarado like '4224%' and t.nro_tarjeta_enmascarado like '%7487';
+
+select * FROM public.OPERADORAS_BILLETERA OB;
+
+select context from payment_credit pc where realm = 'masfazzil' and registered::date = '2024-12-02';
+
+select * from public.comercios c  where
+(c.id::uuid = 'add7d09e-fb2c-4029-81b1-38660c9e7123'::uuid or
+c.empresa_cliente_id::uuid  = 'add7d09e-fb2c-4029-81b1-38660c9e7123'::uuid);
+
+select * from comercios c where c.cybersource_merchant_id = 'dinelco_mf_001969000015';
+
+select "empresas_clientes"."id", "empresas_clientes_bepsa"."cod_cliente_bepsa",
+"personas"."tipo_persona", "empresas_clientes_bepsa"."descripcion_bepsa", CASE
+                                WHEN personas.tipo_persona = 'F' THEN personas_fisicas.nro_documento
+                                WHEN personas.tipo_persona = 'J' THEN personas_juridicas.nro_documento END AS nro_documento, CASE
+                                WHEN personas.tipo_persona = 'F' THEN personas_fisicas.dv_ruc
+                                WHEN personas.tipo_persona = 'J' THEN personas_juridicas.dv_ruc END AS dv_ruc, CASE
+                                WHEN personas.tipo_persona = 'F' THEN personas_fisicas.ruc_normalizado
+                                WHEN personas.tipo_persona = 'J' THEN personas_juridicas.ruc_normalizado END AS ruc_normalizado,
+                                "personas"."nombre_normalizado",
+                                "grupos_empresariales"."id" as "grupo_empresarial_id",
+                                "empresas_clientes"."correo_comercio",
+                                "empresas_clientes"."logo_comercio",
+                                "grupos_empresariales"."nombre" as "grupos_empresariales_nombre",
+                                "empresas_clientes"."activo", "empresas_clientes"."insertado_el",
+                                COUNT(*) OVER () AS counter
+                                from "empresas_clientes"
+                                inner join "empresas_clientes_bepsa" on "empresas_clientes"."empresa_cliente_bepsa_id" = "empresas_clientes_bepsa"."id"
+                                inner join "personas" on "empresas_clientes"."persona_id" = "personas"."id"
+                                left outer join "grupos_empresariales" on "personas"."grupo_empresarial_id" = "grupos_empresariales"."id"
+                                left join "personas_juridicas" on "personas_juridicas"."persona_id" = "personas"."id"
+                                left join "personas_fisicas" on "personas_fisicas"."persona_id" = "personas"."id"
+                        where "personas_juridicas"."eliminado" = false
+                        and "empresas_clientes"."id" in
+                        (select "empresa_id" from "usuarios_x_empresas" where "usuarios_x_empresas"."usuario_id" = 'e7623368-b552-4c3c-9acc-aceef70abbea' and "usuarios_x_empresas"."activo"
+= true)
+-- and "empresas_clientes"."id" = '600';
+and personas_juridicas.ruc_normalizado = '5866335-5' or personas_fisicas.ruc_normalizado = '5866335-5';
+
+este query sera que podes darme el valor porfa?
+select "empresas_clientes"."id", "empresas_clientes_bepsa"."cod_cliente_bepsa",
+"personas"."tipo_persona", "empresas_clientes_bepsa"."descripcion_bepsa", CASE
+                                WHEN personas.tipo_persona = 'F' THEN personas_fisicas.nro_documento
+                                WHEN personas.tipo_persona = 'J' THEN personas_juridicas.nro_documento END AS nro_documento, CASE
+                                WHEN personas.tipo_persona = 'F' THEN personas_fisicas.dv_ruc
+                                WHEN personas.tipo_persona = 'J' THEN personas_juridicas.dv_ruc END AS dv_ruc, CASE
+                                WHEN personas.tipo_persona = 'F' THEN personas_fisicas.ruc_normalizado
+                                WHEN personas.tipo_persona = 'J' THEN personas_juridicas.ruc_normalizado END AS ruc_normalizado,
+                                "personas"."nombre_normalizado",
+                                "grupos_empresariales"."id" as "grupo_empresarial_id",
+                                "empresas_clientes"."correo_comercio",
+                                "empresas_clientes"."logo_comercio",
+                                "grupos_empresariales"."nombre" as "grupos_empresariales_nombre",
+                                "empresas_clientes"."activo", "empresas_clientes"."insertado_el",
+                                COUNT(*) OVER () AS counter
+                                from "empresas_clientes"
+                                inner join "empresas_clientes_bepsa" on "empresas_clientes"."empresa_cliente_bepsa_id" = "empresas_clientes_bepsa"."id"
+                                inner join "personas" on "empresas_clientes"."persona_id" = "personas"."id"
+                                left outer join "grupos_empresariales" on "personas"."grupo_empresarial_id" = "grupos_empresariales"."id"
+                                left join "personas_juridicas" on "personas_juridicas"."persona_id" = "personas"."id"
+                                left join "personas_fisicas" on "personas_fisicas"."persona_id" = "personas"."id"
+                        where "personas_juridicas"."eliminado" = false
+                        and "empresas_clientes"."id" in
+                        (select "empresa_id" from "usuarios_x_empresas" where "usuarios_x_empresas"."usuario_id" = 'be136356-5b5b-4b73-a7f6-53486a743b42' and "usuarios_x_empresas"."activo"
+= true)
+;
+
+select "empresa_id" from "usuarios_x_empresas" where "usuarios_x_empresas"."usuario_id" = 'e7623368-b552-4c3c-9acc-aceef70abbea' and "usuarios_x_empresas"."activo"
+= true
+
+
+select * from configuraciones co where co.comercio_id = '9c605d1c-7951-4741-a698-e67dda38eaf7';
+
+select * from comercios c where c.id = '9c605d1c-7951-4741-a698-e67dda38eaf7';
+
+
+-- VERIFICACION para 3ds
+
+--- BASE pago_digital
+select * from comercios c
+join configuraciones n on c.id::uuid = n.comercio_id::uuid
+where c.cybersource_merchant_id = 'dinelco_002703100001'
+
+--- BASE checkout
+select * from merchants m join
+cybersource_merchant_info cmi on cmi.id = m.cs_merchant_id
+where cmi.cs_id = 'dinelco_002703100001';
+
+
+select "usuarios"."id" as "id", "personas_fisicas"."nombre", "personas_fisicas"."apellido", "personas_fisicas"."es_contribuyente",
+"personas_fisicas"."dv_ruc", "personas_fisicas"."ruc_normalizado", "personas_fisicas"."nro_documento", "personas_fisicas"."tipo_documento_id",
+"tipos_documentos"."nombre" as "tipos_documentos_nombre", "correos_principales_usuarios"."correo", "usuarios"."activo", "usuarios"."insertado_el",
+"usuarios"."codigo_servicio", "niveles_acceso"."id" as "nivel_acceso_id", "niveles_acceso"."nombre" as "nivel_acceso_nombre",
+COUNT(*) OVER() as counter
+from "usuarios"
+inner join "personas_fisicas" on "usuarios"."persona_fisica_id" = "personas_fisicas"."id"
+inner join "tipos_documentos" on "personas_fisicas"."tipo_documento_id" = "tipos_documentos"."id"
+left join "correos_principales_usuarios" on "usuarios"."id" = "correos_principales_usuarios"."usuario_id"
+left join "usuarios_niveles_acceso" on "usuarios_niveles_acceso"."usuario_id" = "usuarios"."id"
+left join "niveles_acceso" on "usuarios_niveles_acceso"."nivel_acceso_id" = "niveles_acceso"."id"
+where "personas_fisicas"."eliminado" = false and "personas_fisicas"."nro_documento" = '430990'
+order by "usuarios"."id" DESC limit 20;
+
+---- PAGO DIGITAL DB -----
+select * from comercios c
+join configuraciones n on c.id::uuid = n.comercio_id::uuid
+where c.cybersource_merchant_id = 'dinelco_link_001694800003';
+
+---- DINELCO CHECKOUT DB -----
+select * from merchants m join
+cybersource_merchant_info cmi on cmi.id = m.cs_merchant_id
+where cmi.cs_id = 'dinelco_link_001694800003';
+
+SELECT * FROM public.BUSDATOS_TRANSACCIONES BT WHERE BT.OPERACION_RRNBEPSA IN ('436327108271', '436326875024');
+
+
+select * FROM PUBLIC.SUSCRIPCIONES;
+
+SELECT * FROM EQWEDI_AUTH_DB.PUBLIC.EMPRESAS_CLIENTES EC WHERE EC.NOMBRE LIKE '%GRO%';
+
+/*Razón Social: Hilagro S.A.
+RUC: 80030229-0
+Razón Social: Transagro S.A.
+RUC: 80024300-5*/
+
+---link de pagos para cambiar es en este secret de pagos digitales bk
+--FORM_TOKEN_EXPIRATION_IN_MINUTES=1440
+
+------------------

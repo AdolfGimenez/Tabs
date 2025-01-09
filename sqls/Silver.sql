@@ -1,6 +1,16 @@
+/*Resumen Acreditaciones cuentas Internas Continental*/
+sELECT DATE(TSBFEAC),tsbtpop, tsbdeop,TSBESTA, TSBCOME,TSBDEME, COUNT(*) CANTIDAD, SUM(TSBIMPO)TOTAL from gxfindta.tcltsb
+where DATE(TSBFEAC)between '2024-11-24' and '2024-11-26' and tsbbade = 1020 and tsbbacr = 1020 AND TSBTPOP = '01' AND TSBCOME in ('040','000')-- AND TSBESTA  in ('EN','ER')
+GROUP BY DATE(TSBFEAC),tsbtpop, tsbdeop,TSBESTA, TSBCOME,TSBDEME;
+
+/*Resumen Acreditaciones SIPAP*/
+sELECT DATE(TSBFEAC),tsbtpop, tsbdeop,TSBESTA, TSBCOME,TSBDEME, COUNT(*) CANTIDAD, SUM(TSBIMPO)TOTAL from gxfindta.tcltsb
+where DATE(TSBFEAC)between '2024-11-24' and '2024-11-25' and tsbbade = 1020 and tsbbacr <> 1020 AND TSBTPOP = '01' AND TSBCOME in ('040','000')-- AND TSBESTA  in ('EN','ER')
+GROUP BY DATE(TSBFEAC),tsbtpop, tsbdeop,TSBESTA, TSBCOME,TSBDEME;
+
 /*fechas comerciales, proceso y trnasaccionales bepsa*/
 SELECT * FROM  LIBDEBITO.EMPRESA0P;
-SELECT * from gxfindta.tclfec; --reingeniería fecha tiene que ser fecant, fecpro, fecsig consecitivos.
+SELECT * from gxfindta.tclfec;--reingenier?a fecha tiene que ser fecant, fecpro, fecsig consecitivos.
 --DRCONBEP
 select * from LIBDEBITO.DRCONBEP WHERE substr(lerrnb, 1, 4) = '3018' and lfcotr <> 20230118
 and lfectr <> 20230117 and lerrnb not in (select opnoref from gxopera.opmovi WHERE OPFECOM = '20230117' AND OPFEREA = '20230118');--31055
@@ -26,7 +36,7 @@ Actualiza Estado para reintento de Pendientes*/
 Select * from gxfindta.tcltsb where date(tsbfege) >= '2022-11-01' and tsbcome = '091' and tsbidop < 5278339; --138 REGISTROS
 Update gxfindta.tcltsb set tsbesta = 'PE', tsbmotivo = 'REINTENTO POR CIERRE' where date(tsbfege) >= '2022-11-01' and tsbcome = '091' and tsbidop < 5278339;
 
-/*Cambia Configuración para Reintento desde la pantalla de transmisiones, corregir el parametro para cuando reintenten de nuevo desde la pantalla por defecto quede con estado PE*/
+/*Cambia Configuraci?n para Reintento desde la pantalla de transmisiones, corregir el parametro para cuando reintenten de nuevo desde la pantalla por defecto quede con estado PE*/
 sELECT * FROM GXFINDTA.TCLPFD WHERE PfdIdGrup = 'ESTADOS' and PFCIDPARM = 'PCLR221';
 Update GXFINDTA.TCLPFD set PFDVALCHR1 = 'PE', PFDVALCHR2= '900', PFDDSCIMP1 = 'PENDIENTE DE TRANSMISION' WHERE PfdIdGrup = 'ESTADOS' and PFCIDPARM = 'PCLR221';
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -59,7 +69,7 @@ Select * from gxfindta.tcltsb where tsbesta = 'PE'  and tsbfeac >= '2022-08-19 0
 Select * from gxfindta.tcltsb where tsbbacr = '1020' and tsbesta = 'IN' and  tsbfege <= '2022-09-06 08:00:00'; --3043 REGISTROS
 Update gxfindta.tcltsb set tsbesta = 'PE', tsbmotivo = 'INTERNA (IN) NO TRANSMITIDO 20220906' where tsbbacr = '1020' and tsbesta = 'IN' and  tsbfege <= '2022-09-06 08:00:00';
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-----------------------------------------/*/*Corrige Nro de Cuenta Dèbito (le falto un cero delante y poner en PE)*/
+----------------------------------------/*/*Corrige Nro de Cuenta D?bito (le falto un cero delante y poner en PE)*/
 Update gxfindta.tcltsb set tsbctde = '0104913400', tsbesta = 'PE' where tsbmotivo = 'REDMINE NRO 36786' and tsbcome = '008'; --4.725
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------/*/*Marca para Envio Pagos SIPAP (Batch)*/
@@ -93,8 +103,8 @@ Update gxfindta.tclmov set movpgon = 'O' where movrrnbep in
 ('229307500932','229307500947','229307501132','229307501239','229307501376','229307501452','229307501461','229307501488','229307501592','229307501598','229307501603','229307501616','229307501629','229307501644','229307501740','229307502005'
 ,'229307502166','229307502427','229307502431','229307502593','229307502939','229307503057','229307503206','229307503472','229307503559','229307503791','229307503924','229307504107','229307504114','229307504182','229307504235');
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---Para el caso que se necesite habilitar la imputación  Actualizar estado para habilitar imputaciones
----error en el tablero de imputacion SE CAMBIA LO QUE ES EJECUCIÓN QUE QUEDÓ EN ESTADO S A N
+--Para el caso que se necesite habilitar la imputaci?n  Actualizar estado para habilitar imputaciones
+---error en el tablero de imputacion SE CAMBIA LO QUE ES EJECUCI?N QUE QUED? EN ESTADO S A N
 SELECT * FROM GXFINDTA.TCLPFD WHERE PFCIDPARM='PCLR154' AND PFDSECU='2';
 SELECT PFCIDPARM,PFDIDGRUP,PFDVALCHR1 FROM GXFINDTA.TCLPFD WHERE PFCIDPARM = 'PCLR154' AND PFDIDGRUP = 'EJECUCION';
 UPDATE GXFINDTA.TCLPFD SET PFDVALCHR1 = 'N' WHERE PFCIDPARM = 'PCLR154' AND PFDIDGRUP = 'EJECUCION';
@@ -115,9 +125,9 @@ select * from gxtrjdta.tdgenr ;
 SELECT * FROM gxopera.CLPARF ;
 --Asociar Cod de Banco Regional a Sudameris RI
 SELECT * FROM gxtrjdta.TCOENC;
---Corrección de Nombre Legacy
+--Correcci?n de Nombre Legacy
 SELECT * FROM gxbdbps.GENTIAF ;
--- Corrección de Nombres RI
+-- Correcci?n de Nombres RI
 SELECT * FROM gxtrjdta.tdgent;
 --PARBCOPAI=5034 = LAMBARE - PARCSWIFT=CLAMPYPAXXXX (050)
 Select * from gxtrjdta.tdgent where entcodent = 5034;
@@ -169,10 +179,10 @@ Update gxtrjdta.tdgenr set ENRBCOPAGA = 1002 where entcodent = 1007;
 select * from gxopera.opago1p;
 /*Paso2 hacer bk del historico en la fecha solicitadoa EN ADOLFOLIB y restaurar al opago1p*/
 select sum(pgimpor),  PGCODMV from GXOPERA.OPAGO1PHIS where PGFECOM=20230526  ---siempre tienen que ser iguales.
-group by PGCODMV; --Tiene que coincidir con la pantalla que envían EN PANTALLA!
+group by PGCODMV; --Tiene que coincidir con la pantalla que env?an EN PANTALLA!
 select * from GXOPERA.OPAGO1PHIS where PGFECOM=20230526;/*PARA BK*/
 /*Paso 3 clrnpfm a opago1p*/
-/*Paso 4 cpyf de historico al 1p con ADD de opción y verificar que coincida con la pantalla nuevamente*/
+/*Paso 4 cpyf de historico al 1p con ADD de opci?n y verificar que coincida con la pantalla nuevamente*/
 select sum(pgimpor), PGCODMV from GXOPERA.OPAGO1P where PGFECOM=20230526
 group by PGCODMV;
 /*Paso 5 eliminar del historico la fecha efectuada para evitar duplicaciones.*/
@@ -188,7 +198,7 @@ SELECT * FROM GXOPERA.FCTACOM WHERE ctafecha = '20161013';
 SELECT * FROM GXOPERA.FLICOM WHERE  LIFECHD = '20161202' AND LIUSER = 'U99BERNAL';
 SELECT * FROM GXOPERA.FLICOM1 WHERE  LIFECHD LIKE '20161202' AND LIFECHH = '20160713';
 SELECT * FROM GXOPERA.OPAGO0P WHERE PGFCOM= '2016-12-02'; --Clearing Parte 1 Resumen Transferencias
-SELECT * FROM GXOPERA.OPAGO1P; -- Clearing Parte 2 Débito Crédito
+SELECT * FROM GXOPERA.OPAGO1P; -- Clearing Parte 2 D?bito Cr?dito
 SELECT * FROM GXOPERA.OPAGO3P;
 SELECT * FROM GXOPERA.OPAGO3TC;
 SELECT * FROM GXOPERA.OPAGO5P;
@@ -217,7 +227,7 @@ DELETE from gxopera.mails;*/
 |--COMRG110    |-- LIBDEBITO/COPAGO0PDM  |-- LIBDEBITO/COPAGO0P  |-- GXOPERA/OPAGO0P  |--                    |-- Total de Acreditaciones del Emisor BNF a Bepsa                            |
 |--COMRG144    |-- LIBDEBITO/COPAEN0PDM  |-- LIBDEBITO/COPAEN0P  |-- GXOPERA/OPAGO1P  |-- GXOPERA/OPAGO1PHIS |-- Acreditaciones de Bepsa a Comercios BNF                                   |
 |--COMCL146    |-- LIBDEBITO/COPAEN2PDM  |-- LIBDEBITO/COPAEN2P  |-- GXOPERA/OPAGO3P  |-- GXOPERA/COPAEN2PHS |-- Acreditaciones por  BNF a Entidades con cuenta en BNF                     |
-|--COMCL146    |-- LIBDEBITO/OPAGO3TCDM  |-- LIBDEBITO/OPAGO3TC  |-- GXOPERA/OPAGO3TC |-- GXOPERA/OPAGO3TCH  |-- Compensación entre entidades con cuenta en BNF                            |
+|--COMCL146    |-- LIBDEBITO/OPAGO3TCDM  |-- LIBDEBITO/OPAGO3TC  |-- GXOPERA/OPAGO3TC |-- GXOPERA/OPAGO3TCH  |-- Compensaci?n entre entidades con cuenta en BNF                            |
 |--COMCL146    |-- LIBDEBITO/OPAGO5PDM   |-- LIBDEBITO/OPAGO5P   |-- GXOPERA/OPAGO5P  |-- GXOPERA/OPAGO5PH   |-- Archivo de pago a Comercios BNF por transacciones de Red de Pagos (CNB)   |
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 SELECT * FROM GXOPERA.OPAGO3P WHERE BNFFECOM = '20231023';
@@ -266,7 +276,7 @@ and (OPCODTRN = '011000' or OPCODTRN = '012000' or OPCODTRN = '013000');
 &entidad = ask('Entidad');==002
 &refech  = ask('Fecha');==20230526*/
 /*-----------------------------------------------------------------------------------*/
-/*para ver los montos creditos y debitos caso bnf de comercio que no está en el excel pero si en el registro enviado
+/*para ver los montos creditos y debitos caso bnf de comercio que no est? en el excel pero si en el registro enviado
 por ddm tarea http://10.1.254.18/issues/47891*/
 /*bk previo antes de cada trabajo*/
 select PGTIPO5, sum(pgimpor5) from GXOPERA.OPAGO5PH where PGFECOM5>='20230321'--and PGCOMER5='8605686'
@@ -285,8 +295,8 @@ DELETE from GXOPERA.OPAGO5PH where PGFECOM5>='20230321' and PGCOMER5='8605686';
 --LIBDEBITO/COPAEN2PDM -- OPAGO3P
 --LIBDEBITO/OPAGO3TCDM --OPAGO3TC
 --LIBDEBITO/OPAGO5PDM -- OPAGO5P
-/*La conexión utiliza el puerto 5246 del sistema local. La conexión utiliza la dirección IP 10.1.254.233,
-puerto 446 del comserver y el ID de usuario BEPSA en el sistema remoto. Ahora se cambió y se apunta directo a
+/*La conexi?n utiliza el puerto 5246 del sistema local. La conexi?n utiliza la direcci?n IP 10.1.254.233,
+puerto 446 del comserver y el ID de usuario BEPSA en el sistema remoto. Ahora se cambi? y se apunta directo a
 as_bnf '192.168.0.2' puerto 446*/
 ---------------------------------------------------------------------------------------------------------------------------
 --Para cuando Rolando de BNF reclame diferencia
@@ -304,7 +314,7 @@ substr(digits(OPHOTRN), 3, 2)||':'
 ||substr(digits(OPHOTRN), 7, 2) as "Hora",
 substr(optarj,1,6)||'XXXXXX'
 ||substr(optarj,13,4) "Nro.Tarjeta",opcomer "Comercio",
-opmonto "I.Compra", opcomi "Comisión", opcoment "Com.Entidad",
+opmonto "I.Compra", opcomi "Comisi?n", opcoment "Com.Entidad",
 opivaent "IVA s/C.Ent", opcombps "Com.Bepsa",
 opivabps "IVA s/C.Bps", opmonto "Neto", opcodaut
 "Cod.Aut.", substr(opidtra,1,8) "Origen"
@@ -327,7 +337,7 @@ substr(digits(OPHOTRN), 3, 2)||':'
 ||substr(digits(OPHOTRN), 7, 2) as "Hora",
 substr(optarj,1,6)||'XXXXXX'
 ||substr(optarj,13,4) "Nro.Tarjeta",opcomer "Comercio",
-opmonto "I.Compra", opcomi "Comisión", opcoment "Com.Entidad",
+opmonto "I.Compra", opcomi "Comisi?n", opcoment "Com.Entidad",
 opivaent "IVA s/C.Ent", opcombps "Com.Bepsa",
 opivabps "IVA s/C.Bps", opmonto "Neto", opcodaut
 "Cod.Aut.", substr(opidtra,1,8) "Origen"
@@ -340,7 +350,7 @@ order by opfecom, opcomer, optarj;
 /* formato de la RED DE PAGOS DINELCO.
 //------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // SECU  | FREAL | FCOMERCIAL | HORA  | TARJETA | COMERCIO | ICOMPRA  | COMISION | COMENTIDAD | IVAENTIDAD | COMBEPSA | IVABPS   | NETO     | CODAUT | ORIGEN //
-// Texto | Texto | Texto      | Texto | Texto   | Texto    | Numérico | Numérico | Numérico   | Numérico   | Numérico | Numérico | Numérico | Texto  | Texto  //
+// Texto | Texto | Texto      | Texto | Texto   | Texto    | Num?rico | Num?rico | Num?rico   | Num?rico   | Num?rico | Num?rico | Num?rico | Texto  | Texto  //
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------*/
 /*97 al 93 .xls, quitar desimales nombre: 20230324RdetalAdeEfectivoCNBXLS.xls*/
 ---------------------------------------------------------------------------------------------------------------------------
@@ -349,9 +359,9 @@ GXFINDTA.TCLCPC
 GXFINDTA.TCLTPC
 Esos son las tablas que indican el clearing RI. Que llama a los main para la carga de las comisiones
 CSP es la cabecera y CPC detalle Osea clearing RI se carga por pantalla, y en ella se va marcando cada proceso que ya se " comisiono" osea,
-que todos los servicios estan por separado "La idea es que clearing RI sea un poco más independiente y se pueda correr solo el servicio necesario"
+que todos los servicios estan por separado "La idea es que clearing RI sea un poco m?s independiente y se pueda correr solo el servicio necesario"
 Entonces esas son las tablas que carga y deja registro "que y en donde mismo se encuentra el procedimiento de clearing" TCLTPC es la carga
-temporalAutorizador carga TSWAUT y de allí se carga el temporal primero "revisiones y control" y luego carga TCLMOV
+temporalAutorizador carga TSWAUT y de all? se carga el temporal primero "revisiones y control" y luego carga TCLMOV
 Todo esto tambien dentro del proceso clearing y estan especificados en las tablas mencionadas anteriormente */
 ---------------------------------------------------------------------------------------------------------------------------
 /*Carga DDM OPAGO5P*/
@@ -366,7 +376,7 @@ year(current date)||substr(digits(month(current date)), 9, 2)||substr(digits(day
 from gxbdbps.comaeaf
 where cocomer = '4500001';
 -------------------------------------------------------------------------
-/*Generación de Debito a Emisores con cuenta en COntinental*/
+/*Generaci?n de Debito a Emisores con cuenta en COntinental*/
 sELECT MVFEPRO, CMCODIG, SUM(MVIMPO2)FROM GXBDBPS.TMOVIAF WHERE MVEMISO = '021' AND mvfepro = '20221129' and mvcodre = 0 and
 CMCODIG IN ( '005','010','020','040','042','091') GROUP BY MVFEPRO, CMCODIG
 UNION
@@ -395,15 +405,15 @@ SELECT HMFEPRO , COUNT(*), SUM(HMIMPO2) AS TOTAL FROM GXBDBPS.THMOVAF t--- HISTO
 WHERE HMFEPRO = '20221104'
 AND HMCODRE = 0AND HMEMISO= '183'AND HMCODCO>'0100030' and HMCODCO< '9200000'
 AND HMCODIG IN ('005' , '010' ,'020' , '040', '042', '091')
-GROUP BY HMFEPRO , HMEMISO ; ---NO se encuentran transacciones en el histórico, todas las trx están en TMOVIAF
+GROUP BY HMFEPRO , HMEMISO ; ---NO se encuentran transacciones en el hist?rico, todas las trx est?n en TMOVIAF
 
---Para verificar lo que se cargó en transmisiones, filtrar por el cocomer y fecha proc
+--Para verificar lo que se carg? en transmisiones, filtrar por el cocomer y fecha proc
 Select *;
 --deletefrom gxfindta.tclimb where imbfch = '20221104' AND IMBIDOP= 223080074500189; --Imputaciones de pago
 --Select *
 --deletefrom gxopera.oplicre where opcrefcom = '20221104' AND OPCRECOM= '4500189';
 --------------------------------------------------------------------------------------------------------------
---Según lo acordado, se provee los querys necesarios para el repair y para la generación del reporte.
+--Seg?n lo acordado, se provee los querys necesarios para el repair y para la generaci?n del reporte.
 /*##PAGO RETAIL CADA 48 HS. POR ACREDITACIONES BATCH##*/
 
 --Repair(Ejecutar el 26/11/2022 luego del proceso New Clearing)
@@ -412,13 +422,13 @@ Select *;
 Select * from gxfindta.tclimb where IMBCLI =10937 and imbfch = '20221125' and imbests = 'PE';
 Update gxfindta.tclimb set imbests = 'IR', imbobs = 'IMPUTACION RETENIDA' where IMBCLI =10937 and imbfch = '20221125' and imbests = 'PE';
 
-/*Query para generación de reporte luego de ejecución del repair*/
+/*Query para generaci?n de reporte luego de ejecuci?n del repair*/
 Select IMBIDOP nro_lote, imblot lote_impu, imbtip tipo_ope, imbser servicio, imbpre prestacion, imbbco bco_comercio, imbbpa bco_pagador, substr(IMBIDOP,9,7) comercio,
 imbcli cliente,imbsuc sucursal, sucdencom denominancion,imbfch fecha_proceso, imbimpn neto,  imbests estado, imbobs mensaje
 from gxfindta.tclimb  inner join GXFINDTA.tcmsuc on imbcli = cliclicod and imbsuc = sucsuccod where imbfch >= '20221125' and IMBCLI =10937;
 --Repair(Ejecutar el 29/11/2022 luego del proceso New Clearing)
 
-/*HABILITA IMPUTACIÓN*/
+/*HABILITA IMPUTACI?N*/
 Select * from gxfindta.tclimb where IMBCLI =10937 and imbfch = '20221125' and imbests = 'IR';
 Update gxfindta.tclimb set imbests = 'PE', imbobs = 'PENDIENTE DE IMPUTACION' where IMBCLI =10937 and imbfch = '20221125' and imbests = 'IR';
 
@@ -426,13 +436,13 @@ Update gxfindta.tclimb set imbests = 'PE', imbobs = 'PENDIENTE DE IMPUTACION' wh
 Select * from gxfindta.tclimb where IMBCLI =10937 and imbfch = '20221128' and imbests = 'PE';
 Update gxfindta.tclimb set imbests = 'IR', imbobs = 'IMPUTACION RETENIDA' where IMBCLI =10937 and imbfch = '20221128' and imbests = 'PE';
 
-/*Query para generación de reporte luego de ejecución del repair*/
+/*Query para generaci?n de reporte luego de ejecuci?n del repair*/
 Select IMBIDOP nro_lote, imblot lote_impu, imbtip tipo_ope, imbser servicio, imbpre prestacion, imbbco bco_comercio, imbbpa bco_pagador, substr(IMBIDOP,9,7) comercio,
 imbcli cliente,imbsuc sucursal, sucdencom denominancion,imbfch fecha_proceso, imbimpn neto,  imbests estado, imbobs mensaje
 from gxfindta.tclimb  inner join GXFINDTA.tcmsuc on imbcli = cliclicod and imbsuc = sucsuccod where imbfch >= '20221125' and IMBCLI =10937;
 --Repair(Ejecutar el 30/11/2022 luego del proceso New Clearing)
 
-/*HABILITA IMPUTACIÓN*/
+/*HABILITA IMPUTACI?N*/
 Select * from gxfindta.tclimb where IMBCLI =10937 and imbfch = '20221128' and imbests = 'IR';
 Update gxfindta.tclimb set imbests = 'PE', imbobs = 'PENDIENTE DE IMPUTACION' where IMBCLI =10937 and imbfch = '20221128' and imbests = 'IR';
 
@@ -440,11 +450,11 @@ Update gxfindta.tclimb set imbests = 'PE', imbobs = 'PENDIENTE DE IMPUTACION' wh
 Select * from gxfindta.tclimb where IMBCLI =10937 and imbfch = '20221129' and imbests = 'PE';
 Update gxfindta.tclimb set imbests = 'IR', imbobs = 'IMPUTACION RETENIDA' where IMBCLI =10937 and imbfch = '20221129' and imbests = 'PE';
 
-/*Query para generación de reporte luego de ejecución del repair*/
+/*Query para generaci?n de reporte luego de ejecuci?n del repair*/
 Select IMBIDOP nro_lote, imblot lote_impu, imbtip tipo_ope, imbser servicio, imbpre prestacion, imbbco bco_comercio, imbbpa bco_pagador, substr(IMBIDOP,9,7) comercio,
 imbcli cliente,imbsuc sucursal, sucdencom denominancion,imbfch fecha_proceso, imbimpn neto,  imbests estado, imbobs mensaje
 from gxfindta.tclimb  inner join GXFINDTA.tcmsuc on imbcli = cliclicod and imbsuc = sucsuccod where imbfch >= '20221128' and IMBCLI =10937;
---Esta misma lógica se debe mantener para los días posteriores, hasta que se tenga una modificación de las aplicaciones propiamente
+--Esta misma l?gica se debe mantener para los d?as posteriores, hasta que se tenga una modificaci?n de las aplicaciones propiamente
 
 --tabla para ver el CIERRE
 select * from gxbdbps.tlogsaf where LSFECHA = '20230325' AND LSTIPRO = 'CIER' order by LSHORA desc;---VERIFICAR LOGS PRODUCCION
@@ -462,10 +472,10 @@ SELECT * FROM PUBLIC.FERIADO WHERE FECHA>='2023-03-28'; --EMPES
 ----------------------------------------------------------------------------------------------
 --codigo 86 and 81
 Select opferea, opfecom, opliqde, sum(opmonto) from gxopera.opmovi where opcomer = '8600240' and opliqde = '20221202' group by opferea, opfecom, opliqde; --detalle de movimiento
-Select * from gxopera.flicom1 where licomer = '8600240' and lifechd = '20221202'; --Liquidación
+Select * from gxopera.flicom1 where licomer = '8600240' and lifechd = '20221202'; --Liquidaci?n
 Select * from gxopera.opago5ph where pgcomer5 = '8600240' and pgfecom5 = '20221202'; -- orden de pago en BNF
 -----------------------------------------------------------------------------------------------
---no llego a correr instructivo y se vacía
+--no llego a correr instructivo y se vac?a
 SELECT --SUM(INSFACTOT)
 * FROM GXOPERA.TRXINST where INSFECARGA = '20230112' AND INSTATUS='P';
 DELETE FROM GXOPERA.TRXINST where INSFECARGA = '20230112' AND INSTATUS='P';
@@ -568,17 +578,17 @@ SELECT OPNOREF, OPFEREA FROM GXOPERA.OPMOVI WHERE OPFEREA>='20230101'; --AND sub
 
 SELECT OPNCOMER FROM GXOPERA.OPLIQUI WHERE OPNROREF IN ('303748535330','303548126900');
 
-----OPLIQUI QUE NO ESTÁN EN TCLTSB
-Select * from gxopera.opliqui where opcodbco = 57 and substr(opcampoa,1,6) = '703002' and substr(opcampoa,41,8) = '20230206' and opstat = '00' --and opstatob = '00' 
+----OPLIQUI QUE NO EST?N EN TCLTSB
+Select * from gxopera.opliqui where opcodbco = 57 and substr(opcampoa,1,6) = '703002' and substr(opcampoa,41,8) = '20230206' and opstat = '00' --and opstatob = '00'?
 and opnroref not in (Select tsbnref from gxfindta.tcltsb where tsbfpro = '20230206');
 ------------------------------
-/* NUMERO DE CUENTA NULO- se elimina del tablero la CUENTA DÉBITO*/
+/* NUMERO DE CUENTA NULO- se elimina del tablero la CUENTA D?BITO*/
 Select * from gxfindta.tcltsb where tsbcoco = '0705590'and tsbtpop = '01' and tsbbacr = 1007 and tsbesta <> 'AC' and tsbtpoacr = 'O'
 and tsbctde = ''; --92 REGISTROS
 Update gxfindta.tcltsb set tsbctde = '0102184061', tsbesta = 'PE', tsbmotivo = 'REDMINE #47207' where tsbcoco = '0705590'
 and tsbtpop = '01' and tsbbacr = 1007 and tsbesta <> 'AC' and tsbtpoacr = 'O';
 ---------------------------------
-/*Imputación indebida comercios BBVA*/
+/*Imputaci?n indebida comercios BBVA*/
 Select * from gxfindta.tcltsb where tsbnref in ('301139503566','301139512151','301139528759','301139543782','301139569892');
 -----------------------------------
 /* Para verificar los codigos de transaccion del anterior con los servicios (000054 = 'COMPRA')*/
@@ -604,10 +614,10 @@ UPDATE GXBDBPS.GEMPRAF
 SET EMFESIG='20230328',EMFEPRO='20230327',EMFEANT='20230324'
 WHERE EMCODIG='001';
 ------------------------------------------------------*/
--- Tabla donde se registran los procesos que serán ejecutados durante el cierre
+-- Tabla donde se registran los procesos que ser?n ejecutados durante el cierre
 SELECT * FROM gxfindta.tclcpc t WHERE t.CPCFEC = '20230601';
 
--- Tabla  donde se registran los subprocesos que serán ejecutados durante el cierre
+-- Tabla  donde se registran los subprocesos que ser?n ejecutados durante el cierre
 SELECT * FROM gxfindta.TCLCSP t WHERE t.CPCFEC = '20230531';
 --cuando empieza el proceso del cierre vas a encontrar datos en esa tabla con el campo CPEST = 'P', luego va actualizando a 'C' a medida que se vaya completando..
 --Movimientos de TC sin valor de renta e ivarenta para rol ISA -- tarea 50628
@@ -636,13 +646,13 @@ WHERE
                 AND emi.OPRENTA > 0
                 AND emi.OPREIVA > 0
                 AND adq.OPFECOM >= '20230426');
-/*Validación de retenciones que se volvieron a pagar en linea*/
+/*Validaci?n de retenciones que se volvieron a pagar en linea*/
 Select a.movidmov,movrrnbep, movftrx, movneto, rtdnrortam, RTDMONAMRT,RTDMONMOV,tsbnref, tsbimpo, tsbdeme, tsbfege
 from gxfindta.tclmov a left join gxfindta.tclrtd b on a.movidmov = b.movidmov
 left join gxfindta.tcltsb on movrrnbep = tsbnref where a.movidmov in (
 Select movidmov from gxfindta.tclrtd where  RTDFCHCOB = '20230410');
---##### OJO PARA LIQUIDACIONES SIEMPRE FILTRAR DESDE EL ULTIMO DÍA DEL MES ANTERIOR Y EL PENULTIMO DÍA DEL MES ACUTAL###
-/*Verificación de liquidación Vs Declaración impositiva tarea 51915, se agega una linea mas con fecha 29 en la cabezera y en detalle(flicom1)
+--##### OJO PARA LIQUIDACIONES SIEMPRE FILTRAR DESDE EL ULTIMO D?A DEL MES ANTERIOR Y EL PENULTIMO D?A DEL MES ACUTAL###
+/*Verificaci?n de liquidaci?n Vs Declaraci?n impositiva tarea 51915, se agega una linea mas con fecha 29 en la cabezera y en detalle(flicom1)
 se cambia la fecha de una de las trx del 26 para que salga con la otra factura lo que corresponde*/
 Select * from gxopera.flicom where licomer = '0801505' and lifechd > '20221220';
 Select * from gxopera.flicom1 where licomer = '0801505' and lifechd > '20221220';
@@ -650,24 +660,24 @@ Select a.*,(licoent+licobps), (liivaent+liivabps) from gxopera.flicom1 a where l
 Select * from contabilid.CCLFACT where lfsitu = 2 and lftpdo = 'LI' and lfcocl = '0802241' and lfnrfa in ('10020070059'),'10020015071');
 -- tiene que ser igual al campo LFIMGR las suma de=LICOENT+LICOBPS e igual a LFIMIM=LIIVAENT+LIIVABPS
 -------------------------------
-/*Validación de retenciones que se volvieron a pagar en linea*/
+/*Validaci?n de retenciones que se volvieron a pagar en linea*/
 Select a.movidmov,movrrnbep, movftrx, movneto, rtdnrortam, RTDMONAMRT,RTDMONMOV,tsbnref, tsbimpo, tsbdeme, tsbfege
 from gxfindta.tclmov a left join gxfindta.tclrtd b on a.movidmov = b.movidmov
 left join gxfindta.tcltsb on movrrnbep = tsbnref where a.movidmov in (
 Select movidmov from gxfindta.tclrtd where  RTDFCHCOB = '20230410');
 --------------
-/*Cambio de Parámetros Continental - configuraciòn del servicio de pago a comercios - disminuir la cantidad de trx a 180 por minuto - tarea 54537*/
+/*Cambio de Par?metros Continental - configuraci?n del servicio de pago a comercios - disminuir la cantidad de trx a 180 por minuto - tarea 54537*/
 SELECT * FROM GXFINDTA.TCLPFD WHERE PFCIDPARM = 'SOCKET_CLEARING' and pfdidgrup = 'REINTENTO';
 Update GXFINDTA.TCLPFD set PFDVALCHR2 = '0 */3 * * * *', PFDVALIMP2 = 180, PFDVALFEC2 = '1', PFDVALIMP1 = 300000
 WHERE PFCIDPARM = 'SOCKET_CLEARING' and pfdidgrup = 'REINTENTO';
-/*Cambio de Parámetros Continental - Aumenta cantidad de Hilos*/
+/*Cambio de Par?metros Continental - Aumenta cantidad de Hilos*/
 SELECT * FROM GXFINDTA.TCLPFD WHERE PFCIDPARM = 'SOCKET_CLEARING' and pfdidgrup = 'REINTENTO';
 Update GXFINDTA.TCLPFD set  PFDVALFEC2 = '3' WHERE PFCIDPARM = 'SOCKET_CLEARING' and pfdidgrup = 'REINTENTO';
-/*Cambio de Parámetros Continental - Aumenta cantidad de Hilos*/
+/*Cambio de Par?metros Continental - Aumenta cantidad de Hilos*/
 SELECT * FROM GXFINDTA.TCLPFD WHERE PFCIDPARM = 'SOCKET_CLEARING' and pfdidgrup = 'REINTENTO';
 Update GXFINDTA.TCLPFD set  PFDVALIMP2 = 536 WHERE PFCIDPARM = 'SOCKET_CLEARING' and pfdidgrup = 'REINTENTO';
 ------
-/*Análsis CICO - 20230728*/
+/*An?lsis CICO - 20230728*/
 Select cofactu, BS15CODCOM,count(*), sum(opmonto),BS15MONSAL from gxopera.opmovi inner join gxbdbps.comaeaf on opcomer = cocomer inner join libdebito.bst015 on substr(BS15CODCOM,6,7) = cofactu and BS15CODPRO = 'CICOMONEY'
 where opfecom between '20230329' and '20230726' and opcodtrn in ('370000','380000','390000')
 group by  cofactu, BS15CODCOM, BS15MONSAL;
@@ -717,9 +727,9 @@ FROM GXOPERA.OPMOVI O
 
 SELECT
     LCTAOR Cta_Origen,LCTADE Cta_Destino,LNRTAR Numero_Tarjeta,LEXTAR Extension_Tarjeta,LEXPIR Vencimiento_Tarjeta,LIDCOM Codigo_Comercio_BEPSA,LHISOR Historico_Origen,LHISDE Historico_Destino,LBCOCR Banco_Credito_Emisor,LCTACR Cuenta_Banco_Credito,
-    LBCODB Banco_Debito, LCTADB Cta_Banco_Debito,LCLEAR Afecta_Cta_Clearing,LFCOTR Fecha_Comercial,LFECTR Fecha_Transaccion,LHORTR Hora_Transacción,LFECLQ Fecha_Liq_BEPSA,LFECEN Fecha_Liq_ENTIDAD,LMONTR Moneda_Transacción,LIMPGS Importe_Guaranies,
-    LIMPDS Importe,LIMPDF Importe_Diferente,LSALTR Saldo_Actual,LDISTR Saldo_Disponible,LMARCA Marca,LCUOTA Cantidad_Cuotas,LIDTRA Identif_Transacción,LSTANT STANTransacción,LTIPTR Tipo_Transacción,LPOSEM POS_EntryMode,LBINPR Bin,LMCCTR Merchant_Category,
-    LCOMTR Descripción_Despachador,LORITR Origen_Transacción,LCODTR Codigo_TransacciónISO,LCODBC Codigo_TransacciónBanco,LCAUTR Codigo_Autorización,LCRETR Codigo_Respuesta,LESTTR Estado,LERRNB Referencia,LEIMP4 Importe_4_SMS,LECA62 CampoISOVisa,
+    LBCODB Banco_Debito, LCTADB Cta_Banco_Debito,LCLEAR Afecta_Cta_Clearing,LFCOTR Fecha_Comercial,LFECTR Fecha_Transaccion,LHORTR Hora_Transacci?n,LFECLQ Fecha_Liq_BEPSA,LFECEN Fecha_Liq_ENTIDAD,LMONTR Moneda_Transacci?n,LIMPGS Importe_Guaranies,
+    LIMPDS Importe,LIMPDF Importe_Diferente,LSALTR Saldo_Actual,LDISTR Saldo_Disponible,LMARCA Marca,LCUOTA Cantidad_Cuotas,LIDTRA Identif_Transacci?n,LSTANT STANTransacci?n,LTIPTR Tipo_Transacci?n,LPOSEM POS_EntryMode,LBINPR Bin,LMCCTR Merchant_Category,
+    LCOMTR Descripci?n_Despachador,LORITR Origen_Transacci?n,LCODTR Codigo_Transacci?nISO,LCODBC Codigo_Transacci?nBanco,LCAUTR Codigo_Autorizaci?n,LCRETR Codigo_Respuesta,LESTTR Estado,LERRNB Referencia,LEIMP4 Importe_4_SMS,LECA62 CampoISOVisa,
     LCPACE Codigo,LENEMI Entida_Emisora,LCORED Codigo_Red,LCOTEL NumeroTelefono,LACTFJ CodigoActivoFijo,LNFACT NumeroFactura,LNFISC Nro_Legislacion_Fiscal,ENEADM Entidad_Administradora,ENEPRO Entidad_Propietaria,LCODPR Codigo_Procesador,
     LCOPRO Comision_Producto,LCOCOM Comision_Comercio,LCOIVA Porcentaje_IVA,LCOADQ Porcentaje_Adquirencia,LNTOKE Token_PAN,LCVVPRES CVV_Presente,LPINPRES PIN_Presente,LTIPOPER Tipo_Operacion,LPROPI Campo_Propina,LPAGOP Campo_Pago_parcial,LCAMPO04 Campo_4_ISO,
     LCAMPO49 Moneda_Campo4,LCAMPO05 Campo_5_ISO,LCAMPO50 Moneda_Campo5,LCOMPO06 Campo_6_ISO,LCAMPO51 Moneda_Campo6,LCAMPO37 Campo37_RRN,LROL Tipo_Rol,LCAMPO03 Codigo_Proceso,LCAMPO22 POS_Entry_Mode,LCAMPO42 Cod_Com_Original,LCAMPO32 Codigo_Adquirente,
@@ -735,7 +745,7 @@ FROM LIBDEBITO.DRCONBEP D
 /*desde tomcat 9 para contra la SET -- Retenciones SET*/
   -- wget https://marangatu.set.gov.py/eset-restful/retencionesMasivas/probarConectividad
 --------------------------------------------------------------
-/*Actualizaciòn de formato de cuenta para pagos en dolares*/
+/*Actualizaci?n de formato de cuenta para pagos en dolares*/
 Select * from gxfindta.tcllod where LOCFPRO = '20230818' and loccoco = '4500123' and LODMONORI = 840;
 Update gxfindta.tcllod set LODNRCT = '0119000470' where LOCFPRO = '20230818' and loccoco = '4500123' and LODMONORI = 840;
 ----------------------------
@@ -746,7 +756,7 @@ INSERT INTO GXFINDTA.TCLPFD
 VALUES
 ('RNTACCPRTD', 'RTNDTLITEM', 15, '040', '', '' , '' , 0.00, '0', 0.00, '0', '15/09/23', '15/09/23', '15/09/23','15/09/23',current user,current timestamp);
 --#ANULAR FACTURAS DE LIQUIDACIONES DE COMERCIOS PARA VOLVER A PROCESAR
-/*#64653 - Anulación de Facturación Octubre 2023*/
+/*#64653 - Anulaci?n de Facturaci?n Octubre 2023*/
 Select * from gxopera.flicom where licodtr = '000054' and lifechd between '20230928' and '20231030' and linro >= 10020069272;
 Update gxopera.flicom set linro = 0, linrofin = 0 where licodtr = '000054' and lifechd between '20230928' and '20231030' and linro >= 10020069272;
 
@@ -763,10 +773,10 @@ Delete from gxopera.flicom2 where lifacnro >= 10020069272 and lifacfed >= '20230
 /*Actualiza Importe Neto en Imputaciones*/
 Select * from gxfindta.tclimb where imbfch = '20231101' and imbidop = 233050010701125;
 Update gxfindta.tclimb set imbimpn = imbimpn+39389 where imbfch = '20231101' and imbidop = 233050010701125;
-/*Anula el registro del módulo de Retenciones*/
+/*Anula el registro del m?dulo de Retenciones*/
 Select * from gxfindta.tclrtc where rtccomerc = '0701125' and rtcidreten = 6314;
-Update gxfindta.tclrtc set rtcestado = 'A', rtcobser = '329339858745 Retencion a pedido de contracargos - Anulación #'  where rtccomerc = '0701125' and rtcidreten = 6314;
-/*Elimina el cobro aplicado sobre la retención*/
+Update gxfindta.tclrtc set rtcestado = 'A', rtcobser = '329339858745 Retencion a pedido de contracargos - Anulaci?n #'  where rtccomerc = '0701125' and rtcidreten = 6314;
+/*Elimina el cobro aplicado sobre la retenci?n*/
 Select * from gxfindta.tclrtd where rtcidreten = 6314;
 Delete from gxfindta.tclrtd where rtcidreten = 6314;
 ----------##--CASOS PREPAGA
@@ -774,7 +784,7 @@ SELECT * FROM GXFINDTA.TCLTSB T WHERE T.TSBCOCO='8607001' AND T.TSBFPRO>='202309
 --VER PRINCIPAL E HISTORICO PARA SEGURAR
 SELECT * FROM GXBDBPS.TMOVIAF T WHERE T.MVFEPRO>='20230928' AND T.MTNUMTA='6274311460228767';
 SELECT * FROM GXBDBPS.THMOVAF TH WHERE TH.HMFEPRO>='20231026' AND TH.HMNUMTA='6274311460228767' AND TH.HMIDUSR='SKJVFIN001';
----IDENTIFICAR EL ID Y REINTENTAR EN CASO QUE NO ESTÉN EN LAS TABLAS DE MOVIMIENTOS..!! Validar con los logs Bepsa/prepagas del 12
+---IDENTIFICAR EL ID Y REINTENTAR EN CASO QUE NO EST?N EN LAS TABLAS DE MOVIMIENTOS..!! Validar con los logs Bepsa/prepagas del 12
 Select * from gxfindta.tcltsb where tsbidop =8857363;
 Update gxfindta.tcltsb set tsbesta = 'ER', tsbcome = '999', tsbdeme = 'ERROR INTERNO', TSBMOTIVO = '#64489' where tsbidop = 8857363;
 /*INSTRUCTIVOS MANUALES REINGE.*/
@@ -785,7 +795,7 @@ SELECT * FROM GXFINDTA.TCLTSB T WHERE T.SERCODI='INSMANCRE' AND DATE (T.TSBFEGE)
 update gxfindta.tclimc
 set IMCEST = 'P' where imcidimc in (537,538,539);
 -----------------------------------------------------
---SISTEMA DE PRODUCICÓN --KB CLEARING REPUESTO --- PERMISOS
+--SISTEMA DE PRODUCIC?N --KB CLEARING REPUESTO --- PERMISOS
 SELECT *FROM GXBDCON.Gxlousu WHERE USUAID IN ('U99ADOLFO','U99HERNAN');--usuario
 SELECT *FROM GXBDCON.Gxlosis; --sistema
 SELECT *FROM GXBDCON.Gxlofun; --funcionalidad
@@ -797,7 +807,7 @@ SELECT * FROM GXTRJDTA.TEnECx where ECXCODENT = 1040 and ECXIDCONEX = 'AS400' an
 --tabla titual
 SELECT * FROM GXBDBPS.TCODPP T WHERE T.COCOMER IN ('1003130','1000478');
 ------------------------------------------------------------
-/*Configuraciòn de Comercios para Débito*/
+/*Configuraci?n de Comercios para D?bito*/
 SELECT A.COCOMER,
        CODENO,
        CLICLICOD,
@@ -814,7 +824,7 @@ WHERE COSTAT = 0
   AND SUBSTR(A.COCOMER, 1, 2) < '87';
 ------------------------------------------------------------------------------------------------------------------
 -----personal
--- como se genera en el legacy y como se tendría que generar la orden de pago ---especf. Personal venta minutos... cambiar operadora para otras lienas
+-- como se genera en el legacy y como se tendr?a que generar la orden de pago ---especf. Personal venta minutos... cambiar operadora para otras lienas
 SELECT opcodtrn,sum(OPMONTO-OPCOMI) from GXOPERA.opmovi where opliqde ='20231219' AND  OPRADOR='971' AND OPCODTRN IN ('901020','514000') group by opcodtrn
 union
 SELECT opcodtrn,sum(OPMONTO-OPCOMI) from GXOPERA.opmovi where opliqde ='20231219' AND  OPRADOR='971' AND OPCODTRN IN ('902020','524000') group by opcodtrn;
@@ -823,7 +833,7 @@ SELECT * from GXOPERA.FLICOM1 WHERE LIFECHD= '20231221' AND LICOMER='6900001';
 SELECT * FROM GXFINDTA.TCLIMB WHERE  imbfch = '20231220 ' and substr(IMBIDOP,9,7) ='6900001';
 SELECT * FROM GXFINDTA.TCLIMB WHERE  imbfch >= '20231215' and substr(IMBIDOP,9,7) ='6900001';
 ----------------------------------------------------------------------------------------------
-/*Eliminar relación 061 y banco 1007*/
+/*Eliminar relaci?n 061 y banco 1007*/
 Select * from gxtrjdta.tcoenc where encentant = '061' and encentrol = 100404;
 --Delete from gxtrjdta.tcoenc where encentant = '061' and encentrol = 100404;
 Select * from gxtrjdta.tcoenc where encentant = '064' and encentact = 1007;
@@ -903,3 +913,52 @@ union
 Select substr(LIDTRA, 1, 4), substr(LIDTRA, 5, 6), lcodtr, LNRTAR, trim(lcotel), lctade, lerrnb, lfectr, substr(digits(lhortr),3,8), lcretr, lesttr, limpgs, 'TIGO MONEY', LIDCOM
 from libdebito.drconbep where substr(LIDTRA, 1, 1) = 'T' and LFCOTR = '20240415' and LCODTR = '000052' and eneadm <> '581' and LESTTR = 'A' AND LCRETR = '00';
 -------------------------------
+--sentencias para agregar los datos bancarios en el detalle transaccional
+Select
+    movidmov,movfpro,movcomer, movdeno, movcodcli, movcodsuc,movidlt,movcodem, movdesem, movntar,sercodi,
+    precodi, movfpgo, movcdbcc, movdsbcc, movctbcc, movbcab,movncbcab, movdsbcc,movpgon, movimpo, movneto
+from gxfindta.tclmov
+where movfpro = '20241014' and movcomer = '8615919';;
+UPDATE GXFINDTA.TCLMOV
+SET MOVCDBCC  = 102004,
+    MOVDSBCC  = 'CONTINENTAL',
+    MOVBCAB   = 1020,
+    MOVNCBCAB = 'CONTINENTAL',
+    MOVCTBCC  = '3405632669'
+WHERE MOVIDLT = '242880038615919';
+----
+---reporte solo de pagos a bnf que no estan en trasmisiones
+SELECT
+    T.MOVIDLT  LOTE, T.SERCODI  SERVICIO, T.MOVFPRO  FECHA_PROCESO, T.MOVFCRE  FECHA_CREDITO, T.MOVFTRX  FECHA_TRX,
+    T.MOVESTA  ESTADO, T.MOVCODIS DISPOSITIVO, T.MOVFPGO  FOMRA_PAGO, T.MOVNETO  NETO, T.MOVCOMER COMERCIO,
+    T.MOVCDBCC BANCO_COMERCIO, T.MOVDENO  DENOMNINACION, T.MOVRAZO  RAZON_SOCIAL, T.MOVRUC   RUC, T.MOVMARC  MARCA,
+    T.MOVCDBCC COD_BANCO_COM, T.MOVDSBCC BANCO, T.MOVCTBCC CUENTA, T.MOVAFIN  AFINIDAD, T.MOVPGON  TIPO_ACRE
+FROM GXFINDTA.TCLMOV T
+WHERE T.MOVCOMER = '0802484' AND T.MOVCDBCC ='100204'
+  AND T.MOVFCRE BETWEEN '20240901' AND '20240930';
+------------------------------------------------------------
+--------eliminar tclmov de factruación | recalcula comisión------------
+--DELETE FROM GXFINDTA.TCLMOD t WHERE t.MOVIDMOV  in (149220464, 149220464, 149223312, 149763840, 150118148, 150251831, 150253395, 150399157);
+--DELETE FROM GXFINDTA.TCLMOV t WHERE t.MOVIDMOV in T.MOVRRNBEP IN ('419751364016', '419951984110', '419149687734','419851644862', '420052401155', '419952092097', '419149549199');
+--UPDATE GXBDBPS.TSWAUT t SET t.AUTESTCLE = 'P' WHERE T.AUTRRNBEP in ('419751364016', '419951984110', '419149687734','419851644862', '420052401155', '419952092097' '419149549199');
+--UPDATE GXFINDTA.TCLMOV t SET t.MOVFECLIQ = '20240709' WHERE MOVIDMOV IN (171397431, 171397536, 171397537, 171397538, 171397539, 171397540, 171397541);
+/*cargamos tclmov
+  CL: CALL PGM(GXFINPGM/PCLR029) PARM('419149549199' '20240709'); */
+-------------------------------------------------------------------
+/*Corrección de Fecha de liquidación para compensacion de Operadoras (616 registros) */
+Select movftrx, movfpro, movfecliq, sercodi, precodi, movimpo, movneto
+from gxfindta.tclmov where MOVFECLIQ = '20240930' AND SERCODI in ('CICO','VTAMIN','PAGFAC');
+Update gxfindta.tclmov set movfecliq = '20241011' where MOVFECLIQ = '20240930' AND SERCODI in ('CICO','VTAMIN','PAGFAC');
+-------DE BNF A BNF
+SELECT * FROM GXOPERA.OPAGO3P O1P;
+SELECT * FROM GXOPERA.COPAEN2PHIS C2P;
+SELECT * FROM GXOPERA.OPAGO1PHIS O1P WHERE O1P.PGCOMER='0802484' AND O1P.PGFETRN BETWEEN '20240901' AND '20240930';
+--RED DE PAGOS
+SELECT * FROM GXOPERA.OPAGO5PH O5P WHERE O5P.PGCOMER5='COD_COMER_86';
+----------
+--Favor si me podrian ayudar con la generacion del archivo para la entidad 7014 DET-ENT-7014
+-- para que se le pueda depositar en su sftp.
+--Se adjunta sentencia para parametrización de generación de reportes por el Nuevo Clearing para la entidad PROGRESAR CORPORATION S.A.
+INSERT INTO GXFINDTA.TCLREP
+(REPIDREP, RECCDEN, REPTPRE, REPTPPA, REPNOAR, REPNOPC, REPDESC, REPUSAC, REPFEAC, REPFEGE, REPTPEX, REPESTA, REPPRIO, REPRLEN, REPMONID)
+VALUES(4, 7014, 'ENT', 'EMIS', 'DET-TRN-ENT', 'PCLR062', 'DETALLE DE TRX ENTIDAD', CURRENT USER, CURRENT TIMESTAMP, 'D', '.pdf', 'A', 1, 1, 600);

@@ -1,4 +1,5 @@
 SHOW FULL PROCESSLIST;
+show processlist;
 /*En la columna "State" tiene que decir = "Locked" si está bloqueado y en la columna "Info" muestra la query que está ejecutando-.*/
 SELECT * FROM information_schema.processlist;/*--Esto muestra casi lo mismo...*/
 SHOW INDEX FROM k2b_prod.asientocontable; /*--muestra los índices creados sobre la tabla que quieras consultar...*/
@@ -605,3 +606,86 @@ SELECT * FROM ASIENTOCONTABLEDETALLE;
 SET GLOBAL max_allowed_packet = 8073741824;
 
 SHOW VARIABLES LIKE 'max_allowed_packet';
+
+SELECT * FROM k2b_prod.MOVIMIENTOACTIVOFIJO M WHERE M.MovActivoFijoId = 136131;
+SELECT * FROM k2b_prod.MOVIMIENTOACTIVOFIJODETALLE M;
+
+
+SELECT * FROM ordenstock o, ordenstockdetalle d WHERE d.ordenstkid = o.ordenstkid AND o.ordenstkid = 31105;
+
+SELECT * FROM movimientostock m, movimientostockdetalle d, movimientostockinventario mi
+         WHERE mi.movstockid = d.movstockid AND mi.movstockdetid = d.movstockdetid
+           AND d.movstockid = m.movstockid AND m.movstockid = 64281;
+#setea
+SET GLOBAL wait_timeout = 28800; -- Tiempo en segundos (8 horas)
+SET GLOBAL interactive_timeout = 28800; -- También 8 horas
+#verifica
+SHOW VARIABLES LIKE 'wait_timeout';
+SHOW VARIABLES LIKE 'interactive_timeout';
+
+#Incrementa el valor a 12 GB (12288M) o más, si tu sistema es principalmente para la base de datos y tienes datos grandes o acceso intensivo.
+#Monitorea el uso con:
+SHOW ENGINE INNODB STATUS;
+#y ajusta si ves que el pool no se utiliza completamente o hay demasiadas lecturas de disco.
+#--------------------------------------
+#Usa este comando para analizar la eficiencia de la Query Cache:
+SHOW STATUS LIKE 'Qcache%';
+#Revisa valores como Qcache_hits y Qcache_inserts para ver cuántas consultas se benefician de la caché.
+SELECT user, host, plugin FROM mysql.user WHERE user = 'root';
+
+SELECT * FROM ordenstock o, ordenstockdetalle d WHERE d.ordenstkid = o.ordenstkid
+AND o.ordenstkid = 31105;
+
+SELECT * FROM movimientostock m, movimientostockdetalle d,
+movimientostockinventario mi WHERE mi.movstockid = d.movstockid AND
+mi.movstockdetid = d.movstockdetid AND d.movstockid = m.movstockid AND
+m.movstockid = 64281;
+
+
+GRANT ALL PRIVILEGES ON k2b_preprod_gam.* TO 'k2b'@'%';
+FLUSH PRIVILEGES;
+
+SELECT * from K2B_PROD.aplicacion;
+SELECT * from K2B_PROD.k2bparametros;
+
+#movimiento stock
+SELECT T1.`MOVSTOCKTIPOMOVIMIENTO`,
+       T1.`MOVSTOCKCENTROALMACENAJEID`,
+       T1.`MOVSTOCKEMPRESAID`,
+       T1.`MOVSTOCKFECHA`,
+       T1.`MOVSTOCKPERSONAID`          AS MOVSTOCKPERSONAID,
+       T1.`MOVSTOCKESTADOPROCESOINGRESO`,
+       T1.`MOVSTOCKFECHAVALOR`,
+       T2.`PERSONANOMBRE`              AS MOVSTOCKPERSONANOMBRE,
+       T3.`TIPOTRANSACCIONNOMBRE`      AS MOVSTOCKTIPOTRNSTKNOMBRE,
+       T1.`MOVSTOCKCODIGO`,
+       T1.`MOVSTOCKID`,
+       T1.`MOVSTOCKTIPOTRNSTKCODIGO`   AS MOVSTOCKTIPOTRNSTKCODIGO,
+       T4.`TIPODOCUMENTONOMBRE`        AS MOVSTOCKTIPODOCUMENTOREFNOMBRE,
+       T1.`MOVSTOCKTIPODOCUMENTOREFID` AS MOVSTOCKTIPODOCUMENTOREFID,
+       T1.`MOVSTOCKDOCUMENTOREFID`,
+       T1.`MOVSTOCKDOCUMENTOREFNUMEROEXTE`
+FROM (((`MOVIMIENTOSTOCK` T1 LEFT JOIN `PERSONA` T2 ON T2.`PERSONAID` = T1.`MOVSTOCKPERSONAID`)
+    INNER JOIN `TIPOTRANSACCION` T3 ON T3.`TIPOTRANSACCIONCODIGO` = T1.`MOVSTOCKTIPOTRNSTKCODIGO`)
+    LEFT JOIN `TIPODOCUMENTO` T4 ON T4.`TIPODOCUMENTOID` = T1.`MOVSTOCKTIPODOCUMENTOREFID`)
+WHERE (T1.`MOVSTOCKCENTROALMACENAJEID` = 42 AND T1.`MOVSTOCKEMPRESAID` = 1)
+  AND (T1.`MOVSTOCKFECHAVALOR` <= '2024-12-30')
+  AND (T1.`MOVSTOCKFECHAVALOR` >= '2024-11-30')
+ORDER BY T1.`MOVSTOCKCODIGO`;
+
+SELECT * FROM MOVIMIENTOSTOCK T1 WHERE T1.MOVSTOCKPERSONAID=1640 AND T1.`MOVSTOCKCENTROALMACENAJEID` = 42 AND T1.`MOVSTOCKEMPRESAID` = 1
+AND (T1.`MOVSTOCKFECHAVALOR` <= '2024-12-30')
+  AND (T1.`MOVSTOCKFECHAVALOR` >= '2024-11-30'); #43354
+
+SELECT * FROM MOVIMIENTOSTOCK WHERE MOVSTOCKPERSONAID=1640;
+SELECT * FROM k2b_prod.PERSONA P WHERE P.PERSONAID=1640;
+SELECT * FROM PERSONA P WHERE P.PERSONADOCUMENTO='80058184-9'; #43354
+
+SELECT * FROM k2b_prod.BIENACTIVOFIJO B WHERE B.BienActivoFijoId='77022';
+
+SELECT * FROM k2b_prod.BIENACTIVOFIJO B
+         WHERE BienActivoFijoProveedorId=1640 AND B.BIENACTIVOFIJOFECHACOMIENZOUSO='2024-12-23';
+
+UPDATE k2b_prod.BIENACTIVOFIJO B
+SET BienActivoFijoProveedorId=43354
+WHERE BienActivoFijoProveedorId=1640 AND B.BIENACTIVOFIJOFECHACOMIENZOUSO='2024-12-23';

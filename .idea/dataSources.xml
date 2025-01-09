@@ -41,7 +41,7 @@
       <synchronize>true</synchronize>
       <schema-control>AUTOMATIC</schema-control>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://10.1.254.236:5432/postgres</jdbc-url>
+      <jdbc-url>jdbc:postgresql://10.11.253.37:5432/postgres</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
     <data-source source="LOCAL" name="Empe_S" uuid="44dee880-a401-4d73-a658-740781127f11">
@@ -49,7 +49,7 @@
       <synchronize>true</synchronize>
       <schema-control>AUTOMATIC</schema-control>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://10.1.254.235:5432/postgres</jdbc-url>
+      <jdbc-url>jdbc:postgresql://10.11.253.36:5432/postgres</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
     <data-source source="LOCAL" name="Prod_26" uuid="bf706d40-a732-4eab-9548-02f8510ba0ac">
@@ -112,7 +112,7 @@
       <synchronize>true</synchronize>
       <schema-control>AUTOMATIC</schema-control>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://fdigital.bepsa.com.py:5432/sirius</jdbc-url>
+      <jdbc-url>jdbc:postgresql://10.11.253.33:5432/sirius</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
     <data-source source="LOCAL" name="Sirius_D" uuid="d597daeb-981d-4189-8dd5-9914a3ebe632">
@@ -246,7 +246,7 @@
       <driver-ref>mariadb</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.mariadb.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mariadb://10.1.254.111:3306/geoswitch_ng_bepsa</jdbc-url>
+      <jdbc-url>jdbc:mariadb://10.11.253.29:3306/geoswitch_ng_bepsa</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
     <data-source source="LOCAL" name="Flash_C" uuid="7051d8d8-d927-46de-9bd1-e01c99959012">

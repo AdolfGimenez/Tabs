@@ -104,3 +104,4 @@ VALUES  ('ABMCREDWS ', 7,        'IP',       1020,      0,          1,        'U
         ('WSJVTRJ007', 3,        'IP',       1020,      0,          1,        'USUARIO', CURRENT USER, CURRENT TIMESTAMP),
         ('WSJVTRJ008', 4,        'IP',       1020,      0,          1,        'USUARIO', CURRENT USER, CURRENT TIMESTAMP),
         ('WSJVTRJ010', 3,        'IP',       1020,      0,          1,        'USUARIO', CURRENT USER, CURRENT TIMESTAMP);
+

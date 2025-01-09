@@ -64,3 +64,20 @@ select bt.*, e.*
 from sch_rpl_entidademisora.replicacion_entidad_emisora e, public.busdatos_transacciones bt
 where e.replicacion_operacion_id = bt.operacion_id
 and e.replicacion_estado_replica = 'N';
+
+
+---- ver actividad de database y matar sesiones
+select
+	datid, usename, wait_event_type, wait_event, state,	query, datname,	pid, usesysid, usename,	application_name, backend_xmin,
+	client_addr, client_hostname, client_port, backend_start, xact_start, query_start, state_change, backend_xid, backend_type
+	--,pg_terminate_backend(pg_stat_activity.pid)
+from
+	pg_stat_activity
+where
+	datname = 'portalbus'
+	and pid <> pg_backend_pid()
+	--and state <> 'active'
+	--AND usename = 'usrclt'
+order by state;
+
+SELECT pg_terminate_backend(36803);

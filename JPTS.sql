@@ -44,7 +44,7 @@ WHERE DATE BETWEEN '2023-07-31 14:50:00.865000' AND '2023-07-31 15:10:59.000000'
 
 SELECT * FROM SAF.MESSAGE_QUEUE MQ LIMIT 1;
 
-#transaction_token
+--transaction_token
 select * from qr.qr_transactions qr order by initial_date desc;
 
 select * from public.tranlog_readonly t where t.transaction_token = '2024081500694820';
@@ -52,27 +52,17 @@ select * from public.tranlog t WHERE date>='2024-03-02 13:11:31.955000'  AND ss_
 
 select * from tranlog t where transaction_token = '2024082600702424';
 
-SELECT * from keys_cybersource_shops where cybersource_shop_id = 'dinelco_mf_000196900017';
-
+SELECT * from keys_cybersource_shops where cybersource_shop_id = 'dinelco_link_00112870000';
+SELECT max(id_key_cybersource_shop) from keys_cybersource_shops;
 update keys_cybersource_shops
-set cybersource_public_key = '05d756fe-ff5a-476d-af2a-9d8dc0777a88',
-    cybersource_private_key = 'iCF8+S7T/+hTYPPnCYBc+j5rjJzmQp0hoq83pq3aTTo='
-where cybersource_shop_id = 'dinelco_mf_001969000008';
+set cybersource_public_key = 'ead9f407-3d46-4e30-bea0-e4195895fbda',
+    cybersource_private_key = 'yHBRT1l68r/ayUT1xFIhRrk348kf3AzdB8BmDzlOrEI='
+where cybersource_shop_id = 'dinelco_002729500001';
 
-update keys_cybersource_shops set
-cybersource_public_key = '962d25f8-46f2-4f0e-bae1-65aed1bd7f30',
-cybersource_private_key ='DLKlCCIbGXtcco5P5+YtJn3qD2ePvQ+tNjS9z/++tcw='
-where cybersource_shop_id =  'dinelco_mf_001969000009';
-
-update keys_cybersource_shops set
-cybersource_public_key = '934ab2d6-f696-43ee-be94-ad2359e26064',
-cybersource_private_key = '/5Gt7VKW0YW7szdDyGjs0iCtfeFRZ02jmSDMT2yFWF0='
-where cybersource_shop_id =  'dinelco_mf_001969000006';
-
-update keys_cybersource_shops set
-cybersource_public_key = '77e6b199-b547-402e-9f9d-278d084cfdf4',
-cybersource_private_key = 'vvXuTXj8s4Nm7SbWPMSgOXOgbDKAOPC8EK8nsRuk214='
-where cybersource_shop_id =  'dinelco_mf_001969000012';
-
+INSERT INTO PUBLIC.KEYS_CYBERSOURCE_SHOPS
+(ID_KEY_CYBERSOURCE_SHOP, CYBERSOURCE_SHOP_ID, CYBERSOURCE_PUBLIC_KEY, CYBERSOURCE_PRIVATE_KEY, CREATED_AT, CYBERSOURCE_SHOP_MAIN_ID, ENTITY_ID)
+VALUES
+(307, 'dinelco_001694800004', '6c97d37f-9a70-415c-9703-d414213d7368', 'z9JIwNIuJJKrZm6dPywRFwu7Dy+ow/1pDXDhtX7SWaE=', '2024-12-23 12:43:07.602152 +00:00', 'dinelco_mf', NULL);
 ---------------------------------------------------
-select * from cybersource_merchant_routing where merchant_id = '000000006901988'
+select * from cybersource_merchant_routing where merchant_id = '000000006901988';
+

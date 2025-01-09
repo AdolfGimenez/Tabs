@@ -57,7 +57,8 @@ SELECT * FROM PUBLIC.TRANSACCION WHERE date(fecha_creacion)= '2021-11-05';
 SELECT * FROM PUBLIC.TRANSACCION WHERE numero_autorizacion in ('163780119','445503386438');
 
 
-select * from public.EMPE E
+select * from public.EMPE E;
+SELECT * FROM public.PARAMETROS_CONFIGURACION PC;
 
 SELECT *
 FROM public.transaccion
@@ -73,8 +74,8 @@ order by hora_operacion desc;
 
 
 
-"0010"	"WALLY"
-"0009"	"ZIMPLE"
-"0005"	"TIGO"
-"0007"	"PERSONAL"
-"0008"	"CLARO"
+/*  "0010"	"WALLY"
+    "0009"	"ZIMPLE"
+    "0005"	"TIGO"
+    "0007"	"PERSONAL"
+    "0008"	"CLARO"*/
