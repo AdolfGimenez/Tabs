@@ -52,7 +52,7 @@ select * from public.tranlog t WHERE date>='2024-03-02 13:11:31.955000'  AND ss_
 
 select * from tranlog t where transaction_token = '2024082600702424';
 
-SELECT * from keys_cybersource_shops where cybersource_shop_id = 'dinelco_link_00112870000';
+SELECT * from keys_cybersource_shops where cybersource_shop_id = 'dinelco_002738400001';
 SELECT max(id_key_cybersource_shop) from keys_cybersource_shops;
 update keys_cybersource_shops
 set cybersource_public_key = 'ead9f407-3d46-4e30-bea0-e4195895fbda',
@@ -62,7 +62,8 @@ where cybersource_shop_id = 'dinelco_002729500001';
 INSERT INTO PUBLIC.KEYS_CYBERSOURCE_SHOPS
 (ID_KEY_CYBERSOURCE_SHOP, CYBERSOURCE_SHOP_ID, CYBERSOURCE_PUBLIC_KEY, CYBERSOURCE_PRIVATE_KEY, CREATED_AT, CYBERSOURCE_SHOP_MAIN_ID, ENTITY_ID)
 VALUES
-(307, 'dinelco_001694800004', '6c97d37f-9a70-415c-9703-d414213d7368', 'z9JIwNIuJJKrZm6dPywRFwu7Dy+ow/1pDXDhtX7SWaE=', '2024-12-23 12:43:07.602152 +00:00', 'dinelco_mf', NULL);
+(3364, 'dinelco_002738400001', '11243e06-2a5d-45f5-9f26-17f0dfa942aa', 'MLttj7vwjME2tw9ZeDI0TSRO3fz4ET8FC9n4xpwIFAI=', '2025-01-20 12:43:07.602152 +00:00', 'dinelco_mf', NULL);
 ---------------------------------------------------
 select * from cybersource_merchant_routing where merchant_id = '000000006901988';
 
+select * from stations;

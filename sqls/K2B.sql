@@ -642,7 +642,7 @@ mi.movstockdetid = d.movstockdetid AND d.movstockid = m.movstockid AND
 m.movstockid = 64281;
 
 
-GRANT ALL PRIVILEGES ON k2b_preprod_gam.* TO 'k2b'@'%';
+GRANT ALL PRIVILEGES ON k2b_prod_gam.* TO 'root'@'%';
 FLUSH PRIVILEGES;
 
 SELECT * from K2B_PROD.aplicacion;
@@ -689,3 +689,11 @@ SELECT * FROM k2b_prod.BIENACTIVOFIJO B
 UPDATE k2b_prod.BIENACTIVOFIJO B
 SET BienActivoFijoProveedorId=43354
 WHERE BienActivoFijoProveedorId=1640 AND B.BIENACTIVOFIJOFECHACOMIENZOUSO='2024-12-23';
+
+SELECT * FROM K2B_PROD.WFLIC W;
+SELECT * FROM k2b_prod.APLICACION A;
+SELECT * FROM k2b_prod.K2BPARAMETROS K2B;
+
+SELECT * FROM k2b_prod.USUARIO U;
+SELECT * FROM k2b_prod_gam.USER U;
+#------kari

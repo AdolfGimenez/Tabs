@@ -76,7 +76,7 @@ select * from facturacionbepsa.tipoasientocontable t;
 SELECT * FROM asientos.email_users;
 -----##marcas
 SELECT * from marcas.transactions where fecha >= '2024-11-14';
-select * from marcas.transactions_visa where report_date >='20MAR24';
+select * from marcas.transactions_visa where report_date >= '11JAN25';
 SELECT * from marcas.mastercard_switch order by mastercard_switch.REPORT_WORK_OF DESC; --where REPORT_WORK_OF >= '02/01/24';
 /*tablas marcas
 Para SWITCH
@@ -84,7 +84,7 @@ delete from marcas.mastercard_switch where report_work_of >= '12/21/24';
 Para MST DUAL
 delete from marcas.transactions where fecha = '2024-12-21';
 Para VISA
-delete from marcas.transactions_visa where report_date ='15DEC24';
+delete from marcas.transactions_visa where report_date >= '11JAN25';
 ---MST
 refresh materialized view marcas.consolidado_dia;
 refresh materialized view marcas.consolidado_dia_gs;
@@ -426,7 +426,7 @@ FROM asientos.datos.GXFINDTA_TCMCLI T join asientos.datos.GXFINDTA_TCMSUC G on T
 WHERE g.SUCCORREO is NOT NULL;
 ----------------------------------------------------------------------
 ----para liquidacion en excel
-SELECT --C.MOVRRNBEP                                                                                                        REFERENCIA,
+SELECT C.MOVRRNBEP                                                                                                        REFERENCIA,
        C.MOVCODCLI                                                                                                        CLIENTE,
        C.MOVCODSUC                                                                                                        SUCURSAL,
        C.MOVCOMER                                                                                                         CODIGO_COMERCIO,
@@ -453,9 +453,9 @@ SELECT --C.MOVRRNBEP                                                            
        SUM(C.MOVNETO)                                                                                                      IMPORTENETO
 FROM FACTURACIONBEPSA.TCLMOV_TMP_COMERCIOS_202412_FACTCOMERCIOS C
 --WHERE movopde = 700405 --para operadoras
-WHERE C.MOVCODCLI IN (SELECT C.CLICLICOD FROM DATOS.GXFINDTA_TCMCLI C WHERE C.CLIRUC LIKE '%80097276%')
+WHERE C.MOVCODCLI IN (SELECT C.CLICLICOD FROM DATOS.GXFINDTA_TCMCLI C WHERE C.CLIRUC LIKE '%80022877%')
 --AND C.MOVCODSUC=2 -- NOT IN ('1', '8')
-GROUP BY C.MOVCODCLI, C.MOVCODSUC, C.MOVCOMER, C.MOVDENO, C.MOVFTRX, C.MOVFPRO, C.MOVFCRE, C.MOVTPTA --,C.MOVRRNBEP
+GROUP BY C.MOVCODCLI, C.MOVCODSUC, C.MOVCOMER, C.MOVDENO, C.MOVFTRX, C.MOVFPRO, C.MOVFCRE, C.MOVTPTA ,C.MOVRRNBEP
 ORDER BY C.MOVCODCLI, C.MOVCODSUC, C.MOVFTRX, C.MOVFPRO, C.MOVFCRE;
 -------------------------
 SELECT * FROM asientos.facturacionbepsa.CLIENTE C WHERE  C.CLIENTERUC='80097276';
@@ -3325,4 +3325,83 @@ CREATE TABLE PUBLIC.SOLICITUDES AS (
 SELECT * FROM asientos.facturacionbepsa.FACVENTA F WHERE EJERCICIOID=2024
 AND F.FACVENTACLIRUC='80022202-4' AND F.STATUSID='DTE_APROBADO');
 
+
+SELECT * FROM asientos.facturacionbepsa.FACVENTA F WHERE F.FACVENTACOMPROBANTESET='001-003-0040548';
+SELECT * FROM asientos.facturacionbepsa.FACVENTACUOTA F WHERE F.FACVENTAID=245428;
+
+SELECT * FROM asientos.facturacionbepsa.FACVENTA F WHERE F.FACVENTACOMPROBANTESET IN (
+'001-003-0124096');
+SELECT * FROM asientos.facturacionbepsa.FACVENTACUOTA F WHERE F.facventaid IN (689471);
+
+SELECT * FROM asientos.facturacionbepsa.CLIENTE C WHERE C.CLIENTERUC='80088521';
+SELECT * FROM asientos.facturacionbepsa.SUCURSAL S WHERE S.CLIENTEID=4500148;
+create TABLE PUBLIC.SOLICITUDES AS (
+SELECT * FROM asientos.facturacionbepsa.FACVENTA F WHERE F.TARGETFACTID='FACTALQPOS' AND EJERCICIOID=2024
+AND F.PERIODOID=12 AND STATUSID='DTE_APROBADO' limit 100);;
+
+SELECT DISTINCT C.TIPOCLIENTEID
+FROM asientos.facturacionbepsa.CLIENTE C
+
+SELECT DISTINCT C.clienteruc, C.clienterazonsocial
+FROM asientos.facturacionbepsa.CLIENTE C
+WHERE C.TIPOCLIENTEID='Comercio' AND C.clienteruc IS NOT NULL;
+
+
+SELECT * FROM asientos.facturacionbepsa.FACVENTA F WHERE periodoid=12 AND EJERCICIOID=2024
+--AND F.FACVENTACLIRUC='80077406-0'
+AND F.CLIENTEID=13110;
+
+SELECT * FROM asientos.facturacionbepsa.CLIENTE C WHERE C.CLIENTERUC='4117931';
+
+SELECT * FROM asientos.facturacionbepsa.SECUSER S;
+
+
+select * from facturacionbepsa.fn_verificar_permiso('nlramos@bepsa.com.py', 'GENERAR_ASIENTO_GENERAR');
+
+SELECT usuariorol.*,funcionalidad.*, funcionalidadrol.*
+FROM
+    facturacionbepsa.secuser usuario,
+    facturacionbepsa.secrole rol,
+    facturacionbepsa.secuserrole usuariorol,
+    facturacionbepsa.secfunctionality funcionalidad,
+    facturacionbepsa.secfunctionalityrole funcionalidadrol
+WHERE
+    usuario.secuserid = usuariorol.secuserid
+    AND rol.secroleid = usuariorol.secroleid
+    AND rol.secroleid = funcionalidadrol.secroleid
+    AND funcionalidad.secfunctionalityid = funcionalidadrol.secfunctionalityid
+    AND usuario.secusername in ('nlramos@bepsa.com.py', 'Administrator', 'jazmin.valdez@bepsa.com.py')
+    AND funcionalidad.secfunctionalitykey =  'GENERAR_ASIENTO_GENERAR';
+
+select * from FACTURACIONBEPSA.FACVENTA F WHERE facventacomprobanteset ='001-002-0230237';
+
+select * FROM asientos.facturacionbepsa.FACVENTACUOTA F where F.FACVENTAID=864594;
+
+
+select * from asientos.facturacionbepsa.SECUSERROLE S;
+SELECT * FROM asientos.facturacionbepsa.SECUSER S;
+
+UPDATE facturacionbepsa.parametros
+SET parmvalue='6,1,28'
+WHERE parmid='tipoAsientoRol' AND parmserial='reciboCobro';
+
+SELECT * FROM asientos.facturacionbepsa.CLIENTE C WHERE
+C.CLIENTEID IN (3909,8265,20673,24681,16830,17919,17945,18309,18834,19423,20241,20370,20369,20799,20875,21019,
+21200,21227,22160,24044,25786,26513,26575);
+
+SELECT * FROM asientos.datos.GXFINDTA_TCMSUC GT WHERE GT.CLICLICOD IN
+(3909,8265,20673,24681,16830,17919,17945,18309,18834,19423,20241,20370,20369,20799,20875,21019,
+21200,21227,22160,24044,25786,26513,26575);
+
+
+SELECT * FROM asientos.facturacionbepsa.FACVENTA F WHERE F.FACVENTACOMPROBANTESET='001-002-0195838';
+SELECT * FROM asientos.facturacionbepsa.FACVENTACUOTA F WHERE F.FACVENTAID='796140';
+
+
+select * FROM asientos.datos.GXFINDTA_TCOCNA GT WHERE GT.COCOMER='6901159';
+
+SELECT * FROM asientos.facturacionbepsa.FACVENTA F WHERE F.FACVENTACOMPROBANTESET='001-003-0200257';
+SELECT * FROM asientos.facturacionbepsa.FACVENTACUOTA F2 WHERE F2.FACVENTAID=883141;
+
+SELECT * FROM asientos.facturacionbepsa.SUCURSAL C WHERE C.CLIENTEID=3939;
 

@@ -81,3 +81,6 @@ where
 order by state;
 
 SELECT pg_terminate_backend(36803);
+---SECUENCIA BUS DATOS
+SELECT *
+FROM PUBLIC.OPERACION_ID;

@@ -91,3 +91,8 @@ alter table gth.almue10 alter column almmrcinc type numeric (5, 2);
 -----
 SELECT * FROM gth.RHMLIQFIN R;
 select * from gth.RHMLIQFINLOG R;
+
+select LFDocCod from gth.rhmliqfin where funcnro = 4345348;
+SELECT * FROM gth.gdc002 g WHERE TRIM(doccodchr) = '4345348';
+
+select * from gth.rhmliqfin order by lffechliq desc;

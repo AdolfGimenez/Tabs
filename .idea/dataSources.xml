@@ -473,5 +473,15 @@
       <jdbc-url>jdbc:postgresql://10.11.253.30:5432/GTHBEPSA</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="Prod_usr_jpts" uuid="6416d1f0-4bdc-493b-9d89-5de4a2f92852">
+      <driver-ref>db2.jtopen</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.ibm.as400.access.AS400JDBCDriver</jdbc-driver>
+      <jdbc-url>jdbc:as400://10.254.254.250</jdbc-url>
+      <jdbc-additional-properties>
+        <property name="database.jdbc.dont.escape" value="true" />
+      </jdbc-additional-properties>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

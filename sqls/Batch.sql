@@ -26,7 +26,7 @@ SELECT * FROM gxfindta.tcltsb where TSBNREF='960900127199'; --TSBCOCO='0301557';
 select * from gxopera.opliqui where opncomer='1200178';
 select* from contabilid.tatgene where tgalfa='BA';
 SELECT * from GXBDBPS.TSWAUT WHERE AUTRRNBEP IN ('235732969853','236234920564');
---la transaccijon se proceso desde el menu de compras en el pos cuando si se trata de red de pago tendria que entrar  en menu diferente, por ende al pasarse como una compra se le calculo comision como compra y ademas se le pagó en linea,
+--la transaccijon se proceso desde el menu de compras en el pos cuando si se trata de red de pago tendria que entrar  en menu diferente, por ende al pasarse como una compra se le calculo comision como compra y ademas se le pag? en linea,
 ---------------------------------------------------------------------------------------------
 SELECT opfecom, opliqde, substr(OPTARJ, 1, 6), openemi, count(*), sum(OPMONTO - OPCOMI - OPRENTA-OPREIVA)
 FROM GXOPERA.OPMOVI WHERE OPLIQDE='20221207' AND OPCOMER='0301557' --AND OPFEREA='20221207'
@@ -43,19 +43,19 @@ FROM gxfindta.tclmov WHERE MOVFTRX >='20221001' AND MOVRRNBEP IN ('222600168939'
 --AND   MOVCOMER = '0302328'
 --AND   MOVIDLT = '221990010302328';
 ------------------------------------------------------
---para elcaso de oplicre en caso que ya esté hay diferencia se copia la refe. y el importe, y se quita el cero del comercio y se pasa al final.
+--para elcaso de oplicre en caso que ya est? hay diferencia se copia la refe. y el importe, y se quita el cero del comercio y se pasa al final.
 --OPC|REREF=221990010701237
 ------------------------------------------------------
 select * from GXOPERA.OPLICRE where OPCREREF=223210010701441; --OPCRECOM=0701555 and OPCREFCOM ='20220720'
 /*222020010701555
-22202 -- año y dia juliano
+22202 -- a?o y dia juliano
 001 --servicio
 0701555 -- codigo comercio*/
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 INSERT INTO GXOPERA.OPLICRE
 (OPCREID,OPCREREF,OPCRECOM,OPCREFLI,OPCREHLI,OPCRECBA,OPCRECTD,OPCRETCD,OPCRECTC,OPCRETCC,OPCREIMPB,OPCREIMPN,OPCRECTRX,OPCRESTAT,OPCREMEN,OPCREFCOM,OPCREFACR,OPCRECREI,OPCRENCOM,OPCREUSUA,OPCREFECH)
 VALUES
-(221990010800743,221990010800743,'0800743',20220718,23100,59,102184061,'K',1153870,'K',19780.00,19780.00,3,'91','Pendiente de Acreditación                         ',20220718,0,1,0,CURRENT USER,'20220719');
+(221990010800743,221990010800743,'0800743',20220718,23100,59,102184061,'K',1153870,'K',19780.00,19780.00,3,'91','Pendiente de Acreditaci?n                         ',20220718,0,1,0,CURRENT USER,'20220719');
 
 select * from GXOPERA.OPLICRE WHERE OPCREID = 222800010703979;
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

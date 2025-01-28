@@ -76,7 +76,7 @@ from libdebito.drconbep
 right join visa.vistrndta b on lerrnb=virrnbepsa
 right join libdebito.tbcret0p on lcretr = codnro
 right join LIBDEBITO.TBCTRA0P A on A.TXCTRX = lcodtr
-where lfectr = '20240107'
+where lfectr = '20240110'
 --AND LORITR='T' --P
 and virol = 'ADQ'--- rol adquirente
 --and virol ='ISS'  --- rol emisor
@@ -87,7 +87,7 @@ and lcodbc='VSA'
 --AND substr(vipannmbr, 1,6) = '425678' --Verificacion por bin de VISA CONTI ISS
 --AND substr(vipannmbr, 1,6) = '425678'--Verificacion por bin de VISA BNF adq
 --and lnrtar like '4998317%' --filtro por bin
-and lhortr>='231700'
+and lhortr>='000000'
 order by lhortr desc;
 ----------------------------------------------------------------------------------------------------------------
 ------VISA EMISOR CONTINENTAL BIN 456976------

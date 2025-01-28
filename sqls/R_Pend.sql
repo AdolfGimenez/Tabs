@@ -16,7 +16,7 @@ addlible gxweb *last , edtlibl
 --call para AS
 SBMJOB CMD(CALL PGM(LIBDEBITO/NCLPR0055) PARM('000023022108511693')) JOB(CLER_BNF) USER(BEPSAUSR)
 ------------------------------------------------------------------------------------------------------------------------------------------
---------------------------------#PARA VERIFICAR Y PROCESAR EL REINTENTO BBVA#
+--------------------------------#PARA VERIFICAR Y PROCESAR EL REINTENTO BBVA GNB#
 --Ingresar a as400 e ingresar el comando
 addlible gxweb *last , edtlibl
 --Call para AS
@@ -175,3 +175,7 @@ CL: CALL PGM(GXPGBPS/PSIT008) PARM(&MOVRRNBEP &MOVESTA &Retorno);
 CL: CALL PG(GXFINPGM/PCLR240) PARM(RRN FECHA);
 --EX CL:CALL PG(GXFINPGM/PCLR240) PARM('RRN' 'FECHA');
 parm(in:&AUTRRNBEP, in:&FECPRO, out: &IDTRANSMISION, out: &MONTONETO, out:&RETORNO, out:&DESCRETORNO);
+---
+--87577 Según verificaciones se pudo ver que BNF no fondeo la cuenta continental por ende la trx quedo con error y no se proceso la acreditación
+CALL PGM(GXAUTPGM/NAUT033) PARM('1002' 'DIN' '000024122013586731' '000000435522857494' '000054' '000000800743' 'A');
+CALL PGM(GXFINPGM/PCLR028) PARM('24122013586731' '435522857494' '20241220');

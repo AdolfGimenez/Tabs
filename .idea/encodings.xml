@@ -3,6 +3,7 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/SilverSipap.sql" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/sqls/A.Embozado" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/sqls/Batch.sql" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/sqls/C_Reint.sql" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/sqls/IbmI.sql" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/sqls/R_Pend.sql" charset="ISO-8859-1" />
