@@ -633,17 +633,13 @@ SELECT * FROM public.EMPRESAS_CLIENTES EC WHERE EC.NOMBRE LIKE '%Sere%';
 SELECT * FROM public.EMPRESAS_CLIENTES EC WHERE EC.ID_INTERNO='12300';
 
 
-select * from public.ordenes_pago op where op.referencia = '540873';
-select * from public.ordenes_pago op where op.rrn_retorno in ('430597567179','430597567163');
-
-select * from public.MEDIOS_PAGO MP
-         WHERE MP.ID IN ('43b39754-0d2c-4cb5-8aee-3b32fba69d91', '574da38c-e862-4e25-8e01-01273aec0267');
+SELECT * FROM public.USUARIOS U WHERE nro_documento='2025138'
 ---USUARIO SIN NIVEL DE ACCESO | EMPRESA || QUITAR EL USER ID DESDE EL F12 DEL NAVEGADOR
-SELECT * FROM pocodi_db.public.USUARIOS U WHERE U.ID='5e7eae64-b02f-46a0-800e-d334ac1eba46';
-SELECT * FROM public.USUARIOS_NIVELES_ACCESO UNA WHERE UNA.USUARIO_ID='5e7eae64-b02f-46a0-800e-d334ac1eba46';
+SELECT * FROM pocodi_db.public.USUARIOS U WHERE U.ID='6c3e6543-75da-43ff-a35e-c75044f93070';
+SELECT * FROM public.USUARIOS_NIVELES_ACCESO UNA WHERE UNA.USUARIO_ID='6c3e6543-75da-43ff-a35e-c75044f93070';
 
 INSERT INTO PUBLIC.USUARIOS_NIVELES_ACCESO ( USUARIO_ID, NIVEL_ACCESO_ID, INSERTADO_EL)
-VALUES ( '5e7eae64-b02f-46a0-800e-d334ac1eba46', 2, CURRENT_TIMESTAMP);
+VALUES ( '6c3e6543-75da-43ff-a35e-c75044f93070', 2, CURRENT_TIMESTAMP);
 --------------- onboarding --------------
 select * from onboarding_access_registration oar; --WHERE OAR.USER_NAME ISNULL ;
 select * from onboarding_access_registration_detail oard;
@@ -749,7 +745,7 @@ select "empresas_clientes"."id", "empresas_clientes_bepsa"."cod_cliente_bepsa",
 -- and "empresas_clientes"."id" = '600';
 and personas_juridicas.ruc_normalizado = '5866335-5' or personas_fisicas.ruc_normalizado = '5866335-5';
 
-este query sera que podes darme el valor porfa?
+--este query sera que podes darme el valor porfa?
 select "empresas_clientes"."id", "empresas_clientes_bepsa"."cod_cliente_bepsa",
 "personas"."tipo_persona", "empresas_clientes_bepsa"."descripcion_bepsa", CASE
                                 WHEN personas.tipo_persona = 'F' THEN personas_fisicas.nro_documento
@@ -791,7 +787,7 @@ select * from comercios c where c.id = '9c605d1c-7951-4741-a698-e67dda38eaf7';
 --- BASE pago_digital
 select * from comercios c
 join configuraciones n on c.id::uuid = n.comercio_id::uuid
-where c.cybersource_merchant_id = 'dinelco_002703100001'
+where c.cybersource_merchant_id = 'dinelco_002703100001';
 
 --- BASE checkout
 select * from merchants m join
@@ -844,14 +840,14 @@ SELECT * FROM public.EMPRESAS_CLIENTES EC WHERE EC.PERSONA_ID=10629;
 SELECT * FROM public.USUARIOS_X_EMPRESAS UXE WHERE UXE.EMPRESA_ID=13337;
 
 
-
-select * from personas_fisicas pf where pf.nro_documento = '3750662';
+SELECT * FROM public.USUARIOS U WHERE U.CORREO LIKE '%@cadenareal.com%';
+select * from personas_fisicas pf where pf.nro_documento = '1646858';
 update personas_fisicas set nombre = 'FEDERICO AGUSTIN', apellido = 'BENITEZ RIVAS' where nro_documento = '1904373';
 
 select * from tarjetas t where t.nro_tarjeta_enmascarado like '627431%%0011';
 
 ---ELIMINAR USUARIOS
-SELECT * FROM public.PERSONAS_FISICAS PF WHERE PF.NRO_DOCUMENTO='4238791';
+SELECT * FROM public.PERSONAS_FISICAS PF WHERE PF.NRO_DOCUMENTO='3519140';
 SELECT * FROM pocodi_db.public.USUARIOS U WHERE U.PERSONA_FISICA_ID=4804;
 SELECT * FROM public.CORREOS_PRINCIPALES_USUARIOS CPU WHERE CPU.USUARIO_ID='69982b45-ff03-4698-8381-f0782c6d9c81';
 SELECT * FROM public.ROLES_X_USUARIOS RXU WHERE RXU.USUARIO_ID='69982b45-ff03-4698-8381-f0782c6d9c81';
@@ -869,4 +865,98 @@ select BT.operacion_est_fn_transaccion, BT.* from BUSDATOS_TRANSACCIONES BT WHER
 SELECT * FROM pagos_digitales_db.public.ORDENES_PAGO OP WHERE OP.REFERENCIA='50161700000000000';
 SELECT * FROM  public.COMERCIOS C WHERE C.CYBERSOURCE_MERCHANT_ID='dinelco_690120800001';
 
-SELECT * FROM BUSDATOS_TRANSACCIONES BT WHERE BT.OPERACION_RRNBEPSA IN ('417140327863', '417140327864', '417140327865', '501617265035');
+SELECT * FROM BUSDATOS_TRANSACCIONES BT WHERE BT.OPERACION_RRNBEPSA IN ('502840199848');
+
+select * from merchants m join cybersource_merchant_info cmi
+on m.cs_merchant_id = cmi.id;
+
+select * from comercios c  where id = '3b211228-bf03-43f4-b12b-8d08d6edaeba';
+
+SELECT * FROM ordenes_pago op WHERE --OP.estado = 'FALLIDO'
+                                 fecha_estado >= '2025-01-29 08:02:09.945204'
+                                 --and op.RRN_RETORNO = '503011958871'
+                                 and OP.RESPUESTA_JSON LIKE '%"responseCode":"1830"%';
+
+select estado  from ordenes_pago op group by estado;
+
+
+select * from ordenes_pago op where op.rrn_retorno = '503011732040';
+
+select valor, TAG from configuraciones where comercio_id='ba54b6c5-09e0-4de9-8ad9-df4e26d74743';
+
+SELECT  * FROM public.COMERCIOS C WHERE nombre='MASFAZZIL';
+---query de detalle liquidacion
+--1 paso
+SELECT "f"."facventaid",
+       "f"."facventacomprobanteset",
+       "f"."facclienteid",
+       "f"."facsucursalid",
+       "f"."periodoid",
+       "f"."ejercicioid",
+       "f"."facventasiriuspdfpath",
+       "f"."facventafecha",
+       "p"."targetperfdesde",
+       "p"."targetperfhasta"
+FROM "facturacionbepsa"."facventa" AS "f"
+         LEFT JOIN "facturacionbepsa"."periodotargetfact" AS "p" ON "p"."targetfactid" = "f"."targetfactid" AND "p"."periodoid" = "f"."periodoid" AND "p"."ejercicioid" = "f"."ejercicioid"
+WHERE "f"."facventaid" = '826712'
+  AND "f"."targetfactid" = 'FactComercios'
+  AND "f"."statusid" = 'DTE_APROBADO'
+LIMIT 1;
+
+--2 paso
+SELECT "c"."movfecliq"                                     AS "fecha_deposito",
+       ROW_NUMBER() OVER ()                                AS NUMERO,
+       "c"."movtpta"                                       AS "referencia",
+       COUNT(C.MOVRRNBEP)                                  AS CUPONES,
+       SUM(C.MOVIMPO)                                      AS IMPORTE,
+       SUM(C.MOVIMCO)                                      AS COM_PROC,
+       SUM(C.MOVIVCO)                                      AS IVA_S_COM,
+       SUM(C.MOVRENT)                                      AS RENTA,
+       SUM(C.MOVIVREN)                                     AS IVA_RENTA,
+       SUM(C.MOVIMCO + C.MOVIVCO + C.MOVRENT + C.MOVIVREN) AS DESCUENTO,
+       SUM(C.MOVNETO)                                      AS IMPORTE_NETO,
+       SUM(C.MOVNETO)                                      AS IMPORTE_CREDITO,
+       "c"."movcodcli"                                     AS "cliente",
+       "c"."movcodsuc"                                     AS "sucursal",
+       "c"."movcomer"                                      AS "codigo_comercio",
+       "c"."movfcre"                                       AS "fecha_acreditacion"
+FROM "facturacionbepsa"."tclmov_tmp_retail_202411_factcomercios" AS "c"
+WHERE "c"."movcodcli" = '10937'
+  AND "c"."movcodsuc" = '21'
+GROUP BY "c"."movfecliq", "c"."movtpta", "c"."movcodcli", "c"."movcodsuc", "c"."movcomer", "c"."movfcre";
+
+/*los que inician con dinelco_00111111 -> su main id es: dinelco_checkout
+los que inician con dinelco_link_0011111 -> su main id es: dinelco_link
+los que inician con dinelco_mf_0011111 -> su main id es: dinelco_mf
+los que inician con dinelco_da_0011111 - > su main id es: dinelco_debitoauto
+dinelco_0012300xxxxx (codigo de cliente de documenta), corresponde al main id dinelco_documeta*/
+
+SELECT * FROM public.MERCHANTS M;
+SELECT * FROM public.CYBERSOURCE_MERCHANT_INFO CMI WHERE CMI.CS_ID='dinelco_001911800001';
+SELECT * FROM public.COMERCIOS C WHERE C.CYBERSOURCE_MERCHANT_ID='dinelco_mf_001969000025';
+--cybersource_private_key LIKE 'PkfXvl09xZcRnrvsM27mffUIJ1kbIm/g1AkqMZZ6GJc=' AND cybersource_public_key LIKE '1296f5f5-3336-43ee-bfe2-45a7a5867c47'
+
+select * from merchants m join
+cybersource_merchant_info cmi on m.cs_merchant_id = cmi.id;
+
+
+select * from usuarios u
+join personas_fisicas pf on pf.id = u.persona_fisica_id
+where pf.nro_documento = '3519140';
+
+select * from personas_fisicas where nro_documento = '4018059';
+
+SELECT * from public.COMERCIOS C where C.ID_INTERNO='6500299';
+
+select * from merchants m join cybersource_merchant_info cmi
+on m.cs_merchant_id = cmi.id;
+
+select * from comercios c where c.id = '1a944f23-fddf-49ef-a131-3c4c71454c8a';
+--inactivar activar comercio 3ds
+SELECT * from public.COMERCIOS C WHERE C.ID_INTERNO='5500339';
+--se busca el idinterno y con su id en merchands
+SELECT * FROM public.MERCHANTS M WHERE M.V1_ID='91e96aae-c7fb-423b-9360-18c8e1a99639';
+
+
+select * from configuraciones c where comercio_id  = '4836af84-c439-4801-86fd-bd79cbafac62'

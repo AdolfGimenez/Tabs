@@ -9,6 +9,13 @@ SHOW ENGINE INNODB STATUS;
 select now();/*ver la hora de la db*/
 SET global general_log = 1; /*activar log*/
 SELECT version(); -- ver version mysql
+ #para ver tamaño de tablas
+ SELECT t.table_schema,
+   t.table_name tablas,
+   round(((t.data_length + t.index_length) / 1024 / 1024), 2) "Tamaño en MB"
+FROM information_schema.TABLES t
+/*WHERE table_schema = "redmine"*/
+ORDER BY (t.data_length + t.index_length) DESC;
 #--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 /*Sentencia para actualización de fechas de Activo Fijo K2B*/
 UPDATE bienactivofijo SET bienactivofijofechaactivacion = bienactivofijofechaadquisicion WHERE bienactivofijofechaadquisicion >= '2021-01-01' AND bienactivofijofechaadquisicion > bienactivofijofechaactivacion;

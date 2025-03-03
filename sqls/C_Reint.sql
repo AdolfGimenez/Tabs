@@ -62,7 +62,7 @@ FROM (SELECT CONCAT('CL: CALL PGM(GXFINPGM/PCLR028) PARM',(CONCAT ((CONCAT ((CON
       FROM (SELECT OPIDLIQ,AUTTRXFCHC,AUTRRNBEP
             FROM GXBDBPS.TSWAUT AS A
               LEFT JOIN GXOPERA.OPLIQUI AS B ON A.AUTRRNBEP = B.OPNROREF
-            WHERE AUTRRNBEP IN ('500329666377')));
+            WHERE AUTRRNBEP IN ('435824842506', '500329528559')));
 ------------------------------------------------------------------------------------------------------------------------------------
 CL: CALL PGM(GXFINPGM/PCLR028) PARM('22081707308003' '222987112331  ' '20220912');--para masivo.!
 /*pero trx con la 703002 en comercios que pagamos via Continental (itau, vision, sudameris, etc) debe llegar hasta transmisiones
@@ -570,3 +570,11 @@ WHERE A.AUTCOMMCC  IN ( '4814''4816','4899','5734','5735','5815','5816','5817','
     AND A.AUTFECINC >= '2024-11-01 00:00:00.000'
     AND A.AUTFECINC < '2024-11-30 00:00:00.000'
     AND A.AUTRRNBEP not IN(SELECT SETRRNBEP FROM GXFINDTA.TCLSET);
+
+---Regularización Compensación Cooperativa Universitario 20250205   Tareas #89225
+---diferencia bnf
+--Se adjunta la sentencia para regularizar compensación de transacciones BNF en cajero de Coop. Universitaria correspondiente a la fecha 20250206.
+
+INSERT INTO GXOPERA.OPAGO3P
+(BNFCODMV, BNFIDTRN, BNFCODENT, BNFFETRN, BNFFECRE, BNFFECOM, BNFTIPO, BNFTICTA, BNFNROCTA, BNFIMPOR, BNFDESCR, BNFOBSER, BNFCODRE, BNFCOMER, BNFFEPRO, BNFHOPRO, BNFIDUSR)
+VALUES (459, '250206061002', '392', 20250206, 20250207, 20250206, 'C', 0, 8191198, 2200000.00, 'Acred.a la Cta.Nro.8191198-UNI', 'Acred.a la Cta.Nro.8191198-UNI ATM     ', '  ', '4500226     ', 20250206, 12154, 'U99ZARATE ');

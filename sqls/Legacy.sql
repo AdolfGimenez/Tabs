@@ -270,7 +270,7 @@ SELECT * FROM gxopera.opmovi;
 -----------------------------------------
 Select *
 --pgidtrn,pgfecom, pgtipo, pgnocta, pgimpor, pgcomer,pgfecre, PGIDUSR,op.PGFEPRO, op.PGHOPRO
-from gxopera.opago1p op where op.PGIDUSR='U99ESTHER';
+from gxopera.opago1p op where op.PGIDUSR='U99KATERIN';
 --AND pgcomer = '4500001' and pgidtrn = '240325569872';
 SELECT * FROM GXOPERA.OPAGO1PHIS O1P WHERE PGIDUSR='U99KATERIN' AND PGFECOM='20241118';
 ---------------------------------------------
@@ -534,3 +534,12 @@ SELECT C2.COFIVA, C2.* FROM GXBDBPS.COMAEAF C2 WHERE C2.CORUCN='80002491-5';
 SELECT * FROM GXFINDTA.TCOCNA T WHERE T.COCOMER IN ('4300052','4300054');
 --reing
 SELECT * FROM GXFINDTA.TCMIMP T WHERE T.CLICLICOD=21772;
+
+select * from gxopera.opago1phis where pgfecom = '20250124' and pgcomer = '6500090';
+SELECT * FROM gxopera.OPAGO1PHIS WHERE pgfecom = '20250124' AND PGIDUSR= 'U99ESTHER';
+
+----tasas legacy
+SELECT * FROM GXBDBPS.COMAEXD C2 WHERE C2.COCOMER='0702003';
+SELECT * FROM GXBDBPS.COMAEAF C2 WHERE C2.COCOMER='0702003';
+--tasas reing.
+SELECT * FROM GXFINDTA.TCMSTS T WHERE T.CLICLICOD=11707;

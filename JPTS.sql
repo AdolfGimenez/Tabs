@@ -43,7 +43,7 @@ SELECT * FROM PUBLIC.TRANLOG t
 WHERE DATE BETWEEN '2023-07-31 14:50:00.865000' AND '2023-07-31 15:10:59.000000' AND t.AMOUNT='4250000';
 
 SELECT * FROM SAF.MESSAGE_QUEUE MQ LIMIT 1;
-
+select * from stations;
 --transaction_token
 select * from qr.qr_transactions qr order by initial_date desc;
 
@@ -52,18 +52,34 @@ select * from public.tranlog t WHERE date>='2024-03-02 13:11:31.955000'  AND ss_
 
 select * from tranlog t where transaction_token = '2024082600702424';
 
-SELECT * from keys_cybersource_shops where cybersource_shop_id = 'dinelco_002738400001';
-SELECT max(id_key_cybersource_shop) from keys_cybersource_shops;
+/*los que inician con dinelco_00111111 -> su main id es: dinelco_checkout
+los que inician con dinelco_link_0011111 -> su main id es: dinelco_link
+los que inician con dinelco_mf_0011111 -> su main id es: dinelco_mf
+los que inician con dinelco_da_0011111 - > su main id es: dinelco_debitoauto
+dinelco_0012300xxxxx (codigo de cliente de documenta), corresponde al main id dinelco_documeta*/
+
+SELECT * from keys_cybersource_shops s where cybersource_shop_id = 'dinelco_mf_001969000025';
+SELECT max(id_key_cybersource_shop) from keys_cybersource_shops s;
+SELECT DISTINCT(cybersource_shop_main_id) from public.KEYS_CYBERSOURCE_SHOPS  s;
+--actualiza
 update keys_cybersource_shops
 set cybersource_public_key = 'ead9f407-3d46-4e30-bea0-e4195895fbda',
     cybersource_private_key = 'yHBRT1l68r/ayUT1xFIhRrk348kf3AzdB8BmDzlOrEI='
 where cybersource_shop_id = 'dinelco_002729500001';
-
+--inserta
 INSERT INTO PUBLIC.KEYS_CYBERSOURCE_SHOPS
-(ID_KEY_CYBERSOURCE_SHOP, CYBERSOURCE_SHOP_ID, CYBERSOURCE_PUBLIC_KEY, CYBERSOURCE_PRIVATE_KEY, CREATED_AT, CYBERSOURCE_SHOP_MAIN_ID, ENTITY_ID)
-VALUES
-(3364, 'dinelco_002738400001', '11243e06-2a5d-45f5-9f26-17f0dfa942aa', 'MLttj7vwjME2tw9ZeDI0TSRO3fz4ET8FC9n4xpwIFAI=', '2025-01-20 12:43:07.602152 +00:00', 'dinelco_mf', NULL);
+(ID_KEY_CYBERSOURCE_SHOP, CYBERSOURCE_SHOP_ID, CYBERSOURCE_PUBLIC_KEY, CYBERSOURCE_PRIVATE_KEY,
+ CREATED_AT, CYBERSOURCE_SHOP_MAIN_ID, ENTITY_ID) VALUES
+(3833, 'dinelco_mf_001969000025',
+ '11156c05-df07-40ac-91fe-536da894f512',
+ 'RgGAyqTdPmMApOGUkKpodxpeLNf+H8pTR4BAKsxC7Hc=',
+ now(), 'dinelco_mf', NULL);
 ---------------------------------------------------
-select * from cybersource_merchant_routing where merchant_id = '000000006901988';
+--15 caracteres completar con 000
+select * from cybersource_merchant_routing where merchant_id = '000000006902103';
 
-select * from stations;
+INSERT INTO public.cybersource_merchant_routing
+(merchant_id, create_at, merchant_name)
+VALUES('000000006902103', now(), 'MF - CREDICITY');
+
+select * from public.cybersource_merchant_routing where merchant_id = '000000004900387';

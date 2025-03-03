@@ -989,7 +989,7 @@ AND d.LERRNB IN (SELECT l.ENRRNB FROM LIBDEBITO.LOG1002 l GROUP BY l.ENRRNB  )
 ---VERIFICA TRX DE DRCONBEP QUE NO CARGO A TSWAUT
 SELECT  COUNT(*) --D.LERRNB ,d.*, t.AUTRRNBEP
 FROM LIBDEBITO.DRCONBEP d LEFT JOIN GXBDBPS.TSWAUT t ON d.LERRNB = t.AUTRRNBEP
-WHERE LFECTR = 20241023 AND LERRNB LIKE '4297%' AND d.LROL != 'ISS' --AND D.LHORTR < 151500
+WHERE LFECTR = 20250202 AND LERRNB LIKE '5033%' AND d.LROL != 'ISS' --AND D.LHORTR < 151500
 AND T.AUTRRNBEP IS NULL;
 
 ---Verificación de Trx con retorno 61 en adelantos en ATM
@@ -1006,3 +1006,26 @@ SELECT MCLIMCO,MCADTCO,MCADTCU,MCADEPE,MCDISCO,MCDISCU, t.* FROM GXBDBPS.TMCTAAF
 --PASO 3: VERIFICAR POR AFINIDAD, ENTIDAD Y BIN DE LA TC--CUANTO ES SU MONTO MÍNIMO Y SU MÁXIMO % ADELANTO
 SELECT AFEXTMI MONTO_MIN_ADEL,AFPORAD PORCENTAJE_ADEL,ENEMISO ENTIDAD,BIBINES BIN,AFAFINI||' '||AFDESCR AFINIDAD, t.*FROM GXBDBPS.TAFINAF t
 WHERE ENEMISO IN ( '021') AND afafini = '505' AND BIBINES = '627431';
+
+-----TIGO CON TARJETA-----
+select lfectr Fecha,lhortr Hora,lenemi Emisor
+, SUBSTR(lnrtar,1,6)||'XXXXXX'||SUBSTR(lnrtar,13,4) AS TARJETA,lidcom Cod_Comercio
+,lcomtr Comercio,(limpgs) importe,lcretr Retorno
+,lesttr Estado,substr(lidtra,1,1) Origen,lctade referencia_linea,lerrnb Cod_Ref
+,A.TXDTRX DETALLES,lcotel numero,lcodtr Cod_Trx,lactfj Activo_Pos,lenemi,lctaor, lcodtr, codmar
+from libdebito.drconbep
+inner join LIBDEBITO.TBCTRA0P A on A.TXCTRX = lcodtr
+right join libdebito.tbcret0p on lcretr = codnro
+where lfectr='20250217'
+and lnrtar like '627431152%'--Tigo Card
+--and lhortr > '150300'
+--And lenemi='591'
+--and lhortr>113000
+--and lesttr= 'P'
+--AND LCRETR in ('91','93')
+--and lcretr= '91'
+--and lesttr= 'A'
+--and limpgs>1
+AND loritr ='A'
+and codmar = 'BEPS'
+order by lhortr desc;

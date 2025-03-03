@@ -1,15 +1,17 @@
 --reimpresion de Pin desde entidad
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--call y luego el update
 call libdebito/EMBRG001N5;
+
 SELECT * FROM LIBDEBITO.TGEMBHAF T WHERE CRDOCU='5106324';
-select * from GXBDBPS.TDEMISnov WHERE TDBINNRO='627431' AND TDCTANRO ='24632' AND
- TDEMISNOV='5';--and TDESTNOV='0';
+
+select * from GXBDBPS.TDEMISnov WHERE --TDBINNRO='627431' AND TDCTANRO ='24632' AND
+ TDEMISNOV='5' and TDESTNOV='0';
 
 update GXBDBPS.TDEMISnov set TDESTNOV='1'
 where  TDEMISNOV='5' and TDESTNOV='0';
 --para cmabiar novedad para reimpresion de pin
-/*
-  Tipos de Novedad de Embozado Actual
+/*Tipos de Novedad de Embozado Actual
      1    Nueva tarjeta
      2    Regrab.Con Cambio Nro. y Sin Cambio Vto.
      3    Regrab.Sin Cambio Nro. y Sin Cambio Vto.
@@ -17,13 +19,12 @@ where  TDEMISNOV='5' and TDESTNOV='0';
      5    Reimpresi?n de PIN
      6    Renov.esp.Con Cambio Nro. y Con Cambio Vto.
      7    Renov.esp.Sin Cambio Nro. y Con Cambio Vto.
-  ---Reigenieria
+---Reigenieria
   Alta            A
   Renovacion      R
   Regrabacion     P
   Reimpresion     I
-  Todas           T
-*/
+  Todas           T */
 SELECT * from GXBDBPS.TDCTA WHERE TDCTANRO=40050002718 AND TDBINNRO='547697';
 UPDATE GXBDBPS.TMTARAF
 SET MTNOVED='3'
@@ -346,7 +347,9 @@ where DATE (CRTFHCORTE)>='2023-03-01' and DECESTADO = 'S' AND PRCIDPROCE IN ('PA
 SELECT * FROM GXTRJDTA.TCADEC where DATE (CRTFHCORTE)>='2023-03-01' AND DECTPNOV='P';
 SELECT * FROM GXTRJDTA.TCADEC;
 
-select CRTFHCORTE,CRTSECUE,AEMNOMARCO,AEMNOMARCD,AEMCODENT,AEMCODAFI,AEMIDTUTRJ,AEMTPPLA,AEMFECHA,AEMPREFARC,AEMSECARC,AEMESTADO,AEMUSULTUP,AEMFHULTUP,AEMCNTTRJ,
+select
+CRTFHCORTE,CRTSECUE,AEMNOMARCO,AEMNOMARCD,AEMCODENT,AEMCODAFI,AEMIDTUTRJ,AEMTPPLA,AEMFECHA,AEMPREFARC,AEMSECARC,
+AEMESTADO,AEMUSULTUP,AEMFHULTUP,AEMCNTTRJ,
 (case when SUBSTR(DECNOMARCH,1,3) = 'DHA' then sum(AEMCNTTRJ)--'DEBITO ALTA'
 when SUBSTR(DECNOMARCH,1,3) = 'DHP' then sum(AEMCNTTRJ)--'DEBITO REGRABACI?N'
 when SUBSTR(DECNOMARCH,1,3) = 'CHA' then sum(AEMCNTTRJ) --'CREDITO ALTA'

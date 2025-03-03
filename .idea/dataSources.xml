@@ -416,7 +416,7 @@
       <jdbc-url>jdbc:hsqldb:hsql://10.1.254.233/portabilidad</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="AtmCentra" uuid="be3b92f7-6779-4d84-9c04-6526bd1f7768">
+    <data-source source="LOCAL" name="AtmCentre" uuid="be3b92f7-6779-4d84-9c04-6526bd1f7768">
       <driver-ref>sqlserver.ms</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</jdbc-driver>
@@ -481,6 +481,35 @@
       <jdbc-additional-properties>
         <property name="database.jdbc.dont.escape" value="true" />
       </jdbc-additional-properties>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="Crm" uuid="9390011e-8e60-4a40-a2a9-dd23f17c3636">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <schema-control>AUTOMATIC</schema-control>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://10.1.254.130:5432/crm-custom-bepsa</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="Crm-Bepsa_Dev" uuid="b652bd6b-1078-4ae4-8656-6f7934c2ec9c">
+      <driver-ref>mongo.4</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.dbschema.MongoJdbcDriver</jdbc-driver>
+      <jdbc-url>mongodb://10.254.102.48:27017/crm</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="AtmCentre 80" uuid="bb43fb57-9a61-4e81-af21-ff5685ccce8f">
+      <driver-ref>sqlserver.ms</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</jdbc-driver>
+      <jdbc-url>jdbc:sqlserver://10.1.254.80\sa:1532</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="AtmCentre 81" uuid="f577090b-cf9a-4240-b430-b270dc325065">
+      <driver-ref>sqlserver.ms</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</jdbc-driver>
+      <jdbc-url>jdbc:sqlserver://10.1.254.81\sa:1532</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

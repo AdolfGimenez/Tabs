@@ -981,3 +981,30 @@ CL: CALL PGM(GXFINPGM/PCLR237) PARM('502135917375' '20250121' '' '' );
 SELECT * FROM GXOPERA.OPLIQUI O WHERE O.OPNROREF  IN ('502135917375');
 CALL PGM(GXFINPGM/PCLR028) PARM('IDOPLIQUI' '502135917375' '20250121');
 SELECT  * FROM GXFINDTA.TCLTSB T WHERE T.TSBNREF='502135917375';
+
+--anular retención manual
+SELECT * FROM GXFINDTA.TCLRTC T WHERE T.RTCCOMERC='0201277';
+SELECT * FROM GXFINDTA.TCLRTD T WHERE T.RTCIDRETEN=653268;
+
+--REINTENTAR POR SERVICIO DE CONSULTA
+Select * from gxfindta.tcltsb where date(tsbfege) in ('2024-08-23','2024-08-24') and tsbbade = 1020 and tsbcome ='000';
+Update gxfindta.tcltsb set tsbesta = 'PE', tsbmotivo = 'EVENTO 20240823' where date(tsbfege) in ('2024-08-23','2024-08-24') and tsbbade = 1020 and tsbcome ='000';
+
+Select date(tsbfege), tsbdeop,tsbesta,tsbcome retorno, tsbdeme respuesta, count(*) cantidad, sum(tsbimpo)Monto from gxfindta.tcltsb where date(tsbfege) >= '2024-08-23' and tsbbade = 1020 and tsbcome in ('000','999')
+group by date(tsbfege), tsbdeop, tsbesta,tsbcome, tsbdeme
+order by 3;
+
+--Tareas #89344: RECLAMA ACREDITACIONES - 8602888 - DESPENSA ANA LIZ
+---redepagos todos en batch, en este caso se le pago en 2 partes porque eran tarjetas != a BNF y una = BNF con Banco comercio BNF
+SELECT * FROM gxfindta.tclmov T WHERE T.MOVCOMER=8602888 AND T.MOVFPRO='20250205';
+SELECT SUM(T.MOVNETO) FROM gxfindta.tclmov T WHERE T.MOVCOMER=8602888 AND T.MOVFPRO='20250205';
+-- por ende los que no son tarjeta BNF pero banco debtio y comercio bnf va a opago1p
+SELECT * FROM GXOPERA.OPAGO1PHIS O1P WHERE O1P.PGCOMER='8602888' AND O1P.PGFECOM='20250205';
+--y las que si son BNF a BNF comercio y pagador BNF en opago5p
+SELECT * FROM GXOPERA.OPAGO5PH O5P WHERE O5P.PGCOMER5=8602888 AND O5P.PGFECOM5='20250205';
+--en este caso historico porque ya fue de fecha pasada.
+-------log clearing legacy
+SELECT * FROM gxfindta.tcllgc WHERE LGFECHA = '20250225';
+---reing
+SELECT * FROM GXFINDTA.TCLCPC WHERE CPCFEC ='20241219';
+SELECT * FROM GXFINDTA.TCLCSP WHERE CPCFEC ='20241219';

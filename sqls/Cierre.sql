@@ -17,7 +17,7 @@ SELECT * FROM GXBDBPS.GCONTRP;
 
 SELECT * FROM GXBDBPS.TSPCIE WHERE PCFCH='20230220' ORDER BY PROCCOD, SUBSEC;
 ---log del cierre
-select *from gxbdbps.tlogsaf where LSFECHA = '20230829' AND LSTIPRO = 'CIER' order by LSHORA desc; ---VERIFICAR LOGS PRODUCCION (DIARIO)
+select * from gxbdbps.tlogsaf where LSFECHA = '20250225' AND LSTIPRO = 'CLEA' order by LSHORA desc; ---VERIFICAR LOGS PRODUCCION (DIARIO)
 -----*GXBDBPS
 select * from gxbdbps.gempraf
 select * from libdebito.empresa0p
