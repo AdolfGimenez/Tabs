@@ -182,4 +182,143 @@ WHERE T.FECHA_COMERCIAL = '2025-01-20'
 
 SELECT count(*) FROM public.LIQUIDACION L WHERE fecha_comercial ='2025-01-30';
 
+SELECT * FROM public.TRANSACCION T WHERE T.NUMERO_AUTORIZACION='792717695'; --100005526957
+SELECT * FROM public.TRANSACCION T WHERE T.CODIGO_RESPUESTA<>'0';
+------------------------------
+--caso cambio de horario
+--Switch
+select (t.fecha_creacion + interval '1 hour') fecha_creacion,
+TO_CHAR((t.fecha_creacion + interval '1 hour'),'DDMMYYYY') fecha_operacion,
+TO_CHAR((t.fecha_creacion + interval '1 hour'),'hh24miss') hora_operacion,
+TO_CHAR((t.fecha_creacion + interval '1 hour'),'DDMMYYYY') fecha_liquidacion,
+(t.fecha_actualizacion + interval '1 hour') fecha_actualizacion,
+(t.fecha_envio + interval '1 hour') fecha_envio,
+t.*
+from public.transaccion t
+where t.id between 100005662530 and 100005667165
+order by t.id;
 
+update public.transaccion
+set fecha_operacion = TO_CHAR((fecha_creacion + interval '1 hour'),'DDMMYYYY'),
+    hora_operacion = TO_CHAR((fecha_creacion + interval '1 hour'),'hh24miss'),
+    fecha_liquidacion = TO_CHAR((fecha_creacion + interval '1 hour'),'DDMMYYYY'),
+    fecha_creacion = (fecha_creacion + interval '1 hour'),
+    fecha_actualizacion = (fecha_actualizacion + interval '1 hour'),
+    fecha_envio = (fecha_envio + interval '1 hour')
+where id between 100005662530 and 100005667165;
+
+--Para verificar cantidades en el switch
+SELECT count(*) Cantidad_trx, date(fecha_creacion)
+FROM public.transaccion
+where fecha_creacion >= '2025-03-24 19:00:00' /* fecha anterior*/
+  and fecha_creacion < '2025-03-25 19:00:00' ---fecha actual
+group by date(fecha_creacion)
+order by date asc;
+
+--Conciliador
+update public.transaccion
+set fecha_operacion = TO_CHAR((fecha_creacion + interval '1 hour'),'DDMMYYYY'),
+    hora_operacion = TO_CHAR((fecha_creacion + interval '1 hour'),'hh24miss'),
+    fecha_liquidacion = TO_CHAR((fecha_creacion + interval '1 hour'),'DDMMYYYY'),
+    fecha_creacion = (fecha_creacion + interval '1 hour'),
+    fecha_actualizacion = (fecha_actualizacion + interval '1 hour')
+where id between 100005662530 and 100005667165;
+
+SELECT id, t.*
+FROM public.transaccion t
+where fecha_creacion >= '2025-03-24 19:00:00'
+  and fecha_creacion < '2025-03-25 19:00:00'
+  and fecha_comercial = '2025-03-25'
+order by 1;
+
+----query noc para ver casos del cierre
+---------------Conciliador---------------
+--Verificacion de trx en conciliador
+SELECT count(*) Cantidad_trx, date(fecha_creacion)
+FROM public.transaccion
+where fecha_comercial = '2025-03-24'  --fecha actual
+group by date(fecha_creacion)
+order by date asc;
+
+
+--Para buscar las transacciones de diferencia entre conciliador y switch
+select * from public.transaccion
+where fecha_comercial = '2025-03-25'  --proximo dia habil
+and fecha_creacion >= '2025-03-24 18:00:00'  --fecha actual
+and fecha_creacion <= '2025-03-24 19:00:00' ; --fecha actual
+
+-----VER ESTADO SUMARIZADO-----
+select *from public.transaccion
+where fecha_comercial = '2025-03-24'  --fecha actual
+and estado = 'Aprobado';
+--and estado_sumarizado ='Sumarizado'
+
+-----CONTADOR DE TRX-----
+SELECT count(*) Cantidad_trx
+FROM public.transaccion
+where fecha_comercial = '2025-03-24';
+
+------PARA VERIFICAR LOS CORREOS A LOS CUALES VAN LOS INFORMES-----
+select *from public.empe;
+
+-----CONTROL DE CORREO-----
+select empre_origen,nombre, sum(importe)monto_enviado from public.transaccion
+inner join public.empe on codigo = empre_origen
+where fecha_comercial = '2025-03-24' and estado = 'Aprobado'
+group by empre_origen,nombre;
+select empre_destino ,nombre , sum(importe)monto_recibido from public.transaccion
+inner join public.empe on codigo = empre_destino
+where fecha_comercial = '2025-03-24' and estado = 'Aprobado'
+group by empre_destino,nombre;
+----------- NO APROBADAS
+select empre_origen,nombre, sum(importe)monto_enviado from public.transaccion
+inner join public.empe on codigo = empre_origen
+where fecha_comercial = '2025-03-24' and estado = 'Rechazado' ---Rechazado
+group by empre_origen,nombre;
+select empre_destino ,nombre , sum(importe)monto_recibido from public.transaccion
+inner join public.empe on codigo = empre_destino
+where fecha_comercial = '2025-03-24' and estado = 'Rechazado'
+group by empre_destino,nombre;
+
+select  * from public.empe;
+
+/*----Para igualar las trx con las se switch
+Update public.transaccion
+set fecha_comercial = '2025-03-24' --fecha actual
+where fecha_comercial = '2025-03-25'  --proximo dia habil
+and fecha_creacion >= '2025-03-24 18:00:00'  --fecha actual
+and fecha_creacion <= '2025-03-24 19:00:00'  --fecha actual
+
+--------Switch-------------
+--Para verificar cantidades en el switch
+SELECT count(*) Cantidad_trx, date(fecha_creacion)
+FROM public.transaccion
+where fecha_creacion >= '2025-03-21 19:00:00' /* fecha anterior*/ and fecha_creacion <= '2025-03-24 19:00:00' ---fecha actual
+group by date(fecha_creacion)
+order by date asc;*/
+-------------------------------------------------
+--caso diferencia Conciliador
+--HOTFIX
+
+SELECT t.* FROM public.transaccion t WHERE t.fecha_comercial = '2025-03-25'
+
+
+SELECT T.*
+FROM PUBLIC.TRANSACCION T
+WHERE T.ID IN ( '100005667237','100005667238' );
+
+-- Switch
+--HOTFIX
+
+SELECT t.* INTO public.transaccion_bk_20250324
+
+SELECT * FROM public.transaccion t
+WHERE t.fecha_creacion BETWEEN '2025-03-24 19:00:00.000' AND '2025-03-25 18:59:59.999'
+AND id NOT IN
+('100005669326','100005669327','100005669328','100005669329','100005669330','100005669331','100005669332',
+ '100005669333','100005667193');
+--la difrencia
+(
+'100005667237'
+'100005667238'
+)

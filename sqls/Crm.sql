@@ -1,5 +1,5 @@
 SELECT t.*, CTID
-FROM "crm-bepsa"."UserIdentity" t;
+FROM "crm-bepsa"."UserIdentity" t WHERE "Email"='pgaleano@bepsa.com.py';
 
 SELECT
  ui."UserName" ,
@@ -10,12 +10,12 @@ INNER JOIN
  "crm-bepsa"."GroupIdentityUserIdentity" AS giui ON  giui."RolesId" = gi."Id"
 INNER JOIN  "crm-bepsa"."UserIdentity" AS ui ON  ui."Id"  = giui."UsersId"
 WHERE
- ui."Email"  = 'eaquino@bepsa.com.py';
+ ui."Email"  = 'pgaleano@bepsa.com.py';
 --grupos
 SELECT  * FROM "crm-bepsa"."GroupIdentity" AS gi ;
 --asignar permisos a usuarios
 INSERT INTO "crm-bepsa"."GroupIdentityPermissions"
-SELECT 'f14f00c9-4384-4314-bdc3-6a16aecfcb95' AS "GroupId", P."Code"
+SELECT 'dc6952db-9936-45b4-a80c-8e86cfde1f10' AS "GroupId", P."Code"
 FROM "crm-bepsa"."Permissions" AS P;
 
 SELECT UI."Email", GI."Name"
@@ -24,7 +24,7 @@ FROM "crm-bepsa"."GroupIdentityUserIdentity" GIUI
          INNER JOIN "crm-bepsa"."GroupIdentity" AS GI ON GI."Id" = GIUI."RolesId";
 
 select *
-from "crm-bepsa"."GroupIdentityPermissions" gip where gip."GroupIdentityId" = '03598fd5-f44b-4941-8f61-bbe9bb0346a5';
+from "crm-bepsa"."GroupIdentityPermissions" gip where gip."GroupIdentityId" = '85369bc0-b41d-4b0d-ad49-38310fe64345';
 
 SELECT * FROM "crm-bepsa"."System-Configuration";
 
@@ -85,27 +85,17 @@ SELECT * FROM "crm-bepsa"."CaseTypeSubtype_Id_seq";
 ---cambiar usuarios que difieren de keycloak vs db
 select ui."Id" , ui."Email" , ui.*
 from "crm-bepsa"."UserIdentity" ui
-where ui."Email" = 'rumilda.dominguez@bepsa.com.py';
+where ui."Email" = 'sbenitez@bepsa.com.py';
 
 --'d89b1b43-0a32-46a9-8480-a7294ef4be83';
 select *
 from "crm-bepsa"."GroupIdentityUserIdentity" giui
-where giui."UsersId" = 'aab1dcd9-d09e-47f1-90ab-becb1b6610be';
+where giui."UsersId" = 'b3d3f077-a11f-434a-8b67-a214ab32d139';
 
 select *
 from "crm-bepsa"."Users" u
-where u."IdentityId" = 'aab1dcd9-d09e-47f1-90ab-becb1b6610be';
+where u."IdentityId" = 'b3d3f077-a11f-434a-8b67-a214ab32d139';
 
---dahiana.benitez@bepsa.com.py = 17377790-833c-4329-ba36-397b15722524
---federico.sosa@bepsa.com.py =  a3992ccb-413f-441a-ac7c-df53e5cfb16f
---erika.fleitas@bepsa.com.py =  43c7fcc6-31e4-4583-aaee-12871d836f83
---      tania.gonzalez@bepsa.com.py =  a3dd5288-5cf8-4ac7-9959-ef4d39150679
---agarcete@bepsa.com.py =    4c98e84c-0bad-41de-94d1-a1b08b0177f1
---antonia.guillen@bepsa.com.py =   71c192ff-1f56-48f8-beda-882118c4eb75
---      lucas.rios@bepsa.com.py =    e3864482-0aec-4741-84bd-2f68ad1dc293
---fatima.gimenez@bepsa.com.py = f21083d3-80ee-4add-a42f-6ce10e326ccf
---      milagros.vazquez@bepsa.com.py =  1c4f80ca-bd78-4a11-a2f5-312fbba7e6da
---rumilda.dominguez@bepsa.com.py =  255800e4-439f-4e17-812f-9ccce599315a
 
 ---ver usuarios activos:
 SELECT ui."UserName", STRING_AGG(gi."Name", ', ') AS "Groups"
@@ -129,3 +119,53 @@ FROM "crm-bepsa"."CaseTypifications" CT
          JOIN "crm-bepsa"."CaseTypes" CTP
               ON CST."CaseTypeId" = CTP."Id"
 ORDER BY CTP."Name", CS."Name", CT."Name";
+-------------
+select * from "crm-bepsa"."GroupIdentityPermissions" gip where "PermissionCode"  = 'CAN_ATTACH_FILE';
+SELECT * FROM "crm-bepsa"."Permissions" P where "Code" = 'CAN_ATTACH_FILE';
+
+insert into "crm-bepsa"."GroupIdentityPermissions"
+select gi."Id" , 'CAN_ATTACH_FILE' as "PermissionCode"
+from "crm-bepsa"."GroupIdentity" gi
+on conflict do nothing;
+-------------------------
+select * from "crm-bepsa"."Permissions" p where "Code"  = 'CAN_EXPORT_ORDERS';
+
+insert into "crm-bepsa"."Permissions" ("Code", "Name", "Url", "ModulesCode")
+values
+('CAN_EXPORT_ORDERS','Acceso para Exportar Pedidos','/','ORDERS');
+
+
+insert into "crm-bepsa"."GroupIdentityPermissions"
+select gi."Id" , 'CAN_EXPORT_ORDERS' as "PermissionCode"
+from "crm-bepsa"."GroupIdentity" gi
+on conflict do nothing;
+
+
+update "crm-bepsa"."Settings"
+set "Value" = 'https://app.powerbi.com/links/_syq3X2Tsc?ctid=1ddf848f-0d03-499e-b9a3-ea636b84a351&pbi_source=linkShare'
+where "Key" = '19';
+
+insert into "crm-bepsa"."Settings"
+("Key", "Value")
+values('19', 'https://app.powerbi.com/groups/76e0bb1b-34e3-4bf4-91d7-189592dbbc38/reports/fc9ff715-281d-4276-8cf1-b771190bff0d/85d9225ef8c246336fbd?experience=power-bi')
+
+
+INSERT INTO  "crm-bepsa"."GroupIdentityPermissions"
+SELECT gi."Id" AS  "GroupIdentityId", 'CAN_UPDATE_CLOSED_CASES' AS "PermissionCode"
+FROM "crm-bepsa"."GroupIdentity" AS gi WHERE gi."Name" = 'crm admin' ON CONFLICT DO NOTHING ;
+
+
+-------------------------------------------------- Tabla Settings--------------------------------------------------------------
+SELECT
+ gi."Name" , ui."FirtName" , ui."LastName"
+FROM
+ "crm-bepsa"."GroupIdentityUserIdentity" AS giui
+INNER JOIN  "crm-bepsa"."GroupIdentity" AS gi ON giui."RolesId" = gi."Id"
+INNER JOIN  "crm-bepsa"."UserIdentity" AS ui ON giui."UsersId" = ui."Id"
+WHERE  ui."Email"  = 'sbenitez@bepsa.com.py' ;
+
+
+SELECT * FROM
+ "crm-bepsa"."GroupIdentityUserIdentity" AS giui WHERE "UsersId" ='b3d3f077-a11f-434a-8b67-a214ab32d139'
+
+---crmadmin= dc6952db-9936-45b4-a80c-8e86cfde1f10

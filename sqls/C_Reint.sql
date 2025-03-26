@@ -62,7 +62,7 @@ FROM (SELECT CONCAT('CL: CALL PGM(GXFINPGM/PCLR028) PARM',(CONCAT ((CONCAT ((CON
       FROM (SELECT OPIDLIQ,AUTTRXFCHC,AUTRRNBEP
             FROM GXBDBPS.TSWAUT AS A
               LEFT JOIN GXOPERA.OPLIQUI AS B ON A.AUTRRNBEP = B.OPNROREF
-            WHERE AUTRRNBEP IN ('435824842506', '500329528559')));
+            WHERE AUTRRNBEP IN ('504748121394', '504748135634', '504748177112', '504748196791', '504748201376', '504748211927', '504748225910')));
 ------------------------------------------------------------------------------------------------------------------------------------
 CL: CALL PGM(GXFINPGM/PCLR028) PARM('22081707308003' '222987112331  ' '20220912');--para masivo.!
 /*pero trx con la 703002 en comercios que pagamos via Continental (itau, vision, sudameris, etc) debe llegar hasta transmisiones
@@ -578,3 +578,13 @@ WHERE A.AUTCOMMCC  IN ( '4814''4816','4899','5734','5735','5815','5816','5817','
 INSERT INTO GXOPERA.OPAGO3P
 (BNFCODMV, BNFIDTRN, BNFCODENT, BNFFETRN, BNFFECRE, BNFFECOM, BNFTIPO, BNFTICTA, BNFNROCTA, BNFIMPOR, BNFDESCR, BNFOBSER, BNFCODRE, BNFCOMER, BNFFEPRO, BNFHOPRO, BNFIDUSR)
 VALUES (459, '250206061002', '392', 20250206, 20250207, 20250206, 'C', 0, 8191198, 2200000.00, 'Acred.a la Cta.Nro.8191198-UNI', 'Acred.a la Cta.Nro.8191198-UNI ATM     ', '  ', '4500226     ', 20250206, 12154, 'U99ZARATE ');
+
+----reintento por naut en vez de los nclr para todos
+cl: CALL PGM(GXAUTPGM/NAUT033) PARM('1002' 'DIN' '000025010313709808' '000000436628391066' '000054' '000000700534' 'A');
+--siempre sera
+--ssiempre din
+--id opliqui
+--referencia
+--cod trx
+--cod comercio
+--A

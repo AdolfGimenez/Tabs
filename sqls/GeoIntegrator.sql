@@ -48,5 +48,11 @@ from integrator.point_of_sale p, integrator.`local` l, integrator.commerce c
 where l.id  = p.local_id
 and l.commerce_id = c.id
 and p.pos_id  = '80000505';
+#--con ese sacas la cantidad de conexiones a partir de una fecha
+select terminal_id, count(terminal_id)
+from transactions where date_time >='2025-03-05' group by terminal_id
 
+
+
+select time (NOW()) as hora;
 

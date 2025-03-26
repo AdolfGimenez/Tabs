@@ -188,7 +188,7 @@ SELECT * FROM public.EMPRESAS_CLIENTES EC WHERE id IN (4, 19, 187);
 SELECT * FROM public.EMPRESAS_CLIENTES_BEPSA ECB WHERE ECB.COD_CLIENTE_BEPSA IN ('12730','12733');
 
 SELECT * FROM public.ROLES R;
-SELECT * FROM public.ROLES_X_USUARIOS RXU WHERE RXU.USUARIO_ID='03c8162a-6b45-4339-9484-4d2e8dacd24d';
+SELECT * FROM public.ROLES_X_USUARIOS RXU WHERE RXU.USUARIO_ID='998cc56c-994a-4941-bfd4-7368db5e4f92';
 
 --permiso fabi
 --INSERT INTO public.roles_x_usuarios (id, rol_id, usuario_id, insertado_el, modificado_el, activo, insertado_por, modificado_por) VALUES (4910, 125, '03c8162a-6b45-4339-9484-4d2e8dacd24d', '2024-03-18 17:00:28.110074', '2024-03-18 17:00:28.110074', true, '6bb47ab6-0ea7-48e8-b5b2-76438104f674', null);
@@ -196,8 +196,8 @@ SELECT * FROM public.ROLES_X_USUARIOS RXU WHERE RXU.USUARIO_ID='03c8162a-6b45-43
 INSERT INTO
     public.roles_x_usuarios (rol_id, usuario_id, insertado_el, modificado_el, activo, insertado_por, modificado_por) VALUES ( 1, 'bdaf16f0-d93c-4414-978a-ae1e8fd3b981', '2023-07-22 14:47:44.997312', '2023-07-22 14:47:44.997312', true, null, null);
 --AUTH_DB
-SELECT * FROM EQWEDI_AUTH_DB.PUBLIC.USUARIOS U WHERE U.NRO_DOCUMENTO='3319151'
-U.CORREO LIKE 'vayala@bepsa.com.py';
+SELECT * FROM EQWEDI_AUTH_DB.PUBLIC.USUARIOS U WHERE U.NRO_DOCUMENTO='6533751';
+--U.CORREO LIKE 'cecilia.caballero@bepsa.com.py';
 
 SELECT t.* FROM public.refresh_tokens t WHERE t.USUARIO_ID='8b3e942c-abc7-45a9-9f53-c240e4020352';
 SELECT * FROM public.GRUPOS_ACCESOS_APIS_X_USUARIOS GAAXU WHERE GAAXU.USUARIO_ID='feafa23e-c9ef-43cd-bb91-fd5328344806';
@@ -345,9 +345,9 @@ FROM BUSDATOS_TRANSACCIONES
      COMISIONES ON COMISIONES.RRNBEPSA = TRIM(BUSDATOS_TRANSACCIONES.OPERACION_RRNBEPSA)
 WHERE BUSDATOS_TRANSACCIONES.OPERACION_EST_FN_TRANSACCION <> 'Q'
   -- Aquí se aplican las condiciones dinámicas basadas en `params.where`:
-  AND BUSDATOS_TRANSACCIONES.OPERACION_FECH_TRANS BETWEEN '2024-09-01 00:00:00.000' AND '2024-10-07 23:59:59.999' -- Ejemplo de fecha
-  AND BUSDATOS_TRANSACCIONES.OPERACION_COD_COMERCIO = '11735'                                                     -- Ejemplo de código de comercio
---AND busdatos_transacciones.OPERACION_RRNBEPSA='427384150745'
+  AND BUSDATOS_TRANSACCIONES.OPERACION_FECH_TRANS BETWEEN '2025-03-21 00:00:00.000' AND '2025-03-24 23:59:59.999' -- Ejemplo de fecha
+  AND BUSDATOS_TRANSACCIONES.OPERACION_COD_COMERCIO = '16351'   -- Ejemplo de código de comercio
+AND busdatos_transacciones.OPERACION_RRNBEPSA='508163979775'
 -- Más condiciones dinámicas...
 ORDER BY BUSDATOS_TRANSACCIONES.OPERACION_FECH_TRANS DESC;
 
@@ -488,14 +488,15 @@ ORDER BY "busdatos_transacciones"."operacion_fech_trans" DESC;
 
 SELECT * FROM comisiones w WHERE w.CLICLICOD=11735 AND w.RRNBEPSA='427384150745';
 
-SELECT BT.OPERACION_FECH_PROC_TRANSACCIO, BT.* FROM public.BUSDATOS_TRANSACCIONES BT WHERE BT.OPERACION_RRNBEPSA='427384150745';
+SELECT BT.OPERACION_FECH_PROC_TRANSACCIO, BT.* FROM public.BUSDATOS_TRANSACCIONES BT WHERE BT.OPERACION_RRNBEPSA='507862150881';
 
 SELECT * FROM public.COMERCIOS C WHERE C.NOMBRE LIKE '%MONITAL%';
 ------casos de suscription key _*****_
-SELECT * FROM public.COMERCIOS C WHERE C.NOMBRE LIKE '%MONITAL%';
+SELECT * FROM public.COMERCIOS C WHERE C.NOMBRE LIKE '%BEPSA%';
 SELECT * FROM public.EMPRESAS_CLIENTES EC WHERE EC.PAGO_DIGITAL_SUSCRIPCION_KEY ISNULL;
 UPDATE public.EMPRESAS_CLIENTES EC SET PAGO_DIGITAL_SUSCRIPCION_KEY='_*****_' WHERE EC.PAGO_DIGITAL_SUSCRIPCION_KEY ISNULL;
-
+SELECT * FROM public.EMPRESAS_CLIENTES EC WHERE EC.EMPRESA_CLIENTE_BEPSA_ID=10736;
+SELECT * FROM public.EMPRESAS_CLIENTES_BEPSA ECB WHERE descripcion_bepsa LIKE '%AUTOMOTOR%'--ECB.COD_CLIENTE_BEPSA='10736';
 -----casos de comercios ya existen y como lleva de la db2 al portal
 ---query de obtención desde db2 al portal
 /*const getByCliCodSucCod = async(params:{
@@ -548,17 +549,17 @@ SELECT *
 FROM SUCURSALES_BEPSA_DB2 SBD
          INNER JOIN EMPRESAS_CLIENTES_BEPSA ECB ON SBD.CLIENTE_BEPSA_ID = ECB.ID
          INNER JOIN EMPRESAS_CLIENTES EC ON EC.EMPRESA_CLIENTE_BEPSA_ID = ECB.ID
-WHERE ECB.COD_CLIENTE_BEPSA IN ('11016');
+WHERE ECB.COD_CLIENTE_BEPSA IN ('24625');
 
-SELECT * FROM public.SUCURSALES_BEPSA_DB2 S WHERE S.CLIENTE_BEPSA_ID=7039;
-SELECT * FROM public.SUCURSALES S WHERE S.COMERCIO_ID=7058;
+SELECT * FROM public.SUCURSALES_BEPSA_DB2 S WHERE S.CLIENTE_BEPSA_ID=7151;
+SELECT * FROM public.SUCURSALES S WHERE S.COMERCIO_ID=7168;
 --sucursales y comercios
 SELECT *
 FROM SUCURSALES S
          INNER JOIN COMERCIOS C ON S.COMERCIO_ID = C.ID
          INNER JOIN EMPRESAS_CLIENTES EC ON C.EMPRESA_CLIENTE_ID = EC.ID
          INNER JOIN EMPRESAS_CLIENTES_BEPSA ECB ON EC.EMPRESA_CLIENTE_BEPSA_ID = ECB.ID
-WHERE ECB.COD_CLIENTE_BEPSA IN ('11016')
+WHERE ECB.COD_CLIENTE_BEPSA IN ('24625')
 ORDER BY SUCURSAL_BEPSA_DB2_ID;
 ----ver empresa
 SELECT ECB.COD_CLIENTE_BEPSA, EC.*
@@ -567,7 +568,7 @@ FROM EMPRESAS_CLIENTES EC
 --inner join personas_fisicas p1 on p1.persona_id = p.id
          INNER JOIN PERSONAS_JURIDICAS P1 ON P1.PERSONA_ID = P.ID
          INNER JOIN PUBLIC.EMPRESAS_CLIENTES_BEPSA ECB ON ECB.ID = EC.EMPRESA_CLIENTE_BEPSA_ID
-WHERE P1.RUC_NORMALIZADO IN ('80017858-0');
+WHERE P1.RUC_NORMALIZADO IN ('80143665-6');
 -------------VER COMERCIOS
 SELECT * FROM public.COMERCIOS C WHERE C.EMPRESA_CLIENTE_ID=8175;
 SELECT * FROM public.EMPRESAS_CLIENTES EC;
@@ -626,14 +627,33 @@ where "bt"."operacion_est_fn_transaccion" <> 'Q' and "bt"."operacion_est_fn_tran
 between '2024-10-22  00:00:00.000' and '2024-10-22 23:59:59.999'
 and ("bt"."operacion_cod_comercio", "bt"."operacion_cod_sucursal") in ((11113, 6), (11113, 8), (10937, 1), (10937, 2), (10937, 3), (10937, 16), (10937, 18), (10937, 4), (10937, 8), (11113, 5), (10937, 5), (11113, 1001), (10937, 226), (10937, 1001), (11113, 3), (11113, 9), (11113, 2), (10937, 17), (11113, 10), (10937, 6), (11113, 7), (10937, 7), (10937, 224), (10937, 21), (10937, 23), (10937, 26), (10937, 78), (10937, 189), (10937, 15), (10937, 168), (10937, 228), (10937, 186), (10937, 10), (10937, 80), (10937, 229), (10937, 25), (11113, 3), (11113, 94), (10937, 186), (11113, 13), (11113, 4), (10736, 1), (11113, 145), (10937, 48), (11113, 11), (11113, 1), (10937, 43), (10937, 14), (10937, 19), (10736, 4), (11735, 35), (10879, 17))
 order by "bt"."operacion_fech_trans" asc;
-
+---QUUERY PANTALLA MIS MOVIMIENTOS PANZA
+select "bt"."operacion_id", "bt"."operacion_fech_insercion", "bt"."operacion_hor_insercion", "bt"."operacion_rrnbepsa", "bt"."operacion_est_reversa", "bt"."operacion_fech_trans", "bt"."operacion_cod_comercio", "bt"."operacion_denom_comercial", "bt"."operacion_cod_sucursal", "bt"."operacion_desc_sucursal", "bt"."operacion_cod_autenticacion", "bt"."operacion_cod_entidad_rol", "bt"."operacion_num_tarjeta", "bt"."operacion_num_tarjeta_enmascar", "bt"."operacion_tip_uso_tarjeta", "bt"."operacion_cant_cuotas", "bt"."operacion_cod_moneda_origen", "bt"."operacion_desc_moneda_origen", "bt"."operacion_cod_moneda_destino", "bt"."operacion_desc_moneda_destino", "bt"."operacion_mont_origen", "bt"."operacion_mont_destino", "bt"."operacion_cod_moneda_origen", "bt"."operacion_mont_origen", "bt"."operacion_mont_destino", "bt"."operacion_ambito_transaccion", "bt"."operacion_cta_utda_operacion", "bt"."operacion_tip_dispositivo", "bt"."operacion_desc_dispositivo", "bt"."operacion_cod_pais_origen", "bt"."operacion_desc_pais_origen", "bt"."operacion_cod_pais_destino", "bt"."operacion_desc_pais_destino", "bt"."operacion_venc_tarjeta", "bt"."operacion_cod_servicio", "bt"."operacion_desc_servicio", "bt"."operacion_cod_prestacion", "bt"."operacion_desc_prestacion", "bt"."operacion_cod_marc_tarjeta", "bt"."operacion_desc_marc_tarjeta", "bt"."operacion_cod_prod_tarjeta", "bt"."operacion_desc_prod_tarjeta", "bt"."operacion_cod_afinidad", "bt"."operacion_desc_afinidad", "bt"."operacion_cod_retorno", "bt"."operacion_desc_retorno", "bt"."operacion_cat_comerc_mcc", "bt"."operacion_desc_mcc", "bt"."operacion_cod_transaccion", "bt"."operacion_desc_transaccion", "bt"."operacion_fech_proc_transaccio", "bt"."operacion_form_pago", "bt"."operacion_desc_form_pago", "bt"."operacion_estac_origen_ss", "bt"."operacion_estac_dest_ds", "bt"."operacion_mod_entrada", "bt"."operacion_desc_mod_entrada", "bt"."operacion_sald_actual", "bt"."operacion_sald_disp", "bt"."operacion_est_in_transaccion", "bt"."operacion_ident_cajero_atm", "bt"."operacion_enti_admi_atm", "bt"."operacion_ent_propieta_atm", "bt"."operacion_opera_origen", "bt"."operacion_telef_origen", "bt"."operacion_oper_destino", "bt"."operacion_telef_destino", "bt"."operacion_mont_cotizacion", "bt"."operacion_ent_transf_origen", "bt"."operacion_desc_enti_origen_tr", "bt"."operacion_ent_transfe_destino", "bt"."operacion_desc_enti_destino_tr", "bt"."operacion_cta_transfe_origen", "bt"."operacion_cta_transfe_destino", "bt"."operacion_num_adherente", "bt"."operacion_id_promocion", "bt"."operacion_proce_emisor", "bt"."operacion_desc_proce_emisor", "bt"."operacion_proce_adquiriente", "bt"."operacion_desc_proce_adquirien", "bt"."operacion_ptos_transaccion", "bt"."operacion_estado_replica", "bt"."operacion_json", "bt"."operacion_est_fn_transaccion", "bt"."operacion_cod_retorno", cast(substring(bt.operacion_num_tarjeta FROM 1 FOR 6) || '******' || substring(bt.operacion_num_tarjeta FROM LENGTH(bt.operacion_num_tarjeta ) - 4 FOR 4) as bpchar(19)) as operacion_num_tarjeta, cast(substring(bt.operacion_num_tarjeta_enmascar FROM 1 FOR 6) || '******' || substring(bt.operacion_num_tarjeta_enmascar FROM LENGTH(bt.operacion_num_tarjeta_enmascar ) - 4 FOR 4) as bpchar(19)) as operacion_num_tarjeta_enmascar, CASE
+WHEN bt.operacion_cod_moneda_origen = 600 THEN bt.operacion_mont_origen
+WHEN bt.operacion_cod_moneda_origen <> 600 THEN bt.operacion_mont_destino
+END operacion_monto_gs, CASE
+WHEN bt.operacion_est_fn_transaccion = 'A' AND bt.operacion_cod_retorno = '00' THEN 'A'
+WHEN bt.operacion_est_fn_transaccion = 'A' AND bt.operacion_cod_retorno <> '00' THEN 'R'
+WHEN bt.operacion_est_fn_transaccion = 'D' THEN 'R'
+WHEN bt.operacion_est_fn_transaccion = 'R' THEN 'X'
+END estado_transaccion, COUNT(*) OVER () AS counter from "busdatos_transacciones" as "bt" where "bt"."operacion_est_fn_transaccion" <>
+'Q' and "bt"."operacion_est_fn_transaccion" = 'A' and "bt"."operacion_cod_retorno" = '00' and "bt"."operacion_fech_trans" between '2025-03-22  00:00:00.000' and '2025-03-24 23:59:59.999' and "bt"."operacion_rrnbepsa" = '508163979775' order by "bt"."operacion_fech_trans" asc limit 5
 -----------------
+--obtiene cliente por cliclicod
+SELECT (SELECT T.COCOMER FROM GXFINDTA.TCOCNA T
+WHERE T.CLICLICOD = A.CLICLICOD AND T.SUCSUCCOD = A.SUCSUCCOD AND SUBSTR(T.COCOMER, 0, 3) NOT IN ('45')
+ORDER BY SUBSTR(T.COCOMER, 0, 3) LIMIT 1) COCOMER, A.*, B.*
+FROM GXFINDTA.TCMSUC A
+         INNER JOIN GXFINDTA.TCMCLI B ON A.CLICLICOD = B.CLICLICOD
+WHERE A.SUCESTADO NOT IN ('B') AND A.CLICLICOD LIKE '24625' AND A.SUCSUCCOD NOT IN ('1')
+LIMIT 10 OFFSET 0;
+------------------------------------------------------------
 --AGREGAR SUPSCRIPCION | AUT
 SELECT * FROM public.EMPRESAS_CLIENTES EC WHERE EC.NOMBRE LIKE '%Sere%';
 SELECT * FROM public.EMPRESAS_CLIENTES EC WHERE EC.ID_INTERNO='12300';
 
 
-SELECT * FROM public.USUARIOS U WHERE nro_documento='2025138'
+SELECT * FROM public.USUARIOS U WHERE nro_documento='2025138';
 ---USUARIO SIN NIVEL DE ACCESO | EMPRESA || QUITAR EL USER ID DESDE EL F12 DEL NAVEGADOR
 SELECT * FROM pocodi_db.public.USUARIOS U WHERE U.ID='6c3e6543-75da-43ff-a35e-c75044f93070';
 SELECT * FROM public.USUARIOS_NIVELES_ACCESO UNA WHERE UNA.USUARIO_ID='6c3e6543-75da-43ff-a35e-c75044f93070';
@@ -819,7 +839,7 @@ select * from merchants m join
 cybersource_merchant_info cmi on cmi.id = m.cs_merchant_id
 where cmi.cs_id = 'dinelco_link_001694800003';
 
-SELECT * FROM public.BUSDATOS_TRANSACCIONES BT WHERE BT.OPERACION_RRNBEPSA IN ('436327108271', '436326875024');
+SELECT * FROM public.BUSDATOS_TRANSACCIONES BT WHERE BT.OPERACION_RRNBEPSA ='561708285183';
 
 
 select * FROM PUBLIC.SUSCRIPCIONES;
@@ -925,7 +945,7 @@ FROM "facturacionbepsa"."tclmov_tmp_retail_202411_factcomercios" AS "c"
 WHERE "c"."movcodcli" = '10937'
   AND "c"."movcodsuc" = '21'
 GROUP BY "c"."movfecliq", "c"."movtpta", "c"."movcodcli", "c"."movcodsuc", "c"."movcomer", "c"."movfcre";
-
+--------casos cybersource
 /*los que inician con dinelco_00111111 -> su main id es: dinelco_checkout
 los que inician con dinelco_link_0011111 -> su main id es: dinelco_link
 los que inician con dinelco_mf_0011111 -> su main id es: dinelco_mf
@@ -933,30 +953,80 @@ los que inician con dinelco_da_0011111 - > su main id es: dinelco_debitoauto
 dinelco_0012300xxxxx (codigo de cliente de documenta), corresponde al main id dinelco_documeta*/
 
 SELECT * FROM public.MERCHANTS M;
-SELECT * FROM public.CYBERSOURCE_MERCHANT_INFO CMI WHERE CMI.CS_ID='dinelco_001911800001';
-SELECT * FROM public.COMERCIOS C WHERE C.CYBERSOURCE_MERCHANT_ID='dinelco_mf_001969000025';
---cybersource_private_key LIKE 'PkfXvl09xZcRnrvsM27mffUIJ1kbIm/g1AkqMZZ6GJc=' AND cybersource_public_key LIKE '1296f5f5-3336-43ee-bfe2-45a7a5867c47'
+SELECT * FROM public.CYBERSOURCE_MERCHANT_INFO CMI WHERE CMI.CS_ID='dinelco_link_002788800001';
 
-select * from merchants m join
-cybersource_merchant_info cmi on m.cs_merchant_id = cmi.id;
+SELECT * FROM public.MERCHANTS M INNER JOIN public.CYBERSOURCE_MERCHANT_INFO CMI ON M.CS_MERCHANT_ID = CMI.ID;
 
+SELECT * FROM public.COMERCIOS C WHERE C.CYBERSOURCE_MERCHANT_ID='dinelco_link_002788800001';
 
-select * from usuarios u
-join personas_fisicas pf on pf.id = u.persona_fisica_id
-where pf.nro_documento = '3519140';
+SELECT * FROM EMPRESAS_CLIENTES EC WHERE EC.ID=749;
+SELECT * FROM EMPRESAS_CLIENTES_BEPSA ECB WHERE ECB.ID=749;
+SELECT * FROM public.EMPRESAS_CLIENTES EC WHERE EC.ID_INTERNO='12300';
+SELECT * FROM public.COMERCIOS C WHERE C.EMPRESA_CLIENTE_ID IN ('bc7711b5-9338-46e5-a8ea-395f47458f14', '87523d23-97ae-46f4-b222-79494fce94d4')
 
-select * from personas_fisicas where nro_documento = '4018059';
+---hallar v1 BASE DE DATOS PAGO DIGITAL
+select c.id as v1Id, c.* from comercios c where c.cybersource_merchant_id  = 'dinelco_link_002784700001';
 
-SELECT * from public.COMERCIOS C where C.ID_INTERNO='6500299';
-
-select * from merchants m join cybersource_merchant_info cmi
-on m.cs_merchant_id = cmi.id;
-
-select * from comercios c where c.id = '1a944f23-fddf-49ef-a131-3c4c71454c8a';
 --inactivar activar comercio 3ds
 SELECT * from public.COMERCIOS C WHERE C.ID_INTERNO='5500339';
 --se busca el idinterno y con su id en merchands
 SELECT * FROM public.MERCHANTS M WHERE M.V1_ID='91e96aae-c7fb-423b-9360-18c8e1a99639';
 
+select operacion_fech_trans, * from busdatos_transacciones bt where bt.operacion_rrnbepsa in ('503643911066', '565503562473');
 
-select * from configuraciones c where comercio_id  = '4836af84-c439-4801-86fd-bd79cbafac62'
+select * from sucursales_bepsa_db2 sbd where sbd.cocomer_pago_digital like '%5700268%';
+-- update sucursales_bepsa_db2 set cocomer_pago_digital = '5700268' where cocomer_pago_digital like '%5700268%';
+
+select * from payer_auth_results par join merchants m ON m.id = par.merchat_id where m.v1_id = 'ef0c8ca9-b573-42b7-a306-d7271f166465' and par.created_at > '2025-03-12'
+
+select * from comercios c where nombre like '%EPEM%';
+select * from comercios c where nombre like '%MF%';
+select * from ordenes_pago op where op.COMERCIO_ID = 'fc348bf4-043d-42ff-b06f-5f3a677066c0' AND op.ESTADO='NUEVO';
+---reporte solicitudes de acceso
+SELECT OAR.USER_NAME NOMBRE, OAR.USER_LASTNAME APELLIDO, OAR.DOCUMENT_NUMBER DOCUMENTO,
+OAR.USER_EMAIL CORREO, OAR.COMPANY_RUC RUC, ECB.DESCRIPCION_BEPSA RAZON_SOCIAL, OAR.REQUEST_STATUS ESTADO, OAR.CREATED_AT FEHCA_HORA_SOLICITUD
+       FROM public.ONBOARDING_ACCESS_REGISTRATION OAR
+INNER JOIN PUBLIC.EMPRESAS_CLIENTES EC ON EC.ID = OAR.EMPRESA_ID
+INNER JOIN PUBLIC.EMPRESAS_CLIENTES_BEPSA ECB ON ECB.ID = EC.EMPRESA_CLIENTE_BEPSA_ID;
+
+SELECT * FROM public.ONBOARDING_ACCESS_REGISTRATION OAR;
+SELECT * FROM public.EMPRESAS_CLIENTES EC WHERE EC.ID=7728;
+SELECT * FROM public.EMPRESAS_CLIENTES_BEPSA ECB WHERE ID=7747;
+
+
+-- LISTAR TRX PARA ADELNATO
+select bt.operacion_fech_proc_transaccio::text as operacion_fech_proc_transaccio, "bt"."operacion_fech_insercion",
+"bt"."operacion_fech_trans", trim(bt.operacion_rrnbepsa) as operacion_rrnbepsa, "bt"."operacion_cod_comercio",
+"bt"."operacion_denom_comercial", "bt"."operacion_cod_sucursal", "bt"."operacion_desc_sucursal",
+"bt"."operacion_cod_marc_tarjeta", "bt"."operacion_cod_servicio", "bt"."operacion_tip_uso_tarjeta",
+"bt"."operacion_est_reversa", "bt"."operacion_cod_retorno", "bt"."operacion_est_fn_transaccion", *
+from "busdatos_transacciones" as "bt"
+where
+"bt"."operacion_est_reversa" = 'N'
+and "bt"."operacion_tip_uso_tarjeta" = 'C'
+and "bt"."operacion_cod_servicio" = 'COMPRA'
+and "bt"."operacion_cod_retorno" = '00'
+and "bt"."operacion_est_fn_transaccion" = 'A'
+and "bt"."operacion_cod_comercio" = '52'
+and "bt".operacion_fech_proc_transaccio >= current_date
+and "bt"."operacion_cod_sucursal" = '1'
+-- and "bt"."operacion_rrnbepsa" in ('501132556975', '501132742637', '501132549982', '501132574572');
+-- and "bt"."operacion_rrnbepsa" not in ('501132556975', '501132742637') -- rrns que esten en la tabla advance_accreditations con misma fecha de proceso
+order by "operacion_fech_trans" ASC limit 5;
+
+
+SELECT * FROM public.BUSDATOS_TRANSACCIONES BT WHERE BT.OPERACION_RRNBEPSA
+IN ('508164120109', '508163898611', '508163941024', '508164005264', '508163917629', '508163928827', '508163949701', '508163966188', '508163941823', '508163821027', '508164040912', '508163975302', '508163902790', '508163914643', '508164234089', '508163926148', '508163939247', '508164127670', '508163986868', '508163977923', '508164215554', '508163973533', '508163979775', '508164140192', '508163969039', '508164134961', '568104038181')
+;
+
+select * from empresas_clientes ec
+join empresas_clientes_bepsa ecb on ecb.id = ec.empresa_cliente_bepsa_id
+join comercios c on c.empresa_cliente_id = ec.id
+join sucursales s on s.comercio_id = c.id
+join sucursales_bepsa_db2 sbd on sbd.id = s.sucursal_bepsa_db2_id
+where ecb.cod_cliente_bepsa = '24625';
+
+select * from ordenes_pago where referencia = 'COMPANIA-ADMINISTRADORA-DE-RIESGOS-SA-CARSA-CI-4840284-CUOTA-10225-1';
+select * from ordenes_pago where referencia ilike '%COMPANIA-ADMINISTRADORA-DE-RIESGOS-SA-CARSA-CI%';
+
+SELECT * FROM public.COMERCIOS C WHERE C.ID='1a944f23-fddf-49ef-a131-3c4c71454c8a';

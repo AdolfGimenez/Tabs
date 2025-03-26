@@ -80,9 +80,9 @@ select * from marcas.transactions_visa where report_date >= '11JAN25';
 SELECT * from marcas.mastercard_switch order by mastercard_switch.REPORT_WORK_OF DESC; --where REPORT_WORK_OF >= '02/01/24';
 /*tablas marcas
 Para SWITCH
-delete from marcas.mastercard_switch where report_work_of >= '12/21/24';
+delete from marcas.mastercard_switch where report_work_of = '03/11/25';
 Para MST DUAL
-delete from marcas.transactions where fecha = '2024-12-21';
+delete from marcas.transactions where fecha = '2025-03-19';
 Para VISA
 delete from marcas.transactions_visa where report_date >= '11JAN25';
 ---MST
@@ -198,7 +198,7 @@ where
 	datname = 'asientos'
 	and pid <> pg_backend_pid()
 	--and state <> 'active'
-	--AND usename = 'usrclt'
+	--AND usename = 'usr_asiento'
 order by state;
 
 SELECT pg_terminate_backend(36803);
@@ -426,7 +426,7 @@ FROM asientos.datos.GXFINDTA_TCMCLI T join asientos.datos.GXFINDTA_TCMSUC G on T
 WHERE g.SUCCORREO is NOT NULL;
 ----------------------------------------------------------------------
 ----para liquidacion en excel
-SELECT --C.MOVRRNBEP                                                                                                        REFERENCIA,
+SELECT C.MOVRRNBEP                                                                                                        REFERENCIA,
        C.MOVCODCLI                                                                                                        CLIENTE,
        C.MOVCODSUC                                                                                                        SUCURSAL,
        C.MOVCOMER                                                                                                         CODIGO_COMERCIO,
@@ -437,7 +437,7 @@ SELECT --C.MOVRRNBEP                                                            
           AND F.SUCURSALID = C.MOVCODSUC
           AND F.STATUSID LIKE '%APROBADO%'
           AND F.TARGETFACTID = 'FactComercios'
-          AND F.PERIODOID = '01'
+          AND F.PERIODOID = '02'
           AND F.EJERCICIOID = '2025')                                                                                      COMPROBANTE,
        (SELECT T.SUCDIRECC FROM DATOS.GXFINDTA_TCMSUC T WHERE T.CLICLICOD = C.MOVCODCLI AND T.SUCSUCCOD = C.MOVCODSUC)     DIRECCION_SUC,
        C.MOVFTRX                                                                                                           FECHA_TRX,
@@ -451,16 +451,16 @@ SELECT --C.MOVRRNBEP                                                            
        SUM(C.MOVRENT)                                                                                                      IMPORTERENTA,
        SUM(C.MOVIVREN)                                                                                                     IMPORTEIVARENTA,
        SUM(C.MOVNETO)                                                                                                      IMPORTENETO
-FROM FACTURACIONBEPSA.TCLMOV_TMP_COMERCIOS_202501_FACTCOMERCIOS C
+FROM FACTURACIONBEPSA.TCLMOV_TMP_COMERCIOS_202502_FACTCOMERCIOS C
 --WHERE movopde = 700405 --para operadoras
-WHERE C.MOVCODCLI IN (SELECT C.CLICLICOD FROM DATOS.GXFINDTA_TCMCLI C WHERE C.CLIRUC LIKE '%80022877%')
+WHERE C.MOVCODCLI IN (SELECT C.CLICLICOD FROM DATOS.GXFINDTA_TCMCLI C WHERE C.CLIRUC LIKE '%80077406%')
 --AND C.MOVCODSUC=1
 -- NOT IN ('1', '8')
-GROUP BY C.MOVCODCLI, C.MOVCODSUC, C.MOVCOMER, C.MOVDENO, C.MOVFTRX, C.MOVFPRO, C.MOVFCRE, C.MOVTPTA --,C.MOVRRNBEP
+GROUP BY C.MOVCODCLI, C.MOVCODSUC, C.MOVCOMER, C.MOVDENO, C.MOVFTRX, C.MOVFPRO, C.MOVFCRE, C.MOVTPTA ,C.MOVRRNBEP
 ORDER BY C.MOVCODCLI, C.MOVCODSUC, C.MOVFTRX, C.MOVFPRO, C.MOVFCRE;
 -------------------------
-SELECT * FROM asientos.facturacionbepsa.CLIENTE C WHERE  C.CLIENTERUC='80109406';
-SELECT * FROM asientos.facturacionbepsa.SUCURSAL S WHERE S.CLIENTEID=26929;
+SELECT * FROM asientos.facturacionbepsa.CLIENTE C WHERE C.CLIENTEID=11373  C.CLIENTERUC='80097276';
+SELECT * FROM asientos.facturacionbepsa.SUCURSAL S WHERE S.CLIENTEID=13637;
 ------------------------- reporte modelo pdf
 SELECT C.movrrnbep                                                                                                         Id_Transac,
        C.MOVFTRX                                                                                                           FECHA_TRANS,
@@ -2954,13 +2954,6 @@ SELECT * FROM asientos.facturacionbepsa.NCREDITO N WHERE N.NCREDITOCOMPROBANTESE
 select * from asientos.tclmov_asientos_trx where asiento_k2b_numero = '89300';
 
 SELECT * from facturacionbepsa.fn_insert_reccobro();
-
-SELECT * FROM asientos.facturacionbepsa.FACVENTA F WHERE F.FACVENTACOMPROBANTESET='001-003-0095538' AND F.TARGETFACTID='FACTALQPOS';
-SELECT * FROM asientos.facturacionbepsa.NCREDITO N WHERE N.NCREDITOCOMPROBANTESET='001-001-0005135';
-
-CREATE TABLE PUBLIC.SOLICITUDESs AS
-    (SELECT * FROM asientos.facturacionbepsa.FACVENTA F
-WHERE F.EJERCICIOID=2024 and F.PERIODOID=10 AND F.STATUSID='DTE_APROBADO'); --==16282
 -----update pdf y xml nulos
 UPDATE ASIENTOS.FACTURACIONBEPSA.FACVENTA
 SET FACVENTASIRIUSPDFPATH = '/opt/fe/KuDE/' ||
@@ -2974,8 +2967,8 @@ SET FACVENTASIRIUSPDFPATH = '/opt/fe/KuDE/' ||
                            TO_CHAR(FACVENTAFECHA, 'YYYYMMDD') || '/FE/FE_' || -- Día (del noveno al décimo carácter)
                            FACVENTACOMPROBANTESET || '.xml'
 WHERE STATUSID = 'DTE_APROBADO'
-  AND TARGETFACTID = 'FACTALQPOS'
-    --FACVENTAFECHA >= '2025-01-01'
+  --AND TARGETFACTID = 'INSTABNF'
+  --FACVENTAFECHA >= '2025-01-01'
   AND FACVENTASIRIUSPDFPATH IS NULL;
 
 DROP TABLE
@@ -3558,10 +3551,24 @@ where p.parmid ='setRetencionesEventos' and p.parmserial ='cambiarValorFacVentaI
 select * from facturacionbepsa.parametros p
 where p.parmid ='setRetencionesEventos' and p.parmserial ='valorInicialFacVentaID';--LONGITUD PARA ENVVIO
 ---------------------------------------------------------------------------------------------------------
+SELECT *
+FROM ASIENTOS.FACTURACIONBEPSA.FACVENTA F
+WHERE F.FACVENTAFECHA = '2025-03-06'
+  AND EJERCICIOID = 2025
+  AND F.PERIODOID = 3
+  AND F.TARGETFACTID = 'FACTALQPOS'
+  AND F.STATUSID = 'DE_RECHAZADO';
 
-select * from asientos.facturacionbepsa.FACVENTA F WHERE F.FACVENTACOMPROBANTESET IN (
-'001-002-0668905','001-002-0653646' , '001-002-0668904');
+SELECT * FROM asientos.facturacionbepsa.SUCURSAL C WHERE C.CLIENTEID=10840;
 
-SELECT * from asientos.facturacionbepsa.FACVENTA F WHERE F.CLIENTEID=11048 AND F.EJERCICIOID=2024;
+select * FROM asientos.facturacionbepsa.FACVENTA F WHERE FACVENTAFECHA = '2025-03-18'
+AND EJERCICIOID = 2025 AND F.PERIODOID = 3  AND F.STATUSID = 'formulario';-- and F.TARGETFACTID='PROCENTI';
+SELECT * from asientos.facturacionbepsa.FACVENTA F where F.FACVENTACLIRUC='80051574-9';
 
-select * from asientos.facturacionbepsa.FACVENTA F where F.FACVENTACOMPROBANTESET='001-002-0275757'
+SELECT * FROM asientos.facturacionbepsa.FACVENTA F WHERE F.EJERCICIOID=2025 AND F.PERIODOID=02
+AND F.CLIENTEID=13110 AND STATUSID='DTE_APROBADO';
+
+select * FROM asientos.facturacionbepsa.FACVENTA F WHERE F.FACVENTACOMPROBANTESET='001-003-0218280';
+
+SELECT facventatotalcomprobml, F.* FROM asientos.facturacionbepsa.FACVENTA F WHERE F.EJERCICIOID=2025 AND F.PERIODOID=03
+AND F.FACVENTAFECHA='2025-03-21' AND TARGETFACTID='FactComercios';
