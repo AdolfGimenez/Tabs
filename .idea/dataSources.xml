@@ -152,7 +152,7 @@
       <synchronize>true</synchronize>
       <schema-control>AUTOMATIC</schema-control>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://10.1.254.52:5432/pagos_digitales_db</jdbc-url>
+      <jdbc-url>jdbc:postgresql://10.1.254.52:5432/postgres</jdbc-url>
       <jdbc-additional-properties>
         <property name="database.postgres.introspect.system.schemas" value="true" />
       </jdbc-additional-properties>

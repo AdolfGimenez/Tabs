@@ -953,11 +953,11 @@ los que inician con dinelco_da_0011111 - > su main id es: dinelco_debitoauto
 dinelco_0012300xxxxx (codigo de cliente de documenta), corresponde al main id dinelco_documeta*/
 
 SELECT * FROM public.MERCHANTS M;
-SELECT * FROM public.CYBERSOURCE_MERCHANT_INFO CMI WHERE CMI.CS_ID='dinelco_link_002788800001';
+SELECT * FROM public.CYBERSOURCE_MERCHANT_INFO CMI WHERE CMI.CS_ID='dinelco_001230000034';
 
 SELECT * FROM public.MERCHANTS M INNER JOIN public.CYBERSOURCE_MERCHANT_INFO CMI ON M.CS_MERCHANT_ID = CMI.ID;
 
-SELECT * FROM public.COMERCIOS C WHERE C.CYBERSOURCE_MERCHANT_ID='dinelco_link_002788800001';
+SELECT * FROM public.COMERCIOS C WHERE C.CYBERSOURCE_MERCHANT_ID='dinelco_001230000034';
 
 SELECT * FROM EMPRESAS_CLIENTES EC WHERE EC.ID=749;
 SELECT * FROM EMPRESAS_CLIENTES_BEPSA ECB WHERE ECB.ID=749;
@@ -965,7 +965,7 @@ SELECT * FROM public.EMPRESAS_CLIENTES EC WHERE EC.ID_INTERNO='12300';
 SELECT * FROM public.COMERCIOS C WHERE C.EMPRESA_CLIENTE_ID IN ('bc7711b5-9338-46e5-a8ea-395f47458f14', '87523d23-97ae-46f4-b222-79494fce94d4')
 
 ---hallar v1 BASE DE DATOS PAGO DIGITAL
-select c.id as v1Id, c.* from comercios c where c.cybersource_merchant_id  = 'dinelco_link_002784700001';
+select c.id as v1Id, c.* from comercios c where c.cybersource_merchant_id  = 'dinelco_001230000034';
 
 --inactivar activar comercio 3ds
 SELECT * from public.COMERCIOS C WHERE C.ID_INTERNO='5500339';
@@ -1029,4 +1029,8 @@ where ecb.cod_cliente_bepsa = '24625';
 select * from ordenes_pago where referencia = 'COMPANIA-ADMINISTRADORA-DE-RIESGOS-SA-CARSA-CI-4840284-CUOTA-10225-1';
 select * from ordenes_pago where referencia ilike '%COMPANIA-ADMINISTRADORA-DE-RIESGOS-SA-CARSA-CI%';
 
-SELECT * FROM public.COMERCIOS C WHERE C.ID='1a944f23-fddf-49ef-a131-3c4c71454c8a';
+select
+ ecb.cod_cliente_bepsa, ec.pago_digital_suscripcion_key, ec.*
+from
+ empresas_clientes ec join empresas_clientes_bepsa ecb on ec.empresa_cliente_bepsa_id = ecb.id
+where  ec.pago_digital_suscripcion_key ilike '%*%' and ec.pago_digital_suscripcion_key ilike '%_***_%';

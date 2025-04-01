@@ -96,3 +96,11 @@ select LFDocCod from gth.rhmliqfin where funcnro = 4345348;
 SELECT * FROM gth.gdc002 g WHERE TRIM(doccodchr) = '4345348';
 
 select * from gth.rhmliqfin order by lffechliq desc;
+
+
+
+DELETE FROM gth.rhemple
+where funcnro = 4196976;
+
+delete FROM gth.rhm100
+where PersoNro = 4196976;
