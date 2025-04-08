@@ -842,7 +842,7 @@ B.RETTXTPRO,B.RETNROCMP NRO_COMPROBANTE,A.SETFECAC FECHA_ACT,A.SETUSUAC USUARIO
     FROM GXFINDTA.TCLSET A
          left JOIN GXFINDTA.TCLRET B
               ON A.SETIDRET = B.RETIDRET
-WHERE A.SETFECPRO BETWEEN '20241101' AND '20241130';
+WHERE A.SETFECPRO BETWEEN '20250301' AND '20250315';
 
 SELECT * from gxfindta.tclset t
 WHERE t.SETFECPRO BETWEEN '20241001' AND '20241031';
@@ -971,6 +971,15 @@ SELECT * FROM GXBDBPS.NUT999 n WHERE DBGOBJID IN ('BLOQTARJ', 'BLOQTARJMST') AND
 SELECT * FROM GXBDBPS.TRXAUDMON t WHERE TRXAUDMSJ LIKE '%5462970000092076%';
 --546297******2076
 ------------------------------------------------------------------------------------------------------
+--tabla resumen para alquiler de pos
 SELECT * FROM GXFINDTA.TCMTIF T WHERE CASCODIGO=2;
---detalle del 2
+--detalle del cascodigo = 2
 SELECT * FROM GXFINDTA.TCMCAS T;
+------------------------------------
+----PARA VER CONFIGURACIÓN DE RENTA IVA RENTA
+--REING
+--PARA QUITAR VERN PANTALLA REING: https://portal.bepsa.com.py/accesobepsa/servlet/finanzas.tcmsucww
+--lupita = https://portal.bepsa.com.py/accesobepsa/servlet/finanzas.tcmsucview?1,3,  e impuestos
+SELECT T.* FROM GXFINDTA.TCMIMP T WHERE T.CLICLICOD=26929 AND T.SUCSUCCOD IN (12,10,16,17,24,18);
+--legacy
+SELECT CORETEN, COFRENT, COFIVA, C2.* FROM GXBDBPS.COMAEAF C2 WHERE C2.COCOMER=5500423;

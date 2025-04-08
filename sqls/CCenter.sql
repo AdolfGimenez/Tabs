@@ -426,7 +426,7 @@ FROM asientos.datos.GXFINDTA_TCMCLI T join asientos.datos.GXFINDTA_TCMSUC G on T
 WHERE g.SUCCORREO is NOT NULL;
 ----------------------------------------------------------------------
 ----para liquidacion en excel
-SELECT C.MOVRRNBEP                                                                                                        REFERENCIA,
+SELECT --C.MOVRRNBEP                                                                                                        REFERENCIA,
        C.MOVCODCLI                                                                                                        CLIENTE,
        C.MOVCODSUC                                                                                                        SUCURSAL,
        C.MOVCOMER                                                                                                         CODIGO_COMERCIO,
@@ -437,7 +437,7 @@ SELECT C.MOVRRNBEP                                                              
           AND F.SUCURSALID = C.MOVCODSUC
           AND F.STATUSID LIKE '%APROBADO%'
           AND F.TARGETFACTID = 'FactComercios'
-          AND F.PERIODOID = '02'
+          AND F.PERIODOID = '03'
           AND F.EJERCICIOID = '2025')                                                                                      COMPROBANTE,
        (SELECT T.SUCDIRECC FROM DATOS.GXFINDTA_TCMSUC T WHERE T.CLICLICOD = C.MOVCODCLI AND T.SUCSUCCOD = C.MOVCODSUC)     DIRECCION_SUC,
        C.MOVFTRX                                                                                                           FECHA_TRX,
@@ -451,12 +451,12 @@ SELECT C.MOVRRNBEP                                                              
        SUM(C.MOVRENT)                                                                                                      IMPORTERENTA,
        SUM(C.MOVIVREN)                                                                                                     IMPORTEIVARENTA,
        SUM(C.MOVNETO)                                                                                                      IMPORTENETO
-FROM FACTURACIONBEPSA.TCLMOV_TMP_COMERCIOS_202502_FACTCOMERCIOS C
+FROM FACTURACIONBEPSA.TCLMOV_TMP_COMERCIOS_202503_FACTCOMERCIOS C
 --WHERE movopde = 700405 --para operadoras
-WHERE C.MOVCODCLI IN (SELECT C.CLICLICOD FROM DATOS.GXFINDTA_TCMCLI C WHERE C.CLIRUC LIKE '%80077406%')
---AND C.MOVCODSUC=1
+WHERE C.MOVCODCLI IN (SELECT C.CLICLICOD FROM DATOS.GXFINDTA_TCMCLI C WHERE C.CLIRUC LIKE '%80097276%')
+AND C.MOVCODSUC=1
 -- NOT IN ('1', '8')
-GROUP BY C.MOVCODCLI, C.MOVCODSUC, C.MOVCOMER, C.MOVDENO, C.MOVFTRX, C.MOVFPRO, C.MOVFCRE, C.MOVTPTA ,C.MOVRRNBEP
+GROUP BY C.MOVCODCLI, C.MOVCODSUC, C.MOVCOMER, C.MOVDENO, C.MOVFTRX, C.MOVFPRO, C.MOVFCRE, C.MOVTPTA --,C.MOVRRNBEP
 ORDER BY C.MOVCODCLI, C.MOVCODSUC, C.MOVFTRX, C.MOVFPRO, C.MOVFCRE;
 -------------------------
 SELECT * FROM asientos.facturacionbepsa.CLIENTE C WHERE C.CLIENTEID=11373  C.CLIENTERUC='80097276';
@@ -552,9 +552,9 @@ SELECT --*
     F.TIPOCLIENTEID,
     F.STATUSID, count(F.FACVENTANUMERO)
 FROM FACTURACIONBEPSA.FACVENTA F
-where F.TARGETFACTID = 'FactComercios'
+where F.TARGETFACTID = 'FACTALQPOS'
 AND F.TIPOCLIENTEID = 'Comercio'
-AND F.FACVENTAFECHA = '2025-03-31'
+AND F.FACVENTAFECHA = '2025-04-04'
 GROUP BY F.TARGETFACTID,
     F.TIPOCLIENTEID,
     F.STATUSID;
@@ -3608,3 +3608,13 @@ AND F.STATUSID='DTE_APROBADO';
 
 SELECT * FROM asientos.facturacionbepsa.FACVENTA F WHERE F.EJERCICIOID=2025
 AND F.STATUSID='DTE_APROBADO' AND facventasiriusid ISNULL ;
+
+--2003coopal.ltda@gmail.com
+SELECT * FROM DATOS.GXBDBPS_COMAEAF C2 WHERE C2.CORUCN='80025769-3';
+SELECT * FROM DATOS.GXFINDTA_TCMSUC T WHERE T.CLICLICOD=11447;
+
+SELECT * FROM asientos.facturacionbepsa.SUCURSAL C WHERE C.CLIENTEID=11447;
+
+SELECT * FROM asientos.facturacionbepsa.CLIENTE C WHERE clienteruc='3559113';
+--emoran8918@gmail.com
+SELECT * FROM DATOS.GXFINDTA_TCMCLI GT WHERE GT.CLIRUC='3559113';

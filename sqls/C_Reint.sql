@@ -62,7 +62,7 @@ FROM (SELECT CONCAT('CL: CALL PGM(GXFINPGM/PCLR028) PARM',(CONCAT ((CONCAT ((CON
       FROM (SELECT OPIDLIQ,AUTTRXFCHC,AUTRRNBEP
             FROM GXBDBPS.TSWAUT AS A
               LEFT JOIN GXOPERA.OPLIQUI AS B ON A.AUTRRNBEP = B.OPNROREF
-            WHERE AUTRRNBEP IN ('508364994619   ', '508365109097   ', '508465326984   ', '508465473665   ')));
+            WHERE AUTRRNBEP IN ('509068644893')));
 ------------------------------------------------------------------------------------------------------------------------------------
 CL: CALL PGM(GXFINPGM/PCLR028) PARM('22081707308003' '222987112331  ' '20220912');--para masivo.!
 /*pero trx con la 703002 en comercios que pagamos via Continental (itau, vision, sudameris, etc) debe llegar hasta transmisiones

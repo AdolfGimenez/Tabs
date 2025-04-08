@@ -10,11 +10,12 @@ select now();/*ver la hora de la db*/
 SET global general_log = 1; /*activar log*/
 SELECT version(); -- ver version mysql
  #para ver tamaño de tablas
- SELECT t.table_schema,
-   t.table_name tablas,
-   round(((t.data_length + t.index_length) / 1024 / 1024), 2) "Tamaño en MB"
+/*--**Tamaño de Tablas en la BD**--*/
+SELECT t.table_schema AS "BD",
+   t.table_name AS "Tabla",
+   ROUND((t.data_length + t.index_length) / 1024 / 1024, 2) AS "Tamaño en MB",
+   ROUND((t.data_length + t.index_length) / 1024 / 1024 / 1024, 2) AS "Tamaño en GB"
 FROM information_schema.TABLES t
-/*WHERE table_schema = "redmine"*/
 ORDER BY (t.data_length + t.index_length) DESC;
 #--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 /*Sentencia para actualización de fechas de Activo Fijo K2B*/
@@ -697,7 +698,7 @@ UPDATE k2b_prod.BIENACTIVOFIJO B
 SET BienActivoFijoProveedorId=43354
 WHERE BienActivoFijoProveedorId=1640 AND B.BIENACTIVOFIJOFECHACOMIENZOUSO='2024-12-23';
 
-SELECT * FROM K2B_PROD.WFLIC W;
+SELECT * FROM K2B_PREPROD.WFLIC W;
 SELECT * FROM k2b_prod.APLICACION A;
 SELECT * FROM K2B_PREPROD.APLICACION A;
 SELECT * FROM k2b_prod.K2BPARAMETROS K2B;
@@ -712,5 +713,160 @@ SELECT * FROM k2b_prod.INVENTARIOACTIVOFIJO I WHERE I.INVACTIVOFIJOID IN (155676
 SELECT * FROM k2b_prod.MOVIMIENTOACTIVOFIJOINVENTARIO M WHERE M.MOVACTIVOFIJOID IN (155676, 156205);
 
 select time (NOW()) as hora;
---------------------------
-SELECT * FROM k2b_prod.BIENACTIVOFIJO B WHERE BienActivoFijoNumeroSerie LIKE '%PEND%'
+#--------------------------
+SELECT * FROM k2b_prod.BIENACTIVOFIJO B WHERE BienActivoFijoNumeroSerie LIKE '%PEND%';
+
+select direcciondescripcion, direccionid from direccion;
+select tipodocumentopersonadescripcio, tipodocumentopersonacodigo from tipodocumentopersona;
+select personanombre, personadocumento from persona;
+#------------------------------------------------
+SELECT * FROM k2b_prod.ALOAD A;
+
+-- Tabla de auditoría
+CREATE TABLE IF NOT EXISTS K2B_PROD.AuditoriaAsientoContable (
+    auditoria_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    operacion_tipo ENUM('INSERT', 'UPDATE', 'DELETE') NOT NULL,
+    asiento_id BIGINT,
+    usuario_ejecutor VARCHAR(100),
+    ip_conexion VARCHAR(50),
+    fecha_hora DATETIME NOT NULL,
+    query_ejecutada TEXT,
+    datos_anteriores JSON,
+    datos_nuevos JSON,
+    descripcion VARCHAR(500)
+) ENGINE=InnoDB;
+
+-- Trigger para INSERT
+DELIMITER //
+CREATE TRIGGER tr_asientocontable_after_insert
+AFTER INSERT ON AsientoContable
+FOR EACH ROW
+BEGIN
+    INSERT INTO AuditoriaAsientoContable (
+        operacion_tipo,
+        asiento_id,
+        usuario_ejecutor,
+        ip_conexion,
+        fecha_hora,
+        query_ejecutada,
+        datos_nuevos,
+        descripcion
+    ) VALUES (
+        'INSERT',
+        NEW.ASIENTOID,
+        SUBSTRING_INDEX(USER(), '@', 1),
+        -- En MySQL 5.6 no hay forma directa de obtener la IP del cliente desde un trigger
+        -- Esta parte obtiene el hostname del servidor
+        SUBSTRING_INDEX(USER(), '@', -1),
+        NOW(),
+        -- No hay forma directa de obtener la query ejecutada en un trigger
+        -- Podrías usar una variable de sesión si la aplicación la setea antes
+        NULL,
+        JSON_OBJECT(
+            'ASIENTONUMERO', NEW.ASIENTONUMERO,
+            'ASIENTOFECHA', NEW.ASIENTOFECHA,
+            'ASIENTOFECHAHORAINGRESO', NEW.ASIENTOFECHAHORAINGRESO,
+            'ASIENTOESTADO', NEW.ASIENTOESTADO,
+            'ASIENTOESTADOPROCESO', NEW.ASIENTOESTADOPROCESO,
+            'ASIENTOOBSERVACIONES', NEW.ASIENTOOBSERVACIONES,
+            'ASIENTOEMPID', NEW.ASIENTOEMPID,
+            'ASIENTOUSUARIOCODIGO', NEW.ASIENTOUSUARIOCODIGO,
+            'TIPOASIENTOCODIGO', NEW.TIPOASIENTOCODIGO,
+            'ASIENTONUMERODIARIO', NEW.ASIENTONUMERODIARIO
+            -- Puedes agregar más campos según necesidad
+        ),
+        CONCAT('Inserción de asiento contable #', NEW.ASIENTONUMERO)
+    );
+END//
+DELIMITER ;
+
+-- Trigger para UPDATE
+DELIMITER //
+CREATE TRIGGER tr_asientocontable_after_update
+AFTER UPDATE ON AsientoContable
+FOR EACH ROW
+BEGIN
+    INSERT INTO AuditoriaAsientoContable (
+        operacion_tipo,
+        asiento_id,
+        usuario_ejecutor,
+        ip_conexion,
+        fecha_hora,
+        query_ejecutada,
+        datos_anteriores,
+        datos_nuevos,
+        descripcion
+    ) VALUES (
+        'UPDATE',
+        NEW.ASIENTOID,
+        SUBSTRING_INDEX(USER(), '@', 1),
+        SUBSTRING_INDEX(USER(), '@', -1),
+        NOW(),
+        NULL,
+        JSON_OBJECT(
+            'ASIENTONUMERO', OLD.ASIENTONUMERO,
+            'ASIENTOFECHA', OLD.ASIENTOFECHA,
+            'ASIENTOFECHAHORAINGRESO', OLD.ASIENTOFECHAHORAINGRESO,
+            'ASIENTOESTADO', OLD.ASIENTOESTADO,
+            'ASIENTOESTADOPROCESO', OLD.ASIENTOESTADOPROCESO,
+            'ASIENTOOBSERVACIONES', OLD.ASIENTOOBSERVACIONES,
+            'ASIENTOEMPID', OLD.ASIENTOEMPID,
+            'ASIENTOUSUARIOCODIGO', OLD.ASIENTOUSUARIOCODIGO,
+            'TIPOASIENTOCODIGO', OLD.TIPOASIENTOCODIGO,
+            'ASIENTONUMERODIARIO', OLD.ASIENTONUMERODIARIO
+        ),
+        JSON_OBJECT(
+            'ASIENTONUMERO', NEW.ASIENTONUMERO,
+            'ASIENTOFECHA', NEW.ASIENTOFECHA,
+            'ASIENTOFECHAHORAINGRESO', NEW.ASIENTOFECHAHORAINGRESO,
+            'ASIENTOESTADO', NEW.ASIENTOESTADO,
+            'ASIENTOESTADOPROCESO', NEW.ASIENTOESTADOPROCESO,
+            'ASIENTOOBSERVACIONES', NEW.ASIENTOOBSERVACIONES,
+            'ASIENTOEMPID', NEW.ASIENTOEMPID,
+            'ASIENTOUSUARIOCODIGO', NEW.ASIENTOUSUARIOCODIGO,
+            'TIPOASIENTOCODIGO', NEW.TIPOASIENTOCODIGO,
+            'ASIENTONUMERODIARIO', NEW.ASIENTONUMERODIARIO
+        ),
+        CONCAT('Actualización de asiento contable #', NEW.ASIENTONUMERO)
+    );
+END//
+DELIMITER ;
+
+-- Trigger para DELETE
+DELIMITER //
+CREATE TRIGGER tr_asientocontable_after_delete
+AFTER DELETE ON AsientoContable
+FOR EACH ROW
+BEGIN
+    INSERT INTO AuditoriaAsientoContable (
+        operacion_tipo,
+        asiento_id,
+        usuario_ejecutor,
+        ip_conexion,
+        fecha_hora,
+        query_ejecutada,
+        datos_anteriores,
+        descripcion
+    ) VALUES (
+        'DELETE',
+        OLD.ASIENTOID,
+        SUBSTRING_INDEX(USER(), '@', 1),
+        SUBSTRING_INDEX(USER(), '@', -1),
+        NOW(),
+        NULL,
+        JSON_OBJECT(
+            'ASIENTONUMERO', OLD.ASIENTONUMERO,
+            'ASIENTOFECHA', OLD.ASIENTOFECHA,
+            'ASIENTOFECHAHORAINGRESO', OLD.ASIENTOFECHAHORAINGRESO,
+            'ASIENTOESTADO', OLD.ASIENTOESTADO,
+            'ASIENTOESTADOPROCESO', OLD.ASIENTOESTADOPROCESO,
+            'ASIENTOOBSERVACIONES', OLD.ASIENTOOBSERVACIONES,
+            'ASIENTOEMPID', OLD.ASIENTOEMPID,
+            'ASIENTOUSUARIOCODIGO', OLD.ASIENTOUSUARIOCODIGO,
+            'TIPOASIENTOCODIGO', OLD.TIPOASIENTOCODIGO,
+            'ASIENTONUMERODIARIO', OLD.ASIENTONUMERODIARIO
+        ),
+        CONCAT('Eliminación de asiento contable #', OLD.ASIENTONUMERO)
+    );
+END//
+DELIMITER ;

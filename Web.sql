@@ -196,7 +196,7 @@ SELECT * FROM public.ROLES_X_USUARIOS RXU WHERE RXU.USUARIO_ID='998cc56c-994a-49
 INSERT INTO
     public.roles_x_usuarios (rol_id, usuario_id, insertado_el, modificado_el, activo, insertado_por, modificado_por) VALUES ( 1, 'bdaf16f0-d93c-4414-978a-ae1e8fd3b981', '2023-07-22 14:47:44.997312', '2023-07-22 14:47:44.997312', true, null, null);
 --AUTH_DB
-SELECT * FROM EQWEDI_AUTH_DB.PUBLIC.USUARIOS U WHERE U.NRO_DOCUMENTO='6533751';
+SELECT * FROM EQWEDI_AUTH_DB.PUBLIC.USUARIOS U WHERE U.NRO_DOCUMENTO='5245903';
 --U.CORREO LIKE 'cecilia.caballero@bepsa.com.py';
 
 SELECT t.* FROM public.refresh_tokens t WHERE t.USUARIO_ID='8b3e942c-abc7-45a9-9f53-c240e4020352';
@@ -206,7 +206,7 @@ SELECT * FROM public.PERSONAS_FISICAS PF where upper(apellido) = 'BENITEZ'; --PF
 SELECT * FROM public.USUARIOS U WHERE U.PERSONA_FISICA_ID IN (962);
 
 SELECT * FROM public.SOCKET_CLIENTS SC WHERE SC.USUARIO_ID='8b3e942c-abc7-45a9-9f53-c240e4020352';
-SELECT * FROM correos_principales_usuarios WHERE USUARIO_ID='8b3e942c-abc7-45a9-9f53-c240e4020352';
+SELECT * FROM correos_principales_usuarios WHERE USUARIO_ID='b4215ab2-c52f-41fa-b708-1cc0d56cdc0f';
 SELECT * FROM public.ROLES_X_USUARIOS RXU WHERE RXU.USUARIO_ID='8b3e942c-abc7-45a9-9f53-c240e4020352';
 SELECT * FROM public.USUARIOS_NIVELES_ACCESO UNA WHERE UNA.USUARIO_ID='8b3e942c-abc7-45a9-9f53-c240e4020352';
 SELECT * FROM public.USUARIOS_X_EMPRESAS UXE WHERE UXE.USUARIO_ID='8b3e942c-abc7-45a9-9f53-c240e4020352';
@@ -549,7 +549,7 @@ SELECT *
 FROM SUCURSALES_BEPSA_DB2 SBD
          INNER JOIN EMPRESAS_CLIENTES_BEPSA ECB ON SBD.CLIENTE_BEPSA_ID = ECB.ID
          INNER JOIN EMPRESAS_CLIENTES EC ON EC.EMPRESA_CLIENTE_BEPSA_ID = ECB.ID
-WHERE ECB.COD_CLIENTE_BEPSA IN ('24625');
+WHERE ECB.COD_CLIENTE_BEPSA IN ('10736');
 
 SELECT * FROM public.SUCURSALES_BEPSA_DB2 S WHERE S.CLIENTE_BEPSA_ID=7151;
 SELECT * FROM public.SUCURSALES S WHERE S.COMERCIO_ID=7168;
@@ -559,7 +559,7 @@ FROM SUCURSALES S
          INNER JOIN COMERCIOS C ON S.COMERCIO_ID = C.ID
          INNER JOIN EMPRESAS_CLIENTES EC ON C.EMPRESA_CLIENTE_ID = EC.ID
          INNER JOIN EMPRESAS_CLIENTES_BEPSA ECB ON EC.EMPRESA_CLIENTE_BEPSA_ID = ECB.ID
-WHERE ECB.COD_CLIENTE_BEPSA IN ('24625')
+WHERE ECB.COD_CLIENTE_BEPSA IN ('10736')
 ORDER BY SUCURSAL_BEPSA_DB2_ID;
 ----ver empresa
 SELECT ECB.COD_CLIENTE_BEPSA, EC.*
@@ -568,7 +568,7 @@ FROM EMPRESAS_CLIENTES EC
 --inner join personas_fisicas p1 on p1.persona_id = p.id
          INNER JOIN PERSONAS_JURIDICAS P1 ON P1.PERSONA_ID = P.ID
          INNER JOIN PUBLIC.EMPRESAS_CLIENTES_BEPSA ECB ON ECB.ID = EC.EMPRESA_CLIENTE_BEPSA_ID
-WHERE P1.RUC_NORMALIZADO IN ('80143665-6');
+WHERE P1.RUC_NORMALIZADO IN ('80011012-9');
 -------------VER COMERCIOS
 SELECT * FROM public.COMERCIOS C WHERE C.EMPRESA_CLIENTE_ID=8175;
 SELECT * FROM public.EMPRESAS_CLIENTES EC;
@@ -653,13 +653,13 @@ SELECT * FROM public.EMPRESAS_CLIENTES EC WHERE EC.NOMBRE LIKE '%Sere%';
 SELECT * FROM public.EMPRESAS_CLIENTES EC WHERE EC.ID_INTERNO='12300';
 
 
-SELECT * FROM public.USUARIOS U WHERE nro_documento='2025138';
+SELECT * FROM public.USUARIOS U WHERE nro_documento='1448578';
 ---USUARIO SIN NIVEL DE ACCESO | EMPRESA || QUITAR EL USER ID DESDE EL F12 DEL NAVEGADOR
-SELECT * FROM pocodi_db.public.USUARIOS U WHERE U.ID='6c3e6543-75da-43ff-a35e-c75044f93070';
-SELECT * FROM public.USUARIOS_NIVELES_ACCESO UNA WHERE UNA.USUARIO_ID='6c3e6543-75da-43ff-a35e-c75044f93070';
+SELECT * FROM pocodi_db.public.USUARIOS U WHERE U.ID='648745fb-3022-4210-aafb-61905ded7a90';
+SELECT * FROM public.USUARIOS_NIVELES_ACCESO UNA WHERE UNA.USUARIO_ID='648745fb-3022-4210-aafb-61905ded7a90';
 
 INSERT INTO PUBLIC.USUARIOS_NIVELES_ACCESO ( USUARIO_ID, NIVEL_ACCESO_ID, INSERTADO_EL)
-VALUES ( '6c3e6543-75da-43ff-a35e-c75044f93070', 2, CURRENT_TIMESTAMP);
+VALUES ( '648745fb-3022-4210-aafb-61905ded7a90', 2, CURRENT_TIMESTAMP);
 --------------- onboarding --------------
 select * from onboarding_access_registration oar; --WHERE OAR.USER_NAME ISNULL ;
 select * from onboarding_access_registration_detail oard;
@@ -953,11 +953,11 @@ los que inician con dinelco_da_0011111 - > su main id es: dinelco_debitoauto
 dinelco_0012300xxxxx (codigo de cliente de documenta), corresponde al main id dinelco_documeta*/
 
 SELECT * FROM public.MERCHANTS M;
-SELECT * FROM public.CYBERSOURCE_MERCHANT_INFO CMI WHERE CMI.CS_ID='dinelco_001230000034';
+SELECT * FROM public.CYBERSOURCE_MERCHANT_INFO CMI WHERE CMI.CS_ID='dinelco_001230000049';
 
 SELECT * FROM public.MERCHANTS M INNER JOIN public.CYBERSOURCE_MERCHANT_INFO CMI ON M.CS_MERCHANT_ID = CMI.ID;
 
-SELECT * FROM public.COMERCIOS C WHERE C.CYBERSOURCE_MERCHANT_ID='dinelco_001230000034';
+SELECT * FROM public.COMERCIOS C WHERE C.CYBERSOURCE_MERCHANT_ID IN ('dinelco_001230000049');
 
 SELECT * FROM EMPRESAS_CLIENTES EC WHERE EC.ID=749;
 SELECT * FROM EMPRESAS_CLIENTES_BEPSA ECB WHERE ECB.ID=749;
@@ -965,7 +965,7 @@ SELECT * FROM public.EMPRESAS_CLIENTES EC WHERE EC.ID_INTERNO='12300';
 SELECT * FROM public.COMERCIOS C WHERE C.EMPRESA_CLIENTE_ID IN ('bc7711b5-9338-46e5-a8ea-395f47458f14', '87523d23-97ae-46f4-b222-79494fce94d4')
 
 ---hallar v1 BASE DE DATOS PAGO DIGITAL
-select c.id as v1Id, c.* from comercios c where c.cybersource_merchant_id  = 'dinelco_001230000034';
+select c.id as v1Id, c.* from comercios c where c.cybersource_merchant_id  = 'dinelco_link_002454000001';
 
 --inactivar activar comercio 3ds
 SELECT * from public.COMERCIOS C WHERE C.ID_INTERNO='5500339';
@@ -1029,8 +1029,38 @@ where ecb.cod_cliente_bepsa = '24625';
 select * from ordenes_pago where referencia = 'COMPANIA-ADMINISTRADORA-DE-RIESGOS-SA-CARSA-CI-4840284-CUOTA-10225-1';
 select * from ordenes_pago where referencia ilike '%COMPANIA-ADMINISTRADORA-DE-RIESGOS-SA-CARSA-CI%';
 
+SELECT * FROM public.COMERCIOS C WHERE C.EMPRESA_CLIENTE_ID_INTERNO='16948';  --WHERE C.CYBERSOURCE_MERCHANT_ID IN ('dinelco_001694800004','dinelco_link_001694800001');
+
+alter table auditoria disable trigger tbu_auditoria_modificado_el;
+
+SELECT * FROM public.COMERCIOS C WHERE DATE(C.MODIFICADO_EL)='2025-04-03';
+SELECT * FROM public.COMERCIOS C WHERE C.EMPRESA_CLIENTE_ID_INTERNO='10937' AND C.ID='e71e4abf-68d8-41c9-881f-d80659be3c5f';
+
+--query para obtener comercio
+SELECT "id", "id_interno", "empresa_cliente_id", "empresa_cliente_id_interno", "activo", "nombre",
+       "cybersource_merchant_id", "cs_main_merchant_id"
+FROM "comercios"
+WHERE "activo" <> FALSE
+AND "empresa_cliente_id_interno" = '16948' LIMIT 1;
+
+
 select
- ecb.cod_cliente_bepsa, ec.pago_digital_suscripcion_key, ec.*
+	datid, usename, wait_event_type, wait_event, state,	query, datname,	pid, usesysid, usename,	application_name, backend_xmin,
+	client_addr, client_hostname, client_port, backend_start, xact_start, query_start, state_change, backend_xid, backend_type
+	--,pg_terminate_backend(pg_stat_activity.pid)
 from
- empresas_clientes ec join empresas_clientes_bepsa ecb on ec.empresa_cliente_bepsa_id = ecb.id
-where  ec.pago_digital_suscripcion_key ilike '%*%' and ec.pago_digital_suscripcion_key ilike '%_***_%';
+	pg_stat_activity
+where
+	datname = 'pocodi_db'
+	and pid <> pg_backend_pid()
+	--and state <> 'active'
+	--AND usename = 'usr_portal'
+order by state;
+SELECT pg_terminate_backend(1030354);
+
+select op.*, '|--|' separator, c.* from ordenes_pago op
+join comercios c on c.id::uuid = op.comercio_id::uuid
+where op.fecha_estado > '2025-03-30'
+and c.id_interno in ('5500396','5500339');
+
+select now();

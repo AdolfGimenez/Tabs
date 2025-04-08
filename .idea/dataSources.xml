@@ -99,6 +99,7 @@
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://10.1.254.52:5432/postgres</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
+      <time-zone>America/Argentina/Buenos_Aires</time-zone>
     </data-source>
     <data-source source="LOCAL" name="K2B_D" uuid="e83bf5ec-b86c-4d33-bb48-effda6f884d0">
       <driver-ref>mysql.8</driver-ref>
@@ -146,6 +147,7 @@
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://10.1.254.130:5432/asientos</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
+      <time-zone>America/Argentina/Buenos_Aires</time-zone>
     </data-source>
     <data-source source="LOCAL" name="Pgs_D" uuid="5dd67261-d976-47b0-a8a5-dba3c79c83fe">
       <driver-ref>postgresql</driver-ref>
@@ -483,14 +485,6 @@
       </jdbc-additional-properties>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="Crm" uuid="9390011e-8e60-4a40-a2a9-dd23f17c3636">
-      <driver-ref>postgresql</driver-ref>
-      <synchronize>true</synchronize>
-      <schema-control>AUTOMATIC</schema-control>
-      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://10.1.254.130:5432/crm-custom-bepsa</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
     <data-source source="LOCAL" name="Crm-Bepsa_Dev" uuid="b652bd6b-1078-4ae4-8656-6f7934c2ec9c">
       <driver-ref>mongo.4</driver-ref>
       <synchronize>true</synchronize>
@@ -511,6 +505,15 @@
       <jdbc-driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</jdbc-driver>
       <jdbc-url>jdbc:sqlserver://10.1.254.81\sa:1532</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="Crm" uuid="5ea46cf2-20db-4486-9390-0bd4205b5346">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <schema-control>AUTOMATIC</schema-control>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://10.1.254.130:5432/crm-custom-bepsa</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+      <time-zone>America/Argentina/Buenos_Aires</time-zone>
     </data-source>
   </component>
 </project>
