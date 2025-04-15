@@ -1,5 +1,5 @@
 SELECT t.*, CTID
-FROM "crm-bepsa"."UserIdentity" t WHERE "Email"='alejandro.coronel@bepsa.com.py';
+FROM "crm-bepsa"."UserIdentity" t WHERE "Email"='dmedina@bepsa.com.py';
 
 SELECT
  ui."UserName" ,
@@ -10,7 +10,7 @@ INNER JOIN
  "crm-bepsa"."GroupIdentityUserIdentity" AS giui ON  giui."RolesId" = gi."Id"
 INNER JOIN  "crm-bepsa"."UserIdentity" AS ui ON  ui."Id"  = giui."UsersId"
 WHERE
- ui."Email"  = 'alejandro.coronel@bepsa.com.py';
+ ui."Email"  = 'dmedina@bepsa.com.py';
 --grupos
 SELECT  * FROM "crm-bepsa"."GroupIdentity" AS gi ;
 --asignar permisos a usuarios
@@ -58,17 +58,24 @@ SELECT * FROM "crm-bepsa"."CaseTypeSubtype_Id_seq";
 ---cambiar usuarios que difieren de keycloak vs db
 select ui."Id" , ui."Email" , ui.*
 from "crm-bepsa"."UserIdentity" ui
-where ui."Email" = 'willian.nunez@bepsa.com.py';
+where ui."Email" = 'dmedina@bepsa.com.py';
 
---'9383b9d2-eb9e-450a-8594-ddbec8988e23';
 select *
 from "crm-bepsa"."GroupIdentityUserIdentity" giui
-where giui."UsersId" = '9383b9d2-eb9e-450a-8594-ddbec8988e23';
+where giui."UsersId" = '5f4fa350-ccd3-4242-8f1c-5f3e8dfce573';
 
 select *
 from "crm-bepsa"."Users" u
-where u."IdentityId" = '9383b9d2-eb9e-450a-8594-ddbec8988e23';
+where u."IdentityId" = '5f4fa350-ccd3-4242-8f1c-5f3e8dfce573';
+---ver si sincronizó bien el cambio de grupo
+SELECT
+ gi."Name" AS rol
+FROM  "crm-bepsa"."GroupIdentityUserIdentity" AS giui
+INNER JOIN  "crm-bepsa"."GroupIdentity" gi ON giui."RolesId" = gi."Id"
+WHERE  giui."UsersId" = '9383b9d2-eb9e-450a-8594-ddbec8988e23'; --id user
 
+SELECT * FROM "crm-bepsa"."GroupIdentity" gi; --crmadmin = dc6952db-9936-45b4-a80c-8e86cfde1f10
+SELECT * FROM "crm-bepsa"."GroupIdentityUserIdentity" WHERE  "UsersId" = '9383b9d2-eb9e-450a-8594-ddbec8988e23';
 
 ---ver usuarios activos:
 SELECT ui."UserName", STRING_AGG(gi."Name", ', ') AS "Groups"
@@ -132,7 +139,28 @@ SELECT * FROM
 --9383b9d2-eb9e-450a-8594-ddbec8988e23
 ----imple
 SELECT  * FROM  "crm-bepsa"."ClientBranches" AS cb
-WHERE  cb."AttrData" ILIKE '%8100040%' ;
+WHERE  cb."AttrData" ILIKE '%8100040%';
 
-SELECT * FROM "crm-bepsa"."Clients" WHERE "Id"=10633;
+SELECT  * FROM  "crm-bepsa"."Clients" AS c WHERE  c."Name" ILIKE '%ROSS MARY BOCADITOS%' ;
+SELECT  * FROM  "crm-bepsa"."ClientBranches" AS cb WHERE "CreatedAt" ISNULL;
+
+UPDATE  "crm-bepsa"."ClientBranches" SET "CreatedAt"="UpdatedAt" WHERE "CreatedAt" ISNULL;
+
+SELECT * FROM "crm-custom-bepsa"."crm-bepsa"."Clerks" WHERE "CreatedAt" IS NULL;
+UPDATE "crm-custom-bepsa"."crm-bepsa"."Clerks" SET "CreatedAt"=now(), "UpdatedAt"=now()  WHERE "CreatedAt" IS NULL;
+
+
+UPDATE "crm-bepsa"."Settings" SET  "Value" = '0 50 14 09 * ?' WHERE  "Key" = 'ClosingBillingSetup' ;
+
+SELECT  * FROM  "crm-bepsa"."Settings" AS s WHERE  s."Key" = 'LastClosingBilling';
+
+UPDATE
+ "crm-bepsa"."Orders"
+SET
+ "Attributes" = (jsonb_set("Attributes"::jsonb, '{Status}', '"FACTURADO"', true))::TEXT
+WHERE
+ "Id" = 164;
+
+SELECT * FROM  "crm-bepsa"."Orders"  WHERE "Id" = 164;
+
 

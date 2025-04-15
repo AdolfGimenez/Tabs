@@ -983,16 +983,13 @@ select * from comercios c where nombre like '%EPEM%';
 select * from comercios c where nombre like '%MF%';
 select * from ordenes_pago op where op.COMERCIO_ID = 'fc348bf4-043d-42ff-b06f-5f3a677066c0' AND op.ESTADO='NUEVO';
 ---reporte solicitudes de acceso
-SELECT OAR.USER_NAME NOMBRE, OAR.USER_LASTNAME APELLIDO, OAR.DOCUMENT_NUMBER DOCUMENTO,
+SELECT OAR.USER_NAME NOMBRE, OAR.USER_LASTNAME APELLIDO, OAR.DOCUMENT_NUMBER DOCUMENTO, OAR.USER_CELLPHONE TELEFONO,
 OAR.USER_EMAIL CORREO, OAR.COMPANY_RUC RUC, ECB.DESCRIPCION_BEPSA RAZON_SOCIAL, OAR.REQUEST_STATUS ESTADO, OAR.CREATED_AT FEHCA_HORA_SOLICITUD
        FROM public.ONBOARDING_ACCESS_REGISTRATION OAR
 INNER JOIN PUBLIC.EMPRESAS_CLIENTES EC ON EC.ID = OAR.EMPRESA_ID
 INNER JOIN PUBLIC.EMPRESAS_CLIENTES_BEPSA ECB ON ECB.ID = EC.EMPRESA_CLIENTE_BEPSA_ID;
 
 SELECT * FROM public.ONBOARDING_ACCESS_REGISTRATION OAR;
-SELECT * FROM public.EMPRESAS_CLIENTES EC WHERE EC.ID=7728;
-SELECT * FROM public.EMPRESAS_CLIENTES_BEPSA ECB WHERE ID=7747;
-
 
 -- LISTAR TRX PARA ADELNATO
 select bt.operacion_fech_proc_transaccio::text as operacion_fech_proc_transaccio, "bt"."operacion_fech_insercion",
@@ -1058,9 +1055,6 @@ where
 order by state;
 SELECT pg_terminate_backend(1030354);
 
-select op.*, '|--|' separator, c.* from ordenes_pago op
-join comercios c on c.id::uuid = op.comercio_id::uuid
-where op.fecha_estado > '2025-03-30'
-and c.id_interno in ('5500396','5500339');
+SELECT * FROM public.ORDENES_PAGO OP ORDER BY FECHA_ESTADO DESC
 
-select now();
+select * from advance_accreditations where company_id = 2;

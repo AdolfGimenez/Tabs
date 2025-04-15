@@ -80,7 +80,7 @@ select * from marcas.transactions_visa where report_date >= '11JAN25';
 SELECT * from marcas.mastercard_switch order by mastercard_switch.REPORT_WORK_OF DESC; --where REPORT_WORK_OF >= '02/01/24';
 /*tablas marcas
 Para SWITCH
-delete from marcas.mastercard_switch where report_work_of = '03/11/25';
+delete from marcas.mastercard_switch where report_work_of = '04/08/25';
 Para MST DUAL
 delete from marcas.transactions where fecha = '2025-03-19';
 Para VISA
@@ -426,7 +426,7 @@ FROM asientos.datos.GXFINDTA_TCMCLI T join asientos.datos.GXFINDTA_TCMSUC G on T
 WHERE g.SUCCORREO is NOT NULL;
 ----------------------------------------------------------------------
 ----para liquidacion en excel
-SELECT --C.MOVRRNBEP                                                                                                        REFERENCIA,
+SELECT C.MOVRRNBEP                                                                                                        REFERENCIA,
        C.MOVCODCLI                                                                                                        CLIENTE,
        C.MOVCODSUC                                                                                                        SUCURSAL,
        C.MOVCOMER                                                                                                         CODIGO_COMERCIO,
@@ -453,10 +453,10 @@ SELECT --C.MOVRRNBEP                                                            
        SUM(C.MOVNETO)                                                                                                      IMPORTENETO
 FROM FACTURACIONBEPSA.TCLMOV_TMP_COMERCIOS_202503_FACTCOMERCIOS C
 --WHERE movopde = 700405 --para operadoras
-WHERE C.MOVCODCLI IN (SELECT C.CLICLICOD FROM DATOS.GXFINDTA_TCMCLI C WHERE C.CLIRUC LIKE '%80097276%')
-AND C.MOVCODSUC=1
+WHERE C.MOVCODCLI IN (SELECT C.CLICLICOD FROM DATOS.GXFINDTA_TCMCLI C WHERE C.CLIRUC LIKE '%80024659%')
+--AND C.MOVCODSUC=1
 -- NOT IN ('1', '8')
-GROUP BY C.MOVCODCLI, C.MOVCODSUC, C.MOVCOMER, C.MOVDENO, C.MOVFTRX, C.MOVFPRO, C.MOVFCRE, C.MOVTPTA --,C.MOVRRNBEP
+GROUP BY C.MOVCODCLI, C.MOVCODSUC, C.MOVCOMER, C.MOVDENO, C.MOVFTRX, C.MOVFPRO, C.MOVFCRE, C.MOVTPTA ,C.MOVRRNBEP
 ORDER BY C.MOVCODCLI, C.MOVCODSUC, C.MOVFTRX, C.MOVFPRO, C.MOVFCRE;
 -------------------------
 SELECT * FROM asientos.facturacionbepsa.CLIENTE C WHERE C.CLIENTEID=11373  C.CLIENTERUC='80097276';
@@ -2428,9 +2428,6 @@ WHERE
     (SELECT REPLACE(FACTURACIONBEPSA.FN_OBTENER_PARMVALUE('parmFechaMV'::CHARACTER VARYING, '5'::CHARACTER VARYING)::TEXT, '-'::TEXT, ''::TEXT) AS FECHA5,
                            REPLACE(FACTURACIONBEPSA.FN_OBTENER_PARMVALUE('parmFechaMV'::CHARACTER VARYING, '6'::CHARACTER VARYING)::TEXT, '-'::TEXT, ''::TEXT) AS FECHA6);
 
-
-truncate table conciliacion.extractos_no_conciliados;
-
 --obtiene los datos de los movimientos no conciliados de la cuenta 601
 select cuenta, referencia_extracto, descripcion_extracto, fecha_extracto, debe, haber, fecha_tclmov, nombre_asiento, numero_asiento_k2b, conciliado, asiento, fecha_hora_insercion, usuario_modificacion, fecha_hora_modificacion, id_referencias, nro_tarjeta, observacion, diferencia, fecha_informe, cod_transacc_ext, hora
  from conciliacion.extractos_no_conciliados enc where cuenta = '01-218406-01' and fecha_extracto < '2024-01-11';
@@ -2593,15 +2590,6 @@ GROUP BY F.TARGETFACTID,
 SELECT F.STATUSID, concat(F.FACVENTASIRIUSPDFPATH) FROM asientos.facturacionbepsa.FACVENTA F WHERE F.FACVENTAFECHA='2024-02-29'
 AND F.TARGETFACTID='FactComercios' AND F.FACVENTACLIRUC='80008431-4' AND F.STATUSID='DTE_APROBADO';
 
-SELECT CONCAT('http://fdigital.bepsa.com.py/', SUBSTRING(facventasiriuspdfpath, 9,  48)) AS pfd_sirius, f.*
-FROM asientos.facturacionbepsa.FACVENTA F WHERE F.FACVENTAFECHA='2024-03-27'
-AND F.TARGETFACTID='FactComercios' AND F.FACVENTACLIRUC='80016096-7' AND F.STATUSID='DTE_APROBADO';
-
-http://fdigital.bepsa.com.py/KuDE/2024/03/20240327/FE/FE_001-002-0051960.pdf
-
-http://fdigital.bepsa.com.py/kude/2024/03/20240327/FE/FE_001-002-0062485.pdf -- ok
-
-http://fdigital.bepsa.com.py/KuDE/2024/03/20240327/FE/FE_001-002-0062460.pdf --db
 ---reporte masivo kude
 SELECT * FROM facturacionbepsa.fn_get_datos_reporte_request();
 
@@ -3595,26 +3583,5 @@ or upper(c.clienterazonsocial) like '%SECRETA%' or upper(c.clienterazonsocial) l
 or upper(c.clienterazonsocial) like 'BANCO%CENTRAL%')
 and cc.tipoclienteid=c.tipoclienteid and cc.clienteid=c.clienteid)
 and cc.tipooperacion is null;
-
----CONSULTADOR
-update facturacionbepsa.parametros p set parmvalue = '-50' where p.parmid = 'consultaSirius' and p.parmserial = 'tiempoMinutos';
-
-SELECT * FROM asientos.facturacionbepsa.FACVENTA F WHERE F.EJERCICIOID=2025 AND F.PERIODOID=02
-AND F.FACVENTACLIRAZONSOCIAL LIKE '%NICIPALIDAD%' AND F.TARGETFACTID='FactComercios';
-
-SELECT * FROM asientos.facturacionbepsa.FACVENTA F WHERE F.CLIENTEID=21772 AND F.EJERCICIOID=2025
-AND F.TARGETFACTID='FactComercios'
-AND F.STATUSID='DTE_APROBADO';
-
-SELECT * FROM asientos.facturacionbepsa.FACVENTA F WHERE F.EJERCICIOID=2025
-AND F.STATUSID='DTE_APROBADO' AND facventasiriusid ISNULL ;
-
---2003coopal.ltda@gmail.com
-SELECT * FROM DATOS.GXBDBPS_COMAEAF C2 WHERE C2.CORUCN='80025769-3';
-SELECT * FROM DATOS.GXFINDTA_TCMSUC T WHERE T.CLICLICOD=11447;
-
-SELECT * FROM asientos.facturacionbepsa.SUCURSAL C WHERE C.CLIENTEID=11447;
-
-SELECT * FROM asientos.facturacionbepsa.CLIENTE C WHERE clienteruc='3559113';
---emoran8918@gmail.com
-SELECT * FROM DATOS.GXFINDTA_TCMCLI GT WHERE GT.CLIRUC='3559113';
+---para cargar facclisuc
+call facturacionbepsa.sp_fpos_cliente_sucursal_factclisuc('2025-03-01'::text, '2025-04-10'::text);

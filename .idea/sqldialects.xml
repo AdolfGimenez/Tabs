@@ -4,6 +4,7 @@
     <file url="file://$PROJECT_DIR$/EMPES.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/JPTS.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/SAP.sql" dialect="DB2_IS" />
+    <file url="file://$PROJECT_DIR$/Select varios.sql" dialect="DB2_IS" />
     <file url="file://$PROJECT_DIR$/SilverSipap.sql" dialect="DB2_IS" />
     <file url="file://$PROJECT_DIR$/Web.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/cico.sql" dialect="DB2_IS" />

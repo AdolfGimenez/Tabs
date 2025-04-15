@@ -104,3 +104,6 @@ where funcnro = 4196976;
 
 delete FROM gth.rhm100
 where PersoNro = 4196976;
+
+SELECT * FROM public.pgaudit_log pl
+ORDER BY log_time DESC;

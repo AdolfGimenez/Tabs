@@ -5,46 +5,10 @@ where /*MCNUMDO='5107555'; */ mcnumta='6274311550006321';
 SELECT * FROM GXBDBPS.TMTARAF T WHERE MTNUMTA in ('6274311550006560','6274311550006321');
 SELECT * from gxbdbps.tmctaaf T  where mcnumta in ('6274311550006560','6274311550006321');
 ----------------------------
-SELECT ODLBNM, ODOBNM, ODOBTP, ODOBAT, ODCDAT, ODSIZU * ODBPUN,ODUDAT, O.*
-FROM moleda.objetos o
-WHERE ODOBAT IN ('PF', 'SAVF') --AND ODLBNM='QGPL'
-ORDER BY ODSIZU * ODBPUN DESC;
-
-SELECT substr(DEBUGIPM, 1, 10) , DEBUGIPM FROM MASTERCARD.DEBUGIPM LIMIT 15;
---WHERE substr(DEBUGIPM, 1, 10) between '2023.02.20' and '2023.02.20'
-
-SELECT * FROM MASTERCARD.LOGMAS001
-WHERE date( FECLOG ) between
-'2023-12-10' and '2023-12-10';
-
-SELECT * FROM MASTERCARD.MIPADQDEB M;
-SELECT * FROM VISA.DEBUGVISA;
-/*Juan Carlos Rojas
-mastercard/DRVMIPRCV
-Juan Carlos Rojas
-MASTERCARD/DRVMIPSND*/
-
-INSERT INTO LIBDEBITO.TAUREV
-SELECT L.ENRRNB                                                REVRRN,
-       '703002'                                                REVBIN,
-       '1002'                                                  REVENT,
-       CURRENT_DATE                                            REVFECH,
-       '114142'                                                REVHORTR,
-       '240125'                                                REVFECTR,
-       '0420' || L.ENCODO || L.ENTRK2 || ENCTAD || ENCTAC || ENFECC || ENFECR || ENHORR || ENMONE || ENIMPO ||
-       ENIMPD || ENTRID || ENSTAN || ENTCC || ENMCCO || ENNAME LREVMSG,
-       'P'                                                     REVEST,
-       '0420'                                                  REVMTI,
-       '  '                                                    REVRET,
-       'U99ADOLFO'                                             REVUSAC,
-       CURRENT_DATE                                            REVFEAC;
 ----------------------------------------
 Select movcodcli, movcodsuc, movcomer, movdeno, MOVTPTA,count(*) CANTIDAD, sum(movimco) COMISION, sum(movivco)IVACOMISION,
 sum(movimco+movivco)"COMISION+IVA" from gxfindta.tclmov where movcodcli = 10937 and sercodi = 'COMPRA' AND movfCRE between '20240131' and '20240228'
 group by movcodcli, movcodsuc, movcomer, movdeno, MOVTPTA;
-
-SELECT * FROM LIBDEBITO.DRCONBEP D WHERE D.LERRNB='468101778911';
-SELECT * FROM GXBDBPS.COMAEAF C2 WHERE C2.CORUCN='80019742-9';
 
 Select movcodcli, movcodsuc, movcomer, movdeno, MOVTPTA,count(*) CANTIDAD, sum(movimco) COMISION, sum(movivco)IVACOMISION,
 sum(movimco+movivco)"COMISION+IVA" from gxfindta.tclmov where movcodcli = 10937 and sercodi = 'COMPRA' AND movfCRE between '20240229' and '20240326'
@@ -56,8 +20,6 @@ sum(movimco+movivco)"COMISION+IVA" from gxfindta.tclmov where --MOVCOMER =690089
     movfCRE between '20240301' and '20240331'
 group by movcodcli, movcodsuc, movcomer, movdeno, MOVTPTA;
 
-SELECT * FROM gxfindta.tclmov where MOVCOMER =6900896
-AND movfCRE between '20240301' and '20240331';
 
 SELECT T.MOVOPDE, T.*
 FROM GXFINDTA.TCLMOV T
@@ -144,7 +106,7 @@ WHERE MOVOPOR IN ('700405', '700105', '700605')
     AND MOVCODIS IN ('ATM', 'WEB', 'POS')) --('ATM', 'WEB', 'POS')
   AND MOVIVCO > 0
 GROUP BY MOVOPOR;
-facventatotalcomprobml IN (437605.00, 1403777.00)
+--facventatotalcomprobml IN (437605.00, 1403777.00)
 SELECT *
 FROM GXOPERA.OPMOVI O
          INNER JOIN GXFINDTA.TCLMOV T ON T.MOVRRNBEP = O.OPNOREF
@@ -286,3 +248,4 @@ GROUP BY T.MOVOPOR, T.SERCODI;
 SELECT T.MOVOPOR , SUM(T.MOVNETO), T.SERCODI, T.MOVFPRO FROM GXFINDTA.TCLMOV T WHERE MOVFECLIQ = '20250203'
 AND T.SERCODI='VTAMIN'--AND T.MOVFPRO<>'20250203'
 GROUP BY T.MOVOPOR, T.SERCODI, T.MOVFPRO;
+
