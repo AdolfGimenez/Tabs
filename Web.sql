@@ -196,17 +196,21 @@ SELECT * FROM public.ROLES_X_USUARIOS RXU WHERE RXU.USUARIO_ID='998cc56c-994a-49
 INSERT INTO
     public.roles_x_usuarios (rol_id, usuario_id, insertado_el, modificado_el, activo, insertado_por, modificado_por) VALUES ( 1, 'bdaf16f0-d93c-4414-978a-ae1e8fd3b981', '2023-07-22 14:47:44.997312', '2023-07-22 14:47:44.997312', true, null, null);
 --AUTH_DB
-SELECT * FROM EQWEDI_AUTH_DB.PUBLIC.USUARIOS U WHERE U.NRO_DOCUMENTO='5245903';
+SELECT * FROM EQWEDI_AUTH_DB.PUBLIC.USUARIOS U WHERE U.NRO_DOCUMENTO='4085675';
 --U.CORREO LIKE 'cecilia.caballero@bepsa.com.py';
 
-SELECT t.* FROM public.refresh_tokens t WHERE t.USUARIO_ID='8b3e942c-abc7-45a9-9f53-c240e4020352';
-SELECT * FROM public.GRUPOS_ACCESOS_APIS_X_USUARIOS GAAXU WHERE GAAXU.USUARIO_ID='feafa23e-c9ef-43cd-bb91-fd5328344806';
+Correo anterior: dreamstravelpy@gmail.com
+Correo a ser modificado: dreamstravelpy.ventas@gmail.com
+dreamstravelpy@gmail.com
+
+SELECT t.* FROM EQWEDI_AUTH_DB.public.refresh_tokens t WHERE t.USUARIO_ID='8b3e942c-abc7-45a9-9f53-c240e4020352';
+SELECT * FROM EQWEDI_AUTH_DB.public.GRUPOS_ACCESOS_APIS_X_USUARIOS GAAXU WHERE GAAXU.USUARIO_ID='feafa23e-c9ef-43cd-bb91-fd5328344806';
 --POCODI_DB
 SELECT * FROM public.PERSONAS_FISICAS PF where upper(apellido) = 'BENITEZ'; --PF.NRO_DOCUMENTO='3319151'
 SELECT * FROM public.USUARIOS U WHERE U.PERSONA_FISICA_ID IN (962);
 
 SELECT * FROM public.SOCKET_CLIENTS SC WHERE SC.USUARIO_ID='8b3e942c-abc7-45a9-9f53-c240e4020352';
-SELECT * FROM correos_principales_usuarios WHERE USUARIO_ID='b4215ab2-c52f-41fa-b708-1cc0d56cdc0f';
+SELECT * FROM POCODI_DB.public.correos_principales_usuarios WHERE USUARIO_ID='c7d15354-506e-40d1-9118-165aee5f94f9';
 SELECT * FROM public.ROLES_X_USUARIOS RXU WHERE RXU.USUARIO_ID='8b3e942c-abc7-45a9-9f53-c240e4020352';
 SELECT * FROM public.USUARIOS_NIVELES_ACCESO UNA WHERE UNA.USUARIO_ID='8b3e942c-abc7-45a9-9f53-c240e4020352';
 SELECT * FROM public.USUARIOS_X_EMPRESAS UXE WHERE UXE.USUARIO_ID='8b3e942c-abc7-45a9-9f53-c240e4020352';
@@ -1038,7 +1042,7 @@ SELECT "id", "id_interno", "empresa_cliente_id", "empresa_cliente_id_interno", "
        "cybersource_merchant_id", "cs_main_merchant_id"
 FROM "comercios"
 WHERE "activo" <> FALSE
-AND "empresa_cliente_id_interno" = '16948' LIMIT 1;
+AND "empresa_cliente_id_interno" = '16948' ; --limit 1;
 
 
 select
@@ -1055,6 +1059,10 @@ where
 order by state;
 SELECT pg_terminate_backend(1030354);
 
-SELECT * FROM public.ORDENES_PAGO OP ORDER BY FECHA_ESTADO DESC
+select op.*, '|--|' separator, c.* from ordenes_pago op
+join comercios c on c.id::uuid = op.comercio_id::uuid
+where op.fecha_estado > '2025-03-30'
+and c.id_interno in ('5500396','6901752');
 
-select * from advance_accreditations where company_id = 2;
+
+SELECT * FROM public.ORDENES_PAGO OP WHERE OP.IMPORTE_PAGO='16000000' AND  DATE(OP.INSERTADO_EL)='2025-04-15'

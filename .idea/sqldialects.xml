@@ -34,6 +34,8 @@
     <file url="file://$PROJECT_DIR$/sqls/R_Pend.sql" dialect="DB2_IS" />
     <file url="file://$PROJECT_DIR$/sqls/Reing.sql" dialect="DB2_IS" />
     <file url="file://$PROJECT_DIR$/sqls/SPI.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/sqls/Sap_Pentaho/Archivos_Conc_ATM.sql" dialect="DB2_IS" />
+    <file url="file://$PROJECT_DIR$/sqls/Sap_Pentaho/Cab_Det_Exxtracto.sql" dialect="DB2_IS" />
     <file url="file://$PROJECT_DIR$/sqls/Silver.sql" dialect="DB2_IS" />
     <file url="file://$PROJECT_DIR$/sqls/Sirius.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/sqls/lila.sql" dialect="PostgreSQL" />
