@@ -437,8 +437,8 @@ SELECT C.MOVRRNBEP                                                              
           AND F.SUCURSALID = C.MOVCODSUC
           AND F.STATUSID LIKE '%APROBADO%'
           AND F.TARGETFACTID = 'FactComercios'
-          AND F.PERIODOID = '03'
-          AND F.EJERCICIOID = '2025')                                                                                      COMPROBANTE,
+          AND F.PERIODOID = '13'
+          AND F.EJERCICIOID = '2023')                                                                                      COMPROBANTE,
        (SELECT T.SUCDIRECC FROM DATOS.GXFINDTA_TCMSUC T WHERE T.CLICLICOD = C.MOVCODCLI AND T.SUCSUCCOD = C.MOVCODSUC)     DIRECCION_SUC,
        C.MOVFTRX                                                                                                           FECHA_TRX,
        C.MOVFPRO                                                                                                           FECHA_PROCESO,
@@ -451,9 +451,9 @@ SELECT C.MOVRRNBEP                                                              
        SUM(C.MOVRENT)                                                                                                      IMPORTERENTA,
        SUM(C.MOVIVREN)                                                                                                     IMPORTEIVARENTA,
        SUM(C.MOVNETO)                                                                                                      IMPORTENETO
-FROM FACTURACIONBEPSA.TCLMOV_TMP_COMERCIOS_202503_FACTCOMERCIOS C
+FROM FACTURACIONBEPSA.TCLMOV_TMP_COMERCIOS_202313_FACTCOMERCIOS C
 --WHERE movopde = 700405 --para operadoras
-WHERE C.MOVCODCLI IN (SELECT C.CLICLICOD FROM DATOS.GXFINDTA_TCMCLI C WHERE C.CLIRUC LIKE '%80024659%')
+WHERE C.MOVCODCLI IN (SELECT C.CLICLICOD FROM DATOS.GXFINDTA_TCMCLI C WHERE C.CLIRUC LIKE '%80025958%')
 --AND C.MOVCODSUC=1
 -- NOT IN ('1', '8')
 GROUP BY C.MOVCODCLI, C.MOVCODSUC, C.MOVCOMER, C.MOVDENO, C.MOVFTRX, C.MOVFPRO, C.MOVFCRE, C.MOVTPTA ,C.MOVRRNBEP
@@ -3585,3 +3585,16 @@ and cc.tipoclienteid=c.tipoclienteid and cc.clienteid=c.clienteid)
 and cc.tipooperacion is null;
 ---para cargar facclisuc
 call facturacionbepsa.sp_fpos_cliente_sucursal_factclisuc('2025-03-01'::text, '2025-04-10'::text);
+
+SELECT * FROM asientos.datos.GXFINDTA_TCOCNA GT WHERE GT.COCOMER IN (
+SELECT GC.COCOMER FROM asientos.datos.GXBDBPS_COMAEAF GC WHERE GC.CORUCN='80019137-4');
+
+SELECT * FROM asientos.facturacionbepsa.FACVENTA F WHERE F.FACVENTACOMPROBANTESET IN (
+'001-002-0032668','001-002-0028495',
+'001-002-0028817','001-002-0033520');
+
+SELECT * FROM asientos.facturacionbepsa.TCLMOV_TMP_COMERCIOS_202313_FACTCOMERCIOS TTC202313F
+WHERE TTC202313F.MOVCODCLI=11457;
+
+SELECT * FROM asientos.facturacionbepsa.TCLMOV_TMP_COMERCIOS_202312_FACTCOMERCIOS TTC202313F
+WHERE TTC202313F.MOVCODCLI=11457 AND TTC202313F.MOVCODSUC IN (4, 1, 3, 2)

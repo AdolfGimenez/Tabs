@@ -12,7 +12,7 @@
     <file url="file://$PROJECT_DIR$/sqls/A.Embozado" dialect="DB2_IS" />
     <file url="file://$PROJECT_DIR$/sqls/Api_s.sql" dialect="DB2_IS" />
     <file url="file://$PROJECT_DIR$/sqls/Batch.sql" dialect="DB2_IS" />
-    <file url="file://$PROJECT_DIR$/sqls/Bus_D.sql" dialect="DB2_IS" />
+    <file url="file://$PROJECT_DIR$/sqls/Bus_D.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/sqls/C.Transac.sql" dialect="DB2_IS" />
     <file url="file://$PROJECT_DIR$/sqls/CCenter.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/sqls/COOPs.sql" dialect="DB2_IS" />
@@ -38,6 +38,7 @@
     <file url="file://$PROJECT_DIR$/sqls/Sap_Pentaho/Cab_Det_Exxtracto.sql" dialect="DB2_IS" />
     <file url="file://$PROJECT_DIR$/sqls/Silver.sql" dialect="DB2_IS" />
     <file url="file://$PROJECT_DIR$/sqls/Sirius.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/sqls/Tasas_Ri_vs_Lgcy.sql" dialect="DB2_IS" />
     <file url="file://$PROJECT_DIR$/sqls/lila.sql" dialect="PostgreSQL" />
   </component>
 </project>

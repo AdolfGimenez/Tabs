@@ -1062,7 +1062,11 @@ SELECT pg_terminate_backend(1030354);
 select op.*, '|--|' separator, c.* from ordenes_pago op
 join comercios c on c.id::uuid = op.comercio_id::uuid
 where op.fecha_estado > '2025-03-30'
-and c.id_interno in ('5500396','6901752');
+and c.id_interno in ('5500396','6901752','5500339');
 
 
-SELECT * FROM public.ORDENES_PAGO OP WHERE OP.IMPORTE_PAGO='16000000' AND  DATE(OP.INSERTADO_EL)='2025-04-15'
+SELECT * FROM PAGOS_DIGITALES_DB.PUBLIC.COMERCIOS C WHERE C.EMPRESA_CLIENTE_ID_INTERNO='10736';--dinelco_checkout
+
+select  c.nombre, c.id_interno,  s.*
+FROM public.suscripciones s, public.empresas_clientes c
+where s.empresa_cliente_id = c.id;

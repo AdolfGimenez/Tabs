@@ -155,12 +155,13 @@ UPDATE "crm-bepsa"."Settings" SET  "Value" = '0 50 14 09 * ?' WHERE  "Key" = 'Cl
 SELECT  * FROM  "crm-bepsa"."Settings" AS s WHERE  s."Key" = 'LastClosingBilling';
 
 UPDATE
- "crm-bepsa"."Orders"
-SET
- "Attributes" = (jsonb_set("Attributes"::jsonb, '{Status}', '"FACTURADO"', true))::TEXT
-WHERE
- "Id" = 164;
+ "crm-bepsa"."Orders" SET  "Attributes" = (jsonb_set("Attributes"::jsonb, '{Status}', '"FACTURADO"', true))::TEXT
+WHERE  "Id" = 164;
 
 SELECT * FROM  "crm-bepsa"."Orders"  WHERE "Id" = 164;
-
----imple
+---cantidad de ususarios
+SELECT
+    COUNT(CASE WHEN ui."Enabled" THEN 1 END) AS "Activos",
+    COUNT(CASE WHEN NOT ui."Enabled" THEN 1 END) AS "Inactivos",
+    COUNT(*) AS "Total"
+    FROM "crm-bepsa"."UserIdentity" ui ;
