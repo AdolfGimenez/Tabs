@@ -310,7 +310,7 @@ WHERE T.ID IN ( '100005667237','100005667238' );
 -- Switch
 --HOTFIX
 
-SELECT t.* INTO public.transaccion_bk_20250324
+SELECT t.* INTO public.transaccion_bk_20250324;
 
 SELECT * FROM public.transaccion t
 WHERE t.fecha_creacion BETWEEN '2025-03-24 19:00:00.000' AND '2025-03-25 18:59:59.999'

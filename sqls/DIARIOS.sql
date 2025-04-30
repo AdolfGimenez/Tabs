@@ -1,7 +1,7 @@
 --231290010802051--lote anulado para no pagar
 --------------------------------------------------------------------------
 select mcdisco saldo,  mcnumta tarjeta,   T.* from gxbdbps.tmctaaf T
-where /*MCNUMDO='5107555'; */ mcnumta='6274311550006321';
+where MCNUMDO='5107555'; -- mcnumta='6274311550006321';
 SELECT * FROM GXBDBPS.TMTARAF T WHERE MTNUMTA in ('6274311550006560','6274311550006321');
 SELECT * from gxbdbps.tmctaaf T  where mcnumta in ('6274311550006560','6274311550006321');
 ----------------------------
@@ -248,3 +248,8 @@ GROUP BY T.MOVOPOR, T.SERCODI;
 SELECT T.MOVOPOR , SUM(T.MOVNETO), T.SERCODI, T.MOVFPRO FROM GXFINDTA.TCLMOV T WHERE MOVFECLIQ = '20250203'
 AND T.SERCODI='VTAMIN'--AND T.MOVFPRO<>'20250203'
 GROUP BY T.MOVOPOR, T.SERCODI, T.MOVFPRO;
+
+----
+--contabilidad@coopsanjose.coop.py
+SELECT * FROM GXBDBPS.COMAEAF GC WHERE GC.CORUCN='80018762-8';
+SELECT * FROM GXFINDTA.TCMSUC GT WHERE GT.CLICLICOD=11062;

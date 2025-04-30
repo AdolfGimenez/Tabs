@@ -1,5 +1,5 @@
 SELECT t.*, CTID
-FROM "crm-bepsa"."UserIdentity" t WHERE "Email"='dmedina@bepsa.com.py';
+FROM "crm-bepsa"."UserIdentity" t WHERE "Email"='eaquino@bepsa.com.py';
 
 SELECT
  ui."UserName" ,
@@ -62,20 +62,20 @@ where ui."Email" = 'dmedina@bepsa.com.py';
 
 select *
 from "crm-bepsa"."GroupIdentityUserIdentity" giui
-where giui."UsersId" = '5f4fa350-ccd3-4242-8f1c-5f3e8dfce573';
+where giui."UsersId" = 'd419e54e-8b1e-408d-883b-6ff26d11ccfb';
 
 select *
 from "crm-bepsa"."Users" u
-where u."IdentityId" = '5f4fa350-ccd3-4242-8f1c-5f3e8dfce573';
+where u."IdentityId" = 'd419e54e-8b1e-408d-883b-6ff26d11ccfb';
 ---ver si sincronizó bien el cambio de grupo
 SELECT
  gi."Name" AS rol
 FROM  "crm-bepsa"."GroupIdentityUserIdentity" AS giui
 INNER JOIN  "crm-bepsa"."GroupIdentity" gi ON giui."RolesId" = gi."Id"
-WHERE  giui."UsersId" = '9383b9d2-eb9e-450a-8594-ddbec8988e23'; --id user
+WHERE  giui."UsersId" = 'd419e54e-8b1e-408d-883b-6ff26d11ccfb'; --id user
 
 SELECT * FROM "crm-bepsa"."GroupIdentity" gi; --crmadmin = dc6952db-9936-45b4-a80c-8e86cfde1f10
-SELECT * FROM "crm-bepsa"."GroupIdentityUserIdentity" WHERE  "UsersId" = '9383b9d2-eb9e-450a-8594-ddbec8988e23';
+SELECT * FROM "crm-bepsa"."GroupIdentityUserIdentity" WHERE  "UsersId" = 'd419e54e-8b1e-408d-883b-6ff26d11ccfb';
 
 ---ver usuarios activos:
 SELECT ui."UserName", STRING_AGG(gi."Name", ', ') AS "Groups"
@@ -83,7 +83,7 @@ FROM "crm-bepsa"."UserIdentity" ui
 JOIN "crm-bepsa"."GroupIdentityUserIdentity" giui ON ui."Id" = giui."UsersId"
 JOIN "crm-bepsa"."GroupIdentity" gi ON giui."RolesId" = gi."Id"
 WHERE ui."Enabled" = true
-AND ui."UserName" NOT LIKE '%@clt%'
+--AND ui."UserName" NOT LIKE '%@clt%'
 GROUP BY ui."UserName"
 ORDER BY ui."UserName";
 -----------------------------

@@ -641,3 +641,20 @@ WHERE LCODTR = '567102'
   AND LFECTR = '20250422'
   --AND D.LERRNB = '571204985777'--'511276564945'
   AND SUBSTR(LIDTRA, 1, 1) IN ('P', 'A', 'W');
+-------
+---cereo de deuda total - coopec - tarea #92841
+SELECT * FROM GXBDBPS.TMCTAAF WHERE MCNUMCT IN( 307030006539,307030000912);
+
+UPDATE GXBDBPS.TMCTAAF
+SET MCSALFI=0,    MCSAFAC=0,    MCNUMFI=0,    MCNUMMO=0,    MCNUMPU=0,    MCNUMCO =0,    MCNUMCA=0,    MCSALUC=0,
+    MCSFNVE=0
+WHERE MCNUMCT IN (307030006539, 307030000912);
+
+--reclaculo disponible
+update GXBDBPS.tmctaaf set mcdisco = mclimco - (mcsafac + mcsfnve + mcsalfi + mcapcoc + mcapcoa + mccuopc + mccuopa)
+WHERE MCNUMCT IN(307030006539,307030000912);;
+
+update GXBDBPS.tmctaaf set mcdiscu = mclimcu - (mccuope + mcadepe + mcapcuc + mcapcua + mcrefpe)
+where MCNUMCT IN(307030006539,307030000912);
+
+UPDATE GXBDBPS.TMCTAAF     SET MCADEPE=0     WHERE MCNUMCT=307030000912;

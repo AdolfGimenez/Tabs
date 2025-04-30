@@ -107,3 +107,9 @@ where PersoNro = 4196976;
 
 SELECT * FROM public.pgaudit_log pl
 ORDER BY log_time DESC;
+--error de escarga de marcaciones
+--Para que descargue el historial de marcaciones brutas, en datos laborales en el campo " Control Horario "
+-- tiene que tener cargado un dato
+--Obs; Te paso un script para que solicites a TIC que actualice este campo a todos los funcionarios que faltan.
+select * from gth.rhemple where functiphor = 0 and funcest = 1 and empid = 1;
+update gth.rhemple set functiphor = 1 where functiphor = 0 and funcest = 1 and empid = 1;

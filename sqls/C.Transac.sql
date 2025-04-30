@@ -1036,3 +1036,59 @@ FROM QSYS2.DATA_QUEUE_INFO WHERE DATA_QUEUE_NAME LIKE '%ACFIREC%';
 
 ---bin 3ds
 SELECT * FROM GXTRJDTA.TAB_3DS_BINES_URL_ENT;
+-- SENTENCIAS PARA OCT DE VISA
+SELECT * FROM GXBDBPS.AUPRCTD; --codgio operacion que viene de la marca
+--relacion cod. operacion inforet con la marca
+select * FROM GXBDBPS.AUPRCCDE; --todos los coigo de operación
+--valores
+SELECT * FROM GXBDBPS.AUTDTRANS A;
+--
+--verfiicación de transacciones cuotizadas para cybersource con MST
+select
+    a.c33id as ID,x.C33DAPR,x.C33FINA,x.C33DTPR , a.trdacco as Accion_Code, a.TRDPUDA FechaTrx ,a.TRDRRNBEP as RRN_BEP, a.trdtxid as Trx_ID, b.RADPUID as ID_Compra,
+    a.trdrrn as MI_RRN, a.TRDMSID as MSG_ID, a.TRDSTS as Estado, b.RADPEM as Pos_Entry_Mode,
+    b.RADPSCC as Pos_Cnd_Cod, a.trdacnu as PAN,    a.trdexda as Vence,    a.trdauda as Aut_MMAA,
+    a.trdauam as Mto_Auto, a.trdacc as Moneda_Auto, a.trdtaa as Total_Auto, Cast(a.trdsoam as numeric(12)) as Mto_Source,
+    a.trdscc as Moneda_Sour, b.radauco as Aut_CodAut, b.radcaid as Marca,
+    b.radcai as Comercio, c.edamena as Nombre, c.edamcc as MCC, c.EDAMCOCD as Pais,
+    v.ADAMIPF as aggregatorId, v.ADASMID as SubmerchanId, v.ADAISOID as SalesOrganizationID_MST
+--    ,d.gddgti as DE63
+,d.P1T5NOI as Cuotas
+from cyberlib.cp01t0 a , cyberlib.cp01t1 b, cyberlib.cp01t4 c, cyberlib.tmtc33 x, --cyberlib.cp01t8 e
+--  ,cyberlib.cp01t5 d --  cyberlib.cp01t7 d
+cyberlib.cp01t6 v,
+cyberlib.CP01T5 d
+Where a.c33id = x.c33id and
+a.c33id = b.c33id and b.c33id = c.c33id
+and a.trdsec  = b.trdsec and b.trdsec = c.trdsec
+and v.C33ID = a.c33id and v.TRDSEC = a.trdsec
+AND d.C33ID = a.C33ID  AND d.TRDSEC = a.TRDSEC
+--and RRN_BEP = '' --order by a.c33id desc;
+--AND A.c33id >= 43--(6,7,8,9,10,11,12,13,14,15,16,17,18,19,20)
+--and TRX_ID = '304183666253674'
+--and TRDRRN in ('505815194883')
+--AND  TRDRRNBEP in ('435522705850')
+--and RADPUID = '7309180099256329103979'
+--and RADREID in ('7309180099256329103979')
+--and C33FINA = '2024268_04.txt'
+--AND trdauam = '000000000150'
+--and trdacnu like '%5303990001025654%'
+--AND SUBSTRING(TRDACNU, 1, 6) = '542927' AND SUBSTRING(TRDACNU, 13, 4) = '8839'
+--and radauco = '436324'
+--and DSUTRI= '50183038325'
+--AND TRDACNU = '5303990001025654'
+--and TRDSTS = 'C'
+AND b.RADCAID = 'MC'
+AND a.TRDSTS = 'P'
+--AND substring(a.TRDRRN ,1 , 1) = '4' AND substring(a.TRDRRNBEP , 1, 1) = '5'
+--AND RIGHT(d.P1T5NOI, 2) > '01'
+AND date(C33DTPR) >= '2025-04-29'
+order by a.c33id desc;
+
+--registros en cuotas
+SELECT mc112, m.MC048 , m.MCROL ,   MCRRNBEPSA , MC037, MC038, MC039 , MC061 , MCREVDATT, MCREVFLG , MCREVCOD ,  m.*
+FROM MASTERCARD.MASCTLDTA m WHERE MC037 IN ('511915967952', '511919327277', '511919129350', '511920885317');
+
+--registros contados
+SELECT mc112, m.MC048 , m.MCROL ,   MCRRNBEPSA , MC037, MC038, MC039 , MC061 , MCREVDATT, MCREVFLG , MCREVCOD ,  m.*
+FROM MASTERCARD.MASCTLDTA m WHERE MC037 IN ('511918509529', '511918372452', '511918618194');
