@@ -3572,3 +3572,5 @@ WHERE parmid='consultaSirius' AND parmserial='periodoEjecucion';
 UPDATE facturacionbepsa.parametros
 SET parmvalue='-21'
 WHERE parmid='consultaSirius' AND parmserial='tiempoMinutos';
+
+SELECT * FROM asientos.facturacionbepsa.FACVENTA F WHERE F.FACVENTANUMERO='266729';

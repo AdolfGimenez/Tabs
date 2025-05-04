@@ -29,7 +29,7 @@ WHERE T.DATE = '2023-11-10 06:25:34.000000' --cast(T.DATE as date) = cast('2023-
 
 SELECT *
 FROM PUBLIC.TRANLOG_READONLY T
-WHERE ss_rrn='468101778911'
+WHERE ss_rrn='570503009575'
   --T.DATE = '2023-11-10 06:25:34.000000'
  T.LOCALTRANSACTIONDATE = '2023-11-13 02:16:37.000000' --'2023-11-10T06:25:34'
   AND T.TRANSACTION_TOKEN = '2023314600013398'
@@ -58,7 +58,7 @@ los que inician con dinelco_mf_0011111 -> su main id es: dinelco_mf
 los que inician con dinelco_da_0011111 - > su main id es: dinelco_debitoauto
 dinelco_0012300xxxxx (codigo de cliente de documenta), corresponde al main id dinelco_documeta*/
 
-SELECT * from keys_cybersource_shops s where cybersource_shop_id = 'dinelco_link_002798500001';
+SELECT * from keys_cybersource_shops s where cybersource_shop_id = 'dinelco_002844100001';
 SELECT max(id_key_cybersource_shop) from keys_cybersource_shops s;
 SELECT DISTINCT(cybersource_shop_main_id) from public.KEYS_CYBERSOURCE_SHOPS  s;
 --actualiza
@@ -70,17 +70,17 @@ where cybersource_shop_id = 'dinelco_002729500001';
 INSERT INTO PUBLIC.KEYS_CYBERSOURCE_SHOPS
 (ID_KEY_CYBERSOURCE_SHOP, CYBERSOURCE_SHOP_ID, CYBERSOURCE_PUBLIC_KEY, CYBERSOURCE_PRIVATE_KEY,
  CREATED_AT, CYBERSOURCE_SHOP_MAIN_ID, ENTITY_ID) VALUES
-(452, 'dinelco_link_002798500001',
- '06eee08d-1951-462b-bfe6-e61c9edd1e05',
- 'C6miBtmiWo+qrYkMJcMOswxKn1nbiaUB/u21Zz5Ez3I=',
- now(), 'dinelco_link', NULL);
+(456, 'dinelco_002844100001',
+ '3f93d600-4a7c-4c6e-80dc-beb425898115',
+ 'bmuW24YtTJZOPDpBTBsjtbdRxDqAK5L6xv1ZB1iROIM=',
+ now(), 'dinelco_checkout', NULL);
 ---------------------------------------------------
 --15 caracteres completar con 000
-select * from cybersource_merchant_routing where merchant_id IN ('000000000400162'); --= '00000000301609';
-000000000400162
+select * from cybersource_merchant_routing where merchant_id IN ('000000005800208'); --= '00000000301609';
+000000005800208
 INSERT INTO public.cybersource_merchant_routing
 (merchant_id, create_at, merchant_name)
-VALUES('000000000400162', now(), 'VIAMAR VIAJES');
+VALUES('000000005800208', now(), 'ISI EDUCA');
 
 select * from public.cybersource_merchant_routing where merchant_id = '000000004900387';
 --INSERT INTO public.cybersource_merchant_routing (merchant_id, create_at, merchant_name) VALUES(

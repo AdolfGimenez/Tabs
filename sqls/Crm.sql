@@ -165,3 +165,11 @@ SELECT
     COUNT(CASE WHEN NOT ui."Enabled" THEN 1 END) AS "Inactivos",
     COUNT(*) AS "Total"
     FROM "crm-bepsa"."UserIdentity" ui ;
+
+
+select count(c.*)
+from "crm-bepsa"."Cases" c ;
+
+select o."OrderType" , count(*)
+from "crm-bepsa"."Orders" o
+group by o."OrderType" ;

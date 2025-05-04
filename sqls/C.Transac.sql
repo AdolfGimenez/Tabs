@@ -1,3 +1,6 @@
+--50xxx en adelante hasta 5365xxx ingresa via autorizador legacy
+--56xxx en adelante autorizador jpts
+-----------------------------------------------
 SELECT * FROM GXBDBPS.TDENTCOM; --ip de entidades transaccionales
 --USUARIO AZ7
 SELECT * FROM FEATMSLIB.AUUSR;

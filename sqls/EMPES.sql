@@ -300,7 +300,7 @@ order by date asc;*/
 --caso diferencia Conciliador
 --HOTFIX
 
-SELECT t.* FROM public.transaccion t WHERE t.fecha_comercial = '2025-03-25'
+SELECT t.* FROM public.transaccion t WHERE t.fecha_comercial = '2025-03-25';
 
 
 SELECT T.*
