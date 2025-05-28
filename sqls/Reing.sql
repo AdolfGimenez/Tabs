@@ -7,21 +7,6 @@ SELECT * FROM GXTRJDTA.tdgciu WHERE DEPIDDEPT = 17;
 INSERT INTO GXTRJDTA.TDGCIU (CIUIDCIUD, DEPIDDEPT, CIUDSCIUD, CIUUSULTUP, CIUFHULTUP)
 VALUES(5, 17, 'MARISCAL ESTIGARRIBA', CURRENT USER, CURRENT Timestamp);
 ----------------------------------------------------------------------------------------------------------------
-INSERT INTO GXFINDTA.TCMRCI
-( RDECODDEP, RCICODCIU, RCICIUERP, RCINOMCIU, RCIUSULTUP, RCIFHULTUP)
-VALUES
-( 15, 9, '259', 'POZO COLORADO', 'U99ROJAS' , '2022-08-01 11:35:20.000');
-----------------------------------------------------------------------------------------------------------------
-INSERT INTO GXTRJDTA.TDGCIU
-( CIUIDCIUD, DEPIDDEPT, CIUDSCIUD, CIUUSULTUP, CIUFHULTUP)
-VALUES
-( 9, 15, 'POZO COLORADO', 'MIGRACION ', '2020-04-23 18:00:00.000');
-----------------------------------------------------------------------------------------------------------------
-INSERT INTO GXFINDTA.TCOCIU
-( DEPCOD, CIUCODNUE, CIUCODACT, CIUDESCRI, CIUUSULTUP, CIUFHULTUP)
-VALUES
-( 15, 9, '195', 'POZO COLORADO', 'U99ROJAS', '2022-08-01 11:42:07.000');
-----------------------------------------------------------------------------------------------------------------
 ------------------------------tablas de comercios reing.
 SELECT * FROM GXFINDTA.TCMCLI t2 WHERE CLIRUC = '932416-0';
 SELECT * FROM GXFINDTA.TCMCLI t2 WHERE CLIDENCOM LIKE '%PETROCHA%'; -- tabla cliente reing.
@@ -862,6 +847,14 @@ Select
 *from gxfindta.tclset a JOIN  GXFINDTA.TCLRET b
 ON a.SETidRet = b.RETIdRet
 WHERE a.SETFecPro = '20241001'; -- NO trae datos, el campo SETidRet esta vacio en tclset
+------
+    ----en caso que falle el envio
+CREATE TABLE WRKADOLFO.gxfindta_tclret AS
+(SELECT * FROM gxfindta.tclret WHERE RETPERMES = '202504') WITH DATA ;
+--se cambia para procesar.!
+UPDATE gxfindta.tclret SET RETPERMES='205005', RETFECHA='20500501' WHERE RETPERMES = '202504';
+--Una vez hecha de ajusta la fecha de proceso.
+UPDATE gxfindta.tclret SET RETPERMES='202504', RETFECHA='20250502' WHERE RETPERMES = '205005';
 -----
 --alta entidad
 --TDGENT - Entidad -214
@@ -1012,3 +1005,11 @@ WHERE COCOMER IN (SELECT COCOMER
                     AND COTARJE = 0
                     AND SUBSTR(COCOMER, 1, 2) NOT IN (45, 90)
                     AND COSTAT <> 90);
+------------------------------------------
+--TAREA #93322: Ajuste de comision min y max - servicio: ADEPAG - Plan Piloto
+--podrian ayudarnos a modificar tanto la "comision minima" como la "comision maxima", del servicio de Adelanto de Pago (ADEPAG). El ajuste corresponde a pruebas piloto con comercios reales, del servicio de adelanto de acreditaciones a comercios.
+SELECT CLICLICOD, SUCSUCCOD, SERCODI, STSTIPCOM, STSVALCOM, STSCOMMIN, STSCOMMAX
+FROM GXFINDTA.TCMSTS WHERE SERCODI = 'ADEPAG'   AND STSCOMMAX = 0;
+UPDATE GXFINDTA.TCMSTS
+SET STSCOMMIN = 1,     STSCOMMAX = 500000,     STSFCHMOD= CURRENT TIMESTAMP,     STSUSUMOD = CURRENT USER
+WHERE SERCODI = 'ADEPAG'   AND STSCOMMAX = 0;

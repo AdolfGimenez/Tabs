@@ -437,8 +437,8 @@ SELECT C.MOVRRNBEP                                                              
           AND F.SUCURSALID = C.MOVCODSUC
           AND F.STATUSID LIKE '%APROBADO%'
           AND F.TARGETFACTID = 'FactComercios'
-          AND F.PERIODOID = '13'
-          AND F.EJERCICIOID = '2023')                                                                                      COMPROBANTE,
+          AND F.PERIODOID = '04'
+          AND F.EJERCICIOID = '2025')                                                                                      COMPROBANTE,
        (SELECT T.SUCDIRECC FROM DATOS.GXFINDTA_TCMSUC T WHERE T.CLICLICOD = C.MOVCODCLI AND T.SUCSUCCOD = C.MOVCODSUC)     DIRECCION_SUC,
        C.MOVFTRX                                                                                                           FECHA_TRX,
        C.MOVFPRO                                                                                                           FECHA_PROCESO,
@@ -451,15 +451,15 @@ SELECT C.MOVRRNBEP                                                              
        SUM(C.MOVRENT)                                                                                                      IMPORTERENTA,
        SUM(C.MOVIVREN)                                                                                                     IMPORTEIVARENTA,
        SUM(C.MOVNETO)                                                                                                      IMPORTENETO
-FROM FACTURACIONBEPSA.TCLMOV_TMP_COMERCIOS_202313_FACTCOMERCIOS C
---WHERE movopde = 700405 --para operadoras
-WHERE C.MOVCODCLI IN (SELECT C.CLICLICOD FROM DATOS.GXFINDTA_TCMCLI C WHERE C.CLIRUC LIKE '%80025958%')
---AND C.MOVCODSUC=1
+FROM TRUSTED_ZONE.GXFINDTA_TCLMOV C
+WHERE movopde = 700405 --para operadoras
+--WHERE C.MOVCODCLI IN (SELECT C.CLICLICOD FROM DATOS.GXFINDTA_TCMCLI C WHERE C.CLIRUC LIKE '%80022877-4%')
+--AND C.MOVCODSUC=3
 -- NOT IN ('1', '8')
 GROUP BY C.MOVCODCLI, C.MOVCODSUC, C.MOVCOMER, C.MOVDENO, C.MOVFTRX, C.MOVFPRO, C.MOVFCRE, C.MOVTPTA ,C.MOVRRNBEP
 ORDER BY C.MOVCODCLI, C.MOVCODSUC, C.MOVFTRX, C.MOVFPRO, C.MOVFCRE;
 -------------------------
-SELECT * FROM asientos.facturacionbepsa.CLIENTE C WHERE C.CLIENTEID=11373  C.CLIENTERUC='80097276';
+SELECT * FROM asientos.facturacionbepsa.CLIENTE C WHERE C.CLIENTEID=11373  --C.CLIENTERUC='80097276';
 SELECT * FROM asientos.facturacionbepsa.SUCURSAL S WHERE S.CLIENTEID=13637;
 ------------------------- reporte modelo pdf
 SELECT C.movrrnbep                                                                                                         Id_Transac,
@@ -712,17 +712,6 @@ call facturacionbepsa.sp_generate_tclmov_month_tmp_master('Operadoras');
 call facturacionbepsa.sp_generate_tclmov_month_tmp_detail('Operadoras');
 SELECT * FROM facturacionbepsa.sp_generate_tclmov_month_transactional(2023::integer, 12::integer, 'FactComercios'::character varying, 'Operadoras'::character varying);
 
-SELECT DISTINCT TTO202312F.movcodcli, TTO202312F.MOVCODSUC FROM FACTURACIONBEPSA.TCLMOV_TMP_OPERADORAS_202312_FACTCOMERCIOS TTO202312F;
-
-SELECT * FROM facturacionbepsa.facventa f WHERE f.FACVENTACOMPROBANTESET='001-003-0001193';
-SELECT * FROM FACTURACIONBEPSA.CLIENTE C WHERE C.CLIENTEID='26800';
-SELECT * FROM facturacionbepsa.facventacuota f WHERE f.facventaid = 129834;
-SELECT * FROM facturacionbepsa.facventacuota f WHERE facventacuotastatus='Activo';
-
-UPDATE FACTURACIONBEPSA.FACVENTACUOTA F
-SET FACVENTACUOTAIMPORTESALDO=FACVENTACUOTAIMPORTETOTAL
-WHERE F.FACVENTACUOTAIMPORTESALDO IS NULL
-  AND FACVENTACUOTASTATUS = 'Activo';
 ----------
 select ss.*
 from facturacionbepsa.sucursal ss
@@ -845,46 +834,9 @@ SET CLIENTETIPOPERSONA = 'PERJU', TIPODOCUMENTOID = 'RUC'
 WHERE CLIENTERUC::numeric >= 80000000;
 -------------------------
 
-SELECT *
-FROM asientos.facturacionbepsa.FACVENTA F
-WHERE F.TARGETFACTID = 'FactComercios' AND F.TIPOCLIENTEID = 'Comercio' AND F.FACVENTAFECHA = '2023-12-31';
 
-/*UPDATE asientos.facturacionbepsa.FACVENTA F
-SET FACVENTAFECHA = '2023-12-31'
-WHERE F.TARGETFACTID = 'FactComercios' AND F.TIPOCLIENTEID = 'Comercio' AND F.FACVENTAFECHA = '2024-01-02';*/
-
-/*UPDATE asientos.facturacionbepsa.FACVENTA F
-SET facventadesc = replace(facventadesc, '20240102', '20231231')
-WHERE F.TARGETFACTID = 'FactComercios' AND F.TIPOCLIENTEID = 'Comercio' AND F.FACVENTAFECHA = '2023-12-31';*/
-
-SELECT * FROM asientos.asientos.CUENTASCOMBINACIONES C;
-
-SELECT * FROM asientos.datos.CUENTAAUXILIARCONTABLE C;
-
-SELECT F.STATUSID, count(F.FACVENTAID)
-FROM asientos.facturacionbepsa.FACVENTA F
-WHERE F.TARGETFACTID = 'FactComercios' AND F.TIPOCLIENTEID = 'Comercio' AND F.FACVENTAFECHA = '2023-12-31'
-GROUP BY F.STATUSID;
-
-SELECT * FROM CONCILIACION.EXTRACTOS_NO_CONCILIADOS ENC;
-
-SELECT * FROM CONCILIACION.EXTRACTOS_INFORME EI;
-
-SELECT *
-FROM asientos.facturacionbepsa.FACVENTA F
-WHERE F.TARGETFACTID = 'FactComercios' AND F.TIPOCLIENTEID = 'Comercio' AND F.FACVENTAFECHA = '2023-12-31' AND F.STATUSID='DTE_APROBADO';
-
---Este documento se quedo en cola 001-002-11606
---Este documento se quedo en cola 001-002-10632
-
-SELECT * FROM asientos.facturacionbepsa.FACVENTADET F WHERE F.FACVENTAID='135600';
-
-SELECT * FROM asientos.facturacionbepsa.CLIENTE C WHERE C.CLIENTEID='10736';
-
-SELECT * FROM DATOS.GXFINDTA_TCMCLI T WHERE T.CLICLICOD='10736';
-SELECT * FROM asientos.datos.GXFINDTA_TCMSUC T WHERE T.CLICLICOD='10736';
 ---------------------------------------------------------
-SELECT * from facturacionbepsa.sp_insert_factventa;
+SELECT * from facturacionbepsa.sp_insert_factventa();
 
 select facturacionbepsa.fn_quitar_dv_ruc('80016096-7');
 
@@ -3137,7 +3089,7 @@ facturacionbepsa.fn_get_reccobro_by_ejercicios_periodos_targets
 SELECT * FROM FACTURACIONBEPSA.FACVENTA F WHERE F.FACVENTACLIRUC='80019742-9' AND F.PERIODOID=10;
 ---gemera liq. comercios
 SELECT * FROM facturacionbepsa.fn_get_facturas_a_generar();
------CALCULO DE IMPORTES PARA FACTURAS
+-----CALCULO DE IMPORTES PARA FACTURAS QUERY PARA FACTURAS
 --RETAIL
 SELECT
 	tmov.movcodcli AS cliente, tmov.movcodsuc AS sucursal, tmov.movrazo, tmov.movruc,
@@ -3573,4 +3525,5 @@ UPDATE facturacionbepsa.parametros
 SET parmvalue='-21'
 WHERE parmid='consultaSirius' AND parmserial='tiempoMinutos';
 
-SELECT * FROM asientos.facturacionbepsa.FACVENTA F WHERE F.FACVENTANUMERO='266729';
+SELECT * FROM asientos.facturacionbepsa.FACVENTA F WHERE F.FACVENTACLIRUC='80013744-2' AND EJERCICIOID=2025
+AND F.PERIODOID=04-- F.FACVENTACOMPROBANTESET='001-002-0296961'

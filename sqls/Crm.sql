@@ -58,7 +58,7 @@ SELECT * FROM "crm-bepsa"."CaseTypeSubtype_Id_seq";
 ---cambiar usuarios que difieren de keycloak vs db
 select ui."Id" , ui."Email" , ui.*
 from "crm-bepsa"."UserIdentity" ui
-where ui."Email" = 'dmedina@bepsa.com.py';
+where ui."Email" = 'cvicente@bepsa.com.py';
 
 select *
 from "crm-bepsa"."GroupIdentityUserIdentity" giui
@@ -67,7 +67,7 @@ where giui."UsersId" = 'd419e54e-8b1e-408d-883b-6ff26d11ccfb';
 select *
 from "crm-bepsa"."Users" u
 where u."IdentityId" = 'd419e54e-8b1e-408d-883b-6ff26d11ccfb';
----ver si sincronizó bien el cambio de grupo
+---ver si sincronizó bien el cmbio de grupo
 SELECT
  gi."Name" AS rol
 FROM  "crm-bepsa"."GroupIdentityUserIdentity" AS giui
@@ -88,9 +88,7 @@ GROUP BY ui."UserName"
 ORDER BY ui."UserName";
 -----------------------------
 --lista de tipificaciones por tipo (COMERCIO/ ENTIDAD)
-SELECT CTP."Name" AS "CaseTypeName",
-       CS."Name"  AS "CaseSubtypeName",
-       CT."Name"
+SELECT CTP."Name" AS "CaseTypeName", CS."Name"  AS "CaseSubtypeName", CT."Name"
 FROM "crm-bepsa"."CaseTypifications" CT
          JOIN "crm-bepsa"."CaseSubtypeTypification" CST
               ON CT."Id" = CST."CaseTypificationId"
@@ -173,3 +171,20 @@ from "crm-bepsa"."Cases" c ;
 select o."OrderType" , count(*)
 from "crm-bepsa"."Orders" o
 group by o."OrderType" ;
+
+select count(u."Id") as totalusers
+from "crm-bepsa"."Users" u join "crm-bepsa"."UserIdentity" ud on u."IdentityId" = ud."Id"
+where ud."Enabled" = true;
+
+SELECT DISTINCT (U."Name")
+FROM "crm-bepsa"."CaseResolutionArea"
+INNER JOIN "crm-bepsa"."Users" U ON U."Id" = "CaseResolutionArea"."ByUserId"
+WHERE "ByUserId" = U."Id" AND "UserId" = U."Id"
+
+select count(u."Id") as totalusers
+from "crm-bepsa"."Users" u join "crm-bepsa"."UserIdentity" ud on u."IdentityId" = ud."Id"
+where ud."Enabled" = true
+
+
+
+'2c29dca9-6158-4f97-8341-0b05e3e66a15'

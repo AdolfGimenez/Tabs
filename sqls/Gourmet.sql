@@ -3,11 +3,12 @@ LEFT JOIN GXBDBPS.COMAEAF b ON b.cocomer = a.cocomer
 WHERE PARENE = '041' AND TRAEST = 'A';
 ------------------------------------------------------------------------------------------------------------------
 -- BEPSA
-select *from gxbdbps.tafitra where parene='155' limit 1; -- AND COCOMER='0706581'
-delete from gxbdbps.tafitra where parene='155'; --0706582
+select *from gxbdbps.tafitra where parene='155';limit 1; -- AND COCOMER='0706581'
+   select *from WRKADOLFO.tafitra where parene='155';
+--delete from gxbdbps.tafitra where parene='155'; --0706582
 
 INSERT INTO GXBDBPS.TAFITRA (PARENE, PARBIN, PARAFINI, COCOMER, TRAEST, TRAFCHALT, TRAUSRALT, TRAFCHMOD, TRAUSRMOD)
-VALUES ('155', '627431', '001', '0706582', 'A', '20231215', 'U99ADOLFO', '20231215', NULL);
+VALUES ('155', '627431', '001', '0708433', 'A', '20250509', 'U99ADOLFO', '20250509', NULL);
 
 insert into gxbdbps.tafitra (PARENE, PARBIN, PARAFINI, COCOMER, TRAEST, TRAFCHALT,TRAUSRALT, TRAFCHMOD, TRAUSRMOD)
 ( select '155','627431','001', cocomer,'A', '20200124','U99JOSEEN','20200619',''

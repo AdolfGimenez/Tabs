@@ -7,6 +7,7 @@ SHOW INDEX FROM K2B_PROD.ASIENTOCONTABLE;
 /*--muestra los índices creados sobre la tabla que quieras consultar...*/
 --
 SHOW ENGINE INNODB STATUS;
+SHOW ENGINE INNODB STATUS;
 --
 SELECT NOW();/*ver la hora de la db*/
 SET GLOBAL general_log = 1; /*activar log*/
@@ -235,3 +236,6 @@ ORDER BY T1.`INVACTIVOFIJOID`;
 SELECT * from k2b_prod.CENTROALMACENAJE C;
 
 SELECT * FROM k2b_prod.INVENTARIOACTIVOFIJO I WHERE I.INVACTIVOFIJOROLCODIGO=''
+
+select * from acuerdo where acuerdoid = 41;
+

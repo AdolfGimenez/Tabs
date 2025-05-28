@@ -58,7 +58,7 @@ los que inician con dinelco_mf_0011111 -> su main id es: dinelco_mf
 los que inician con dinelco_da_0011111 - > su main id es: dinelco_debitoauto
 dinelco_0012300xxxxx (codigo de cliente de documenta), corresponde al main id dinelco_documeta*/
 
-SELECT * from keys_cybersource_shops s where cybersource_shop_id = 'dinelco_002844100001';
+SELECT * from keys_cybersource_shops s where cybersource_shop_id = 'dinelco_002855600001';
 SELECT max(id_key_cybersource_shop) from keys_cybersource_shops s;
 SELECT DISTINCT(cybersource_shop_main_id) from public.KEYS_CYBERSOURCE_SHOPS  s;
 --actualiza
@@ -70,18 +70,17 @@ where cybersource_shop_id = 'dinelco_002729500001';
 INSERT INTO PUBLIC.KEYS_CYBERSOURCE_SHOPS
 (ID_KEY_CYBERSOURCE_SHOP, CYBERSOURCE_SHOP_ID, CYBERSOURCE_PUBLIC_KEY, CYBERSOURCE_PRIVATE_KEY,
  CREATED_AT, CYBERSOURCE_SHOP_MAIN_ID, ENTITY_ID) VALUES
-(456, 'dinelco_002844100001',
- '3f93d600-4a7c-4c6e-80dc-beb425898115',
- 'bmuW24YtTJZOPDpBTBsjtbdRxDqAK5L6xv1ZB1iROIM=',
+(470, 'dinelco_002855600001',
+ 'c1b249d1-b027-4ce6-9888-2f7433cc3af7',
+ 'm09bgfxsRw0EOwz6EZtOiwkB5kx64kFmupuzNeUlXwE=',
  now(), 'dinelco_checkout', NULL);
 ---------------------------------------------------
 --15 caracteres completar con 000
-select * from cybersource_merchant_routing where merchant_id IN ('000000005800208'); --= '00000000301609';
-000000005800208
+select * from cybersource_merchant_routing where merchant_id IN ('000000002301518'); --= '00000000301609';
+000000002301518
 INSERT INTO public.cybersource_merchant_routing
 (merchant_id, create_at, merchant_name)
-VALUES('000000005800208', now(), 'ISI EDUCA');
+VALUES('000000002301518', now(), 'ESSEN');
 
 select * from public.cybersource_merchant_routing where merchant_id = '000000004900387';
---INSERT INTO public.cybersource_merchant_routing (merchant_id, create_at, merchant_name) VALUES(
 

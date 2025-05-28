@@ -29,6 +29,9 @@ SELECT * FROM LIBDEBITO.TBCRET0P;
 --para lenemi
 Select * from gxopera.opentid1;
 ------------------------------------------------------------------------------------------------------------------------------------------
+SELECT * FROM GXAUTDTA.TADQMSTEXC; --exepciones MAST
+SELECT * FROM GXSWTDTA.TMIEXC t WHERE EXCFCHING='20250507' ; --tabla de exepciones VISA
+------------------------------------------------------------------------------------------------------------------------------------------
 --para codigo de trx
 SELECT * FROM LIBDEBITO.tbctra0p;
 -------------------------------------------GENERAL-------------------------------------------------
@@ -1095,3 +1098,31 @@ FROM MASTERCARD.MASCTLDTA m WHERE MC037 IN ('511915967952', '511919327277', '511
 --registros contados
 SELECT mc112, m.MC048 , m.MCROL ,   MCRRNBEPSA , MC037, MC038, MC039 , MC061 , MCREVDATT, MCREVFLG , MCREVCOD ,  m.*
 FROM MASTERCARD.MASCTLDTA m WHERE MC037 IN ('511918509529', '511918372452', '511918618194');
+
+----PARA RUTEAR 703020 POR LEGACY tAREA #92138
+--desactivar jpts con los secrests cambiando valores del jpts.config.properties
+/*continental_atm_terminal_id_list
+continental_pos_terminal_id_list ambos a NONE*/
+--Para: POS Ejecutar script para cambiar la parametrización para que apunte al nuevo programa.
+UPDATE libdebito.TBBINE0P SET QEPGM = 'MOVETRNDTA'
+WHERE QEBIN1 = '703020';  --vALOR ACTUAL = CNXRPGCAUT
+
+--Para ATM Ejecutar script para cambiar la parametrización para que apunte al nuevo programa.
+UPDATE  atmcentre.TBBINE0P SET QEPGM = 'DEBAUTENTI'
+WHERE QEBIN1 ='703020';  --vALOR ACTUAL = CNXRPGAUTA
+--BK E EN SU MOMENTO
+SELECT QEBIN1 ,QEPGM  FROM WRKADOLFO.ATMCENTRE_TBBINE0P
+WHERE QEBIN1 = '703020';
+SELECT QEBIN1 ,QEPGM  FROM WRKADOLFO.libdebito_TBBINE0P
+WHERE QEBIN1 = '703020';
+---LOG DEL MISMO
+SELECT * FROM libdebito.lgdinelco L;
+
+--Diferencias en transacciónes QR PIX PAYPY - QR EXPIRADO
+--SQL para encontrar todas las transacciones de QR PIX que tuvieron un pago pero se reversó luego de que se haya procesado el pago al comercio.
+SELECT T2.MOVRRNBEP, T2.MOVESTA, T.*
+FROM JPTSAPI.TRANLOG T
+         INNER JOIN GXFINDTA.TCLMOV T2 ON T.DS_RRN = T2.MOVRRNBEP
+WHERE T.TRANSACTION_TOKEN IN (SELECT T2.TRANSACTION_TOKEN FROM JPTSAPI.TRANLOG T2 WHERE T2.TRANSACTION_TOKEN IN
+(SELECT T1.TRANSACTION_TOKEN FROM JPTSAPI.TRANLOG T1 WHERE T1.SSPCODE = '540063' AND T1.ITC LIKE '200.%') AND T2.SS = 'SS-REST')
+AND T.ITC LIKE '400.%' AND T2.MOVFPRO BETWEEN '20250516' AND '20250519' AND T2.MOVFTRX BETWEEN '20250516' AND '20250518';

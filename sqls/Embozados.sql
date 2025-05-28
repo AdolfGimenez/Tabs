@@ -19,6 +19,11 @@ group by DECNOMARCH;
 --tabla de transmicion de detalle debito y credito
 SELECT * FROM GXTRJDTA.TDSDTE WHERE SPRIDSEG = 87866;
 
+----embozado opión 20 legacy
+SELECT * FROM GXBDBPS.TDEMISNOV
+WHERE TDESTNOV = '0'
+AND TDFECHPROC = '00000000';
+
 --para corregir horarios
 UPDATE GXTRJDTA.TTDEMI SET EMIFHULTUP = '2022-04-21 11:27:00.000' WHERE EMIPROCABM = 'S' ;
 --ver Fechas de corte
@@ -67,7 +72,7 @@ SELECT * FROM GXBDBPS.TDEMIS WHERE TDEMFECALT = '20220426' AND TDBINENTID <> 104
 -------------------------------------------------------------------------------------------------------
 --Correccion de tipo de platico para que genere bien el reproceso de cr?dito
 -------------------------------------------------------------------------------------------------------
-UPDATE GXTRJDTA.TTCTRJ SET TRJTPPLA='L' WHERE TRJNROTRJ IN('5476970000002632'); 
+UPDATE GXTRJDTA.TTCTRJ SET TRJTPPLA='L' WHERE TRJNROTRJ IN('5476970000002632');
 -------------------------------------------------------------------------------------------------------
 ------para cambiar hora debito
 -------------------------------------------------------------------------------------------------------

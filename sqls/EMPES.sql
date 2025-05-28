@@ -19,8 +19,8 @@ SELECT fecha_operacion, empre_origen, empre_destino, estado, count(*) Cantidad, 
 /*Resumen de transacciones - Switch*/
 SELECT empre_origen, empre_destino, estado, count(*) Cantidad, sum(importe) Total, codigo_respuesta, mensaje_error
   FROM public.transaccion
- where fecha_creacion >= '2022-04-07 00:00:00'
-   and fecha_creacion <= '2022-04-10 18:59:59'
+ where fecha_creacion >= '2025-05-11 23:59:00'
+   and fecha_creacion <= '2025-05-12 23:59:59'
  group by empre_origen, empre_destino, estado, codigo_respuesta, mensaje_error
  order by empre_origen, empre_destino;
 
@@ -34,8 +34,8 @@ SELECT count(*) Cantidad_trx--, fecha_creacion, fecha_comercial
 -------SWICHT----------
 SELECT count(*) Cantidad_trx, date(fecha_creacion)
   FROM PUBLIC.TRANSACCION
- where fecha_creacion >= '2020-12-24 19:00:00'
-   and fecha_creacion <= '2020-12-28 18:59:59'
+ where fecha_creacion >= '2025-05-11 23:59:00'
+   and fecha_creacion <= '2025-05-12 23:59:59'
  group by date(fecha_creacion)
  order by date asc;
 ---#######################################################################################################################################################################################---
@@ -322,3 +322,4 @@ AND id NOT IN
 '100005667237'
 '100005667238'
 )*/
+
