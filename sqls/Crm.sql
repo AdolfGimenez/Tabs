@@ -1,5 +1,5 @@
 SELECT t.*, CTID
-FROM "crm-bepsa"."UserIdentity" t WHERE "Email"='eaquino@bepsa.com.py';
+FROM "crm-bepsa"."UserIdentity" t WHERE "Email"='liz.vazquez@bepsa.com.py';
 
 SELECT
  ui."UserName" ,
@@ -58,24 +58,24 @@ SELECT * FROM "crm-bepsa"."CaseTypeSubtype_Id_seq";
 ---cambiar usuarios que difieren de keycloak vs db
 select ui."Id" , ui."Email" , ui.*
 from "crm-bepsa"."UserIdentity" ui
-where ui."Email" = 'cvicente@bepsa.com.py';
-
+where ui."Email" = 'liz.vazquez@bepsa.com.py';
+----'06de0585-5c6a-4259-aa45-0a335ffe3513'
 select *
 from "crm-bepsa"."GroupIdentityUserIdentity" giui
-where giui."UsersId" = 'd419e54e-8b1e-408d-883b-6ff26d11ccfb';
+where giui."UsersId" = '06de0585-5c6a-4259-aa45-0a335ffe3513';
 
 select *
 from "crm-bepsa"."Users" u
-where u."IdentityId" = 'd419e54e-8b1e-408d-883b-6ff26d11ccfb';
+where u."IdentityId" = '06de0585-5c6a-4259-aa45-0a335ffe3513';
 ---ver si sincronizó bien el cmbio de grupo
 SELECT
  gi."Name" AS rol
 FROM  "crm-bepsa"."GroupIdentityUserIdentity" AS giui
 INNER JOIN  "crm-bepsa"."GroupIdentity" gi ON giui."RolesId" = gi."Id"
-WHERE  giui."UsersId" = 'd419e54e-8b1e-408d-883b-6ff26d11ccfb'; --id user
+WHERE  giui."UsersId" = '06de0585-5c6a-4259-aa45-0a335ffe3513'; --id user
 
-SELECT * FROM "crm-bepsa"."GroupIdentity" gi; --crmadmin = dc6952db-9936-45b4-a80c-8e86cfde1f10
-SELECT * FROM "crm-bepsa"."GroupIdentityUserIdentity" WHERE  "UsersId" = 'd419e54e-8b1e-408d-883b-6ff26d11ccfb';
+SELECT * FROM "crm-bepsa"."GroupIdentity" gi; --crmadmin = dc6952db-9936-45b4-a80c-8e86cfde1f10 --sae = bc6aef81-04cf-4631-9ebf-932d6d176533
+SELECT * FROM "crm-bepsa"."GroupIdentityUserIdentity" WHERE  "UsersId" = '06de0585-5c6a-4259-aa45-0a335ffe3513';
 
 ---ver usuarios activos:
 SELECT ui."UserName", STRING_AGG(gi."Name", ', ') AS "Groups"
@@ -127,14 +127,15 @@ FROM
  "crm-bepsa"."GroupIdentityUserIdentity" AS giui
 INNER JOIN  "crm-bepsa"."GroupIdentity" AS gi ON giui."RolesId" = gi."Id"
 INNER JOIN  "crm-bepsa"."UserIdentity" AS ui ON giui."UsersId" = ui."Id"
-WHERE  ui."Email"  = 'sbenitez@bepsa.com.py' ;
+WHERE  ui."Email"  = 'liz.vazquez@bepsa.com.py' ;
 
 
 SELECT * FROM
  "crm-bepsa"."GroupIdentityUserIdentity" AS giui WHERE "UsersId" ='b3d3f077-a11f-434a-8b67-a214ab32d139';
 
 ---crmadmin= dc6952db-9936-45b4-a80c-8e86cfde1f10
---9383b9d2-eb9e-450a-8594-ddbec8988e23
+--'06de0585-5c6a-4259-aa45-0a335ffe3513'
+
 ----imple
 SELECT  * FROM  "crm-bepsa"."ClientBranches" AS cb
 WHERE  cb."AttrData" ILIKE '%8100040%';
@@ -183,8 +184,5 @@ WHERE "ByUserId" = U."Id" AND "UserId" = U."Id"
 
 select count(u."Id") as totalusers
 from "crm-bepsa"."Users" u join "crm-bepsa"."UserIdentity" ud on u."IdentityId" = ud."Id"
-where ud."Enabled" = true
+where ud."Enabled" = true;
 
-
-
-'2c29dca9-6158-4f97-8341-0b05e3e66a15'

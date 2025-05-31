@@ -238,4 +238,3 @@ SELECT * from k2b_prod.CENTROALMACENAJE C;
 SELECT * FROM k2b_prod.INVENTARIOACTIVOFIJO I WHERE I.INVACTIVOFIJOROLCODIGO=''
 
 select * from acuerdo where acuerdoid = 41;
-
