@@ -437,7 +437,7 @@ SELECT C.MOVRRNBEP                                                              
           AND F.SUCURSALID = C.MOVCODSUC
           AND F.STATUSID LIKE '%APROBADO%'
           AND F.TARGETFACTID = 'FactComercios'
-          AND F.PERIODOID = '04'
+          AND F.PERIODOID = '05'
           AND F.EJERCICIOID = '2025')                                                                                      COMPROBANTE,
        (SELECT T.SUCDIRECC FROM DATOS.GXFINDTA_TCMSUC T WHERE T.CLICLICOD = C.MOVCODCLI AND T.SUCSUCCOD = C.MOVCODSUC)     DIRECCION_SUC,
        C.MOVFTRX                                                                                                           FECHA_TRX,
@@ -451,10 +451,13 @@ SELECT C.MOVRRNBEP                                                              
        SUM(C.MOVRENT)                                                                                                      IMPORTERENTA,
        SUM(C.MOVIVREN)                                                                                                     IMPORTEIVARENTA,
        SUM(C.MOVNETO)                                                                                                      IMPORTENETO
-FROM TRUSTED_ZONE.GXFINDTA_TCLMOV C
-WHERE movopde = 700405 --para operadoras
---WHERE C.MOVCODCLI IN (SELECT C.CLICLICOD FROM DATOS.GXFINDTA_TCMCLI C WHERE C.CLIRUC LIKE '%80022877-4%')
---AND C.MOVCODSUC=3
+FROM FACTURACIONBEPSA.tclmov_tmp_comercios_202505_factcomercios C
+/*DATOS.GXFINDTA_TCLMOV c WHERE c.MOVOPDE = 700405 AND c.MOVFCRE BETWEEN '20250422' AND '20250521'
+    AND (c.SERCODI IN ('PAGFAC', 'VTAMIN') AND c.PRECODI IN ('PFEW', 'PFTA', 'VTEP', 'VTEW', 'VTTA')
+    AND c.MOVCODIS IN ('ATM', 'WEB', 'POS')) AND c.MOVIVCO > 0*/
+--WHERE movopde = 700405 --para operadoras
+WHERE C.MOVCODCLI IN (SELECT C.CLICLICOD FROM DATOS.GXFINDTA_TCMCLI C WHERE C.CLIRUC LIKE '%80028213%')
+AND C.MOVCODSUC=29
 -- NOT IN ('1', '8')
 GROUP BY C.MOVCODCLI, C.MOVCODSUC, C.MOVCOMER, C.MOVDENO, C.MOVFTRX, C.MOVFPRO, C.MOVFCRE, C.MOVTPTA ,C.MOVRRNBEP
 ORDER BY C.MOVCODCLI, C.MOVCODSUC, C.MOVFTRX, C.MOVFPRO, C.MOVFCRE;
@@ -3484,7 +3487,6 @@ where p.parmid ='setRetencionesEventos' and p.parmserial ='valorInicialFacVentaI
 ---VER SI CARGO PARSERO EPIN
 seleCT * FROM MARCAS.TRANS_VISA TV WHERE TV.DATE_REPORT='2025-03-27';
 
-
 SELECT *
 FROM FACTURACIONBEPSA.FACVENTA
 WHERE STATUSID ='DE_ACTIVO'
@@ -3524,8 +3526,14 @@ WHERE parmid='consultaSirius' AND parmserial='periodoEjecucion';
 UPDATE facturacionbepsa.parametros
 SET parmvalue='-21'
 WHERE parmid='consultaSirius' AND parmserial='tiempoMinutos';
+SELECT * FROM asientos.facturacionbepsa.NCREDITO N WHERE N.NCREDITOCOMPROBANTESET IN
+('001-001-0006289');
+SELECT * FROM asientos.facturacionbepsa.FACVENTACUOTA F WHERE F.FACVENTAID=372178;
 
-SELECT * FROM asientos.facturacionbepsa.FACVENTA F WHERE F.FACVENTACLIRUC='80013744-2' AND EJERCICIOID=2025
-AND F.PERIODOID=04-- F.FACVENTACOMPROBANTESET='001-002-0296961'
+select * FROM asientos.facturacionbepsa.FACVENTA F WHERE F.FACVENTANUMERO=315729;
+SELECT * FROM asientos.facturacionbepsa.FACVENTADET F WHERE F.FACVENTAID=1119991
+--clienteid = 11612 AND sucursalid = 29
 
-select  * FROM asientos.facturacionbepsa.NCREDITO N WHERE N.NCREDITOCOMPROBANTESET='001-001-0007127'
+/*"COMISION+IVA" = 3204.00 AND IVACOMISION = 291.00 AND COMISION = 2913.00 AND MOVTPTA = 'D' AND CANTIDAD = 3
+"COMISION+IVA" = 796415.00 AND IVACOMISION = 72403.00 AND COMISION = 724012.00 AND MOVTPTA = 'E' AND CANTIDAD = 52
+"COMISION+IVA" = 731125.00 AND IVACOMISION = 66466.00 AND COMISION = 664659.00 AND MOVTPTA = 'C' AND CANTIDAD = 42*/

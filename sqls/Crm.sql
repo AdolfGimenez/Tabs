@@ -1,6 +1,6 @@
 SELECT t.*, CTID
-FROM "crm-bepsa"."UserIdentity" t WHERE "Email"='liz.vazquez@bepsa.com.py';
-
+FROM "crm-bepsa"."UserIdentity" t WHERE "Email"='katherin.canete@bepsa.com.py';
+--50a1ef8b-3920-430c-9a8e-819a53c1552d
 SELECT
  ui."UserName" ,
  gip."PermissionCode"
@@ -58,21 +58,21 @@ SELECT * FROM "crm-bepsa"."CaseTypeSubtype_Id_seq";
 ---cambiar usuarios que difieren de keycloak vs db
 select ui."Id" , ui."Email" , ui.*
 from "crm-bepsa"."UserIdentity" ui
-where ui."Email" = 'liz.vazquez@bepsa.com.py';
-----'06de0585-5c6a-4259-aa45-0a335ffe3513'
+where ui."Email" = 'carlos.chavez@bepsa.com.py';
+----'8f7c0314-a3e9-422d-a85b-66979f60661a'
 select *
 from "crm-bepsa"."GroupIdentityUserIdentity" giui
-where giui."UsersId" = '06de0585-5c6a-4259-aa45-0a335ffe3513';
+where giui."UsersId" = '8f7c0314-a3e9-422d-a85b-66979f60661a';
 
 select *
 from "crm-bepsa"."Users" u
-where u."IdentityId" = '06de0585-5c6a-4259-aa45-0a335ffe3513';
+where u."IdentityId" = '8f7c0314-a3e9-422d-a85b-66979f60661a';
 ---ver si sincronizó bien el cmbio de grupo
 SELECT
  gi."Name" AS rol
 FROM  "crm-bepsa"."GroupIdentityUserIdentity" AS giui
 INNER JOIN  "crm-bepsa"."GroupIdentity" gi ON giui."RolesId" = gi."Id"
-WHERE  giui."UsersId" = '06de0585-5c6a-4259-aa45-0a335ffe3513'; --id user
+WHERE  giui."UsersId" = '50a1ef8b-3920-430c-9a8e-819a53c1552d'; --id user
 
 SELECT * FROM "crm-bepsa"."GroupIdentity" gi; --crmadmin = dc6952db-9936-45b4-a80c-8e86cfde1f10 --sae = bc6aef81-04cf-4631-9ebf-932d6d176533
 SELECT * FROM "crm-bepsa"."GroupIdentityUserIdentity" WHERE  "UsersId" = '06de0585-5c6a-4259-aa45-0a335ffe3513';
@@ -185,4 +185,18 @@ WHERE "ByUserId" = U."Id" AND "UserId" = U."Id"
 select count(u."Id") as totalusers
 from "crm-bepsa"."Users" u join "crm-bepsa"."UserIdentity" ud on u."IdentityId" = ud."Id"
 where ud."Enabled" = true;
+
+SELECT  * FROM "crm-bepsa"."ClientBranches" WHERE "ClientId"=3554;
+
+SELECT  * FROM "crm-bepsa"."CaseSubtypeTypification";
+
+SELECT  * FROM "crm-bepsa"."Permissions";
+
+----cierre para facturar bobinas
+SELECT  * FROM  "crm-bepsa"."Settings" AS s WHERE  s."Key" ILIKE '%Closing%';
+--update de horario para el mismo
+UPDATE "crm-bepsa"."Settings"
+SET  "Value" = '0 35 09 13 * ?'
+WHERE  "Key" = 'ClosingBillingSetup' ;
+
 

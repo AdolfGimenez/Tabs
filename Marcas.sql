@@ -1,0 +1,20 @@
+--PENDIENTE OUTGOING.
+/*Tenemos casos de registros con fecha comercial diferente para las transacciones que ingresan en el primer ciclo de Cybersource, del día siguiente.
+Como ingresan con fecha comercial diferente, no ingresan en los outgoing.
+Adjunto query de los registros.*/
+SELECT MC014, MCPANEXPDT,MCREVDATT,MCFECCOM, LFCOTR,LECA62 ,A.MC038, C.LCAUTR, B.MCIMPORTE, C.LIMPGS, B.MCFECCOM, CHAR(C.LFCOTR) AS lfcotr, A.*, B.*
+FROM     MASTERCARD.MASCTLDTA AS A
+    INNER JOIN     MASTERCARD.MASTRNDTA AS B ON A.MCRRNBEPSA = B.MCRRNBEPSA
+AND A.MTI = B.MCMTI
+AND A.MCROL = B.MCROL
+INNER JOIN LIBDEBITO.DRCONBEP AS C ON A.MCRRNBEPSA = C.LERRNB and
+A.MC038 = C.LCAUTR AND B.MCIMPORTE = C.LIMPGS AND
+B.MCFECCOM != CHAR(C.LFCOTR)
+WHERE MC039 IN ('00', '10')
+AND      A.MTI = 0110
+AND     A.MCROL = 'ADQ'
+AND    B.MCROL = 'ADQ'
+AND     C.LROL = 'ADQ' AND LIMPGS > 0
+AND     MASIPMPRC  ='N'-- AND TIME(MCREVDATT) >='23:00:00' AND LECA62 = 'PAGO_DIGITAL'
+and B.MCFECCOM >= '20250201'  AND B.MCFECCOM <= '20250529'
+ORDER BY MCREVDATT DESC;
