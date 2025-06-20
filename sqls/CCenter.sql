@@ -451,13 +451,13 @@ SELECT C.MOVRRNBEP                                                              
        SUM(C.MOVRENT)                                                                                                      IMPORTERENTA,
        SUM(C.MOVIVREN)                                                                                                     IMPORTEIVARENTA,
        SUM(C.MOVNETO)                                                                                                      IMPORTENETO
-FROM FACTURACIONBEPSA.tclmov_tmp_comercios_202505_factcomercios C
+FROM FACTURACIONBEPSA.TCLMOV_TMP_COMERCIOS_202505_FACTCOMERCIOS C
 /*DATOS.GXFINDTA_TCLMOV c WHERE c.MOVOPDE = 700405 AND c.MOVFCRE BETWEEN '20250422' AND '20250521'
     AND (c.SERCODI IN ('PAGFAC', 'VTAMIN') AND c.PRECODI IN ('PFEW', 'PFTA', 'VTEP', 'VTEW', 'VTTA')
     AND c.MOVCODIS IN ('ATM', 'WEB', 'POS')) AND c.MOVIVCO > 0*/
 --WHERE movopde = 700405 --para operadoras
 WHERE C.MOVCODCLI IN (SELECT C.CLICLICOD FROM DATOS.GXFINDTA_TCMCLI C WHERE C.CLIRUC LIKE '%80028213%')
-AND C.MOVCODSUC=29
+--AND C.MOVCODSUC=29
 -- NOT IN ('1', '8')
 GROUP BY C.MOVCODCLI, C.MOVCODSUC, C.MOVCOMER, C.MOVDENO, C.MOVFTRX, C.MOVFPRO, C.MOVFCRE, C.MOVTPTA ,C.MOVRRNBEP
 ORDER BY C.MOVCODCLI, C.MOVCODSUC, C.MOVFTRX, C.MOVFPRO, C.MOVFCRE;
@@ -3497,28 +3497,28 @@ ORDER BY facventanumero;
 call facturacionbepsa.sp_fpos_cliente_sucursal_factclisuc('2025-03-01'::text, '2025-04-10'::text);
 
 ---update para b2g
-update facturacionbepsa.cliente cc
-set tipooperacion ='B2C'
-where not exists (
-select 1
-from facturacionbepsa.cliente c
-where  ( upper(c.clienterazonsocial)  like '%M_NICIPALIDAD%'
-or upper(c.clienterazonsocial) like '%MINISTERIO%'
-or upper(c.clienterazonsocial) like '%SECRETA%' or upper(c.clienterazonsocial) like 'BANCO%FOMENTO'
-or upper(c.clienterazonsocial) like 'BANCO%CENTRAL%')
-and cc.tipoclienteid=c.tipoclienteid and cc.clienteid=c.clienteid)
-and cc.tipooperacion is null;
-update facturacionbepsa.cliente cc
-set tipooperacion ='B2G'
-where exists (
-select 1
-from facturacionbepsa.cliente c
-where  ( upper(c.clienterazonsocial)  like '%M_NICIPALIDAD%'
-or upper(c.clienterazonsocial) like '%MINISTERIO%'
-or upper(c.clienterazonsocial) like '%SECRETA%' or upper(c.clienterazonsocial) like 'BANCO%FOMENTO'
-or upper(c.clienterazonsocial) like 'BANCO%CENTRAL%')
-and cc.tipoclienteid=c.tipoclienteid and cc.clienteid=c.clienteid)
-and cc.tipooperacion is null;
+UPDATE FACTURACIONBEPSA.CLIENTE CC
+SET TIPOOPERACION ='B2C'
+WHERE NOT EXISTS (SELECT 1
+                  FROM FACTURACIONBEPSA.CLIENTE C
+                  WHERE (UPPER(C.CLIENTERAZONSOCIAL) LIKE '%M_NICIPALIDAD%'
+                      OR UPPER(C.CLIENTERAZONSOCIAL) LIKE '%MINISTERIO%'
+                      OR UPPER(C.CLIENTERAZONSOCIAL) LIKE '%SECRETA%' OR UPPER(C.CLIENTERAZONSOCIAL) LIKE 'BANCO%FOMENTO'
+                      OR UPPER(C.CLIENTERAZONSOCIAL) LIKE 'BANCO%CENTRAL%')
+                    AND CC.TIPOCLIENTEID = C.TIPOCLIENTEID
+                    AND CC.CLIENTEID = C.CLIENTEID)
+  AND CC.TIPOOPERACION IS NULL;
+UPDATE FACTURACIONBEPSA.CLIENTE CC
+SET TIPOOPERACION ='B2G'
+WHERE EXISTS (SELECT 1
+              FROM FACTURACIONBEPSA.CLIENTE C
+              WHERE (UPPER(C.CLIENTERAZONSOCIAL) LIKE '%M_NICIPALIDAD%'
+                  OR UPPER(C.CLIENTERAZONSOCIAL) LIKE '%MINISTERIO%'
+                  OR UPPER(C.CLIENTERAZONSOCIAL) LIKE '%SECRETA%' OR UPPER(C.CLIENTERAZONSOCIAL) LIKE 'BANCO%FOMENTO'
+                  OR UPPER(C.CLIENTERAZONSOCIAL) LIKE 'BANCO%CENTRAL%')
+                AND CC.TIPOCLIENTEID = C.TIPOCLIENTEID
+                AND CC.CLIENTEID = C.CLIENTEID)
+  AND CC.TIPOOPERACION IS NULL;
 --Modificar parámetros aplicativo consulta estado de factura
 UPDATE facturacionbepsa.parametros
 SET parmvalue='0 */30 * * * *'
@@ -3526,14 +3526,37 @@ WHERE parmid='consultaSirius' AND parmserial='periodoEjecucion';
 UPDATE facturacionbepsa.parametros
 SET parmvalue='-21'
 WHERE parmid='consultaSirius' AND parmserial='tiempoMinutos';
-SELECT * FROM asientos.facturacionbepsa.NCREDITO N WHERE N.NCREDITOCOMPROBANTESET IN
-('001-001-0006289');
-SELECT * FROM asientos.facturacionbepsa.FACVENTACUOTA F WHERE F.FACVENTAID=372178;
 
-select * FROM asientos.facturacionbepsa.FACVENTA F WHERE F.FACVENTANUMERO=315729;
-SELECT * FROM asientos.facturacionbepsa.FACVENTADET F WHERE F.FACVENTAID=1119991
---clienteid = 11612 AND sucursalid = 29
+--sp que genera el detalle de facturación
+SELECT * FROM ASIENTOS.FACTURACIONBEPSA.SP_GENERATE_TCLMOV_MONTH_TRANSACTIONAL
+('2025', 04, 'FactComercios', 'Comercios');
 
-/*"COMISION+IVA" = 3204.00 AND IVACOMISION = 291.00 AND COMISION = 2913.00 AND MOVTPTA = 'D' AND CANTIDAD = 3
-"COMISION+IVA" = 796415.00 AND IVACOMISION = 72403.00 AND COMISION = 724012.00 AND MOVTPTA = 'E' AND CANTIDAD = 52
-"COMISION+IVA" = 731125.00 AND IVACOMISION = 66466.00 AND COMISION = 664659.00 AND MOVTPTA = 'C' AND CANTIDAD = 42*/
+SELECT  * FROM asientos.facturacionbepsa.FACVENTA F WHERE F.CLIENTEID=16127 AND F.EJERCICIOID=2025 AND F.PERIODOID=04;
+
+SELECT * FROM asientos.pr_ver_pos_comision_adquirencia_nacional_det();
+
+---query del portal comercios para detalle
+SELECT C.MOVFECLIQ          AS FECHA_DEPOSITO,
+       ROW_NUMBER() OVER () AS NUMERO,
+       C.MOVTPTA            AS REFERENCIA,
+       COUNT(C.MOVRRNBEP)   AS CUPONES,
+       SUM(C.MOVIMPO)       AS IMPORTE,
+       SUM(C.MOVIMCO)       AS COM_PROC,
+       SUM(C.MOVIVCO)       AS IVA_S_COM,
+       SUM(C.MOVRENT)       AS RENTA,
+       SUM(C.MOVIVREN)      AS IVA_RENTA,
+       SUM(C.MOVNETO)       AS IMPORTE_NETO,
+       SUM(C.MOVNETO)       AS IMPORTE_CREDITO,
+       C.MOVCODCLI          AS CLIENTE,
+       C.MOVCODSUC          AS SUCURSAL,
+       C.MOVCOMER           AS CODIGO_COMERCIO,
+       C.MOVFCRE            AS FECHA_ACREDITACION,
+       SUM(C.MOVIMCO + C.MOVIVCO + C.MOVRENT + C.MOVIVREN + C.MOVINAD + C.MOVIVAD) AS DESCUENTO,
+       SUM(C.MOVTSAD)       AS TASA_COMISION_ADELANTO,
+       SUM(C.MOVINAD)       AS MONTO_COMISION_ADELANTO,
+       SUM(C.MOVIVAD)       AS IVA_COMISION_ADELANTO
+FROM FACTURACIONBEPSA.TCLMOV_TMP_COMERCIOS_202505_FACTCOMERCIOS AS C
+WHERE C.MOVCODCLI = 16127
+  AND C.MOVCODSUC = 1
+GROUP BY C.MOVFECLIQ, C.MOVTPTA, C.MOVCODCLI, C.MOVCODSUC, C.MOVCOMER, C.MOVFCRE;
+---------------------------------

@@ -132,5 +132,3 @@ WHERE "bt"."operacion_est_fn_transaccion" <> 'Q'
 ORDER BY "bt"."operacion_fech_trans" ASC
 LIMIT 5;
 
-
-select * from comprobantes_transacciones ct where rrn = '516199727797';

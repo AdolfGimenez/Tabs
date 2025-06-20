@@ -42,6 +42,9 @@
       <schema-control>AUTOMATIC</schema-control>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://10.11.253.37:5432/postgres</jdbc-url>
+      <jdbc-additional-properties>
+        <property name="database.postgres.introspect.system.schemas" value="true" />
+      </jdbc-additional-properties>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
     <data-source source="LOCAL" name="Empe_S" uuid="44dee880-a401-4d73-a658-740781127f11">
@@ -50,6 +53,9 @@
       <schema-control>AUTOMATIC</schema-control>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://10.11.253.36:5432/postgres</jdbc-url>
+      <jdbc-additional-properties>
+        <property name="database.postgres.introspect.system.schemas" value="true" />
+      </jdbc-additional-properties>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
     <data-source source="LOCAL" name="Prod_26" uuid="bf706d40-a732-4eab-9548-02f8510ba0ac">
@@ -98,6 +104,9 @@
       <schema-control>AUTOMATIC</schema-control>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://10.1.254.52:5432/postgres</jdbc-url>
+      <jdbc-additional-properties>
+        <property name="database.postgres.introspect.system.schemas" value="true" />
+      </jdbc-additional-properties>
       <working-dir>$ProjectFileDir$</working-dir>
       <time-zone>America/Argentina/Buenos_Aires</time-zone>
     </data-source>
@@ -114,6 +123,9 @@
       <schema-control>AUTOMATIC</schema-control>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://10.11.253.33:5432/sirius</jdbc-url>
+      <jdbc-additional-properties>
+        <property name="database.postgres.introspect.system.schemas" value="true" />
+      </jdbc-additional-properties>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
     <data-source source="LOCAL" name="Sirius_D" uuid="d597daeb-981d-4189-8dd5-9914a3ebe632">
@@ -122,6 +134,9 @@
       <schema-control>AUTOMATIC</schema-control>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://10.254.102.140:5432/sirius</jdbc-url>
+      <jdbc-additional-properties>
+        <property name="database.postgres.introspect.system.schemas" value="true" />
+      </jdbc-additional-properties>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
     <data-source source="LOCAL" name="BDatos" uuid="c633f848-4953-48a9-92f5-87e547659ec1">
@@ -130,6 +145,9 @@
       <schema-control>AUTOMATIC</schema-control>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://10.1.254.51:5432/postgres</jdbc-url>
+      <jdbc-additional-properties>
+        <property name="database.postgres.introspect.system.schemas" value="true" />
+      </jdbc-additional-properties>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
     <data-source source="LOCAL" name="Fact_D" uuid="9cf1e3a5-4732-4ded-b2c4-8e33ec212d95">
@@ -138,6 +156,9 @@
       <schema-control>AUTOMATIC</schema-control>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://10.254.102.35:5432/asientos</jdbc-url>
+      <jdbc-additional-properties>
+        <property name="database.postgres.introspect.system.schemas" value="true" />
+      </jdbc-additional-properties>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
     <data-source source="LOCAL" name="Fact_P" uuid="5540b211-6810-45f0-a944-194873726d0f">
@@ -146,6 +167,9 @@
       <schema-control>AUTOMATIC</schema-control>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://10.1.254.130:5432/asientos</jdbc-url>
+      <jdbc-additional-properties>
+        <property name="database.postgres.introspect.system.schemas" value="true" />
+      </jdbc-additional-properties>
       <working-dir>$ProjectFileDir$</working-dir>
       <time-zone>America/Argentina/Buenos_Aires</time-zone>
     </data-source>
@@ -173,6 +197,9 @@
       <schema-control>AUTOMATIC</schema-control>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://10.254.102.152:5432/GTHBEPSA</jdbc-url>
+      <jdbc-additional-properties>
+        <property name="database.postgres.introspect.system.schemas" value="true" />
+      </jdbc-additional-properties>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
     <data-source source="LOCAL" name="FAct_Q" uuid="45158f9b-1b2a-46dc-acd6-ad296832e2eb">
@@ -181,6 +208,9 @@
       <schema-control>AUTOMATIC</schema-control>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://10.254.102.99:5432/asientos</jdbc-url>
+      <jdbc-additional-properties>
+        <property name="database.postgres.introspect.system.schemas" value="true" />
+      </jdbc-additional-properties>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
     <data-source source="LOCAL" name="Db2MN1" uuid="d3038c19-9827-4803-8a2d-10e758a8dce4">
@@ -219,6 +249,9 @@
       <schema-control>AUTOMATIC</schema-control>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://10.1.254.58:5432/BCP_SPI</jdbc-url>
+      <jdbc-additional-properties>
+        <property name="database.postgres.introspect.system.schemas" value="true" />
+      </jdbc-additional-properties>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
     <data-source source="LOCAL" name="Flash_T" uuid="00be8b01-c181-49d5-acea-c09c89cfc7ac">
@@ -242,6 +275,9 @@
       <schema-control>AUTOMATIC</schema-control>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://10.254.102.35:5432/asientos</jdbc-url>
+      <jdbc-additional-properties>
+        <property name="database.postgres.introspect.system.schemas" value="true" />
+      </jdbc-additional-properties>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
     <data-source source="LOCAL" name="GeoCom" uuid="09e3a43e-2f39-46f7-a788-194c6fa4b198">
@@ -305,6 +341,9 @@
       <schema-control>AUTOMATIC</schema-control>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://pcomercio-bus-db.bepsa.com.py:5432/keycloack</jdbc-url>
+      <jdbc-additional-properties>
+        <property name="database.postgres.introspect.system.schemas" value="true" />
+      </jdbc-additional-properties>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
     <data-source source="LOCAL" name="Jpts_60_T" uuid="8df51eb4-6aba-488b-8f91-155320470192">
@@ -431,6 +470,9 @@
       <schema-control>AUTOMATIC</schema-control>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://10.254.102.48:5432/postgres</jdbc-url>
+      <jdbc-additional-properties>
+        <property name="database.postgres.introspect.system.schemas" value="true" />
+      </jdbc-additional-properties>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
     <data-source source="LOCAL" name="GeoIntegrador_D" uuid="97c06d93-7c90-4241-afdd-11b5f3905826">
@@ -447,7 +489,6 @@
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://10.254.102.99:5432/portal</jdbc-url>
       <jdbc-additional-properties>
-        <property name="SHOW_TEMPLATE_DATABASES" value="true" />
         <property name="database.postgres.introspect.system.schemas" value="true" />
       </jdbc-additional-properties>
       <working-dir>$ProjectFileDir$</working-dir>
@@ -473,6 +514,9 @@
       <schema-control>AUTOMATIC</schema-control>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://10.11.253.30:5432/GTHBEPSA</jdbc-url>
+      <jdbc-additional-properties>
+        <property name="database.postgres.introspect.system.schemas" value="true" />
+      </jdbc-additional-properties>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
     <data-source source="LOCAL" name="Prod_usr_jpts" uuid="6416d1f0-4bdc-493b-9d89-5de4a2f92852">
@@ -512,6 +556,9 @@
       <schema-control>AUTOMATIC</schema-control>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://10.1.254.130:5432/crm-custom-bepsa</jdbc-url>
+      <jdbc-additional-properties>
+        <property name="database.postgres.introspect.system.schemas" value="true" />
+      </jdbc-additional-properties>
       <working-dir>$ProjectFileDir$</working-dir>
       <time-zone>America/Argentina/Buenos_Aires</time-zone>
     </data-source>

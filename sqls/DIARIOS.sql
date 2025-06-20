@@ -6,20 +6,22 @@ SELECT * FROM GXBDBPS.TMTARAF T WHERE MTNUMTA in ('6274311070218893','6274311550
 SELECT * from gxbdbps.tmctaaf T  where mcnumta in ('6274311070218893','6274311550006321');
 ----------------------------
 ----------------------------------------
+--query para facturacion
+SELECT tmov.movcodcli, tmov.movcodsuc, tmov.movcomer, tmov.movdeno, tmov.MOVTPTA, tmov.MOVESTA,
+count(*) CANTIDAD, sum(tmov.movimco) COMISION, sum(tmov.movivco)IVACOMISION, sum(tmov.movimco+tmov.movivco)"COMISION+IVA"
+FROM gxfindta.tclmov tmov
+   WHERE tmov.movfcre BETWEEN '20250501' AND '20250530'
+       AND (tmov.sercodi = 'COMPRA' OR (tmov.sercodi in ('DEBAUT', 'ECOM')
+AND tmov.PRECODI in ( 'PREC', 'BTNP') AND tmov.movcodis = 'WEB'
+AND tmov.movruc != '80050172-1') OR (tmov.sercodi = 'PUNTOS' AND tmov.PRECODI = 'CAPU'))
+and trim(tmov.movruc) != '80016096-7' AND (tmov.movivco + tmov.movimco) <> 0
+AND tmov.MOVCODCLI=11612
+  GROUP BY tmov.movcodcli, tmov.movcodsuc, tmov.movcomer, tmov.movdeno, tmov.MOVTPTA, tmov.MOVESTA;
+
 Select movcodcli, movcodsuc, movcomer, movdeno, MOVTPTA,count(*) CANTIDAD, sum(movimco) COMISION, sum(movivco)IVACOMISION,
 sum(movimco+movivco)"COMISION+IVA" from gxfindta.tclmov where movcodcli = 11612 and sercodi = 'COMPRA' AND movfCRE between '20250501' and '20250530'
 group by movcodcli, movcodsuc, movcomer, movdeno, MOVTPTA;
-
-Select movcodcli, movcodsuc, movcomer, movdeno, MOVTPTA,count(*) CANTIDAD, sum(movimco) COMISION, sum(movivco)IVACOMISION,
-sum(movimco+movivco)"COMISION+IVA" from gxfindta.tclmov where movcodcli = 10937 and sercodi = 'COMPRA' AND movfCRE between '20240229' and '20240326'
-group by movcodcli, movcodsuc, movcomer, movdeno, MOVTPTA;
-
-Select movcodcli, movcodsuc, movcomer, movdeno, MOVTPTA,count(*) CANTIDAD, sum(movimco) COMISION, sum(movivco)IVACOMISION,
-sum(movimco+movivco)"COMISION+IVA" from gxfindta.tclmov where --MOVCOMER =6900896 --and sercodi = 'COMPRA'
---AND
-    movfCRE between '20240301' and '20240331'
-group by movcodcli, movcodsuc, movcomer, movdeno, MOVTPTA;
-
+--10937 retail
 
 SELECT /*T.MOVOPDE,*/ T.*
 FROM GXFINDTA.TCLMOV T
@@ -280,8 +282,15 @@ where tpcfpro = '20250602'
 GROUP BY TPCFPRO, TPCDISP, SERCODI, tpcestrx, precodi,A.ECCCDERRCC, B.ECCDSERRCC
 ORDER BY 1,5;
 
-
 SELECT * FROM JPTSAPI.TRANLOG t
 WHERE t."DATE" BETWEEN '2025-06-09 00:00:00.000' AND '2025-06-09 09:05:27.999'
-  AND t.DESTINATIONS = 'ds-pix'
-  AND t.AMOUNTCARDHOLDERBILLING = 433.17;
+  AND t.DESTINATIONS = 'ds-pix' AND t.AMOUNTCARDHOLDERBILLING = 433.17;
+
+SELECT * FROM GXBDBPS.COMAEAF C2 WHERE C2.CORUCN='80026277-8';
+--proveedores_facturas@fpj.com.py
+
+SELECT movrrnbep, movfpro, movfcre, sercodi, precodi, movesta FROM gxfindta.tclmov WHERE movesta = 'R' AND movrrnbep IN
+(SELECT revnroref FROM GXFINDTA.TCLREV WHERE REVSERCODI = 'COMPRA' AND REVPRECODI = 'PXQR' AND revfchpro < '20250603');
+
+SELECT SUM(T.MOVNETO) FROM GXFINDTA.TCLMOV T WHERE T.MOVIDLT='251690015500359';
+SELECT * FROM GXFINDTA.TCLTSB T WHERE T.TSBNREF='251690015500359';

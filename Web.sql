@@ -975,6 +975,20 @@ where mp.procesador = 'CYBERSOURCE' and visible = true and length(mp."token")>33
 SELECT * FROM audit_log ;
 -- Por si se quiere hacer impieza vieja (ej: más de 1 año)
 DELETE FROM audit_log WHERE changed_at < now() - interval '1 year';
-
-Select * from advance_accreditations;
-select * from public.ordenes_pago op where op.rrn_retorno in ('516199614761','576108123281') or rrn_envio in ('516199614761','576108123281')
+--ver roles
+SELECT R.NOMBRE,
+-- p.descripcion,
+       STRING_AGG(DISTINCT P.DESCRIPCION, '; ')                     AS PERMISOS,
+--(pf.nombre || ' ' || pf.apellido) as nombre_apellido_usuario
+       STRING_AGG(DISTINCT (PF.NOMBRE || ' ' || PF.APELLIDO), '; ') AS USUARIOS
+FROM ROLES R
+         JOIN ROLES_X_USUARIOS UR ON UR.ROL_ID = R.ID
+         JOIN USUARIOS U ON UR.USUARIO_ID = U.ID
+         JOIN PERSONAS_FISICAS PF ON PF.ID = U.PERSONA_FISICA_ID
+         JOIN PERMISOS_X_ROLES PR ON PR.ROL_ID = R.ID
+         JOIN PERMISOS P ON PR.PERMISO_ID = P.ID
+WHERE R.CODIGO_SERVICIO = 'PC_CLI'
+  AND R.ACTIVO IS TRUE
+  AND U.CODIGO_SERVICIO = 'PC_CLI'
+  AND U.ACTIVO IS TRUE
+GROUP BY R.NOMBRE;

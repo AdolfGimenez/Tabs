@@ -1,5 +1,5 @@
 SELECT t.*, CTID
-FROM "crm-bepsa"."UserIdentity" t WHERE "Email"='katherin.canete@bepsa.com.py';
+FROM "crm-bepsa"."UserIdentity" t WHERE "Email"='ljara@bepsa.com.py';
 --50a1ef8b-3920-430c-9a8e-819a53c1552d
 SELECT
  ui."UserName" ,
@@ -10,7 +10,7 @@ INNER JOIN
  "crm-bepsa"."GroupIdentityUserIdentity" AS giui ON  giui."RolesId" = gi."Id"
 INNER JOIN  "crm-bepsa"."UserIdentity" AS ui ON  ui."Id"  = giui."UsersId"
 WHERE
- ui."Email"  = 'dmedina@bepsa.com.py';
+ ui."Email"  = 'ljara@bepsa.com.py';
 --grupos
 SELECT  * FROM "crm-bepsa"."GroupIdentity" AS gi ;
 --asignar permisos a usuarios
@@ -23,8 +23,8 @@ FROM "crm-bepsa"."GroupIdentityUserIdentity" GIUI
          INNER JOIN "crm-bepsa"."UserIdentity" AS UI ON UI."Id" = GIUI."UsersId"
          INNER JOIN "crm-bepsa"."GroupIdentity" AS GI ON GI."Id" = GIUI."RolesId";
 
-select *
-from "crm-bepsa"."GroupIdentityPermissions" gip where gip."GroupIdentityId" = '85369bc0-b41d-4b0d-ad49-38310fe64345';
+select * from "crm-bepsa"."GroupIdentityPermissions" gip
+where gip."GroupIdentityId" = '85369bc0-b41d-4b0d-ad49-38310fe64345';
 
 SELECT * FROM "crm-bepsa"."System-Configuration";
 
@@ -72,10 +72,12 @@ SELECT
  gi."Name" AS rol
 FROM  "crm-bepsa"."GroupIdentityUserIdentity" AS giui
 INNER JOIN  "crm-bepsa"."GroupIdentity" gi ON giui."RolesId" = gi."Id"
-WHERE  giui."UsersId" = '50a1ef8b-3920-430c-9a8e-819a53c1552d'; --id user
+WHERE  giui."UsersId" = '33c5ea20-824b-42ef-82c2-60d9960214a8'; --id user
 
-SELECT * FROM "crm-bepsa"."GroupIdentity" gi; --crmadmin = dc6952db-9936-45b4-a80c-8e86cfde1f10 --sae = bc6aef81-04cf-4631-9ebf-932d6d176533
-SELECT * FROM "crm-bepsa"."GroupIdentityUserIdentity" WHERE  "UsersId" = '06de0585-5c6a-4259-aa45-0a335ffe3513';
+SELECT * FROM "crm-bepsa"."GroupIdentity" gi;
+--"Id" = '8be7bced-fa66-4e4b-928b-f333466416f4' AND "Name" = 'crm input'
+--"Id" = 'dc6952db-9936-45b4-a80c-8e86cfde1f10' AND "Name" = 'crm admin'
+SELECT * FROM "crm-bepsa"."GroupIdentityUserIdentity" WHERE  "UsersId" = '33c5ea20-824b-42ef-82c2-60d9960214a8';
 
 ---ver usuarios activos:
 SELECT ui."UserName", STRING_AGG(gi."Name", ', ') AS "Groups"
@@ -180,7 +182,7 @@ where ud."Enabled" = true;
 SELECT DISTINCT (U."Name")
 FROM "crm-bepsa"."CaseResolutionArea"
 INNER JOIN "crm-bepsa"."Users" U ON U."Id" = "CaseResolutionArea"."ByUserId"
-WHERE "ByUserId" = U."Id" AND "UserId" = U."Id"
+WHERE "ByUserId" = U."Id" AND "UserId" = U."Id";
 
 select count(u."Id") as totalusers
 from "crm-bepsa"."Users" u join "crm-bepsa"."UserIdentity" ud on u."IdentityId" = ud."Id"
