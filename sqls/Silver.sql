@@ -1323,9 +1323,44 @@ AND SERCODI = 'PAGFAC' AND SUBSTR(MOVIDLT,1,7) <> '2511200';
 UPDATE GXFINDTA.TCLMOV SET MOVIDLT = '251110056900001' WHERE movfecliq = '20250422' AND movopor = 700405
 AND SERCODI = 'VTAMIN' AND SUBSTR(MOVIDLT,1,7) <> '2511200';
 
+/*Validar transaccions que quedaron en el temporal*/
+Select '3-ERROR-TEMPORAL' ORIGEN,TPCFPRO, TPCDISP, SERCODI, tpcestrx, COUNT(*) Cantidad, A.ecccderrcc, B.ECCDSERRCC error
+from gxfindta.tcltpc A INNER JOIN gxfindta.tclecc B ON A.ECCCDERRCC = B.ECCCDERRCC
+where tpcfpro = '20250627'
+GROUP BY TPCFPRO, TPCDISP, SERCODI, tpcestrx, precodi,A.ECCCDERRCC, B.ECCDSERRCC
+ORDER BY 1,5;
+--errores temporal del cambo ECCCDERRCC
+/*-- Validaciones realizadas
+01 - SERVICIO EXISTE
+02 - PRESTACION EXISTE
+03 - COMERCIO PRUEBA * //comerprb
+04 - TARJETA PRUEBA *  //becardoc
+05 - FORMA DE PAGO EXISTE
+06 - TIPO TARJETA VALIDO
+07 - Codigo de Entidad o Entidad-Rol existe
+08 - Comercio dado de Baja
+09 - Monto invalido
+10 - Entidad/Servicio
+11 - Entidad/Servicio/Dispositivo
+12 - Entidad/Marca
+13 - Entidad/Marca/Producto
+14 - Bin No existe
+15 - Entidad Procesadora No existe
+16 - Entidad Emisora no existe
+17 - Marca No existe
+18 - Entidad Administradora no existe
+19 - Producto no existe
+20 - Transaccion Dudosa
+21 - % Comision no encontrada
+22 - Entidad Propietaria no existe
+23 - Valor con decimal para moneda guaranies
+24 - Procesa Clearing No
+25 - Nro de Cuenta no registrado para moneda
+26 - Servicio - Prestacion no parametrizado */
 
-SELECT COUNT(*) FROM FEATMSLIB.AULAF A;
-
-
-SELECT * FROM GXBDBPS.COMAEAF C2 WHERE C2.CORUCN='80026277-8';
-
+---reversados
+SELECT MOVRRNBEP, MOVFPRO, MOVFCRE, SERCODI, PRECODI, MOVESTA
+FROM GXFINDTA.TCLMOV
+WHERE MOVESTA = 'R'
+  AND MOVRRNBEP IN
+      (SELECT REVNROREF FROM GXFINDTA.TCLREV WHERE REVSERCODI = 'COMPRA' AND REVPRECODI = 'PXQR' AND REVFCHPRO < '20250603');

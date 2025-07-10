@@ -56,9 +56,10 @@ select * from tranlog t where transaction_token = '2024082600702424';
 los que inician con dinelco_link_0011111 -> su main id es: dinelco_link
 los que inician con dinelco_mf_0011111 -> su main id es: dinelco_mf
 los que inician con dinelco_da_0011111 - > su main id es: dinelco_debitoauto
-dinelco_0012300xxxxx (codigo de cliente de documenta), corresponde al main id dinelco_documeta*/
+dinelco_0012300xxxxx (codigo de cliente de documenta), corresponde al main id dinelco_documeta
+  CYBERSOURCE_SHOP_ID = 'dinelco_bm_002327100002' AND CYBERSOURCE_SHOP_MAIN_ID = 'dinelco_bancame'*/
 
-SELECT * from keys_cybersource_shops s where cybersource_shop_id = 'dinelco_002855600001';
+SELECT * from keys_cybersource_shops s where cybersource_shop_id = 'dinelco_link_002823400001';
 SELECT max(id_key_cybersource_shop) from keys_cybersource_shops s;
 SELECT DISTINCT(cybersource_shop_main_id) from public.KEYS_CYBERSOURCE_SHOPS  s;
 --actualiza
@@ -76,11 +77,19 @@ INSERT INTO PUBLIC.KEYS_CYBERSOURCE_SHOPS
  now(), 'dinelco_checkout', NULL);
 ---------------------------------------------------
 --15 caracteres completar con 000
-select * from cybersource_merchant_routing where merchant_id IN ('000000002301518'); --= '00000000301609';
+select * from cybersource_merchant_routing where merchant_id IN ('000000006902202'); --= '00000000301609';
 000000002301518
 INSERT INTO public.cybersource_merchant_routing
 (merchant_id, create_at, merchant_name)
-VALUES('000000002301518', now(), 'ESSEN');
+VALUES('000000006902202', now(), 'ESSEN');
 
 select * from public.cybersource_merchant_routing where merchant_id = '000000004900387';
 
+SELECT * FROM JPTSAPI.TRANLOG t
+WHERE t."DATE" BETWEEN '2025-06-09 00:00:00.000' AND '2025-06-09 09:05:27.999'
+  AND t.DESTINATIONS = 'ds-pix' AND t.AMOUNTCARDHOLDERBILLING = 433.17;
+
+SELECT max(ds_rrn) FROM PUBLIC.TRANLOG t
+WHERE t.DATE BETWEEN '2025-05-02 00:00:00.908000' AND '2025-05-02 23:59:59.999'; --AND t.AMOUNT='65940';
+
+SELECT * FROM JPTSAPI.HISTORY_LOGS HL;

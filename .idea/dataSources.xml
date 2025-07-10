@@ -127,6 +127,7 @@
         <property name="database.postgres.introspect.system.schemas" value="true" />
       </jdbc-additional-properties>
       <working-dir>$ProjectFileDir$</working-dir>
+      <time-zone>America/Buenos_Aires</time-zone>
     </data-source>
     <data-source source="LOCAL" name="Sirius_D" uuid="d597daeb-981d-4189-8dd5-9914a3ebe632">
       <driver-ref>postgresql</driver-ref>

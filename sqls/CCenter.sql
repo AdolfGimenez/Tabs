@@ -84,43 +84,7 @@ delete from marcas.mastercard_switch where report_work_of = '04/08/25';
 Para MST DUAL
 delete from marcas.transactions where fecha = '2025-03-19';
 Para VISA
-delete from marcas.transactions_visa where report_date >= '11JAN25';
----MST
-refresh materialized view marcas.consolidado_dia;
-refresh materialized view marcas.consolidado_dia_gs;
-refresh materialized view marcas.consolidado_dia_usd;
-refresh materialized view marcas.consolidado_resumen_gs;
-refresh materialized view marcas.consolidado_resumen_usd;
-refresh materialized view marcas.consolidado_preasiento_gs;
-refresh materialized view marcas.consolidado_preasiento_usd; --ojo..cuando subir después de subir archivos.!!
---SWTF
-refresh materialized view marcas.mst_switch_consolidado;
-refresh materialized view marcas.mst_switch_consolidado_pyg;
-refresh materialized view marcas.mst_switch_consolidado_usd;
-refresh materialized view marcas.mst_switch_consolidado_diario_pyg;
-refresh materialized view marcas.mst_switch_consolidado_diario_usd;
-refresh materialized view marcas.mst_switch_consolidado_preasiento;
---VSA
-refresh materialized view marcas.visa_consolidado;
-refresh materialized view marcas.visa_consolidado_adq;
-refresh materialized view marcas.visa_consolidado_adq_pyg;
-refresh materialized view marcas.visa_consolidado_adq_pyg_diario;
-refresh materialized view marcas.visa_consolidado_adq_usd;
-refresh materialized view marcas.visa_consolidado_adq_usd_diario;
-refresh materialized view marcas.visa_consolidado_emi;
-refresh materialized view marcas.visa_consolidado_emi_pyg;
-refresh materialized view marcas.visa_consolidado_emi_pyg_diario_472040004;
-refresh materialized view marcas.visa_consolidado_emi_pyg_diario_456976;
-refresh materialized view marcas.visa_consolidado_emi_pyg_diario_45943000;
-refresh materialized view marcas.visa_consolidado_emi_pyg_diario_488234;
-refresh materialized view marcas.visa_consolidado_emi_pyg_diario_total;
-refresh materialized view marcas.visa_consolidado_emi_usd;
-refresh materialized view marcas.visa_consolidado_emi_usd_diario_472040004;
-refresh materialized view marcas.visa_consolidado_emi_usd_diario_456976;
-refresh materialized view marcas.visa_consolidado_emi_usd_diario_45943000;
-refresh materialized view marcas.visa_consolidado_emi_usd_diario_488234;
-refresh materialized view marcas.visa_consolidado_emi_usd_diario_total;
-refresh materialized view marcas.visa_consolidado_total_preasiento;*/ --tabla marcas delete y refresh
+delete from marcas.transactions_visa where report_date >= '11JAN25';*/
 ---------------------------------------------------------------
 SELECT * FROM facturacionbepsa.fn_get_secuser_by_username(1);
 
@@ -375,36 +339,14 @@ WHERE F.TARGETFACTID = 'FactComercios'
   --AND F.FACVENTACLIRUC LIKE '80016096%'
   AND FACVENTASTATUSLASTFH >= '2024-04-30 08:13:44.722';
 ---------------------------------------------------------------------
----SUPER REPORTE
-SELECT FV.FACVENTAID,
-       FV.FACVENTADESC,
-       FV.TIPOCLIENTEID,
-       FV.CLIENTEID,
-       FV.SUCURSALID,
-       SUC.SUCURSALCOMERCIOBEPSA,
-       FV.FACVENTACLIRUC,
-       FV.FACVENTACLIRAZONSOCIAL,
-       FV.FACVENTACLIDIRECCION,
-       SUC.SUCURSALDENOMINACION,
-       SUC.SUCURSALDOMICILIO,
-       SUC.SUCURSALEMAIL,
-       SUC.SUCURSALPHONE,
-       --FV.FACVENTACLIEMAIL,
-       FV.FACVENTACLITELEFONO,
-       FV.FACVENTATOTALCOMPROBML,
-       FV.FACVENTATOTALEXCML,
-       FV.FACVENTATOTALGR05ML,
-       FV.FACVENTATOTALGR10ML,
-       FV.FACVENTATOTALBASEIMPEXCML,
-       FV.FACVENTATOTALBASEIMPGR05ML,
-       FV.FACVENTATOTALBASEIMPGR10ML,
-       FV.FACVENTATOTALIVAGR05ML,
-       FV.FACVENTATOTALIVAGR10ML,
-       FV.FACVENTATOTALIVAGRAVADAML,
-       CLI.CLIENTETIPOPERSONA,
-       CLI.CLIENTETIPOCONTRIB,
-       CLI.CLIENTERUC,
-       CLI.CLIENTEDV,
+---SUPER REPORTE pantalla fact
+SELECT
+    FV.FACVENTAID, FV.FACVENTADESC, FV.TIPOCLIENTEID, FV.CLIENTEID, FV.SUCURSALID, SUC.SUCURSALCOMERCIOBEPSA, FV.FACVENTACLIRUC,
+    FV.FACVENTACLIRAZONSOCIAL, FV.FACVENTACLIDIRECCION, SUC.SUCURSALDENOMINACION, SUC.SUCURSALDOMICILIO, SUC.SUCURSALEMAIL,
+    SUC.SUCURSALPHONE, --FV.FACVENTACLIEMAIL, FV.FACVENTACLITELEFONO, FV.FACVENTATOTALCOMPROBML, FV.FACVENTATOTALEXCML,
+    -- FV.FACVENTATOTALGR05ML, FV.FACVENTATOTALGR10ML, FV.FACVENTATOTALBASEIMPEXCML, FV.FACVENTATOTALBASEIMPGR05ML,
+    -- FV.FACVENTATOTALBASEIMPGR10ML, FV.FACVENTATOTALIVAGR05ML, FV.FACVENTATOTALIVAGR10ML, FV.FACVENTATOTALIVAGRAVADAML,
+    -- CLI.CLIENTETIPOPERSONA, CLI.CLIENTETIPOCONTRIB, CLI.CLIENTERUC, CLI.CLIENTEDV,
        FACTURACIONBEPSA.FN_VALIDAR_EMAIL(SUC.SUCURSALEMAIL) AS EMAILVALIDO
 FROM FACTURACIONBEPSA.FACVENTA FV
          INNER JOIN FACTURACIONBEPSA.CLIENTE CLI
@@ -413,9 +355,11 @@ FROM FACTURACIONBEPSA.FACVENTA FV
                     ON FV.TIPOCLIENTEID = SUC.TIPOCLIENTEID AND FV.CLIENTEID = SUC.CLIENTEID AND FV.SUCURSALID = SUC.SUCURSALID
 WHERE FV.TARGETFACTID = 'FactComercios'
   AND FV.TIPOCLIENTEID = 'Comercio'
-  AND FV.FACVENTAFECHA = '20240327'
- -- AND FV.FACVENTACLIRUC LIKE '%80016096%'
-  --AND STATUSID = 'preformulario'
+  AND FV.EJERCICIOID = 2025
+  AND FV.PERIODOID = 05
+--  AND FV.FACVENTAFECHA = '20240327'
+-- AND FV.FACVENTACLIRUC LIKE '%80016096%'
+--AND STATUSID = 'preformulario'
 ORDER BY CLI.CLIENTERUC DESC, CLI.CLIENTETIPOPERSONA DESC;
 
 SELECT T.CLIRUc, T.CLICLICOD, G.SUCSUCCOD, g.SUCCORREO
@@ -437,7 +381,7 @@ SELECT C.MOVRRNBEP                                                              
           AND F.SUCURSALID = C.MOVCODSUC
           AND F.STATUSID LIKE '%APROBADO%'
           AND F.TARGETFACTID = 'FactComercios'
-          AND F.PERIODOID = '05'
+          AND F.PERIODOID = '06'
           AND F.EJERCICIOID = '2025')                                                                                      COMPROBANTE,
        (SELECT T.SUCDIRECC FROM DATOS.GXFINDTA_TCMSUC T WHERE T.CLICLICOD = C.MOVCODCLI AND T.SUCSUCCOD = C.MOVCODSUC)     DIRECCION_SUC,
        C.MOVFTRX                                                                                                           FECHA_TRX,
@@ -451,13 +395,13 @@ SELECT C.MOVRRNBEP                                                              
        SUM(C.MOVRENT)                                                                                                      IMPORTERENTA,
        SUM(C.MOVIVREN)                                                                                                     IMPORTEIVARENTA,
        SUM(C.MOVNETO)                                                                                                      IMPORTENETO
-FROM FACTURACIONBEPSA.TCLMOV_TMP_COMERCIOS_202505_FACTCOMERCIOS C
+FROM FACTURACIONBEPSA.tclmov_tmp_comercios_202506_factcomercios C
 /*DATOS.GXFINDTA_TCLMOV c WHERE c.MOVOPDE = 700405 AND c.MOVFCRE BETWEEN '20250422' AND '20250521'
     AND (c.SERCODI IN ('PAGFAC', 'VTAMIN') AND c.PRECODI IN ('PFEW', 'PFTA', 'VTEP', 'VTEW', 'VTTA')
     AND c.MOVCODIS IN ('ATM', 'WEB', 'POS')) AND c.MOVIVCO > 0*/
 --WHERE movopde = 700405 --para operadoras
-WHERE C.MOVCODCLI IN (SELECT C.CLICLICOD FROM DATOS.GXFINDTA_TCMCLI C WHERE C.CLIRUC LIKE '%80028213%')
---AND C.MOVCODSUC=29
+WHERE C.MOVCODCLI IN (SELECT C.CLICLICOD FROM DATOS.GXFINDTA_TCMCLI C WHERE C.CLIRUC LIKE '%80097276%')
+--AND C.MOVCODSUC=1
 -- NOT IN ('1', '8')
 GROUP BY C.MOVCODCLI, C.MOVCODSUC, C.MOVCOMER, C.MOVDENO, C.MOVFTRX, C.MOVFPRO, C.MOVFCRE, C.MOVTPTA ,C.MOVRRNBEP
 ORDER BY C.MOVCODCLI, C.MOVCODSUC, C.MOVFTRX, C.MOVFPRO, C.MOVFCRE;
@@ -480,13 +424,6 @@ SELECT C.movrrnbep                                                              
        SUM(C.MOVNETO)                                                                                                      IMPORTE_NETO
 FROM asientos.datos.GXFINDTA_TCLMOV C
 --FROM FACTURACIONBEPSA.tclmov_tmp_comercios_202403_factcomercios C
---from FACTURACIONBEPSA.tclmov_tmp_operadoras_202403_factcomercios c
---FROM FACTURACIONBEPSA.tclmov_tmp_comercios_202403_factcomercios C
---FROM FACTURACIONBEPSA.tclmov_tmp_retail_202402_factcomercios C
---FROM TRUSTED_ZONE.GXFINDTA_TCLMOV_COMPLEMENTO C --COMPLEMENTO
---FROM FACTURACIONBEPSA.tclmov_tmp_comercios_202313_factcomercios C
---FROM FACTURACIONBEPSA.tclmov_tmp_comercios_202312_factcomercios c
---FROM FACTURACIONBEPSA.TCLMOV_TMP_COMERCIOS_202401_FACTCOMERCIOS C
 --WHERE movopde=700605 --para operadoras
 WHERE --C.MOVCODCLI IN (SELECT C.CLICLICOD FROM DATOS.GXFINDTA_TCMCLI C WHERE C.CLIRUC LIKE '%80030572%')
 --AND C.MOVCODSUC=14 --NOT IN ('1', '8')
@@ -3560,3 +3497,23 @@ WHERE C.MOVCODCLI = 16127
   AND C.MOVCODSUC = 1
 GROUP BY C.MOVFECLIQ, C.MOVTPTA, C.MOVCODCLI, C.MOVCODSUC, C.MOVCOMER, C.MOVFCRE;
 ---------------------------------
+
+SELECT * FROM asientos.facturacionbepsa.RECCOBRO R WHERE R.RECCOBROCOMPROBANTESET='001-400-0015082';
+SELECT * FROM asientos.facturacionbepsa.RECCOBRODET R WHERE R.RECCOBROID=329136;
+SELECT * FROM asientos.facturacionbepsa.FACVENTA F WHERE F.FACVENTAID=356512;
+SELECT * FROM asientos.facturacionbepsa.FACVENTA F WHERE F.FACVENTANUMERO=270243;
+SELECT * FROM asientos.facturacionbepsa.FACVENTACUOTA F WHERE F.FACVENTAID=1100617;
+
+select  * FROM asientos.facturacionbepsa.NCREDITO N WHERE N.NCREDITOID=8293; --N.NCREDITONUMERO='0008296'
+
+SELECT sum(GT.TIFIMPFAC) FROM asientos.datos.GXFINDTA_TCMTIF GT;
+
+SELECT * FROM FACTURACIONBEPSA.AUDITORIA A
+         WHERE A.FEC_INSERCION>='2025-07-07 11:43:16.654130'
+         ORDER BY ID_AUDITORIA DESC;
+
+SELECT * FROM
+facturacionbepsa.fn_get_facventa_anulacion_masiva('16410772','FAECA',
+'001','003','C-000',2025,07,'SeguroMedico','1','9999999','DTE_APROBADO');
+
+select * from public.visanet_account_range;

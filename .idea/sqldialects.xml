@@ -14,11 +14,18 @@
     <file url="file://$PROJECT_DIR$/sqls/Bus_D.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/sqls/C.Transac.sql" dialect="DB2_IS" />
     <file url="file://$PROJECT_DIR$/sqls/CCenter.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/sqls/C_Reint.sql" dialect="DB2_IS" />
     <file url="file://$PROJECT_DIR$/sqls/Crm.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/sqls/DIARIOS.sql" dialect="DB2_IS" />
     <file url="file://$PROJECT_DIR$/sqls/EMPES.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/sqls/IbmI.sql" dialect="DB2_IS" />
     <file url="file://$PROJECT_DIR$/sqls/K2B.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/sqls/Legacy.sql" dialect="DB2_IS" />
+    <file url="file://$PROJECT_DIR$/sqls/R_Pend.sql" dialect="DB2_IS" />
+    <file url="file://$PROJECT_DIR$/sqls/Reing.sql" dialect="DB2_IS" />
+    <file url="file://$PROJECT_DIR$/sqls/SPI.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/sqls/Silver.sql" dialect="DB2_IS" />
+    <file url="file://$PROJECT_DIR$/sqls/Sirius.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/sqls/k2bkari.sql" dialect="GenericSQL" />
   </component>
 </project>

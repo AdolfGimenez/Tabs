@@ -382,12 +382,15 @@ SELECT BT.OPERACION_FECH_PROC_TRANSACCIO, BT.* FROM public.BUSDATOS_TRANSACCIONE
 SELECT * FROM public.COMERCIOS C WHERE C.NOMBRE LIKE '%MONITAL%';
 ------casos de suscription key _*****_
 SELECT * FROM public.EMPRESAS_CLIENTES EC INNER JOIN PUBLIC.PERSONAS P ON P.ID = EC.PERSONA_ID
-INNER JOIN PUBLIC.PERSONAS_JURIDICAS PJ ON P.ID = PJ.PERSONA_ID WHERE PJ.RUC_NORMALIZADO='80033319-5';
+INNER JOIN PUBLIC.PERSONAS_JURIDICAS PJ ON P.ID = PJ.PERSONA_ID WHERE PJ.RUC_NORMALIZADO='80031661-4';
 SELECT * FROM public.COMERCIOS C WHERE C.NOMBRE LIKE '%BEPSA%';
 SELECT * FROM public.EMPRESAS_CLIENTES EC WHERE EC.PAGO_DIGITAL_SUSCRIPCION_KEY ISNULL;
 UPDATE public.EMPRESAS_CLIENTES EC SET PAGO_DIGITAL_SUSCRIPCION_KEY='_*****_' WHERE EC.PAGO_DIGITAL_SUSCRIPCION_KEY ISNULL;
-SELECT * FROM public.EMPRESAS_CLIENTES EC WHERE EC.EMPRESA_CLIENTE_BEPSA_ID=10736;
-SELECT * FROM public.EMPRESAS_CLIENTES_BEPSA ECB WHERE descripcion_bepsa LIKE '%AUTOMOTOR%'--ECB.COD_CLIENTE_BEPSA='10736';
+SELECT * FROM public.EMPRESAS_CLIENTES EC WHERE EC.EMPRESA_CLIENTE_BEPSA_ID=15332;
+SELECT * FROM public.EMPRESAS_CLIENTES_BEPSA ECB WHERE descripcion_bepsa LIKE '%AUTOMOTOR%';--ECB.COD_CLIENTE_BEPSA='10736';
+--eqwdi
+SELECT * FROM EQWEDI_AUTH_DB.PUBLIC.EMPRESAS_CLIENTES EC WHERE EC.NOMBRE LIKE '%EFE%';
+SELECT  *FROM EQWEDI_AUTH_DB.PUBLIC.SUSCRIPCIONES S;
 -----casos de comercios ya existen y como lleva de la db2 al portal
 ---query de obtención desde db2 al portal
 /*const getByCliCodSucCod = async(params:{
@@ -440,17 +443,17 @@ SELECT *
 FROM SUCURSALES_BEPSA_DB2 SBD
          INNER JOIN EMPRESAS_CLIENTES_BEPSA ECB ON SBD.CLIENTE_BEPSA_ID = ECB.ID
          INNER JOIN EMPRESAS_CLIENTES EC ON EC.EMPRESA_CLIENTE_BEPSA_ID = ECB.ID
-WHERE ECB.COD_CLIENTE_BEPSA IN ('10836'); --AND SBD.COD_SUCURSAL_BEPSA_DB2 NOT IN ('4','16','15','11','10','9','8');
+WHERE ECB.COD_CLIENTE_BEPSA IN ('7454'); --AND SBD.COD_SUCURSAL_BEPSA_DB2 NOT IN ('4','16','15','11','10','9','8');
 
-SELECT * FROM public.SUCURSALES_BEPSA_DB2 S WHERE S.CLIENTE_BEPSA_ID=273 AND COD_SUCURSAL_BEPSA_DB2 NOT IN ('4','16','15','11','10','9','8');
-SELECT * FROM public.SUCURSALES S WHERE S.COMERCIO_ID=306;
+SELECT * FROM public.SUCURSALES_BEPSA_DB2 S WHERE S.CLIENTE_BEPSA_ID=2632; --AND COD_SUCURSAL_BEPSA_DB2 NOT IN ('4','16','15','11','10','9','8');
+SELECT * FROM public.SUCURSALES S WHERE S.COMERCIO_ID=2749;
 --sucursales y comercios
 SELECT *
 FROM SUCURSALES S
          INNER JOIN COMERCIOS C ON S.COMERCIO_ID = C.ID
          INNER JOIN EMPRESAS_CLIENTES EC ON C.EMPRESA_CLIENTE_ID = EC.ID
          INNER JOIN EMPRESAS_CLIENTES_BEPSA ECB ON EC.EMPRESA_CLIENTE_BEPSA_ID = ECB.ID
-WHERE ECB.COD_CLIENTE_BEPSA IN ('10836')
+WHERE ECB.COD_CLIENTE_BEPSA IN ('7454')
 ORDER BY SUCURSAL_BEPSA_DB2_ID;
 ----ver empresa BUSCAR EMPRESA POR RUC
 SELECT ECB.COD_CLIENTE_BEPSA, EC.*
@@ -459,7 +462,7 @@ FROM EMPRESAS_CLIENTES EC
 --inner join personas_fisicas p1 on p1.persona_id = p.id
          INNER JOIN PERSONAS_JURIDICAS P1 ON P1.PERSONA_ID = P.ID
          INNER JOIN PUBLIC.EMPRESAS_CLIENTES_BEPSA ECB ON ECB.ID = EC.EMPRESA_CLIENTE_BEPSA_ID
-WHERE P1.RUC_NORMALIZADO IN ('80013744-2');
+WHERE P1.RUC_NORMALIZADO IN ('4433079-0');
 ---ver cliente y sus sucursales dentro del portal
 SELECT S.*
 FROM PUBLIC.EMPRESAS_CLIENTES EC
@@ -850,17 +853,18 @@ GROUP BY "c"."movfecliq", "c"."movtpta", "c"."movcodcli", "c"."movcodsuc", "c"."
 los que inician con dinelco_link_0011111 -> su main id es: dinelco_link
 los que inician con dinelco_mf_0011111 -> su main id es: dinelco_mf
 los que inician con dinelco_da_0011111 - > su main id es: dinelco_debitoauto
-dinelco_0012300xxxxx (codigo de cliente de documenta), corresponde al main id dinelco_documeta*/
+dinelco_0012300xxxxx (codigo de cliente de documenta), corresponde al main id dinelco_documeta
+  CYBERSOURCE_SHOP_ID = 'dinelco_bm_002327100002' AND CYBERSOURCE_SHOP_MAIN_ID = 'dinelco_bancame'*/
 
 SELECT * FROM CHECKOUT_PLATFORM.public.MERCHANTS M;
-SELECT * FROM CHECKOUT_PLATFORM.public.CYBERSOURCE_MERCHANT_INFO CMI WHERE CMI.CS_ID='dinelco_link_002894800001';
+SELECT * FROM CHECKOUT_PLATFORM.public.CYBERSOURCE_MERCHANT_INFO CMI WHERE CMI.CS_ID='dinelco_link_002823400001';
 
 SELECT M.* , CMI.*
 FROM CHECKOUT_PLATFORM.PUBLIC.MERCHANTS M
          INNER JOIN PUBLIC.CYBERSOURCE_MERCHANT_INFO CMI ON M.CS_MERCHANT_ID = CMI.ID;
 
 SELECT C.CYBERSOURCE_MERCHANT_ID, C.NOMBRE, C.ID_INTERNO, C.*
-FROM PAGOS_DIGITALES_DB.PUBLIC.COMERCIOS C WHERE C.CYBERSOURCE_MERCHANT_ID IN ('dinelco_link_002894800001');
+FROM PAGOS_DIGITALES_DB.PUBLIC.COMERCIOS C WHERE C.CYBERSOURCE_MERCHANT_ID IN ('dinelco_link_002463500001');
 
 SELECT * FROM PAGOS_DIGITALES_DB.PUBLIC.COMERCIOS C WHERE C.ID_INTERNO IN ('6900159', '6900293', '8104121', '8603622', '6900682', '6900683', '6900684', '6900696', '8300003', '5400658', '5400659', '2900004', '2900005', '2900006', '2900007', '1600028', '4800224', '4800225', '6900849', '3800031', '5800120', '5100125', '6100119', '4800226', '1600029', '4800227', '4800228', '6900850', '3800032', '5800122', '5100126', '6100120', '4800229', '1600030', '4800231', '4800232', '6900862', '3800033', '5800123', '5100127', '6100121', '4800233', '8613994', '8613995', '8613996', '8613997', '8613998', '8613999', '8614000', '8614001', '8614002', '8614003', '8614004', '8614005', '8614006', '8614007', '8614008', '6901688', '8622192', '6901689', '8622193', '6901690', '8622194', '6901691', '8622195', '6901692', '8622196', '6901693', '6901694', '6901695', '6901696', '6901697', '6901848', '8623325', '6901859', '8623427', '6901860', '8623428', '6901861', '8623429', '6901862', '8623430', '6901863', '8623431', '6901864', '8623432', '6901865', '8623433', '6901866', '8112883', '8623434', '6901867', '8112884', '8623435', '6901868', '8112885', '8623436', '6901869', '8112886', '8623437', '6901870', '8112887', '8623438', '6901871', '8112888', '8623439', '6901872', '8112889', '8623440', '6901873', '8112890', '8623441', '6901874', '8112891', '8623442', '6901875', '8623443', '6901876', '8623444', '6901877', '8623445', '6901878', '8623446', '6901879', '8623447', '6901880', '8623448', '6901881', '8623449', '6901882', '8623450', '6901883', '8623451', '6901884', '8623452', '6901885', '8112892', '8623453', '6901900', '8623681', '6901901', '8623682', '6901902', '8113045', '8623683', '6901903', '8623687', '6901904', '8623689', '6901906', '8113058', '8623698', '6901907', '8113059', '8623699', '6901908', '8113060', '8623700', '6901909', '8113061', '8623701', '6901910', '8623702', '6901911', '8113062', '8623703', '6901912', '8623706', '6901913', '8623709', '6901914', '8623710', '6901915', '8623711', '6901916', '8623714', '6901917', '8623720', '6901918', '8623721', '6901919', '8623723', '6901968', '8113446', '8624245', '6901992', '8624675', '6901993', '8624676', '6901994', '8113788', '8624677', '6901995', '8624678', '6901996', '8624679', '6901997', '8624680', '6901998', '8113789', '8624681', '6901999', '8624682', '6902000', '8624683', '6902001', '8624684', '6902003', '8624728', '6902004', '8624729', '6902005', '8624734', '6902006', '8624736', '6902007', '8624737', '6902010', '8624807', '6902011', '8624810', '6902012', '8624815', '6902013', '8624816', '6902014', '6902015', '8624817', '6902016', '8624818', '6902017', '8624819', '6902018', '8624820', '6902023', '8624904', '6902039', '6902040', '6902041', '6902042', '6902067', '6902073', '6902075', '6902100', '6902113', '6902114', '6902115', '6902116', '6902117')
 SELECT * FROM EMPRESAS_CLIENTES EC WHERE EC.ID=749;
@@ -944,7 +948,7 @@ FROM "comercios"
 WHERE "activo" <> FALSE
 AND "empresa_cliente_id_interno" = '16948' ; --limit 1;
 
-
+---pg terminate monitoreo
 select
 	datid, usename, wait_event_type, wait_event, state,	query, datname,	pid, usesysid, usename,	application_name, backend_xmin,
 	client_addr, client_hostname, client_port, backend_start, xact_start, query_start, state_change, backend_xid, backend_type
@@ -992,3 +996,81 @@ WHERE R.CODIGO_SERVICIO = 'PC_CLI'
   AND U.CODIGO_SERVICIO = 'PC_CLI'
   AND U.ACTIVO IS TRUE
 GROUP BY R.NOMBRE;
+
+SELECT * FROM CHECKOUT_PLATFORM.CHECKOUT.CYBERSOURCE_MERCHANT_INFO CMI WHERE CMI.CYBERSOURCE_ID='dinelco_link_002823400001';
+SELECT * FROM checkout_platform.checkout.PAYMENTS P ORDER BY ID  DESC;
+SELECT * FROM CHECKOUT_PLATFORM.CHECKOUT.PAYER_AUTH_RESULTS PAR;
+---para cambiar y resetear la contraseña cambiar en correo ambos campos de usuarios de eqwedi
+SELECT * FROM public.USUARIOS U WHERE U.ID='89463495-0c72-4977-8638-0b2916c2ed65';
+--U.CORREO='rafael.torres@documenta.com.py' OR U.CORREO_NO_VERIFICADO='rafael.torres@documenta.com.py';
+SELECT * FROM public.REFRESH_TOKENS RT WHERE RT.USUARIO_ID='89463495-0c72-4977-8638-0b2916c2ed65';
+--pamelacareaga37@gmail.com
+--aca también en pocodi
+SELECT * FROM public.CORREOS_PRINCIPALES_USUARIOS CPU WHERE CPU.USUARIO_ID='89463495-0c72-4977-8638-0b2916c2ed65';
+--ver qaui
+SELECT * FROM eqwedi_auth_db.public.SEGURIDADES S WHERE USUARIO_ID='89463495-0c72-4977-8638-0b2916c2ed65';
+
+SELECT  * FROM public.API_KEYS_X_AD_GRUPOS_CN AKXAGC;
+---usuarios y permisos
+select u.*,
+grupos_accesos_apis_x_api_keys.id, grupos_accesos_apis_x_usuarios.*, '|-|',
+grupos_accesos_apis.*, '|-|',
+grupos_accesos_apis_x_api_keys.*
+from grupos_accesos_apis_x_usuarios
+join grupos_accesos_apis on grupos_accesos_apis.id =  grupos_accesos_apis_x_usuarios.grupo_acceso_api_id
+join grupos_accesos_apis_x_api_keys on grupos_accesos_apis_x_api_keys.grupo_acceso_api_id = grupos_accesos_apis.id
+left join usuarios u on u.id = grupos_accesos_apis_x_usuarios.usuario_id;
+
+--18ee1401-c836-41d7-8f7e-2cfae5dab09d
+--18ee1401-c836-41d7-8f7e-2cfae5dab09d
+
+select *
+from api_keys_x_ad_grupos_cn A WHERE A.API_KEY_ID='044903bd-6c28-4a65-af53-d60a91077972';
+SELECT * FROM public.ACTIVE_DIRECTORY_GRUPOS_CN ADGC;
+SELECT * FROM public.API_KEYS AK;
+
+SELECT * FROM public.PERMISOS P;
+--Acceso a Pantalla de Dinelco Link Clientes
+SELECT DISTINCT cpu.correo, ecb.descripcion_bepsa as Empresa
+FROM usuarios u
+left join usuarios_x_empresas uxe on uxe.usuario_id = u.id
+left join empresas_clientes ec on ec.id = uxe.empresa_id
+left join empresas_clientes_bepsa ecb on ecb.id = ec.empresa_cliente_bepsa_id
+INNER JOIN roles_x_usuarios rxu ON rxu.usuario_id = u.id
+INNER JOIN permisos_x_roles pxr ON pxr.rol_id = rxu.rol_id
+inner join correos_principales_usuarios cpu on cpu.usuario_id = u.id
+WHERE u.activo = TRUE
+and ec.activo = true
+and uxe.activo = true
+  AND u.codigo_servicio = 'PC_CLI'
+  AND pxr.permiso_id in (select p.id from permisos p where descripcion = 'Acceso a Pantalla de Dinelco Link Clientes');
+
+--ASIGNAR PERMISOS
+SELECT * FROM public.RECURSOS R WHERE  id IN (249, 248, 247, 246, 245, 244);
+SELECT * FROM public.INTERFACES I WHERE I.ID=76;
+SELECT * FROM public.INTERFACES_X_RECURSOS IXR WHERE IXR.RECURSO_ID IN (249, 248, 247, 246, 245, 244);
+SELECT * FROM public.PERMISOS P;
+SELECT * FROM public.INTERFACES_X_PERMISOS IXP;
+
+select * from suscripciones s where empresa_cliente_id = '3ed3461c-304a-4253-8da9-634ed8f1bd9d' and s.activo = true;
+--b78aea3f-4a77-a2b3-cb85-9bdb0c40f8ca viejo skey de bancame
+
+SELECT * FROM pocodi_db.public.PERSONAS_FISICAS PF WHERE PF.NRO_DOCUMENTO= '4621264';
+
+SELECT * FROM public.USUARIOS U WHERE U.PERSONA_FISICA_ID=16759;
+SELECT * FROM public.USUARIOS U WHERE U.CORREO='marcekrivinski@gmail.com' OR U.CORREO_NO_VERIFICADO='marcekrivinski@gmail.com';
+
+select
+ *
+from
+ ordenes_pago op
+inner join comercios c
+on
+ c.id::uuid = op.comercio_id::uuid
+inner join medios_pago mp on
+ mp.id = op.medio_pago_id
+left join tarjetas t on
+ t.medio_pago_id = mp.id
+where
+ c.id_interno = '5500339'
+ and op.fecha_estado > '2025-07-06';

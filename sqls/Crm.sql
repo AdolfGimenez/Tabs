@@ -58,26 +58,27 @@ SELECT * FROM "crm-bepsa"."CaseTypeSubtype_Id_seq";
 ---cambiar usuarios que difieren de keycloak vs db
 select ui."Id" , ui."Email" , ui.*
 from "crm-bepsa"."UserIdentity" ui
-where ui."Email" = 'carlos.chavez@bepsa.com.py';
-----'8f7c0314-a3e9-422d-a85b-66979f60661a'
+where ui."Email" = 'agimenez@bepsa.com.py';
+----8f815566-e982-4dfb-bc86-721240fc217a   --623ca28e-7204-41f5-b01f-cf40780dbd72
 select *
 from "crm-bepsa"."GroupIdentityUserIdentity" giui
-where giui."UsersId" = '8f7c0314-a3e9-422d-a85b-66979f60661a';
+where giui."UsersId" = '623ca28e-7204-41f5-b01f-cf40780dbd72';
 
 select *
 from "crm-bepsa"."Users" u
-where u."IdentityId" = '8f7c0314-a3e9-422d-a85b-66979f60661a';
+where u."IdentityId" = '623ca28e-7204-41f5-b01f-cf40780dbd72';
 ---ver si sincronizó bien el cmbio de grupo
 SELECT
  gi."Name" AS rol
 FROM  "crm-bepsa"."GroupIdentityUserIdentity" AS giui
 INNER JOIN  "crm-bepsa"."GroupIdentity" gi ON giui."RolesId" = gi."Id"
-WHERE  giui."UsersId" = '33c5ea20-824b-42ef-82c2-60d9960214a8'; --id user
+WHERE  giui."UsersId" = '8f815566-e982-4dfb-bc86-721240fc217a'; --id user
 
 SELECT * FROM "crm-bepsa"."GroupIdentity" gi;
 --"Id" = '8be7bced-fa66-4e4b-928b-f333466416f4' AND "Name" = 'crm input'
 --"Id" = 'dc6952db-9936-45b4-a80c-8e86cfde1f10' AND "Name" = 'crm admin'
-SELECT * FROM "crm-bepsa"."GroupIdentityUserIdentity" WHERE  "UsersId" = '33c5ea20-824b-42ef-82c2-60d9960214a8';
+--"Id" = '8eaae1fb-ddb4-4244-86ce-4a0b6064b231' AND "Name" = 'crm embozados'
+SELECT * FROM "crm-bepsa"."GroupIdentityUserIdentity" WHERE  "UsersId" = '85a5d7ce-84fe-4d00-a75d-ac5b54fb4a2e';
 
 ---ver usuarios activos:
 SELECT ui."UserName", STRING_AGG(gi."Name", ', ') AS "Groups"
@@ -188,17 +189,37 @@ select count(u."Id") as totalusers
 from "crm-bepsa"."Users" u join "crm-bepsa"."UserIdentity" ud on u."IdentityId" = ud."Id"
 where ud."Enabled" = true;
 
-SELECT  * FROM "crm-bepsa"."ClientBranches" WHERE "ClientId"=3554;
+SELECT  * FROM "crm-bepsa"."ClientBranches" WHERE "ClientId"=13879;
 
 SELECT  * FROM "crm-bepsa"."CaseSubtypeTypification";
 
 SELECT  * FROM "crm-bepsa"."Permissions";
 
-----cierre para facturar bobinas
-SELECT  * FROM  "crm-bepsa"."Settings" AS s WHERE  s."Key" ILIKE '%Closing%';
+----cierre para facturar bobinas ver fechas
+SELECT * FROM  "crm-bepsa"."Settings" AS s WHERE  s."Key" ILIKE '%Closing%';
+SELECT * FROM  "crm-bepsa"."Settings" AS s WHERE  s."Key" = 'ClosingBillingSetup';
 --update de horario para el mismo
 UPDATE "crm-bepsa"."Settings"
-SET  "Value" = '0 35 09 13 * ?'
-WHERE  "Key" = 'ClosingBillingSetup' ;
+SET  "Value" = '0 35 09 13 * ?' WHERE  "Key" = 'ClosingBillingSetup' ;
 
 
+SELECT O."TicketNumber"::TEXT                                                AS "TicketNumber",
+       O."OrderDate"::DATE                                                   AS "OrderDate",
+       C."Id"::TEXT                                                          AS "CodClient",
+       CB."Id"::TEXT                                                         AS "CodClientBranch",
+       C."Name" || ' - ' || CB."Name"                                        AS "ClientName",
+       C."DocumentNumber"                                                    AS "RUC",
+       (OS."Attributes"::JSONB -> 'InvoiceData' ->> 'TotalInvoice')::NUMERIC AS "TotalInvoice"
+FROM "crm-bepsa"."Orders" AS O
+         INNER JOIN  "crm-bepsa"."Clients" AS C ON O."ClientId" = C."Id"
+         INNER JOIN  "crm-bepsa"."ClientBranches" AS CB ON O."ClientBranchId" = CB."Id"
+         INNER JOIN  "crm-bepsa"."OrderSupplies" AS OS ON OS."OrderId" = O."Id"
+WHERE O."OrderType" = 'Supplies'   AND O."Attributes" NOT ILIKE '%FACTURADO%';
+
+
+UPDATE
+ "crm-bepsa"."Settings"
+SET
+ "Value" = '0 0 14 09 * ?'
+WHERE
+ "Key" = 'ClosingBillingSetup' ;
