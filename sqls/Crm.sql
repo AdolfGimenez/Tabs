@@ -217,9 +217,9 @@ FROM "crm-bepsa"."Orders" AS O
 WHERE O."OrderType" = 'Supplies'   AND O."Attributes" NOT ILIKE '%FACTURADO%';
 
 
-UPDATE
- "crm-bepsa"."Settings"
-SET
- "Value" = '0 0 14 09 * ?'
+SELECT
+ *
+FROM
+ "crm-bepsa"."Settings" AS s
 WHERE
- "Key" = 'ClosingBillingSetup' ;
+ s."Key" = ANY (ARRAY['LastClosingBilling', 'NextClosingBilling']);

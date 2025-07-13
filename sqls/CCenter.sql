@@ -3516,4 +3516,4 @@ SELECT * FROM
 facturacionbepsa.fn_get_facventa_anulacion_masiva('16410772','FAECA',
 '001','003','C-000',2025,07,'SeguroMedico','1','9999999','DTE_APROBADO');
 
-select * from public.visanet_account_range;
+SELECT  * FROM asientos.facturacionbepsa.FACCLISUC F WHERE F.CLIENTEID=28359;

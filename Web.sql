@@ -1060,17 +1060,44 @@ SELECT * FROM pocodi_db.public.PERSONAS_FISICAS PF WHERE PF.NRO_DOCUMENTO= '4621
 SELECT * FROM public.USUARIOS U WHERE U.PERSONA_FISICA_ID=16759;
 SELECT * FROM public.USUARIOS U WHERE U.CORREO='marcekrivinski@gmail.com' OR U.CORREO_NO_VERIFICADO='marcekrivinski@gmail.com';
 
-select
- *
-from
- ordenes_pago op
-inner join comercios c
-on
- c.id::uuid = op.comercio_id::uuid
-inner join medios_pago mp on
- mp.id = op.medio_pago_id
-left join tarjetas t on
- t.medio_pago_id = mp.id
-where
- c.id_interno = '5500339'
- and op.fecha_estado > '2025-07-06';
+--correo con empresa
+SELECT DISTINCT cpu.correo, ecb.descripcion_bepsa AS Empresa
+FROM usuarios u
+LEFT JOIN usuarios_x_empresas uxe ON uxe.usuario_id = u.id
+LEFT JOIN empresas_clientes ec ON ec.id = uxe.empresa_id
+LEFT JOIN empresas_clientes_bepsa ecb ON ecb.id = ec.empresa_cliente_bepsa_id
+INNER JOIN roles_x_usuarios rxu ON rxu.usuario_id = u.id
+INNER JOIN permisos_x_roles pxr ON pxr.rol_id = rxu.rol_id
+INNER JOIN correos_principales_usuarios cpu ON cpu.usuario_id = u.id
+WHERE u.activo = TRUE   AND ec.activo = TRUE
+  AND uxe.activo = TRUE   AND u.codigo_servicio = 'PC_CLI'
+  AND EXISTS ( SELECT 1 FROM permisos_x_roles pxr2  JOIN permisos p2 ON p2.id = pxr2.permiso_id
+    WHERE pxr2.rol_id = rxu.rol_id AND p2.descripcion = 'Acceso a Pantalla de Dinelco Link Clientes V2')
+  AND EXISTS (SELECT 1 FROM permisos_x_roles pxr3  JOIN permisos p3 ON p3.id = pxr3.permiso_id
+    WHERE pxr3.rol_id = rxu.rol_id AND p3.descripcion = 'Acceso pantalla Dinelco Link' );
+-------------------
+SELECT * FROM CUSTOMERS C WHERE C.EMAIL='hotellepelicanpy@gmail.com';
+
+SELECT * FROM CHECKOUT.CUSTOMERS C WHERE C.PHONE LIKE '+5950%';
+
+SELECT * FROM CHECKOUT.MERCHANTS M WHERE M.ID =1;
+SELECT * FROM CHECKOUT.CYBERSOURCE_MERCHANT_INFO CMI WHERE CMI.ID=1;
+--INSERT INTO checkout.cybersource_merchant_info (id, cybersource_id,
+--cybersource_main_id, public_key, private_key, key_expiration, created_at, updated_at)
+-- VALUES (1, 'dinelco_030258600001', 'dinelco_checkout',
+-- '6d9936f3-f83b-4d02-8374-b22871c9e800', '7lRoFSXKhSz2TC+FP5XSsTdP/lBoq2lqQFLTJbcxJMI=', '2028-12-31 05:01:39.000 -03:00', '2025-05-16 17:19:43.036 -03:00', '2025-05-16 17:19:43.036 -03:00');
+
+
+SELECT DISTINCT cpu.correo, ecb.descripcion_bepsa as Empresa
+FROM usuarios u
+left join usuarios_x_empresas uxe on uxe.usuario_id = u.id
+left join empresas_clientes ec on ec.id = uxe.empresa_id
+left join empresas_clientes_bepsa ecb on ecb.id = ec.empresa_cliente_bepsa_id
+INNER JOIN roles_x_usuarios rxu ON rxu.usuario_id = u.id
+INNER JOIN permisos_x_roles pxr ON pxr.rol_id = rxu.rol_id
+inner join correos_principales_usuarios cpu on cpu.usuario_id = u.id
+WHERE u.activo = TRUE
+and ec.activo = true
+and uxe.activo = true
+AND u.codigo_servicio = 'PC_CLI'
+AND pxr.permiso_id in (select p.id from permisos p where descripcion = 'Acceso pantalla Dinelco Link');

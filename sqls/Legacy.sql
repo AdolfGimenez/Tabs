@@ -267,7 +267,7 @@ from gxopera.opmovi inner join gxbdbps.comaeaf on (opcomer = cocomer)
 where CORUCN='80025401-5' and substr(opcomer, 1, 2) IN ('81', '86') and substr(opferea, 1, 4) = '2024' and substr(opferea, 5, 2) between '02' and '02'
 group by substr(opferea, 1, 6), opcomer, codeno;
 SELECT * FROM gxopera.opmovi;
------------------------------------------cta bnf
+-----------------------------------------cta bnf debito cuenta bnf
 Select *
 --pgidtrn,pgfecom, pgtipo, pgnocta, pgimpor, pgcomer,pgfecre, PGIDUSR,op.PGFEPRO, op.PGHOPRO
 from gxopera.opago1p op where op.PGIDUSR='U99KATERIN';
@@ -378,7 +378,7 @@ AND RRN_EXT IN ('507259804699', '507259804692', '507259804684', '507259804696', 
 
 --ver trx monplus a enviar y enviados
 ---ver los pendientes excluyendo los eliminados mas arriba
-SELECT * FROM VISA.NRT_RRN_EX WHERE NRTLOGFECH='2025-07-08' ORDER BY NRTLOGHORA DESC;
+SELECT * FROM VISA.NRT_RRN_EX WHERE NRTLOGFECH='2025-07-10' ORDER BY NRTLOGHORA DESC;
 --AND  NRTLOGHORA BETWEEN '12:05:29' AND  '12:38:55' AND RRN_EXT NOT IN ('507259804699', '507259804692', '507259804684', '507259804696', '507259804683', '507259804694',
 '507259804705', '507259804720', '507259804702', '507259804708', '507259804721', '507259804713', '507259804710', '507259804703', '507259804712');
 

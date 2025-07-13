@@ -832,3 +832,7 @@ SHOW timezone;
 
 SELECT * FROM sirius.sifen.DOCUMENTOELECTRONICO D WHERE D.IDDE=1090012;
 SELECT * FROM sirius.sifen.LOTEDETALLEEVENTO L WHERE L.IDDE=1090012;
+------------------------------####especial-----------------------------------------------------
+SELECT  * FROM BASE.fn_all_permission_rol(2, 4, 'administrador');
+SELECT * FROM base.rolprograma R WHERE R.IDEMPRESA=2 AND R.IDROL=4;
+SELECT * FROM base.credencial;
