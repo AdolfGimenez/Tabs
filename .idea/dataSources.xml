@@ -214,42 +214,12 @@
       </jdbc-additional-properties>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="Db2MN1" uuid="d3038c19-9827-4803-8a2d-10e758a8dce4">
-      <driver-ref>db2.jtopen</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>com.ibm.as400.access.AS400JDBCDriver</jdbc-driver>
-      <jdbc-url>jdbc:as400://10.254.102.244</jdbc-url>
-      <jdbc-additional-properties>
-        <property name="database.jdbc.dont.escape" value="true" />
-      </jdbc-additional-properties>
-      <working-dir>$ProjectFileDir$</working-dir>
-      <driver-properties>
-        <property name="auto commit" value="false" />
-        <property name="errors" value="full" />
-        <property name="decimal separator" value="," />
-      </driver-properties>
-    </data-source>
-    <data-source source="LOCAL" name="Db2MN2" uuid="8d6cb4a3-d00b-44bc-9b32-f7a7baf35b83">
-      <driver-ref>db2.jtopen</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>com.ibm.as400.access.AS400JDBCDriver</jdbc-driver>
-      <jdbc-url>jdbc:as400://10.254.102.245</jdbc-url>
-      <jdbc-additional-properties>
-        <property name="database.jdbc.dont.escape" value="true" />
-      </jdbc-additional-properties>
-      <working-dir>$ProjectFileDir$</working-dir>
-      <driver-properties>
-        <property name="auto commit" value="false" />
-        <property name="errors" value="full" />
-        <property name="decimal separator" value="," />
-      </driver-properties>
-    </data-source>
     <data-source source="LOCAL" name="SPI_P" uuid="b1168614-aeeb-4f67-9a49-78066597c565">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <schema-control>AUTOMATIC</schema-control>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://10.1.254.58:5432/BCP_SPI</jdbc-url>
+      <jdbc-url>jdbc:postgresql://10.1.254.52:5432/BCP_SPI</jdbc-url>
       <jdbc-additional-properties>
         <property name="database.postgres.introspect.system.schemas" value="true" />
       </jdbc-additional-properties>
@@ -347,30 +317,6 @@
       </jdbc-additional-properties>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="Jpts_60_T" uuid="8df51eb4-6aba-488b-8f91-155320470192">
-      <driver-ref>postgresql</driver-ref>
-      <synchronize>true</synchronize>
-      <schema-control>AUTOMATIC</schema-control>
-      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://10.1.254.60:5432/postgres</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
-    <data-source source="LOCAL" name="Jpts_61_C" uuid="9e3065c8-d46e-4684-813b-37fe589caa34">
-      <driver-ref>postgresql</driver-ref>
-      <synchronize>true</synchronize>
-      <schema-control>AUTOMATIC</schema-control>
-      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://10.1.254.61:5432/postgres</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
-    <data-source source="LOCAL" name="Jpts_62_C" uuid="aa3bc1c2-3718-411e-ac43-bb058483d6d5">
-      <driver-ref>postgresql</driver-ref>
-      <synchronize>true</synchronize>
-      <schema-control>AUTOMATIC</schema-control>
-      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://10.1.254.62:5432/postgres</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
     <data-source source="LOCAL" name="Crm-Bepsa" uuid="82c3f0f9-1eef-4c5d-87b1-903c3a9b41ea">
       <driver-ref>mongo.4</driver-ref>
       <synchronize>true</synchronize>
@@ -384,6 +330,9 @@
       <schema-control>AUTOMATIC</schema-control>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://db-bops02.bepsa.com.py:5432/kong_db_01</jdbc-url>
+      <jdbc-additional-properties>
+        <property name="database.postgres.introspect.system.schemas" value="true" />
+      </jdbc-additional-properties>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
     <data-source source="LOCAL" name="Bops02" uuid="cfb84309-76a4-4171-b186-858ec57e909b">
@@ -557,6 +506,18 @@
       <schema-control>AUTOMATIC</schema-control>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://10.1.254.130:5432/crm-custom-bepsa</jdbc-url>
+      <jdbc-additional-properties>
+        <property name="database.postgres.introspect.system.schemas" value="true" />
+      </jdbc-additional-properties>
+      <working-dir>$ProjectFileDir$</working-dir>
+      <time-zone>America/Argentina/Buenos_Aires</time-zone>
+    </data-source>
+    <data-source source="LOCAL" name="Portal_Rpl" uuid="aee8105b-9d19-4a56-a9fb-a6940464066c">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <schema-control>AUTOMATIC</schema-control>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://10.1.254.56:5432/postgres</jdbc-url>
       <jdbc-additional-properties>
         <property name="database.postgres.introspect.system.schemas" value="true" />
       </jdbc-additional-properties>

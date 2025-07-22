@@ -38,10 +38,11 @@ HEX(cast(substring(entry_data, 438, 4) as char(4) for bit data)) as N3
 FROM TABLE(DISPLAY_JOURNAL('@JOURNAL',
 'QSQJRN',
 JOURNAL_CODES => 'R',
-OBJECT_LIBRARY => 'WRKADOLFO',
-OBJECT_NAME => 'TSWAUT',
-OBJECT_MEMBER => 'TSWAUT',
-OBJECT_OBJTYPE => '*FILE'));
+OBJECT_LIBRARY => 'MASTERCARD',
+OBJECT_NAME => 'MASCTLDTA',
+OBJECT_MEMBER => 'MASCTLDTA',
+OBJECT_OBJTYPE => '*FILE'))
+ORDER BY ENTRY_TIMESTAMP asc;
 
 ---ver
 --https://stackoverflow.com/questions/78132931/using-sql-to-view-as400-journal-data-entry-data-in-particular
@@ -58,7 +59,7 @@ INTERPRET(substring(entry_data, 421, 6) as DECIMAL(11,2) ) as N1, -- decimal
 INTERPRET(substring(entry_data, 427, 11) as NUMERIC(11,2) ) as N2, -- numeric
 INTERPRET(substring(entry_data, 438, 4) as INTEGER) as N3 -- int
 FROM TABLE (
-                 QSYS2.DISPLAY_JOURNAL( 'MYDB', 'QSQJRN', OBJECT_NAME=>'VARTABLE',
+                 QSYS2.DISPLAY_JOURNAL( '@JOURNAL', 'QSQJRN', OBJECT_NAME=>'MASCTLDTA',
                  STARTING_RECEIVER_NAME => '*CURAVLCHN',
                  OBJECT_LIBRARY=>'MYDB',
                  OBJECT_OBJTYPE=>'*FILE',

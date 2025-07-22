@@ -400,7 +400,7 @@ FROM FACTURACIONBEPSA.tclmov_tmp_comercios_202506_factcomercios C
     AND (c.SERCODI IN ('PAGFAC', 'VTAMIN') AND c.PRECODI IN ('PFEW', 'PFTA', 'VTEP', 'VTEW', 'VTTA')
     AND c.MOVCODIS IN ('ATM', 'WEB', 'POS')) AND c.MOVIVCO > 0*/
 --WHERE movopde = 700405 --para operadoras
-WHERE C.MOVCODCLI IN (SELECT C.CLICLICOD FROM DATOS.GXFINDTA_TCMCLI C WHERE C.CLIRUC LIKE '%80097276%')
+WHERE C.MOVCODCLI IN (SELECT C.CLICLICOD FROM DATOS.GXFINDTA_TCMCLI C WHERE C.CLIRUC LIKE '%80024659%')
 --AND C.MOVCODSUC=1
 -- NOT IN ('1', '8')
 GROUP BY C.MOVCODCLI, C.MOVCODSUC, C.MOVCOMER, C.MOVDENO, C.MOVFTRX, C.MOVFPRO, C.MOVFCRE, C.MOVTPTA ,C.MOVRRNBEP
@@ -563,6 +563,7 @@ select info from facturacionbepsa.fn_obtener_parmvalue('desc_serv_prest','C') as
 SELECT F.FACVENTAID, F.FACVENTACLIDIRECCION, F.CLIENTEID, F.SUCURSALID, F.*
 FROM FACTURACIONBEPSA.FACVENTA F
 WHERE F.FACVENTAID IN (SELECT * FROM facturacionbepsa.sp_insert_cliente('Comercios');
+SELECT * FROM facturacionbepsa.sp_insert_cliente('Comercios');
 SELECT * FROM facturacionbepsa.sp_insert_sucursal('Comercios');
 SELECT * FROM facturacionbepsa.sp_insert_clifactsuc('Comercios');
                        130630, 130633, 130634, 130635, 130636, 130637);
@@ -3516,4 +3517,5 @@ SELECT * FROM
 facturacionbepsa.fn_get_facventa_anulacion_masiva('16410772','FAECA',
 '001','003','C-000',2025,07,'SeguroMedico','1','9999999','DTE_APROBADO');
 
-SELECT  * FROM asientos.facturacionbepsa.FACCLISUC F WHERE F.CLIENTEID=28359;
+SELECT * FROM DATOS.GXFINDTA_TCOCNA T WHERE T.COCOMER IN
+(SELECT * FROM DATOS.GXBDBPS_COMAEAF C2 WHERE C2.CORUCN='80026157-7');

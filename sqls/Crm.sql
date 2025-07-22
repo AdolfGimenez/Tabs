@@ -217,9 +217,10 @@ FROM "crm-bepsa"."Orders" AS O
 WHERE O."OrderType" = 'Supplies'   AND O."Attributes" NOT ILIKE '%FACTURADO%';
 
 
-SELECT
- *
-FROM
- "crm-bepsa"."Settings" AS s
-WHERE
- s."Key" = ANY (ARRAY['LastClosingBilling', 'NextClosingBilling']);
+SELECT  * FROM  "crm-bepsa"."Settings" AS s
+WHERE  s."Key" = ANY (ARRAY['LastClosingBilling', 'NextClosingBilling']);
+
+SELECT * FROM "crm-bepsa"."Clients" WHERE "DocumentNumber"='7264137-1' ;-- 0 = ENTIDAD 1 = COMERCIO
+
+SELECT * FROM "crm-bepsa"."Clients" WHERE "Name" LIKE '%PERUANO%'; --11375
+SELECT * FROM "crm-bepsa"."ClientBranches" WHERE "ClientId"='11375';

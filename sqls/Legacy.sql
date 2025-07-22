@@ -270,7 +270,7 @@ SELECT * FROM gxopera.opmovi;
 -----------------------------------------cta bnf debito cuenta bnf
 Select *
 --pgidtrn,pgfecom, pgtipo, pgnocta, pgimpor, pgcomer,pgfecre, PGIDUSR,op.PGFEPRO, op.PGHOPRO
-from gxopera.opago1p op where op.PGIDUSR='U99KATERIN';
+from gxopera.opago1p op where op.PGIDUSR='U99LUCIA';
 --AND pgcomer = '4500001' and pgidtrn = '240325569872';
 SELECT * FROM GXOPERA.OPAGO1PHIS O1P WHERE PGIDUSR='U99KATERIN' ORDER BY PGFECOM DESC --AND PGFECOM >='20250317';
 ---------------------------------------------
@@ -378,7 +378,7 @@ AND RRN_EXT IN ('507259804699', '507259804692', '507259804684', '507259804696', 
 
 --ver trx monplus a enviar y enviados
 ---ver los pendientes excluyendo los eliminados mas arriba
-SELECT * FROM VISA.NRT_RRN_EX WHERE NRTLOGFECH='2025-07-10' ORDER BY NRTLOGHORA DESC;
+SELECT * FROM VISA.NRT_RRN_EX WHERE NRTLOGFECH='2025-07-17' ORDER BY NRTLOGHORA DESC;
 --AND  NRTLOGHORA BETWEEN '12:05:29' AND  '12:38:55' AND RRN_EXT NOT IN ('507259804699', '507259804692', '507259804684', '507259804696', '507259804683', '507259804694',
 '507259804705', '507259804720', '507259804702', '507259804708', '507259804721', '507259804713', '507259804710', '507259804703', '507259804712');
 

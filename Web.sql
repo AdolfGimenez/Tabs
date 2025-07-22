@@ -14,6 +14,38 @@ and "active_directory_grupos_cn"."activo" = true
 and "permisos_x_recursos"."activo" = true
 and "permisos"."activo" = true;
 
+SELECT * FROM active_directory_grupos_cn;
+SELECT * FROM permisos_x_active_directory_grupos_cn;
+SELECT * FROM public.GRUPOS_ACCESOS_APIS GAA;
+SELECT * FROM api_keys_x_ad_grupos_cn; ---para acceso por api key
+SELECT * FROM public.GRUPOS_ACCESOS_APIS_X_USUARIOS GAAXU WHERE GAAXU.USUARIO_ID='bdaf16f0-d93c-4414-978a-ae1e8fd3b981';
+
+---para login que no es ldap
+select "grupos_accesos_apis_x_api_keys"."id"
+from "grupos_accesos_apis_x_usuarios"
+inner join "grupos_accesos_apis"
+  on "grupos_accesos_apis"."id" = "grupos_accesos_apis_x_usuarios"."grupo_acceso_api_id"
+inner join "grupos_accesos_apis_x_api_keys"
+  on "grupos_accesos_apis_x_api_keys"."grupo_acceso_api_id" = "grupos_accesos_apis"."id"
+where "grupos_accesos_apis_x_api_keys"."api_key_id" = '18ee1401-c836-41d7-8f7e-2cfae5dab09d'
+  and "grupos_accesos_apis_x_usuarios"."usuario_id" = 'bdaf16f0-d93c-4414-978a-ae1e8fd3b981'
+  and "grupos_accesos_apis_x_usuarios"."activo" = true
+  and "grupos_accesos_apis"."activo" = true  and "grupos_accesos_apis_x_api_keys"."activo" = true
+limit 1;
+---para el login
+SELECT api_keys_x_ad_grupos_cn.id
+FROM api_keys_x_ad_grupos_cn
+JOIN active_directory_grupos_cn
+  ON active_directory_grupos_cn.id = api_keys_x_ad_grupos_cn.ad_grupo_cn_id
+JOIN api_keys
+  ON api_keys.id = api_keys_x_ad_grupos_cn.api_key_id
+WHERE /*active_directory_grupos_cn.cn IN (?, ?, ..., ?)
+  AND*/ api_keys_x_ad_grupos_cn.api_key_id = '18ee1401-c836-41d7-8f7e-2cfae5dab09d'
+  AND active_directory_grupos_cn.activo = true
+  AND api_keys_x_ad_grupos_cn.activo = true;
+
+SELECT * FROM public.API_KEYS AK;
+
 --permisos
 select r2.*
 from public.roles_x_usuarios r
@@ -873,14 +905,29 @@ SELECT * FROM public.EMPRESAS_CLIENTES EC WHERE EC.ID_INTERNO='12300';
 SELECT * FROM public.COMERCIOS C WHERE C.EMPRESA_CLIENTE_ID IN ('bc7711b5-9338-46e5-a8ea-395f47458f14', '87523d23-97ae-46f4-b222-79494fce94d4')
 
 ---hallar v1 BASE DE DATOS PAGO DIGITAL
-select c.id as v1Id, c.* from PAGOS_DIGITALES_DB.public.comercios c where c.cybersource_merchant_id  = 'dinelco_002692900046';
+select c.id as v1Id, c.* from PAGOS_DIGITALES_DB.public.comercios c where c.cybersource_merchant_id  = 'dinelco_link_001662700002';
 
 --inactivar activar comercio 3ds
 SELECT * from public.COMERCIOS C WHERE C.ID_INTERNO='5500339';
 --se busca el idinterno y con su id en merchands
 SELECT * FROM public.MERCHANTS M WHERE M.V1_ID='91e96aae-c7fb-423b-9360-18c8e1a99639';
 
-select operacion_fech_trans, * from busdatos_transacciones bt where bt.operacion_rrnbepsa in ('503643911066', '565503562473');
+---VER LLAVES CORRECTAMENTE CARGADAS EN LA V2
+SELECT M."name", CMI.CYBERSOURCE_ID, CMI.CYBERSOURCE_MAIN_ID, CMI.PUBLIC_KEY, CMI.PRIVATE_KEY, CMI.KEY_EXPIRATION,
+       MO.THREE_D_SECURE_ACTIVE AS ESTADO_3DS, M.RI_CODE  CODIGO_REINGENIERIA, M.LEGACY_CODE AS CODIGO_LEGACY, M.ID AS CODIGO_MERCHANT
+FROM MERCHANTS M
+         LEFT JOIN CYBERSOURCE_MERCHANT_INFO CMI ON M.CS_INFO_ID = CMI.ID
+         LEFT JOIN MERCHANT_OPTIONS MO ON MO.ID = M.MERCHANT_OPTIONS_ID
+WHERE M.LEGACY_CODE IN ('5700270');
+
+---v2 cyb merchand checkout platform checkout
+SELECT m.*
+FROM CHECKOUT_PLATFORM.CHECKOUT.MERCHANTS M --WHERE M.CS_INFO_ID IN (299, 346, 482, 516, 543, 511)
+WHERE M.CS_INFO_ID IN
+      (SELECT CMI.ID FROM CHECKOUT_PLATFORM.CHECKOUT.CYBERSOURCE_MERCHANT_INFO CMI
+       WHERE CMI.CYBERSOURCE_ID IN ('dinelco_002904300001'));
+
+SELECT *  FROM CHECKOUT_PLATFORM.CHECKOUT.CYBERSOURCE_MERCHANT_INFO CMI WHERE ID=514;
 
 select * from sucursales_bepsa_db2 sbd where sbd.cocomer_pago_digital like '%5700268%';
 -- update sucursales_bepsa_db2 set cocomer_pago_digital = '5700268' where cocomer_pago_digital like '%5700268%';
@@ -997,9 +1044,6 @@ WHERE R.CODIGO_SERVICIO = 'PC_CLI'
   AND U.ACTIVO IS TRUE
 GROUP BY R.NOMBRE;
 
-SELECT * FROM CHECKOUT_PLATFORM.CHECKOUT.CYBERSOURCE_MERCHANT_INFO CMI WHERE CMI.CYBERSOURCE_ID='dinelco_link_002823400001';
-SELECT * FROM checkout_platform.checkout.PAYMENTS P ORDER BY ID  DESC;
-SELECT * FROM CHECKOUT_PLATFORM.CHECKOUT.PAYER_AUTH_RESULTS PAR;
 ---para cambiar y resetear la contraseña cambiar en correo ambos campos de usuarios de eqwedi
 SELECT * FROM public.USUARIOS U WHERE U.ID='89463495-0c72-4977-8638-0b2916c2ed65';
 --U.CORREO='rafael.torres@documenta.com.py' OR U.CORREO_NO_VERIFICADO='rafael.torres@documenta.com.py';
@@ -1020,9 +1064,6 @@ from grupos_accesos_apis_x_usuarios
 join grupos_accesos_apis on grupos_accesos_apis.id =  grupos_accesos_apis_x_usuarios.grupo_acceso_api_id
 join grupos_accesos_apis_x_api_keys on grupos_accesos_apis_x_api_keys.grupo_acceso_api_id = grupos_accesos_apis.id
 left join usuarios u on u.id = grupos_accesos_apis_x_usuarios.usuario_id;
-
---18ee1401-c836-41d7-8f7e-2cfae5dab09d
---18ee1401-c836-41d7-8f7e-2cfae5dab09d
 
 select *
 from api_keys_x_ad_grupos_cn A WHERE A.API_KEY_ID='044903bd-6c28-4a65-af53-d60a91077972';
@@ -1101,3 +1142,20 @@ and ec.activo = true
 and uxe.activo = true
 AND u.codigo_servicio = 'PC_CLI'
 AND pxr.permiso_id in (select p.id from permisos p where descripcion = 'Acceso pantalla Dinelco Link');
+
+
+select * FROM CHECKOUT.MERCHANTS M WHERE M.CS_INFO_ID IN (374, 424, 446, 541, 394, 285, 423, 396, 399, 397, 445, 375, 376);
+SELECT * FROM CHECKOUT_PLATFORM.CHECKOUT.CYBERSOURCE_MERCHANT_INFO CMI
+         WHERE CMI.CYBERSOURCE_ID IN ('dinelco_link_001108700053');
+
+select * from advance_accreditations aa where aa.MERCHANT_NAME LIKE 'OSCAR%' ;--aa.inserted_by_user = '7336ce7a-abc1-4402-aaf5-d771c172c7cd';
+
+select * FROM public.USUARIOS U WHERE U.NRO_DOCUMENTO='5107555';
+
+SELECT * FROM "BCP_SPI"."MX_PAIN001" M --WHERE "ESTADO" ='ACSP'
+ORDER BY M."CREATED_AT" DESC;
+
+
+SELECT * FROM "BCP_SPI"."TOKEN_SPI" TS;
+
+SELECT * FROM public.USUARIOS U WHERE U.NRO_DOCUMENTO='4208822'
