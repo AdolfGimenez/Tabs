@@ -2,8 +2,8 @@
 --------------------------------------------------------------------------
 select mcdisco saldo,  mcnumta tarjeta,   T.* from gxbdbps.tmctaaf T
 where MCNUMDO='4179747'; -- mcnumta='6274311550006321';
-SELECT * FROM GXBDBPS.TMTARAF T WHERE MTNUMTA in ('4224102252162439','6274311550006321');
-SELECT * from gxbdbps.tmctaaf T  where mcnumta in ('4224102252162439','6274311550006321');
+SELECT * FROM GXBDBPS.TMTARAF T WHERE MTNUMTA in ('6274311460168146','6274311550006321');
+SELECT * from gxbdbps.tmctaaf T  where mcnumta in ('6274310212948854','6274311550006321');
 ----------------------------
 ----------------------------------------
 --query para facturacion
@@ -167,8 +167,6 @@ from GXFINDTA.TCLPFD
 WHERE PFCIDPARM='CONFIGVISA'
 AND PFDIDGRUP ='FECHAEPIN';
 ------------------
---vemor qr generado
-select * from JPTSAPI.qr_transactions  t order by initial_date desc;
 --servidor correos
 SELECT * FROM GXFINDTA.TCLCNE t WHERE t.CNEIDCON  = 'MAILAS';
 
@@ -211,7 +209,7 @@ SELECT  * FROM GXFINDTA.TCLTSB T WHERE T.TSBNREF IN ('250360015700169');
 SELECT * FROM GXFINDTA.TCLTSB T WHERE T.TSBCOCO='8621245' AND T.TSBFPRO >='20250201';
 SELECT T.MOVCOMER, T.* FROM GXFINDTA.TCLMOV T WHERE T.MOVRRNBEP IN ('503644299416','503644290532');
 
-SELECT SUM(T.MOVNETO) FROM GXFINDTA.TCLMOV T WHERE T.MOVID  LT='250360015700169';
+SELECT SUM(T.MOVNETO) FROM GXFINDTA.TCLMOV T WHERE T.MOVIDLT='250360015700169';
 select * from GXFINDTA.TCLIMB where SUBSTR(IMBIDOP, 9 , 7)= 5700169 AND IMBFCH>='20250201';
 SELECT * FROM GXOPERA.OPLIQUI O WHERE O.OPNROREF IN ('503644299416','503644290532');
 
@@ -226,38 +224,25 @@ SELECT T.MOVOPOR , SUM(T.MOVNETO), T.SERCODI, T.MOVFPRO FROM GXFINDTA.TCLMOV T W
 AND T.SERCODI='VTAMIN'--AND T.MOVFPRO<>'20250203'
 GROUP BY T.MOVOPOR, T.SERCODI, T.MOVFPRO;
 
+SELECT * FROM GXFINDTA.TCLTSB T WHERE T.TSBCOCO='0705719' ORDER BY TSBFEGE DESC;
 
-SELECT * FROM JPTSAPI.KEYS_CYBERSOURCE_SHOPS where cybersource_shop_id = 'dinelco_bm_002327100004';
-INSERT INTO JPTSAPI.KEYS_CYBERSOURCE_SHOPS
-( CYBERSOURCE_SHOP_ID, CYBERSOURCE_PUBLIC_KEY, CYBERSOURCE_PRIVATE_KEY,
- CREATED_AT, CYBERSOURCE_SHOP_MAIN_ID, ENTITY_ID) VALUES
-( 'dinelco_002919200001',  '7abffecd-20b9-427a-8f1c-6b971439d62a',
- 'uBH/ZfEuxdu1OpqhLVPtdyLummpCgqWcsQapYYWVjbk=',
- now(), 'dinelco_checkout', NULL);
+select C.AFTIDESC DESCRIPCION, AFFALTA FECHAALTA, AFFINST FECHAINSTAL, afcodi activo, AFSERN NROSERIAL,
+(case when AFSTAT = '00' then 'ACTIVO' WHEN AFSTAT = '50' THEN 'MANTENIMIENTO' when AFSTAT = '60' then 'DEPOSITO'
+WHEN AFSTAT = '90' then 'BAJA' WHEN AFSTAT = '01' then 'PENDIENTE DE ACTIVACION' end) estado
+from  GXBDBPS.COMAEAF A
+INNER JOIN gxbdbps.COAFMAF B ON (AFCOMER = COCOMER)
+INNER JOIN GXBDBPS.COAFTAF  C ON  B.AFTICODI = C.AFTICODI
+/*WHERE COSTAT <> '90'
+--AND SUBSTR(COCOMER,1,2) NOT IN ('90', '95', '99')
+and cocomer <> '0100001'*/;
+;
 
-select * from JPTSAPI.cybersource_merchant_routing where merchant_id IN ('000000005700270');
---nombre = 'ITACUA ALQUILERES' AND id_interno = '5100174'
+SELECT F2.cocomer, F2.CORAZO, m2.afcodi, m2.affmodi as fecha_mod, m2.afidusal user_alta, m2.afidusmd as user_modf, M2.*
+FROM GXBDBPS.COMAEAF F2,
+     GXBDBPS.COAFMAF M2
+WHERE M2.AFCOMER = F2.COCOMER  AND M2.afidusmd in ('OPTKDOSB','OGPKDOSB') AND M2.affmodi >='20250601';
 
-INSERT INTO JPTSAPI.cybersource_merchant_routing (merchant_id, create_at, merchant_name)
-VALUES('000000005700270', now(), 'LANDERFIT');
---nombre = 'HEART WOOD' AND id_interno = '304256'
-
-
---Resumen de Liquidacion
-Select  LICOMER,litiptar, sum(LIMONTO)monto, sum(licobps+licoent)comison, sum(liivaent+liivabps)iva,sum(lirenta) renta,
-        sum(lireiva)ivarenta, sum(LINETO) neto
-from gxopera.flicom1
-where substr(lifecredi,1,6) = '202304' and licodtr = '000054' AND LICOMER = '1002729'
-GROUP BY LICOMER, litiptar;
-
-SELECT * from gxopera.flicom1 where substr(lifecredi,1,6) = '202304' and licodtr = '000054' AND LICOMER = '1002729';
-
---detalle
-SELECT OPFEREA, opcomer comercio, optiptar tipo, sum(opmonto)monto, sum(opcoment+opcombps)comision, sum(opivaent+opivabps)iva,
-       sum(oprenta)renta, sum(opreiva)ivarenta, sum(opmonto-opcomi-oprenta-opreiva)neto
-FROM gxopera.opmovi WHERE opfecom BETWEEN '20231201' AND '20231230' AND opcomer = '1002729'
-GROUP BY opcomer, optiptar, OPFEREA;
-
-
-SELECT * FROM GXBDBPS.COMAEAF C2 WHERE C2.CORUCN='80052397-0';
-
+/*Activo Fijo*/
+SELECT afcodi activo_fijo, b.* FROM gxbdbps.coafmaf b  WHERE afcodi = '24848427'; --legacy
+SELECT disactcod activo_fijo, a.* FROM gxfindta.tcmdis a  WHERE disactcod = '24848427' ; --ri
+SELECT * FROM gxfindta.tcocna WHERE cliclicod = 29659;

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="SqlDialectMappings">
     <file url="file://$PROJECT_DIR$/EMPES.sql" dialect="PostgreSQL" />
-    <file url="file://$PROJECT_DIR$/JPTS.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/JPTS.sql" dialect="DB2_IS" />
     <file url="file://$PROJECT_DIR$/Marcas.sql" dialect="DB2_IS" />
     <file url="file://$PROJECT_DIR$/SAP.sql" dialect="DB2_IS" />
     <file url="file://$PROJECT_DIR$/Select varios.sql" dialect="DB2_IS" />
@@ -15,8 +15,10 @@
     <file url="file://$PROJECT_DIR$/sqls/C.Transac.sql" dialect="DB2_IS" />
     <file url="file://$PROJECT_DIR$/sqls/CCenter.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/sqls/C_Reint.sql" dialect="DB2_IS" />
+    <file url="file://$PROJECT_DIR$/sqls/Conf_Pos .sql" dialect="DB2_IS" />
     <file url="file://$PROJECT_DIR$/sqls/Crm.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/sqls/DIARIOS.sql" dialect="DB2_IS" />
+    <file url="file://$PROJECT_DIR$/sqls/Discover_R.sql" dialect="DB2_IS" />
     <file url="file://$PROJECT_DIR$/sqls/EMPES.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/sqls/IbmI.sql" dialect="DB2_IS" />
     <file url="file://$PROJECT_DIR$/sqls/JOURNALS.sql" dialect="DB2_IS" />

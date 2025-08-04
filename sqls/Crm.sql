@@ -58,21 +58,21 @@ SELECT * FROM "crm-bepsa"."CaseTypeSubtype_Id_seq";
 ---cambiar usuarios que difieren de keycloak vs db
 select ui."Id" , ui."Email" , ui.*
 from "crm-bepsa"."UserIdentity" ui
-where ui."Email" = 'agimenez@bepsa.com.py';
+where ui."Email" = 'cvillalba@bepsa.com.py';
 ----8f815566-e982-4dfb-bc86-721240fc217a   --623ca28e-7204-41f5-b01f-cf40780dbd72
 select *
 from "crm-bepsa"."GroupIdentityUserIdentity" giui
-where giui."UsersId" = '623ca28e-7204-41f5-b01f-cf40780dbd72';
+where giui."UsersId" = '6a786bff-3be2-47dc-b8d4-7f300131e4f9';
 
 select *
 from "crm-bepsa"."Users" u
-where u."IdentityId" = '623ca28e-7204-41f5-b01f-cf40780dbd72';
+where u."IdentityId" = '6a786bff-3be2-47dc-b8d4-7f300131e4f9';
 ---ver si sincronizó bien el cmbio de grupo
 SELECT
  gi."Name" AS rol
 FROM  "crm-bepsa"."GroupIdentityUserIdentity" AS giui
 INNER JOIN  "crm-bepsa"."GroupIdentity" gi ON giui."RolesId" = gi."Id"
-WHERE  giui."UsersId" = '8f815566-e982-4dfb-bc86-721240fc217a'; --id user
+WHERE  giui."UsersId" = '6a786bff-3be2-47dc-b8d4-7f300131e4f9'; --id user
 
 SELECT * FROM "crm-bepsa"."GroupIdentity" gi;
 --"Id" = '8be7bced-fa66-4e4b-928b-f333466416f4' AND "Name" = 'crm input'
@@ -224,3 +224,5 @@ SELECT * FROM "crm-bepsa"."Clients" WHERE "DocumentNumber"='7264137-1' ;-- 0 = E
 
 SELECT * FROM "crm-bepsa"."Clients" WHERE "Name" LIKE '%PERUANO%'; --11375
 SELECT * FROM "crm-bepsa"."ClientBranches" WHERE "ClientId"='11375';
+
+

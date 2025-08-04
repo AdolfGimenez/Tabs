@@ -1,20 +1,16 @@
---translog
-SELECT RC, BIN, LAST_FOUR, AMOUNT, t.* FROM PUBLIC.TRANLOG t
-WHERE DATE BETWEEN '2023-07-31 14:50:00.865000' AND '2023-07-31 15:10:59.000000' AND BIN='703002' AND last_four='4611';
+--vemor qr generado
+select * from JPTSAPI.qr_transactions  t order by initial_date desc;
 
 --para buscar trx aprobadas
-select t.atm_session_id, t.mid, t.tid, t.amount, t.bin, t.last_four, t.ss_stan, t.dsrc from public.tranlog t
-where t."date" between '2023-05-09 18:00:00' and '2023-05-09 18:30:00' and t.tid = '19899552';
+SELECT T.ATM_SESSION_ID, T.MID, T.TID, T.AMOUNT, T.BIN, T.LAST_FOUR, T.SS_STAN, T.DSRC
+FROM JPTSAPI.TRANLOG T
+WHERE T.date BETWEEN '2023-05-09 18:00:00' AND '2023-05-09 18:30:00'  AND T.TID = '19899552';
 
 --para buscar su contra parte, si tiene la reversa
-select * from public.tranlog
-where "date" between '2023-05-09 18:00:00' and '2023-05-09 18:30:00' and amount = 9550.00 and ss_stan = '004833' and mid like '%000000000704065';
+SELECT * FROM JPTSAPI.TRANLOG
+WHERE date BETWEEN '2023-05-09 18:00:00' AND '2023-05-09 18:30:00' AND AMOUNT = 9550.00
+  AND SS_STAN = '004833' AND MID LIKE '%000000000704065';
 ------------------------------------------
-
-SELECT * FROM PUBLIC.TRANLOG T WHERE T.SS LIKE '%REST%';--ORDER BY ID DESC
-select * from public.tranlog t  where t.DATE>='2023-11-10 06:21:27.677000' AND ss = 'SS-REST'; --order by id desc
--------------------------------------------
-SELECT * FROM PUBLIC.API_REQUEST_HISTORY ARH;
 
 SELECT *
 FROM PUBLIC.TRANLOG T
@@ -26,70 +22,48 @@ WHERE T.DATE = '2023-11-10 06:25:34.000000' --cast(T.DATE as date) = cast('2023-
   AND T.TID = '26989261' -- "terminal_id"
   AND T.MID = '000000002400172' --"merchant_id"
   AND T.SS_STAN = '007853'; --"stan": "007853",
-
-SELECT *
-FROM PUBLIC.TRANLOG_READONLY T
-WHERE ss_rrn='570503009575'
-  --T.DATE = '2023-11-10 06:25:34.000000'
- T.LOCALTRANSACTIONDATE = '2023-11-13 02:16:37.000000' --'2023-11-10T06:25:34'
-  AND T.TRANSACTION_TOKEN = '2023314600013398'
-  AND T.AMOUNT = '20500'
-  AND T.CURRENCYCODE = '600'
-  AND T.TID = '26989261'
-  AND T.MID = '000000002400172'
-  AND T.SS_STAN = '007853';
 -------------------
 SELECT * FROM PUBLIC.TRANLOG t
 WHERE DATE BETWEEN '2023-07-31 14:50:00.865000' AND '2023-07-31 15:10:59.000000' AND t.AMOUNT='4250000';
 
-SELECT * FROM SAF.MESSAGE_QUEUE MQ LIMIT 1;
-select * from stations;
+SELECT * FROM JPTSAPI.MESSAGE_QUEUE MQ LIMIT 1;
+select * from JPTSAPI.stations S;
 --transaction_token
-select * from qr.qr_transactions qr order by initial_date desc;
-
-select * from public.tranlog_readonly t where t.transaction_token = '2024081500694820';
-select * from public.tranlog t WHERE date>='2024-03-02 13:11:31.955000'  AND ss_rrn='466206130451';
-
-select * from tranlog t where transaction_token = '2024082600702424';
+select * from JPTSAPI.qr_transactions qr order by initial_date desc;
 
 /*los que inician con dinelco_00111111 -> su main id es: dinelco_checkout
 los que inician con dinelco_link_0011111 -> su main id es: dinelco_link
 los que inician con dinelco_mf_0011111 -> su main id es: dinelco_mf
 los que inician con dinelco_da_0011111 - > su main id es: dinelco_debitoauto
 dinelco_0012300xxxxx (codigo de cliente de documenta), corresponde al main id dinelco_documeta
-  CYBERSOURCE_SHOP_ID = 'dinelco_bm_002327100002' AND CYBERSOURCE_SHOP_MAIN_ID = 'dinelco_bancame'*/
+CYBERSOURCE_SHOP_ID = 'dinelco_bm_002327100002' AND CYBERSOURCE_SHOP_MAIN_ID = 'dinelco_bancame'*/
 
-SELECT * from keys_cybersource_shops s where cybersource_shop_id = 'dinelco_link_002823400001';
-SELECT max(id_key_cybersource_shop) from keys_cybersource_shops s;
-SELECT DISTINCT(cybersource_shop_main_id) from public.KEYS_CYBERSOURCE_SHOPS  s;
+SELECT * FROM JPTSAPI.KEYS_CYBERSOURCE_SHOPS where cybersource_shop_id = 'dinelco_002692900047';
+--inserta
+INSERT INTO JPTSAPI.KEYS_CYBERSOURCE_SHOPS ( CYBERSOURCE_SHOP_ID, CYBERSOURCE_PUBLIC_KEY, CYBERSOURCE_PRIVATE_KEY, CREATED_AT, CYBERSOURCE_SHOP_MAIN_ID, ENTITY_ID) VALUES
+( 'dinelco_002904300001',  '252c30ea-6dd5-4720-bf9e-1c2fff538c23',
+ 'S/itACoGpwiSc4bDsd2Hskwl4/Af3EAzB1D4NxbGPRk=',
+ now(), 'dinelco_checkout', NULL);
+
+--15 caracteres completar con 000
+select * from JPTSAPI.cybersource_merchant_routing where merchant_id IN ('000000001900552');
+--  legacy_code = '0304382' AND branch_name = 'BM - RAPIDCOMPRA.COM'
+INSERT INTO JPTSAPI.cybersource_merchant_routing (merchant_id, create_at, merchant_name)
+VALUES('000000001900552', now(), 'SG COMERCIAL');
+
 --actualiza
-update keys_cybersource_shops
+update JPTSAPI.keys_cybersource_shops
 set cybersource_public_key = 'ead9f407-3d46-4e30-bea0-e4195895fbda',
     cybersource_private_key = 'yHBRT1l68r/ayUT1xFIhRrk348kf3AzdB8BmDzlOrEI='
 where cybersource_shop_id = 'dinelco_002729500001';
---inserta
-INSERT INTO PUBLIC.KEYS_CYBERSOURCE_SHOPS
-(ID_KEY_CYBERSOURCE_SHOP, CYBERSOURCE_SHOP_ID, CYBERSOURCE_PUBLIC_KEY, CYBERSOURCE_PRIVATE_KEY,
- CREATED_AT, CYBERSOURCE_SHOP_MAIN_ID, ENTITY_ID) VALUES
-(470, 'dinelco_002855600001',
- 'c1b249d1-b027-4ce6-9888-2f7433cc3af7',
- 'm09bgfxsRw0EOwz6EZtOiwkB5kx64kFmupuzNeUlXwE=',
- now(), 'dinelco_checkout', NULL);
 ---------------------------------------------------
---15 caracteres completar con 000
-select * from cybersource_merchant_routing where merchant_id IN ('000000006902202'); --= '00000000301609';
-000000002301518
-INSERT INTO public.cybersource_merchant_routing
-(merchant_id, create_at, merchant_name)
-VALUES('000000006902202', now(), 'ESSEN');
-
-select * from public.cybersource_merchant_routing where merchant_id = '000000004900387';
-
+---en otras monedas
 SELECT * FROM JPTSAPI.TRANLOG t
 WHERE t."DATE" BETWEEN '2025-06-09 00:00:00.000' AND '2025-06-09 09:05:27.999'
   AND t.DESTINATIONS = 'ds-pix' AND t.AMOUNTCARDHOLDERBILLING = 433.17;
 
-SELECT max(ds_rrn) FROM PUBLIC.TRANLOG t
-WHERE t.DATE BETWEEN '2025-05-02 00:00:00.908000' AND '2025-05-02 23:59:59.999'; --AND t.AMOUNT='65940';
-
-SELECT * FROM JPTSAPI.HISTORY_LOGS HL;
+SELECT * FROM JPTSAPI.TRANLOG t
+WHERE t.DATE BETWEEN '2025-06-25 00:00:00.908000' AND '2025-06-25 09:59:59.999' AND t.TRANSACTION_TOKEN='2025176401546384'--AND t.AMOUNT='77000';
+---history insert ex apilog
+SELECT * FROM JPTSAPI.HISTORY_LOGS HL WHERE HL.RRN='577600250557';
+SELECT * FROM LIBDEBITO.DRCONBEP D WHERE D.LERRNB='577600250557';

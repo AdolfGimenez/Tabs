@@ -162,9 +162,10 @@ where
 	datname = 'asientos'
 	and pid <> pg_backend_pid()
 	--and state <> 'active'
-	--AND usename = 'usr_asiento'
+	--AND usename = 'usrproducción'
 order by state;
-
+SELECT * FROM pg_locks;
+SELECT * FROM pg_stat_activity WHERE state = 'blocked';
 SELECT pg_terminate_backend(36803);
 --------------------------------
 SELECT * FROM FACTURACIONBEPSA.SECFUNCTIONALITY S;
@@ -381,7 +382,7 @@ SELECT C.MOVRRNBEP                                                              
           AND F.SUCURSALID = C.MOVCODSUC
           AND F.STATUSID LIKE '%APROBADO%'
           AND F.TARGETFACTID = 'FactComercios'
-          AND F.PERIODOID = '06'
+          AND F.PERIODOID = '07'
           AND F.EJERCICIOID = '2025')                                                                                      COMPROBANTE,
        (SELECT T.SUCDIRECC FROM DATOS.GXFINDTA_TCMSUC T WHERE T.CLICLICOD = C.MOVCODCLI AND T.SUCSUCCOD = C.MOVCODSUC)     DIRECCION_SUC,
        C.MOVFTRX                                                                                                           FECHA_TRX,
@@ -395,12 +396,12 @@ SELECT C.MOVRRNBEP                                                              
        SUM(C.MOVRENT)                                                                                                      IMPORTERENTA,
        SUM(C.MOVIVREN)                                                                                                     IMPORTEIVARENTA,
        SUM(C.MOVNETO)                                                                                                      IMPORTENETO
-FROM FACTURACIONBEPSA.tclmov_tmp_comercios_202506_factcomercios C
+FROM FACTURACIONBEPSA.tclmov_tmp_comercios_202507_factcomercios C
 /*DATOS.GXFINDTA_TCLMOV c WHERE c.MOVOPDE = 700405 AND c.MOVFCRE BETWEEN '20250422' AND '20250521'
     AND (c.SERCODI IN ('PAGFAC', 'VTAMIN') AND c.PRECODI IN ('PFEW', 'PFTA', 'VTEP', 'VTEW', 'VTTA')
     AND c.MOVCODIS IN ('ATM', 'WEB', 'POS')) AND c.MOVIVCO > 0*/
 --WHERE movopde = 700405 --para operadoras
-WHERE C.MOVCODCLI IN (SELECT C.CLICLICOD FROM DATOS.GXFINDTA_TCMCLI C WHERE C.CLIRUC LIKE '%80024659%')
+WHERE C.MOVCODCLI IN (SELECT C.CLICLICOD FROM DATOS.GXFINDTA_TCMCLI C WHERE C.CLIRUC LIKE '%80097276%')
 --AND C.MOVCODSUC=1
 -- NOT IN ('1', '8')
 GROUP BY C.MOVCODCLI, C.MOVCODSUC, C.MOVCOMER, C.MOVDENO, C.MOVFTRX, C.MOVFPRO, C.MOVFCRE, C.MOVTPTA ,C.MOVRRNBEP
@@ -3519,3 +3520,14 @@ facturacionbepsa.fn_get_facventa_anulacion_masiva('16410772','FAECA',
 
 SELECT * FROM DATOS.GXFINDTA_TCOCNA T WHERE T.COCOMER IN
 (SELECT * FROM DATOS.GXBDBPS_COMAEAF C2 WHERE C2.CORUCN='80026157-7');
+
+SELECT G.CLICLICOD, G.SUCSUCCOD, GT.CLIRUC, GT.CLIDENCOM, GT.CLIRAZSOC, G.SUCCORREO
+FROM ASIENTOS.DATOS.GXFINDTA_TCMCLI GT
+         INNER JOIN DATOS.GXFINDTA_TCMSUC G ON GT.CLICLICOD = G.CLICLICOD;
+
+select *  from asientos.pr_ver_pos_clearing_cobro_nacional_det_batch('20250722');
+
+select * FROM asientos.asientos.CUENTA_CONT_PROCESO_CABE CCPC WHERE CCPC.ID_CTA_CONT_CABE=108;
+SELECT * FROM asientos.pr_trx_pos_clearing_cobro_nacional_batch_83();
+
+SELECT * FROM DATOS.GXTRJDTA_TDGENT T WHERE T.ENTNMENTID LIKE '%CENCOPAN%';

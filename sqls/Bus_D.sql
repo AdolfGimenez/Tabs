@@ -103,8 +103,7 @@ SELECT * FROM GXFINDTA.CONFIGURACION_ENTIDAD_EMIADQ CEE;
 ---SECUENCIA BUS DATOS
 SELECT NEXT VALUE FOR gxfindta.generic_seq AS next_value FROM SYSIBM.SYSDUMMY1;
 
-SELECT BT.OPERACION_COD_COMERCIO, BT.OPERACION_COD_SUCURSAL, BT.* FROM POCODI_HIST.PUBLIC.BUSDATOS_TRANSACCIONES BT
-WHERE BT.OPERACION_RRNBEPSA IN ('502236102954');
+
 SELECT * FROM POCODI_HIST.PUBLIC.COMISIONES C WHERE C.RRNBEPSA
 IN ('570101647143', '570202074247', '570202074843', '570603337461', '570703772545');
 
@@ -133,5 +132,16 @@ WHERE "bt"."operacion_est_fn_transaccion" <> 'Q'
 ORDER BY "bt"."operacion_fech_trans" ASC
 LIMIT 5;
 
-
+select bt.operacion_fech_proc_transaccio::text as operacion_fech_proc_transaccio, "bt"."operacion_fech_insercion", "bt"."operacion_fech_trans", trim(bt.operacion_rrnbepsa) as operacion_rrnbepsa, "bt"."operacion_cod_comercio", "bt"."operacion_denom_comercial", "bt"."operacion_cod_sucursal", "bt"."operacion_desc_sucursal", "bt"."operacion_cod_marc_tarjeta", "bt"."operacion_cod_servicio", "bt"."operacion_tip_uso_tarjeta", "bt"."operacion_est_reversa", "bt"."operacion_cod_retorno", "bt"."operacion_est_fn_transaccion", COUNT(*) OVER () AS counter from "busdatos_transacciones" as "bt"
+where
+-- "bt"."operacion_est_reversa" = 'N'
+-- and "bt"."operacion_tip_uso_tarjeta" = 'C'
+-- and "bt"."operacion_cod_servicio" = 'COMPRA'
+-- and "bt"."operacion_cod_retorno" = '00'
+-- and "bt"."operacion_est_fn_transaccion" = 'A'
+-- and "bt"."operacion_cod_comercio" = '12285'
+-- and "bt"."operacion_cod_sucursal" = '2'
+-- and
+"bt".operacion_rrnbepsa in ('520819682874', '520819654515', '520819640014', '520819639745', '520819604059', '520819603472', '520819600228', '520819599100', '520819598047', '520819596874', '520819596747', '520819594311', '520819590822', '520819590418', '520819588697', '520819585442', '520819583780', '520819583069', '520819581595', '520819580832', '520819580486', '520819577760', '520819571403', '520819568877', '520719452296', '520719452191', '520719452097', '520719451209', '520719450531', '520719450389', '520719448045', '520719447947', '520719447907', '520719447405', '520719447133', '520719446315', '520719446122', '520719444549', '520719444464', '520719444317', '520719443413', '520719442236', '520719434304', '520719428186', '520719427102', '520719412143', '520719365093', '520719278420', '520719244049', '520719243671', '520719241603', '520719219194', '520719218691', '520719216693', '520719206279', '520719200309', '520719195444', '520719181007')
+order by "operacion_fech_trans" ASC;
 
